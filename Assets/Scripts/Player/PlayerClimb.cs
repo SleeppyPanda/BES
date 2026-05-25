@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerState))]
 public class PlayerClimb : MonoBehaviour
@@ -8,10 +9,12 @@ public class PlayerClimb : MonoBehaviour
     public LayerMask climbableLayer;
 
     PlayerState state;
+    PlayerInputHub input;
 
     void Start()
     {
         state = GetComponent<PlayerState>();
+        input = GetComponent<PlayerInputHub>();
     }
 
     void Update()
@@ -20,17 +23,26 @@ public class PlayerClimb : MonoBehaviour
 
         HandleClimbingDetection();
 
-        if (state.isClimbing) HandleClimbMovement();
+        if (state.isClimbing)
+            HandleClimbMovement();
+    }
+
+    Vector2 GetMoveAxes()
+    {
+        if (input != null)
+            return input.MoveInput;
+
+        return BESInputReader.GetMoveVector();
     }
 
     void HandleClimbingDetection()
     {
-        RaycastHit hit;
+        Vector2 axes = GetMoveAxes();
         Vector3 rayOrigin = transform.position + Vector3.up * 1f;
 
-        if (Physics.Raycast(rayOrigin, transform.forward, out hit, wallDetectionDistance, climbableLayer))
+        if (Physics.Raycast(rayOrigin, transform.forward, out _, wallDetectionDistance, climbableLayer))
         {
-            if (!state.isClimbing && Input.GetAxis("Vertical") > 0)
+            if (!state.isClimbing && axes.y > 0)
             {
                 state.isClimbing = true;
                 state.velocity = Vector3.zero;
@@ -41,23 +53,21 @@ public class PlayerClimb : MonoBehaviour
             state.isClimbing = false;
         }
 
-        if (state.isClimbing && state.controller.isGrounded && Input.GetAxis("Vertical") < 0)
-        {
+        if (state.isClimbing && state.controller.isGrounded && axes.y < 0)
             state.isClimbing = false;
-        }
     }
 
     void HandleClimbMovement()
     {
-        float verticalClimb = Input.GetAxis("Vertical");
-        float horizontalClimb = Input.GetAxis("Horizontal");
+        Vector2 axes = GetMoveAxes();
 
-        Vector3 climbDirection = (transform.up * verticalClimb + transform.right * horizontalClimb);
-        if (climbDirection.magnitude > 1f) climbDirection.Normalize();
+        Vector3 climbDirection = (transform.up * axes.y + transform.right * axes.x);
+        if (climbDirection.magnitude > 1f)
+            climbDirection.Normalize();
 
         state.controller.Move(climbDirection * climbSpeed * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (BESInputReader.WasKeyPressedThisFrame(Key.Space))
         {
             state.isClimbing = false;
             state.velocity = -transform.forward * 5f + Vector3.up * 1.5f;

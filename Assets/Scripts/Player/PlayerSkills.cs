@@ -1,51 +1,37 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerState))]
+[RequireComponent(typeof(PlayerInputHub))]
 public class PlayerSkills : MonoBehaviour
 {
     PlayerState state;
+    PlayerInputHub input;
     PlayerDash dashComponent;
+    PlayerCombat combatComponent;
 
     void Start()
     {
         state = GetComponent<PlayerState>();
+        input = GetComponent<PlayerInputHub>();
         dashComponent = GetComponent<PlayerDash>();
+        combatComponent = GetComponent<PlayerCombat>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && dashComponent != null)
-        {
-            if (state != null && state.canDash)
-                StartCoroutine(dashComponent.DashRoutine());
-        }
+        if (input == null) return;
 
-        // Skill keys with costs and enhancements
-        // Enhancement modifier: hold C while pressing Q/E/R to consume Energy
-        bool enhance = Input.GetKey(KeyCode.C);
+        if (input.ConsumeAction(PlayerAction.Dash) && dashComponent != null)
+            dashComponent.TryStartDash();
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            bool isEnhanced = enhance;
-            TryUseSkill("Q", isEnhanced);
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            bool isEnhanced = enhance;
-            TryUseSkill("E", isEnhanced);
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            bool isEnhanced = enhance;
-            TryUseSkill("R", isEnhanced);
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
+        if (input.ConsumeAction(PlayerAction.SkillQ))
+            TryUseSkill("Q", input.EnhanceHeld);
+        if (input.ConsumeAction(PlayerAction.SkillE))
+            TryUseSkill("E", input.EnhanceHeld);
+        if (input.ConsumeAction(PlayerAction.SkillR))
+            TryUseSkill("R", input.EnhanceHeld);
+        if (input.ConsumeAction(PlayerAction.SkillT))
             TryUseSkill("T", false);
-        }
     }
 
     [Header("Skill Costs & Durations")]
@@ -63,25 +49,29 @@ public class PlayerSkills : MonoBehaviour
 
     public float energyCostEnhance = 20f;
 
-    // Allow Q while E is active
     public bool allowQDuringE = true;
 
-    void TryUseSkill(string skillName, bool enhanced)
+    public void TryUseSkill(string skillName, bool enhanced)
     {
         if (state == null) return;
 
-        // Can't use skills while jumping or climbing
-        if (!state.controller.isGrounded) { Debug.Log("Can't use skills while in air"); return; }
-        if (state.isClimbing) { Debug.Log("Can't use skills while climbing"); return; }
-
-        // If another skill active, only allow Q when E is ongoing
-        if (state.activeSkillCount > 0)
+        if (!state.controller.isGrounded)
         {
-            if (!(skillName == "Q" && allowQDuringE && state.currentSkillName == "E"))
-            {
-                Debug.Log("Another skill is active");
-                return;
-            }
+            Debug.Log("Can't use skills while in air");
+            return;
+        }
+
+        if (state.isClimbing)
+        {
+            Debug.Log("Can't use skills while climbing");
+            return;
+        }
+
+        bool canUseDuringAnotherSkill = skillName == "Q" && allowQDuringE && state.isSkillEActive;
+        if (state.activeSkillCount > 0 && !canUseDuringAnotherSkill)
+        {
+            Debug.Log("Another skill is active");
+            return;
         }
 
         float manaCost = 0f;
@@ -96,17 +86,28 @@ public class PlayerSkills : MonoBehaviour
 
         float energyCost = enhanced ? energyCostEnhance : 0f;
 
-        if (!state.CanUseMana(manaCost)) { Debug.Log("Not enough Mana"); return; }
-        if (enhanced && !state.CanUseEnergy(energyCost)) { Debug.Log("Not enough Energy for enhancement"); return; }
+        if (!state.CanUseMana(manaCost))
+        {
+            Debug.Log("Not enough Mana");
+            return;
+        }
 
-        // Consume resources
+        if (enhanced && !state.CanUseEnergy(energyCost))
+        {
+            Debug.Log("Not enough Energy for enhancement");
+            return;
+        }
+
         state.ConsumeMana(manaCost);
-        if (enhanced) state.ConsumeEnergy(energyCost);
+        if (enhanced)
+            state.ConsumeEnergy(energyCost);
 
-        // If attacking, override it
         if (state.isAttacking)
         {
-            state.isAttacking = false;
+            if (combatComponent != null)
+                combatComponent.CancelAttack();
+            else
+                state.isAttacking = false;
         }
 
         StartCoroutine(PerformSkill(skillName, duration));
@@ -114,41 +115,46 @@ public class PlayerSkills : MonoBehaviour
 
     System.Collections.IEnumerator PerformSkill(string skillName, float duration)
     {
-        // Manage stacking of skills so Q can run during E
+        bool isSkillE = skillName == "E";
+
         if (state.activeSkillCount == 0)
         {
+            state.preSkillPosition = transform.position;
             state.preSkillRotation = transform.rotation;
         }
+
         state.activeSkillCount++;
+        if (isSkillE)
+            state.isSkillEActive = true;
+
         state.isUsingSkill = true;
         state.currentSkillName = skillName;
         state.disableMouseAttack = true;
 
         Debug.Log("<color=orange>[SKILL]</color> Bắt đầu: " + skillName);
 
-        // Prevent movement implicitly via state.isUsingSkill (PlayerMovement checks it)
         float startTime = Time.time;
         while (Time.time < startTime + duration)
-        {
             yield return null;
-        }
 
         Debug.Log("<color=orange>[SKILL]</color> Kết thúc: " + skillName);
 
         state.activeSkillCount--;
+        if (isSkillE)
+            state.isSkillEActive = false;
+
         if (state.activeSkillCount <= 0)
         {
             state.activeSkillCount = 0;
             state.isUsingSkill = false;
             state.currentSkillName = null;
             state.disableMouseAttack = false;
-            // restore rotation
+            transform.position = state.preSkillPosition;
             transform.rotation = state.preSkillRotation;
         }
         else
         {
-            // If there are still skills active, keep flags but clear currentSkillName if this was the last one with that name
-            state.currentSkillName = null;
+            state.currentSkillName = state.isSkillEActive ? "E" : null;
         }
     }
 }

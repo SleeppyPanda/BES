@@ -16,8 +16,10 @@ public class PlayerState : MonoBehaviour
     [HideInInspector] public string currentSkillName = null;
     [HideInInspector] public bool disableMouseAttack = false;
     [HideInInspector] public bool isAttacking = false;
+    [HideInInspector] public Vector3 preSkillPosition = Vector3.zero;
     [HideInInspector] public Quaternion preSkillRotation = Quaternion.identity;
     [HideInInspector] public int activeSkillCount = 0;
+    [HideInInspector] public bool isSkillEActive = false;
 
     // Camera shared
     [HideInInspector] public float currentZoom = 5f;

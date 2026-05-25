@@ -15,12 +15,13 @@ public class PlayerDash : MonoBehaviour
         state = GetComponent<PlayerState>();
     }
 
-    void Update()
+    public bool TryStartDash()
     {
-        if (Input.GetKeyDown(KeyCode.F) && state != null && state.canDash && !state.isClimbing)
-        {
-            StartCoroutine(DashRoutine());
-        }
+        if (state == null || !state.canDash || state.isClimbing || state.isDashing)
+            return false;
+
+        StartCoroutine(DashRoutine());
+        return true;
     }
 
     public IEnumerator DashRoutine()
