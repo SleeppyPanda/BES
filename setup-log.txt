@@ -1,0 +1,39 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.3/staging' branch; Version is '6000.3.3f1 (ef04196de0d6) revision 15664153'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Admin" at "2026-07-05T07:30:22.2736421Z"
+OS: 'Windows 11  (10.0.26200) 64bit Professional' Language: 'en' Physical Memory: 32475 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1
+Date: 2026-07-05T07:30:22Z
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.4+4293ba1
+  Session Id:              082e8c8ded32431c8443cb4fae98395a
+  Correlation Id:          4c9c8bb461d3ff84c59b41038da42e75
+  External correlation Id: 4786502329588721874
+  Machine Id:              7Bn+eVcLTa8Oab4zgovMZi67v0c=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-Admin" (connect: 0.00s, validation: 0.00s, handshake: 1.26s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Admin-notifications" at "2026-07-05T07:30:23.5312784Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 18968364352632-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.01
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 1.29s
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.3.3f1\Editor\Unity.exe
+-batchmode
+-nographics
+-quit
+-projectPath
+c:\Users\Admin\Documents\BES
+-executeMethod
+BES.Editor.BESProjectSetup.SetupFullProject
+-logFile
+c:\Users\Admin\Documents\BES\setup-log.txt
+Successfully changed project path to: c:\Users\Admin\Documents\BES
+C:/Users/Admin/Documents/BES
+Exiting without the bug reporter. Application will terminate with return code 1

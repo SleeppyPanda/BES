@@ -1,0 +1,7 @@
+﻿Hß╗ç thß╗æng v┼⌐ kh├¡C├íc loß║íi v┼⌐ kh├¡:Kiß║┐m ─æ╞ínTr╞░ß╗úngCungV┼⌐ kh├¡ c├ín d├ái─Éß║íi kiß║┐mArtifact:AtkHpDefCrit RateCrit DMGMana RechargeIX.
+Hß╗ç thß╗æng nhiß╗çm vß╗ÑC├íc loß║íi nhiß╗çm vß╗ÑNhiß╗çm vß╗Ñ cß╗æt truyß╗çn ch├¡nhNhiß╗çm vß╗Ñ kh├ím ph├í thß║┐ giß╗¢iNhiß╗çm vß╗Ñ ß╗ºy th├ícNhiß╗çm vß╗Ñ ri├¬ng cß╗ºa nh├ón vß║¡t Nhiß╗çm vß╗Ñ ng├áyXII.
+Hß╗ç thß╗æng gachaNh├ón vß║¡t:Standard BannerLimited Character BannerPh├ón cß║Ñp nh├ón vß║¡t 4 sao v├á 5 saoV┼⌐ kh├¡:Weapon BannerPh├ón cß║Ñp v┼⌐ kh├¡ 3 sao / 4 sao / 5 saoSß╗▒ kiß╗çn:Event Banner (Theo m├╣a / ng├áy lß╗à)Item ─æß║╖c biß╗çtTrang phß╗ÑcXIII.
+Hß╗ç thß╗æng tiß╗ün tß╗çC╞í bß║ún:─Éß╗ông bß║íc, ─Éß╗ông v├áng, ─Éß╗ông bß║ích ng├ónMß║únh vß╗í h╞░ kh├┤ng: (Event Banner)Bß╗Ñi sao khß╗ƒi nguy├¬nBß╗Ñi sao khß╗ƒi nguy├¬n c├│ thß╗â chuyß╗ân ─æß╗òi:Tinh t├║ v─⌐nh hß║▒ng: (Limited Character Banner / Weapon Banner)Tinh t├║ t├án khuyß║┐t: (Standard Banner)XIV.
+UI/UXGiao diß╗çn ng╞░ß╗¥i d├╣ng:Mini-mapCompass nhiß╗çm vß╗ÑMenu nh├ón vß║¡tInventoryMap lß╗¢nN├║t t╞░╞íng t├ícTrß║úi nghiß╗çm ng╞░ß╗¥i d├╣ngDß╗à d├áng thao t├íc tr├¬n PC / Mobile (Android / IOS)Hiß╗çu ß╗⌐ng m╞░ß╗út m├á, kh├┤ng bß╗ï ─æß╗⌐t g├úyThiß║┐t kß║┐ gß╗ìn ─æß╗â tß║ºm nh├¼n ─æ╞░ß╗úc bao qu├ítXVI.
+MonetizationGachaBattle PassC├íc g├│i nß║íp
+TOTAL 6

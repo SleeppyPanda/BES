@@ -1,0 +1,227 @@
+﻿Sheets: [' Tß╗òng Quan', ' Tß║Ñt Cß║ú Stories', ' Roadmap', 'E01', 'E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08', 'E09', 'E10', 'E11', 'E12', 'E13']
+
+===  Tß╗òng Quan ===
+ | Beneath Enchanted Sky (BES) ΓÇö UNITY GAME PROJECT |  |  |  |  | 
+ | Open World Story Experience + Quest & Character Narrative System +  | Unity 3D | 3 th├íng |  |  |  |  | 
+ | 13.0 | 70.0 | 8.0 | 532.0 | 3.0
+ | Epics | User Stories | Simulation/Decision Features | Story Points | Th├íng
+ | TECH STACK ─Éß╗Ç XUß║ñT |  |  |  |  | 
+ | Layer | C├┤ng nghß╗ç |  |  | Ghi ch├║ | 
+ | Game Engine | Unity 6.3 LTS + C# |  |  | Ph├ít triß╗ân gameplay, hß╗ç thß╗æng chiß║┐n ─æß║Ñu, quest v├á thß║┐ giß╗¢i mß╗ƒ | 
+ | Render/Visual | URP, Shader Graph |  |  | Hiß╗çu ß╗⌐ng ├ính s├íng, m├┤i tr╞░ß╗¥ng v├á phong c├ích art game  | 
+ | 3D Asset Creation | Blender |  |  | Modeling nh├ón vß║¡t, m├┤i tr╞░ß╗¥ng, v┼⌐ kh├¡ | 
+ | 2D Art & UI Design | Photoshop, Illustrator, Procreate, Figma |  |  | Thiß║┐t kß║┐ UI, concept art, icon, texture | 
+ | Character Animation | Blender, Spine, Live2D Cubism |  |  | Animation nh├ón vß║¡t v├á UI ─æß╗Öng | 
+ | Data-Driven Config | ScriptableObject, JSON |  |  | Quß║ún l├╜ dß╗» liß╗çu nh├ón vß║¡t, v┼⌐ kh├¡, qu├íi vß║¡t, quest | 
+ | Gameplay Architecture | State Machine, Event Bus |  |  | Tß╗ò chß╗⌐c hß╗ç thß╗æng gameplay v├á giß║úm phß╗Ñ thuß╗Öc giß╗»a c├íc module | 
+ | Environment Data | ScriptableObject Database, Dialogue Database |  |  | Quß║ún l├╜ bß║ún ─æß╗ô, NPC, hß╗Öi thoß║íi v├á lore | 
+ | AI & Decision System | Behavior Tree, Finite State Machine (FSM) |  |  | AI qu├íi vß║¡t, NPC v├á boss | 
+ | Version Control | Git, GitHub |  |  | Quß║ún l├╜ source code v├á l├ám viß╗çc nh├│m | 
+ | Testing/Build | Unity Test Framework, Profiler, Windows Build |  |  | Kiß╗âm thß╗¡ chß╗⌐c n─âng v├á tß╗æi ╞░u hiß╗çu n─âng | 
+ | Save & Persistence | JSON Save System, PlayerPrefs |  |  | L╞░u tiß║┐n tr├¼nh ng╞░ß╗¥i ch╞íi v├á c├ái ─æß║╖t | 
+ | ─ÉIß╗éM ─Éß║╢C BIß╗åT Cß╗ªA ─Éß╗Ç T├ÇI |  |  |  |  | 
+ | AI-Driven NPC Dialogue | NPC c├│ thß╗â tr├▓ chuyß╗çn tß╗▒ nhi├¬n bß║▒ng AI thay v├¼ chß╗ë d├╣ng hß╗Öi thoß║íi cß╗æ ─æß╗ïnh |  |  |  | 
+ | Living Memory NPC System | NPC ghi nhß╗¢ c├íc cuß╗Öc tr├▓ chuyß╗çn v├á h├ánh ─æß╗Öng tr╞░ß╗¢c ─æ├óy cß╗ºa ng╞░ß╗¥i ch╞íi |  |  |  | 
+ | Dynamic Story Evolution | Cß╗æt truyß╗çn thay ─æß╗òi theo lß╗▒a chß╗ìn v├á h├ánh vi cß╗ºa ng╞░ß╗¥i ch╞íi |  |  |  | 
+ | Personalized Companion Experience | Mß╗ùi ng╞░ß╗¥i ch╞íi c├│ thß╗â x├óy dß╗▒ng mß╗æi quan hß╗ç kh├íc nhau vß╗¢i c├íc nh├ón vß║¡t ─æß╗ông h├ánh |  |  |  | 
+ | Emotion-Based NPC Reactions | Mß╗Öt sß╗æ nhiß╗çm vß╗Ñ phß╗Ñ ─æ╞░ß╗úc tß║ío ─æß╗Öng theo bß╗æi cß║únh hiß╗çn tß║íi cß╗ºa ng╞░ß╗¥i ch╞íi |  |  |  | 
+ | Quest & Event Persistent World Consequences | NPC phß║ún ß╗⌐ng kh├íc nhau t├╣y cß║úm x├║c, mß╗⌐c ─æß╗Ö tin t╞░ß╗ƒng v├á lß╗ïch sß╗¡ t╞░╞íng t├íc |  |  |  | 
+ | Persistent World Consequences | Quyß║┐t ─æß╗ïnh cß╗ºa ng╞░ß╗¥i ch╞íi tß║ío ß║únh h╞░ß╗ƒng l├óu d├ái l├¬n thß║┐ giß╗¢i v├á NPC |  |  |  | 
+
+===  Tß║Ñt Cß║ú Stories ===
+ | MASTER BACKLOG___Beneath Enchanted Sky (BES) ___ (70 USER STORIES) |  |  |  |  |  |  | 
+ | Story ID | Epic | User Story | Th├íng | Module | SP | Priority | Note
+ | US-001 | E01 | Khß╗ƒi tß║ío dß╗▒ ├ín Unity 6 LTS, thiß║┐t lß║¡p cß║Ñu tr├║c th╞░ mß╗Ñc chuß║⌐n cho Scripts, Art, UI, Audio, Prefabs v├á Scenes | Th├íng 5 | Setup | 2.0 | ≡ƒö┤ High | 
+ | US-002 | E01 | Thiß║┐t lß║¡p GitHub Repository, quy tß║»c branch v├á quy tr├¼nh merge source code nh├│m | Th├íng 5 | DevOps | 2.0 | ≡ƒö┤ High | 
+ | US-003 | E01 | Thiß║┐t lß║¡p Input System hß╗ù trß╗ú di chuyß╗ân, t╞░╞íng t├íc v├á chiß║┐n ─æß║Ñu | Th├íng 5 | Input | 2.0 | ≡ƒö┤ High | 
+ | US-004 | E01 | X├óy dß╗▒ng Scene Management ─æß╗â quß║ún l├╜ chuyß╗ân cß║únh giß╗»a Menu, Gameplay v├á Cutscene | Th├íng 5 | Scene Management | 3.0 | ≡ƒö┤ High | 
+ | US-005 | E01 | Thiß║┐t lß║¡p Coding Convention, Naming Convention v├á quy chuß║⌐n quß║ún l├╜ asset | Th├íng 5 | Architecture | 2.0 | ≡ƒö┤ High | 
+ | US-006 | E01 | Tß║ío Prototype Scene kiß╗âm tra pipeline tß╗½ asset ─æß║┐n gameplay | Th├íng 5 | Prototype | 2.0 | ≡ƒö┤ High | 
+ | US-007 | E02 | X├óy dß╗▒ng bß╗æi cß║únh tß╗òng thß╗â cß╗ºa thß║┐ giß╗¢i v├á nguß╗ôn gß╗æc c├íc nß╗ün v─ân minh | Th├íng 6 | World Building | 5.0 | ≡ƒö┤ High | 
+ | US-008 | E02 | Thiß║┐t kß║┐ lß╗ïch sß╗¡ thß║┐ giß╗¢i v├á c├íc sß╗▒ kiß╗çn quan trß╗ìng ß║únh h╞░ß╗ƒng tß╗¢i cß╗æt truyß╗çn | Th├íng 6 | Lore | 5.0 | ≡ƒö┤ High | 
+ | US-009 | E02 | X├óy dß╗▒ng c├íc quß╗æc gia/khu vß╗▒c vß╗¢i v─ân h├│a, m├┤i tr╞░ß╗¥ng v├á ─æß║╖c ─æiß╗âm ri├¬ng | Th├íng 6 | Region Design | 8.0 | ≡ƒö┤ High | 
+ | US-010 | E02 | Thiß║┐t kß║┐ hß╗ç thß╗æng phe ph├íi, tß╗ò chß╗⌐c v├á mß╗æi quan hß╗ç giß╗»a c├íc phe | Th├íng 6 | Faction System | 5.0 | ≡ƒö┤ High | 
+ | US-011 | E02 | Ho├án thiß╗çn t├ái liß╗çu World Building l├ám c╞í sß╗ƒ cho Story v├á Quest | Th├íng 6 | Documentation | 6.0 | ≡ƒö┤ High | 
+ | US-012 | E03 | Viß║┐t cß╗æt truyß╗çn ch├¡nh v├á mß╗Ñc ti├¬u xuy├¬n suß╗æt cß╗ºa nh├ón vß║¡t ng╞░ß╗¥i ch╞íi | Th├íng 6 | Main Story | 8.0 | ≡ƒö┤ High | 
+ | US-013 | E03 | Thiß║┐t kß║┐ tuyß║┐n cß╗æt truyß╗çn nh├ính A vß╗¢i kß║┐t th├║c ri├¬ng | Th├íng 6 | Branch Story A | 8.0 | ≡ƒö┤ High | 
+ | US-014 | E03 | Thiß║┐t kß║┐ tuyß║┐n cß╗æt truyß╗çn nh├ính B vß╗¢i kß║┐t th├║c ri├¬ng | Th├íng 6 | Branch Story B | 8.0 | ≡ƒö┤ High | 
+ | US-015 | E03 | X├óy dß╗▒ng hß╗ô s╞í nh├ón vß║¡t ch├¡nh, ─æß╗ông h├ánh v├á phß║ún diß╗çn | Th├íng 6 | Character Profile | 5.0 | ≡ƒö┤ High | 
+ | US-016 | E03 | Ho├án thiß╗çn Story Bible bao gß╗ôm timeline, nh├ón vß║¡t v├á c├íc sß╗▒ kiß╗çn ch├¡nh | Th├íng 6 | Story Bible | 3.0 | ≡ƒö┤ High | 
+ | US-017 | E04 | Thiß║┐t kß║┐ ngoß║íi h├¼nh v├á t├¡nh c├ích nh├ón vß║¡t ch├¡nh | Th├íng 6 | Main Character | 8.0 | ≡ƒö┤ High | 
+ | US-018 | E04 | Thiß║┐t kß║┐ ngoß║íi h├¼nh v├á hß╗ô s╞í nh├ón vß║¡t ─æß╗ông h├ánh | Th├íng 6 | Companion | 5.0 | ≡ƒö┤ High | 
+ | US-019 | E04 | Thiß║┐t kß║┐ NPC d├ón th╞░ß╗¥ng phß╗Ñc vß╗Ñ t╞░╞íng t├íc v├á thß║┐ giß╗¢i sß╗æng ─æß╗Öng | Th├íng 6 | NPC Design | 5.0 | ≡ƒö┤ High | 
+ | US-020 | E04 | Thiß║┐t kß║┐ NPC quan trß╗ìng tham gia trß╗▒c tiß║┐p v├áo cß╗æt truyß╗çn | Th├íng 6 | Story NPC | 5.0 | ≡ƒö┤ High | 
+ | US-021 | E04 | Thiß║┐t kß║┐ c├íc loß║íi qu├íi vß║¡t v├á h├ánh vi chiß║┐n ─æß║Ñu c╞í bß║ún | Th├íng 6 | Enemy Design | 8.0 | ≡ƒö┤ High | 
+ | US-022 | E04 | Thiß║┐t kß║┐ Boss vß╗¢i c╞í chß║┐ chiß║┐n ─æß║Ñu v├á vai tr├▓ trong cß╗æt truyß╗çn | Th├íng 6 | Boss Design | 8.0 | ≡ƒö┤ High | 
+ | US-023 | E05 | Thiß║┐t kß║┐ User Flow cho to├án bß╗Ö h├ánh tr├¼nh ng╞░ß╗¥i ch╞íi tß╗½ ─æ─âng nhß║¡p ─æß║┐n ho├án th├ánh nhiß╗çm vß╗Ñ | Th├íng 6 | User Flow | 5.0 | ≡ƒö┤ High | 
+ | US-024 | E05 | Thiß║┐t kß║┐ giao diß╗çn Main Menu v├á c├íc m├án h├¼nh chß╗⌐c n─âng | Th├íng 6 | Main Menu | 5.0 | ≡ƒö┤ High | 
+ | US-025 | E05 | Thiß║┐t kß║┐ HUD hiß╗ân thß╗ï HP, Stamina, Mini Map v├á Quest Tracking | Th├íng 6 | HUD | 8.0 | ≡ƒö┤ High | 
+ | US-026 | E05 | Thiß║┐t kß║┐ giao diß╗çn hß╗Öi thoß║íi NPC v├á AI Chat | Th├íng 6 | Dialogue UI | 5.0 | ≡ƒö┤ High | 
+ | US-027 | E05 | Thiß║┐t kß║┐ giao diß╗çn Inventory, Character v├á Equipment | Th├íng 6 | Inventory UI | 5.0 | ≡ƒö┤ High | 
+ | US-028 | E05 | X├óy dß╗▒ng prototype UI/UX ho├án chß╗ënh tr├¬n Figma | Th├íng 6 | Figma Prototype | 6.0 | ≡ƒö┤ High | 
+ | US-029 | E06 | Vß║╜ concept art nh├ón vß║¡t ch├¡nh v├á ─æß╗ông h├ánh | Th├íng 6 | Concept Art | 8.0 | ≡ƒö┤ High | 
+ | US-030 | E06 | Modeling nh├ón vß║¡t bß║▒ng Blender | Th├íng 6 | Character Modeling | 21.0 | ≡ƒö┤ High | 
+ | US-031 | E06 | Rigging nh├ón vß║¡t phß╗Ñc vß╗Ñ animation | Th├íng 6 | Rigging | 8.0 | ≡ƒö┤ High | 
+ | US-032 | E06 | Tß║ío animation c╞í bß║ún: Idle, Walk, Run, Attack | Th├íng 6 | Animation | 13.0 | ≡ƒö┤ High | 
+ | US-033 | E06 | Thiß║┐t kß║┐ asset m├┤i tr╞░ß╗¥ng: nh├á cß╗¡a, c├óy cß╗æi, vß║¡t thß╗â | Th├íng 6 | Environment Art | 13.0 | ≡ƒö┤ High | 
+ | US-034 | E06 | Thiß║┐t kß║┐ icon, UI asset v├á hiß╗çu ß╗⌐ng h├¼nh ß║únh | Th├íng 6 | UI Assets | 5.0 | ≡ƒö┤ High | 
+ | US-035 | E07 | X├óy dß╗▒ng hß╗ç thß╗æng Character Controller hß╗ù trß╗ú di chuyß╗ân c╞í bß║ún | Th├íng 6 | Character Controller | 8.0 | ≡ƒö┤ High | 
+ | US-036 | E07 | X├óy dß╗▒ng Camera Controller theo d├╡i nh├ón vß║¡t | Th├íng 6 | Camera System | 5.0 | ≡ƒö┤ High | 
+
+===  Roadmap ===
+ | ROADMAP 3 TH├üNG ΓÇö Beneath Enchanted Sky (BES) |  |  |  |  | 
+ | TH├üNG 1 ΓÇö PRE-PRODUCTION, WORLD BUILDING & DESIGN FOUNDATION |  |  |  |  | 
+ | Epic | T├¬n | Nß╗Öi dung ch├¡nh | Story Points |  | 
+ | E01 | Project Setup & Infrastructure | Nß╗ün tß║úng kß╗╣ thuß║¡t dß╗▒ ├ín: Unity setup, GitHub workflow, Input System, Scene Management v├á Prototype Pipeline. | 13 sp |  | 
+ | E02 | World Lore & Content Design | X├óy dß╗▒ng thß║┐ giß╗¢i game, lß╗ïch sß╗¡, c├íc quß╗æc gia, phe ph├íi v├á hß╗ç thß╗æng lore l├ám nß╗ün tß║úng cho to├án bß╗Ö nß╗Öi dung. | 29 sp |  | 
+ | E03 | Story & Narrative Design | Thiß║┐t kß║┐ cß╗æt truyß╗çn ch├¡nh, c├íc tuyß║┐n truyß╗çn ph├ón nh├ính, hß╗ô s╞í nh├ón vß║¡t v├á t├ái liß╗çu Story Bible. | 34 sp |  | 
+ | E04 | Character & NPC Design | Thiß║┐t kß║┐ nh├ón vß║¡t ch├¡nh, ─æß╗ông h├ánh, NPC, qu├íi vß║¡t v├á Boss, ─æß╗ông thß╗¥i x├íc ─æß╗ïnh vai tr├▓ cß╗ºa tß╗½ng nh├ón vß║¡t trong thß║┐ giß╗¢i game. | 39 sp |  | 
+ | TH├üNG 2 ΓÇö UI/UX, ART PRODUCTION, GAMEPLAY & AI DEVELOPMENT |  |  |  |  | 
+ | Epic | T├¬n | Nß╗Öi dung ch├¡nh | Story Points |  | 
+ | E05 | UI/UX Design | Thiß║┐t kß║┐ User Flow, HUD, Inventory, Dialogue UI v├á x├óy dß╗▒ng Prototype giao diß╗çn tr├¬n Figma | 34 sp |  | 
+ | E06 | Art Production | Concept Art, Character Modeling, Rigging, Animation, Environment Assets v├á UI Assets phß╗Ñc vß╗Ñ gameplay | 68 sp |  | 
+ | E07 | Core Gameplay Development | X├óy dß╗▒ng Character Controller, Camera System, Stamina, Save/Load System v├á Inventory System | 52 sp |  | 
+ | E08 | Combat System Development | Ph├ít triß╗ân hß╗ç thß╗æng chiß║┐n ─æß║Ñu thß╗¥i gian thß╗▒c gß╗ôm Basic Attack, Skill System, Dodge Mechanic v├á Damage Calculation | 55 sp |  | 
+ | E09 | AI NPC System | T├¡ch hß╗úp AI Dialogue, NPC Memory, Relationship System v├á t╞░╞íng t├íc ─æß╗Öng giß╗»a ng╞░ß╗¥i ch╞íi vß╗¢i NPC | 55 sp |  | 
+ | TH├üNG 3 ΓÇö STORY INTEGRATION, OPEN WORLD, TESTING & RELEASE |  |  |  |  | 
+ | Epic | T├¬n | Nß╗Öi dung ch├¡nh | Story Points |  | 
+ | E10 | Story & Quest System | T├¡ch hß╗úp Main Quest, Side Quest, Dialogue System, Branching Choices v├á Multiple Endings | 47 sp |  | 
+ | E11 | Open World Integration | T├¡ch hß╗úp World Map, NPC Placement, Quest Placement, Collectibles, Teleport System v├á World Events | 55 sp |  | 
+ | E12 | Functional Testing | Kiß╗âm thß╗¡ Gameplay, Combat, AI NPC, Quest System v├á Save/Load System nhß║▒m ─æß║úm bß║úo t├¡nh ß╗òn ─æß╗ïnh | 25 sp |  | 
+ | E13 | Optimization & Release | Tß╗æi ╞░u hiß╗çu n─âng, sß╗¡a lß╗ùi, Regression Testing, ─æ├│ng g├│i Final Build v├á ho├án thiß╗çn t├ái liß╗çu bß║úo vß╗ç | 26 sp |  | 
+
+=== E01 ===
+ | PROJECT SETUP & INFRASTRUCTURE |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-001 | Khß╗ƒi tß║ío dß╗▒ ├ín Unity 6 LTS, thiß║┐t lß║¡p cß║Ñu tr├║c th╞░ mß╗Ñc chuß║⌐n cho Scripts, Art, UI, Audio, Prefabs v├á Scenes | Setup | Engine, Infrastructure | 2.0 | Project mß╗ƒ th├ánh c├┤ng tr├¬n tß║Ñt cß║ú m├íy th├ánh vi├¬n; cß║Ñu tr├║c th╞░ mß╗Ñc thß╗æng nhß║Ñt v├á dß╗à mß╗ƒ rß╗Öng
+ | US-002 | Thiß║┐t lß║¡p GitHub Repository, quy tß║»c branch main/dev/feature v├á quy tr├¼nh merge source code nh├│m | DevOps | Infrastructure | 2.0 | Repository hoß║ít ─æß╗Öng ß╗òn ─æß╗ïnh; th├ánh vi├¬n clone, commit v├á merge th├ánh c├┤ng
+ | US-003 | Thiß║┐t lß║¡p Input System hß╗ù trß╗ú di chuyß╗ân, t╞░╞íng t├íc NPC, chiß║┐n ─æß║Ñu v├á ─æiß╗üu h╞░ß╗¢ng UI | Input System | Engine, Gameplay | 2.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â thß╗▒c hiß╗çn c├íc thao t├íc c╞í bß║ún bß║▒ng b├án ph├¡m v├á chuß╗Öt
+ | US-004 | X├óy dß╗▒ng Scene Management quß║ún l├╜ chuyß╗ân cß║únh giß╗»a Main Menu, Gameplay, Dialogue v├á Cutscene | Scene Management | Engine | 3.0 | Chuyß╗ân Scene ß╗òn ─æß╗ïnh, kh├┤ng lß╗ùi mß║Ñt dß╗» liß╗çu hoß║╖c crash
+ | US-005 | Thiß║┐t lß║¡p Coding Convention, Naming Convention v├á quy chuß║⌐n quß║ún l├╜ Asset cho to├án bß╗Ö dß╗▒ ├ín | Architecture | Infrastructure | 2.0 | Source code v├á Asset tu├ón thß╗º quy tß║»c ─æß║╖t t├¬n thß╗æng nhß║Ñt
+ | US-006 | Tß║ío Prototype Scene kiß╗âm tra pipeline tß╗½ Asset ΓåÆ Gameplay ΓåÆ UI ΓåÆ Save System | Prototype | Engine, Prototype | 2.0 | Chß║íy ─æ╞░ß╗úc bß║ún demo ─æ╞ín giß║ún thß╗â hiß╗çn pipeline ph├ít triß╗ân cß╗ºa dß╗▒ ├ín
+ | Tß╗öNG STORY POINTS |  |  |  | 13 | 
+
+=== E02 ===
+ | WORLD LORE & CONTENT DESIGN |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-007 | X├óy dß╗▒ng bß╗æi cß║únh tß╗òng thß╗â cß╗ºa thß║┐ giß╗¢i v├á nguß╗ôn gß╗æc c├íc nß╗ün v─ân minh | World Building | Content, Narrative | 5.0 | X├íc ─æß╗ïnh ─æ╞░ß╗úc bß╗æi cß║únh trung t├óm, nguß╗ôn gß╗æc thß║┐ giß╗¢i v├á c├íc yß║┐u tß╗æ cß╗æt l├╡i ß║únh h╞░ß╗ƒng ─æß║┐n cß╗æt truyß╗çn
+ | US-008 | Thiß║┐t kß║┐ lß╗ïch sß╗¡ thß║┐ giß╗¢i v├á c├íc sß╗▒ kiß╗çn quan trß╗ìng ß║únh h╞░ß╗ƒng tß╗¢i hiß╗çn tß║íi | Lore | Content, Narrative | 5.0 | Ho├án thiß╗çn timeline c├íc sß╗▒ kiß╗çn ch├¡nh, chiß║┐n tranh, thß║úm hß╗ìa hoß║╖c biß║┐n cß╗æ ─æß╗ïnh h├¼nh thß║┐ giß╗¢i
+ | US-009 | X├óy dß╗▒ng c├íc quß╗æc gia/khu vß╗▒c vß╗¢i v─ân h├│a, m├┤i tr╞░ß╗¥ng v├á ─æß║╖c ─æiß╗âm ri├¬ng | Region Design | Content, World Design | 8.0 | Mß╗ùi khu vß╗▒c c├│ bß║ún sß║»c ri├¬ng vß╗ü v─ân h├│a, ─æß╗ïa l├╜, kiß║┐n tr├║c v├á vai tr├▓ trong thß║┐ giß╗¢i ga
+ | US-010 | Thiß║┐t kß║┐ c├íc phe ph├íi, tß╗ò chß╗⌐c v├á mß╗æi quan hß╗ç giß╗»a c├íc phe | Faction System | Content, Narrative | 5.0 | X├íc ─æß╗ïnh mß╗Ñc ti├¬u, ß║únh h╞░ß╗ƒng v├á mß╗æi quan hß╗ç giß╗»a c├íc phe ph├íi trong thß║┐ giß╗¢i
+ | US-011 | Ho├án thiß╗çn t├ái liß╗çu World Building phß╗Ñc vß╗Ñ Story, Quest v├á NPC Design | Documentation | Content, Design | 6.0 | Ho├án thiß╗çn t├ái liß╗çu tß╗òng hß╗úp lore, quß╗æc gia, phe ph├íi v├á timeline ─æß╗â c├íc nh├│m kh├íc sß╗¡ dß╗Ñng
+ | Tß╗öNG STORY POINTS |  |  |  | 29 | 
+ |  |  |  |  
+
+=== E03 ===
+ | STORY & NARRATIVE DESIGN |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-012 | X├óy dß╗▒ng cß╗æt truyß╗çn ch├¡nh v├á h├ánh tr├¼nh ph├ít triß╗ân cß╗ºa nh├ón vß║¡t ng╞░ß╗¥i ch╞íi | Main Story | Narrative, Content | 8.0 | Ho├án thiß╗çn tuyß║┐n cß╗æt truyß╗çn ch├¡nh tß╗½ mß╗ƒ ─æß║ºu, cao tr├áo ─æß║┐n kß║┐t th├║c; x├íc ─æß╗ïnh mß╗Ñc ti├¬u v├á ─æß╗Öng c╞í cß╗ºa nh├ón vß║¡t ch├¡nh
+ | US-013 | Thiß║┐t kß║┐ tuyß║┐n cß╗æt truyß╗çn nh├ính A vß╗¢i c├íc sß╗▒ kiß╗çn, nh├ón vß║¡t v├á kß║┐t th├║c ri├¬ng | Branch Story A | Narrative, Choice System | 8.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â trß║úi nghiß╗çm tuyß║┐n truyß╗çn A vß╗¢i c├íc sß╗▒ kiß╗çn v├á kß║┐t th├║c kh├íc biß╗çt so vß╗¢i tuyß║┐n ch├¡nh
+ | US-014 | Thiß║┐t kß║┐ tuyß║┐n cß╗æt truyß╗çn nh├ính B vß╗¢i c├íc sß╗▒ kiß╗çn, nh├ón vß║¡t v├á kß║┐t th├║c ri├¬ng | Branch Story B | Narrative, Choice System | 8.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â trß║úi nghiß╗çm tuyß║┐n truyß╗çn B vß╗¢i c├íc sß╗▒ kiß╗çn v├á kß║┐t th├║c ri├¬ng biß╗çt
+ | US-015 | X├óy dß╗▒ng hß╗ô s╞í nh├ón vß║¡t ch├¡nh, ─æß╗ông h├ánh v├á phß║ún diß╗çn | Character Profile | Narrative, Character Design | 5.0 | Mß╗ùi nh├ón vß║¡t ch├¡nh c├│ th├┤ng tin vß╗ü t├¡nh c├ích, mß╗Ñc ti├¬u, mß╗æi quan hß╗ç v├á vai tr├▓ trong cß╗æt truyß╗çn
+ | US-016 | Ho├án thiß╗çn Story Bible bao gß╗ôm timeline, nh├ón vß║¡t, sß╗▒ kiß╗çn v├á c├íc nh├ính truyß╗çn | Story Bible | Documentation | 5.0 | T├ái liß╗çu Story Bible ho├án chß╗ënh, l├ám c╞í sß╗ƒ cho Quest Design, NPC Design v├á Dialogue System
+ | Tß╗öNG STORY POINTS |  |  |  | 34 | 
+
+=== E04 ===
+ | CHARACTER & NPC DESIGN |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-017 | Thiß║┐t kß║┐ ngoß║íi h├¼nh, t├¡nh c├ích v├á vai tr├▓ cß╗ºa nh├ón vß║¡t ch├¡nh | Main Character | Character Design, Narrative | 8.0 | Ho├án thiß╗çn hß╗ô s╞í nh├ón vß║¡t ch├¡nh gß╗ôm ngoß║íi h├¼nh, t├¡nh c├ích, ─æß╗Öng c╞í v├á vai tr├▓ trong cß╗æt truyß╗çn
+ | US-018 | Thiß║┐t kß║┐ nh├ón vß║¡t ─æß╗ông h├ánh v├á mß╗æi quan hß╗ç vß╗¢i ng╞░ß╗¥i ch╞íi | Companion Design | Character Design | 5.0 | Nh├ón vß║¡t ─æß╗ông h├ánh c├│ hß╗ô s╞í, t├¡nh c├ích v├á vai tr├▓ r├╡ r├áng trong h├ánh tr├¼nh
+ | US-019 | Thiß║┐t kß║┐ NPC d├ón th╞░ß╗¥ng phß╗Ñc vß╗Ñ t╞░╞íng t├íc v├á x├óy dß╗▒ng thß║┐ giß╗¢i | NPC Design | World Building, NPC | 5.0 | NPC c├│ chß╗⌐c n─âng, nghß╗ü nghiß╗çp v├á ─æß║╖c ─æiß╗âm ri├¬ng ph├╣ hß╗úp vß╗¢i tß╗½ng khu vß╗▒c
+ | US-020 | Thiß║┐t kß║┐ NPC quan trß╗ìng tham gia trß╗▒c tiß║┐p v├áo cß╗æt truyß╗çn | Story NPC | Narrative, NPC | 5.0 | NPC cß╗æt truyß╗çn c├│ hß╗ô s╞í, mß╗Ñc ti├¬u v├á ß║únh h╞░ß╗ƒng ─æß║┐n c├íc tuyß║┐n truyß╗çn
+ | US-021 | Thiß║┐t kß║┐ c├íc loß║íi qu├íi vß║¡t v├á h├ánh vi chiß║┐n ─æß║Ñu c╞í bß║ún | Enemy Design | Combat, Enemy | 8.0 | Ho├án thiß╗çn danh s├ích qu├íi vß║¡t, ngoß║íi h├¼nh v├á ─æß║╖c ─æiß╗âm chiß║┐n ─æß║Ñu
+ | US-022 | Thiß║┐t kß║┐ Boss vß╗¢i c╞í chß║┐ chiß║┐n ─æß║Ñu v├á vai tr├▓ trong cß╗æt truyß╗çn | Boss Design | Combat, Narrative | 8.0 | Boss c├│ ngoß║íi h├¼nh, lore, c╞í chß║┐ chiß║┐n ─æß║Ñu v├á vai tr├▓ trong Story
+ | Tß╗öNG STORY POINTS |  |  |  | 39 | 
+
+=== E05 ===
+ | UI/UX DESIGN |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-023 | Thiß║┐t kß║┐ User Flow cho to├án bß╗Ö h├ánh tr├¼nh ng╞░ß╗¥i ch╞íi | User Flow | UX Design | 5.0 | Ho├án thiß╗çn s╞í ─æß╗ô luß╗ông trß║úi nghiß╗çm tß╗½ Main Menu ─æß║┐n Gameplay
+ | US-024 | Thiß║┐t kß║┐ giao diß╗çn Main Menu v├á c├íc m├án h├¼nh chß╗⌐c n─âng | Main Menu UI | UI Design | 5.0 | Giao diß╗çn trß╗▒c quan, thß╗æng nhß║Ñt phong c├ích cß╗ºa BES
+ | US-025 | Thiß║┐t kß║┐ HUD hiß╗ân thß╗ï HP, Stamina, Mini Map v├á Quest Tracking | HUD | UI Design, Gameplay | 8.0 | HUD hiß╗ân thß╗ï ─æß║ºy ─æß╗º th├┤ng tin cß║ºn thiß║┐t trong khi ch╞íi
+ | US-026 | Thiß║┐t kß║┐ giao diß╗çn hß╗Öi thoß║íi NPC v├á AI Chat | Dialogue UI | UI Design, AI NPC | 5.0 | Giao diß╗çn hß╗ù trß╗ú hiß╗ân thß╗ï hß╗Öi thoß║íi tß╗▒ nhi├¬n vß╗¢i NPC AI
+ | US-027 | Thiß║┐t kß║┐ giao diß╗çn Inventory, Character v├á Equipment | Inventory UI | UI Design | 5.0 | Ng╞░ß╗¥i ch╞íi dß╗à d├áng quß║ún l├╜ vß║¡t phß║⌐m v├á trang bß╗ï
+ | US-028 | X├óy dß╗▒ng Prototype UI/UX ho├án chß╗ënh tr├¬n Figma | Figma Prototype | UX Design, Prototype | 6.0 | Prototype m├┤ phß╗Ång ─æß║ºy ─æß╗º luß╗ông trß║úi nghiß╗çm ng╞░ß╗¥i ch╞íi
+ | Tß╗öNG STORY POINTS |  |  |  | 34 | 
+
+=== E06 ===
+ | ART PRODUCTION & ASSET CREATION |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-029 | Tß║ío Concept Art cho nh├ón vß║¡t, NPC v├á m├┤i tr╞░ß╗¥ng | Concept Art | Art, Concept | 8.0 | Ho├án thiß╗çn concept phß╗Ñc vß╗Ñ Modeling v├á Environment Design
+ | US-030 | Modeling nh├ón vß║¡t ch├¡nh, NPC v├á qu├íi vß║¡t bß║▒ng Blender | Character Modeling | 3D Art | 21.0 | Model ho├án chß╗ënh, tß╗æi ╞░u topology v├á ph├╣ hß╗úp cho rigging
+ | US-031 | Rigging nh├ón vß║¡t phß╗Ñc vß╗Ñ animation | Rigging | Animation | 8.0 | Nh├ón vß║¡t c├│ bß╗Ö x╞░╞íng v├á ─æiß╗üu khiß╗ân chuyß╗ân ─æß╗Öng ─æß║ºy ─æß╗º
+ | US-032 | Tß║ío animation c╞í bß║ún: Idle, Walk, Run, Attack | Character Animation | Animation | 13.0 | Ho├án thiß╗çn c├íc animation gameplay cß╗æt l├╡i
+ | US-033 | Thiß║┐t kß║┐ Environment Assets: nh├á cß╗¡a, c├óy cß╗æi, vß║¡t thß╗â t╞░╞íng t├íc | Environment Art | 3D Art, Environment | 13.0 | Ho├án thiß╗çn asset m├┤i tr╞░ß╗¥ng ─æß╗º d├╣ng cho world map demo
+ | US-034 | Thiß║┐t kß║┐ icon, UI Asset v├á hiß╗çu ß╗⌐ng h├¼nh ß║únh c╞í bß║ún | UI Assets | UI Art | 5.0 | Asset ─æ╞░ß╗úc export ─æ├║ng ─æß╗ïnh dß║íng ─æß╗â t├¡ch hß╗úp v├áo Unity
+ | Tß╗öNG STORY POINTS |  |  |  | 68 | 
+
+=== E07 ===
+ | CORE GAMEPLAY DEVELOPMENT |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-035 | X├óy dß╗▒ng Character Controller hß╗ù trß╗ú di chuyß╗ân c╞í bß║ún | Character Controller | Gameplay, Movement | 8.0 | Nh├ón vß║¡t c├│ thß╗â di chuyß╗ân ß╗òn ─æß╗ïnh theo Input System v├á va chß║ím ─æ├║ng vß╗¢i m├┤i tr╞░ß╗¥ng
+ | US-036 | X├óy dß╗▒ng Camera Controller theo d├╡i nh├ón vß║¡t | Camera System | Gameplay, Camera | 5.0 | Camera theo d├╡i nh├ón vß║¡t m╞░ß╗út m├á v├á hß╗ù trß╗ú xoay g├│c nh├¼n
+ | US-037 | X├óy dß╗▒ng hß╗ç thß╗æng chß║íy n╞░ß╗¢c r├║t v├á ti├¬u hao Stamina | Stamina System | Gameplay | 8.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â Sprint v├á Stamina giß║úm/t─âng theo thiß║┐t kß║┐
+ | US-038 | X├óy dß╗▒ng hß╗ç thß╗æng nhß║úy v├á t╞░╞íng t├íc m├┤i tr╞░ß╗¥ng | Movement System | Gameplay | 8.0 | Nh├ón vß║¡t c├│ thß╗â Jump, tiß║┐p ─æß║Ñt v├á t╞░╞íng t├íc vß╗¢i vß║¡t thß╗â c╞í bß║ún
+ | US-039 | X├óy dß╗▒ng hß╗ç thß╗æng Save/Load dß╗» liß╗çu ng╞░ß╗¥i ch╞íi | Save System | Data, Persistence | 8.0 | Tiß║┐n tr├¼nh ch╞íi ─æ╞░ß╗úc l╞░u v├á tß║úi ch├¡nh x├íc
+ | US-040 | X├óy dß╗▒ng hß╗ç thß╗æng Inventory quß║ún l├╜ vß║¡t phß║⌐m | Inventory System | Gameplay, Data | 13.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â th├¬m, sß╗¡ dß╗Ñng, loß║íi bß╗Å v├á quß║ún l├╜ vß║¡t phß║⌐m
+ | Tß╗öNG STORY POINTS |  |  |  | 50 | 
+
+=== E08 ===
+ | COMBAT SYSTEM DEVELOPMENT |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-041 | X├óy dß╗▒ng hß╗ç thß╗æng ─æ├ính th╞░ß╗¥ng cß╗ºa nh├ón vß║¡t | Basic Attack | Combat | 8.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â thß╗▒c hiß╗çn chuß╗ùi ─æ├▓n ─æ├ính c╞í bß║ún
+ | US-042 | X├óy dß╗▒ng hß╗ç thß╗æng kß╗╣ n─âng chß╗º ─æß╗Öng | Skill System | Combat, Ability | 13.0 | Kß╗╣ n─âng ─æ╞░ß╗úc k├¡ch hoß║ít ─æ├║ng, c├│ cooldown v├á hiß╗çu ß╗⌐ng
+ | US-043 | X├óy dß╗▒ng hß╗ç thß╗æng n├⌐ tr├ính v├á miß╗àn s├ít th╞░╞íng tß║ím thß╗¥i | Dodge System | Combat | 8.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â n├⌐ ─æ├▓n v├á nhß║¡n hiß╗çu ß╗⌐ng Invincible Frame
+ | US-044 | X├óy dß╗▒ng hß╗ç thß╗æng t├¡nh to├ín s├ít th╞░╞íng v├á HP | Damage System | Combat | 8.0 | Hß╗ç thß╗æng t├¡nh to├ín s├ít th╞░╞íng ch├¡nh x├íc dß╗▒a tr├¬n chß╗ë sß╗æ
+ | US-045 | X├óy dß╗▒ng hß╗ç thß╗æng chiß║┐n ─æß║Ñu vß╗¢i qu├íi vß║¡t v├á Boss | Combat Manager | Combat, Boss | 21.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â chiß║┐n ─æß║Ñu ho├án chß╗ënh vß╗¢i Enemy v├á Boss
+ | Tß╗öNG STORY POINTS |  |  |  | 58 | 
+
+=== E09 ===
+ | AI NPC INTERACTION SYSTEM |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-046 | X├óy dß╗▒ng hß╗ç thß╗æng t╞░╞íng t├íc vß╗¢i NPC | NPC Interaction | AI, NPC | 8.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â bß║»t ─æß║ºu v├á kß║┐t th├║c t╞░╞íng t├íc vß╗¢i NPC
+ | US-047 | T├¡ch hß╗úp AI hß╗Öi thoß║íi cho NPC | AI Dialogue | AI, LLM | 21.0 | NPC c├│ thß╗â phß║ún hß╗ôi theo ngß╗» cß║únh v├á nß╗Öi dung hß╗Öi thoß║íi
+ | US-048 | X├óy dß╗▒ng hß╗ç thß╗æng ghi nhß╗¢ lß╗ïch sß╗¡ tr├▓ chuyß╗çn cß╗ºa NPC | Memory System | AI, Data | 13.0 | NPC l╞░u ─æ╞░ß╗úc th├┤ng tin quan trß╗ìng tß╗½ c├íc lß║ºn tr├▓ chuyß╗çn tr╞░ß╗¢c
+ | US-049 | X├óy dß╗▒ng hß╗ç thß╗æng ─æß╗Ö th├ón thiß║┐t v├á phß║ún ß╗⌐ng cß╗ºa NPC | Relationship System | AI, Narrative | 13.0 | Th├íi ─æß╗Ö v├á phß║ún ß╗⌐ng cß╗ºa NPC thay ─æß╗òi theo mß╗⌐c ─æß╗Ö quan hß╗ç
+ | Tß╗öNG STORY POINTS |  |  |  | 55 | 
+
+=== E10 ===
+ | STORY & QUEST SYSTEM DEVELOPMENT |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-050 | X├óy dß╗▒ng hß╗ç thß╗æng hß╗Öi thoß║íi theo cß╗æt truyß╗çn | Dialogue System | Narrative, Quest | 8.0 | Hß╗ç thß╗æng hiß╗ân thß╗ï hß╗Öi thoß║íi theo tiß║┐n tr├¼nh cß╗æt truyß╗çn
+ | US-051 | X├óy dß╗▒ng hß╗ç thß╗æng nhiß╗çm vß╗Ñ ch├¡nh | Main Quest | Quest System | 8.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â nhß║¡n, thß╗▒c hiß╗çn v├á ho├án th├ánh nhiß╗çm vß╗Ñ ch├¡nh
+ | US-052 | X├óy dß╗▒ng hß╗ç thß╗æng nhiß╗çm vß╗Ñ phß╗Ñ | Side Quest | Quest System | 5.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â thß╗▒c hiß╗çn c├íc nhiß╗çm vß╗Ñ phß╗Ñ ─æß╗Öc lß║¡p
+ | US-053 | X├óy dß╗▒ng hß╗ç thß╗æng lß╗▒a chß╗ìn ph├ón nh├ính cß╗æt truyß╗çn | Branching Choice | Narrative, Choice | 13.0 | Lß╗▒a chß╗ìn cß╗ºa ng╞░ß╗¥i ch╞íi ß║únh h╞░ß╗ƒng ─æß║┐n tiß║┐n tr├¼nh c├óu chuyß╗çn
+ | US-054 | X├óy dß╗▒ng hß╗ç thß╗æng nhiß╗üu kß║┐t th├║c kh├íc nhau | Multiple Ending | Narrative, Ending | 13.0 | Tr├▓ ch╞íi c├│ c├íc kß║┐t th├║c kh├íc nhau dß╗▒a tr├¬n lß╗▒a chß╗ìn v├á tiß║┐n tr├¼nh
+ | Tß╗öNG STORY POINTS |  |  |  | 47 | 
+
+=== E11 ===
+ | OPEN WORLD INTEGRATION |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-055 | X├óy dß╗▒ng bß║ún ─æß╗ô thß║┐ giß╗¢i mß╗ƒ v├á c├íc khu vß╗▒c kh├ím ph├í | World Map | Open World, Environment | 13.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â tß╗▒ do di chuyß╗ân giß╗»a c├íc khu vß╗▒c trong thß║┐ giß╗¢i
+ | US-056 | T├¡ch hß╗úp NPC v├áo thß║┐ giß╗¢i v├á vß╗ï tr├¡ t╞░╞íng t├íc | NPC Placement | NPC, World | 8.0 | NPC xuß║Ñt hiß╗çn ─æ├║ng vß╗ï tr├¡ v├á hoß║ít ─æß╗Öng theo thiß║┐t kß║┐
+ | US-057 | T├¡ch hß╗úp nhiß╗çm vß╗Ñ v├á sß╗▒ kiß╗çn v├áo tß╗½ng khu vß╗▒c | Quest Placement | Quest, World | 8.0 | Nhiß╗çm vß╗Ñ ─æ╞░ß╗úc k├¡ch hoß║ít ─æ├║ng ─æiß╗üu kiß╗çn v├á vß╗ï tr├¡
+ | US-058 | X├óy dß╗▒ng hß╗ç thß╗æng vß║¡t phß║⌐m thu thß║¡p trong thß║┐ giß╗¢i | Collectible System | Gameplay, World | 8.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â t├¼m kiß║┐m v├á thu thß║¡p vß║¡t phß║⌐m
+ | US-059 | X├óy dß╗▒ng hß╗ç thß╗æng dß╗ïch chuyß╗ân giß╗»a c├íc ─æß╗ïa ─æiß╗âm | Teleport System | Gameplay, Navigation | 5.0 | Ng╞░ß╗¥i ch╞íi c├│ thß╗â dß╗ïch chuyß╗ân giß╗»a c├íc ─æiß╗âm ─æ├ú mß╗ƒ kh├│a
+ | US-060 | T├¡ch hß╗úp to├án bß╗Ö gameplay v├áo bß║ún ─æß╗ô ho├án chß╗ënh | World Integration | Integration, Open World | 13.0 | C├íc hß╗ç thß╗æng Combat, Quest, NPC, Inventory hoß║ít ─æß╗Öng ─æß╗ông bß╗Ö trong thß║┐ giß╗¢i mß╗ƒ
+ | Tß╗öNG STORY POINTS |  |  |  | 55 | 
+
+=== E12 ===
+ | FUNCTIONAL TESTING & QUALITY ASSURANCE |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-061 | Kiß╗âm thß╗¡ chß╗⌐c n─âng di chuyß╗ân v├á ─æiß╗üu khiß╗ân nh├ón vß║¡t | Gameplay Testing | QA, Gameplay | 5.0 | C├íc thao t├íc di chuyß╗ân hoß║ít ─æß╗Öng ß╗òn ─æß╗ïnh v├á kh├┤ng ph├ít sinh lß╗ùi nghi├¬m trß╗ìng
+ | US-062 | Kiß╗âm thß╗¡ hß╗ç thß╗æng chiß║┐n ─æß║Ñu v├á t├¡nh s├ít th╞░╞íng | Combat Testing | QA, Combat | 5.0 | C├íc c╞í chß║┐ chiß║┐n ─æß║Ñu hoß║ít ─æß╗Öng ─æ├║ng theo thiß║┐t kß║┐
+ | US-063 | Kiß╗âm thß╗¡ AI NPC v├á phß║ún hß╗ôi hß╗Öi thoß║íi | AI Testing | QA, AI | 5.0 | NPC phß║ún hß╗ôi ─æ├║ng ngß╗» cß║únh v├á kh├┤ng lß╗ùi hß╗Öi thoß║íi
+ | US-064 | Kiß╗âm thß╗¡ hß╗ç thß╗æng nhiß╗çm vß╗Ñ v├á ph├ón nh├ính cß╗æt truyß╗çn | Quest Testing | QA, Narrative | 5.0 | Quest hoß║ít ─æß╗Öng ─æ├║ng tiß║┐n tr├¼nh v├á c├íc lß╗▒a chß╗ìn ─æ╞░ß╗úc ghi nhß║¡n
+ | US-065 | Kiß╗âm thß╗¡ hß╗ç thß╗æng l╞░u v├á tß║úi dß╗» liß╗çu | Save Testing | QA, Data | 5.0 | Dß╗» liß╗çu ─æ╞░ß╗úc l╞░u v├á tß║úi ch├¡nh x├íc, kh├┤ng mß║Ñt tiß║┐n tr├¼nh
+ | Tß╗öNG STORY POINTS |  |  |  | 25 | 
+
+=== E13 ===
+ | OPTIMIZATION, DEPLOYMENT & RELEASE |  |  |  |  | 
+ | Story ID | User Story | Module | Tags | SP | Ghi ch├║ / Acceptance Criteria
+ | US-066 | Tß╗æi ╞░u hiß╗çu n─âng v├á FPS cß╗ºa tr├▓ ch╞íi | Performance Optimization | Optimization | 8.0 | Game duy tr├¼ hiß╗çu n─âng ß╗òn ─æß╗ïnh tr├¬n cß║Ñu h├¼nh mß╗Ñc ti├¬u
+ | US-067 | Sß╗¡a lß╗ùi gameplay v├á lß╗ùi giao diß╗çn ─æ╞░ß╗úc ghi nhß║¡n | Bug Fixing | QA, Maintenance | 5.0 | C├íc lß╗ùi mß╗⌐c High v├á Critical ─æ╞░ß╗úc xß╗¡ l├╜ ho├án chß╗ënh
+ | US-068 | Thß╗▒c hiß╗çn Regression Testing sau c├íc lß║ºn sß╗¡a lß╗ùi | Regression Testing | QA | 5.0 | C├íc t├¡nh n─âng c┼⌐ vß║½n hoß║ít ─æß╗Öng b├¼nh th╞░ß╗¥ng sau khi cß║¡p nhß║¡t
+ | US-069 | Build phi├¬n bß║ún ho├án chß╗ënh ─æß╗â nghiß╗çm thu | Final Build | Release | 3.0 | Tß║ío ─æ╞░ß╗úc bß║ún build ß╗òn ─æß╗ïnh phß╗Ñc vß╗Ñ demo v├á bß║úo vß╗ç ─æß╗ô ├ín
+ | US-070 | Ho├án thiß╗çn t├ái liß╗çu kß╗╣ thuß║¡t, h╞░ß╗¢ng dß║½n sß╗¡ dß╗Ñng v├á b├ío c├ío ─æß╗ô ├ín | Documentation | Documentation | 5.0 | Ho├án thiß╗çn t├ái liß╗çu phß╗Ñc vß╗Ñ nghiß╗çm thu v├á bß║úo vß╗ç dß╗▒ ├ín
+ | Tß╗öNG STORY POINTS |  |  |  | 26 | 

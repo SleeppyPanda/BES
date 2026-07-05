@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 884580c25be156845b773744a0f2e419, type: 3}
+  m_Name: Node_EndingChoice
+  m_EditorClassIdentifier: BES:BES.Narrative:DialogueNode
+  nodeId: ending_choice
+  speakerId: Spirit of Guarem
+  line: "B\u1EA1n \u0111\xE3 chi\u1EBFn th\u1EAFng Void Guardian. Con \u0111\u01B0\u1EDDng n\xE0o
+    b\u1EA1n ch\u1ECDn?"
+  choices:
+  - choiceText: "K\u1EBFt \u01B0\u1EDBc v\u1EDBi th\u1EE7 h\u1ED9 Creation City"
+    nextNodeId: 
+    branchId: branch_a
+    affinityDelta: 0
+  - choiceText: "L\u1EAFng nghe ti\u1EBFng th\xEC th\u1EA7m c\u1EE7a Void"
+    nextNodeId: 
+    branchId: branch_b
+    affinityDelta: 0
+  nextNodeId: 
+  questTriggerId: 

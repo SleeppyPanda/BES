@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eb91a861721f7b4585a6d8f9e1b1054, type: 3}
+  m_Name: Quest_Main_Awakening
+  m_EditorClassIdentifier: BES::BES.Narrative.QuestDefinition
+  questId: main_awakening
+  questTitle: Awakening in Guarem
+  questType: 0
+  summary: Begin your journey at Creation City outskirts.
+  steps:
+  - stepId: s1
+    stepType: 0
+    targetId: npc_guard
+    requiredCount: 1
+    description: Speak with the city guard.
+  - stepId: s2
+    stepType: 3
+    targetId: region_ruins
+    requiredCount: 1
+    description: Travel to the Ancient Ruins.
+  - stepId: s3
+    stepType: 2
+    targetId: Boss_VoidGuardian
+    requiredCount: 1
+    description: Defeat the Void Guardian.
+  - stepId: s4
+    stepType: 4
+    targetId: branch_choice
+    requiredCount: 1
+    description: Choose your path.
+  rewardItemId: relic_shard
+  rewardItemCount: 1
+  endingId: 

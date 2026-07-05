@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8f4e2a19b3d4f6e8a1c2d3e4f5a6b7c, type: 3}
+  m_Name: UIScreenBackgroundManifest
+  m_EditorClassIdentifier: BES::BES.UI.UIScreenBackgroundManifest
+  mainMenu: {fileID: 21300000, guid: b24ae9132f5926a4dabf9b4f0b202dad, type: 3}
+  gameplayHud: {fileID: 21300000, guid: 4ea18e62c996dcc4880a993eb74288e6, type: 3}
+  inventory: {fileID: 21300000, guid: a1121ed65ae1b0243844517211f4f7c6, type: 3}
+  characterProfile: {fileID: 21300000, guid: a1121ed65ae1b0243844517211f4f7c6, type: 3}
+  characterPreview: {fileID: 21300000, guid: f630e5038b1e5874d9118f5a9e8db5e1, type: 3}
+  worldMap: {fileID: 21300000, guid: e4a79b6dd127acf45a6351b69eeedab8, type: 3}
+  weapon: {fileID: 21300000, guid: a530f74d44c10ad44a601f9230eceea2, type: 3}
+  weaponEnhance: {fileID: 21300000, guid: 4c1a05f2f608dcc40b950d2317429669, type: 3}
+  weaponRankUp: {fileID: 21300000, guid: 49d4de5c41f4fb8479679b20279d1ab1, type: 3}
+  weaponRefine: {fileID: 21300000, guid: dd6c5df378c01b14481f1dfa53f5b330, type: 3}
+  artifacts: {fileID: 21300000, guid: 62c0756a99a913049a734172f5909cc7, type: 3}
+  teamSetup: {fileID: 21300000, guid: ee570b9b613d1a2418b9b35e72009562, type: 3}
+  teamSlotPicker: {fileID: 21300000, guid: 42dad1be0e2a96b4b82f063da5a653af, type: 3}
+  eventCheckIn: {fileID: 21300000, guid: 09f704dc980c14d479520a0bc7121370, type: 3}
+  wish: {fileID: 21300000, guid: b017c467d1e98244e8c7dbcdfeae1cd5, type: 3}
+  dialogue: {fileID: 21300000, guid: db4e2f023b335c44b9ac56bbb057deea, type: 3}
+  loading: {fileID: 21300000, guid: 649cc9ad1cffb994eb93efc13766aa86, type: 3}
+  playerProfile: {fileID: 21300000, guid: 49098f6532f3cfc4bb0a6303a35b9e8e, type: 3}
+  questTracker: {fileID: 21300000, guid: 65ccb21ed8ea05c4c89bda48df10ce18, type: 3}
