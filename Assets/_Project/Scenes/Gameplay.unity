@@ -601,6 +601,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameplayHUD
       objectReference: {fileID: 0}
+    - target: {fileID: 168113106467405701, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 290237560099906091, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1293104276911956082, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -679,6 +687,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1293104276911956082, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2407541929579649757, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503701373584213183, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335128959798234773, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5619397939732043315, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5619397939732043315, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7011608512053292706, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7011608512053292706, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636191324713056418, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8636191324713056418, guid: 211782938eff89b4a8518e1e60748bc2, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -980,6 +1024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c01736212420f4dbe23b959d554150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BES::BES.Gameplay.EnemyHealth
+  enemyId: 
   maxHealth: 50
   defense: 2
   experienceReward: 10
@@ -1108,6 +1153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a297567cd606678418bb157c093433b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BES::BES.Gameplay.Collectible
+  instanceId: 
   itemId: herb_common
   amount: 1
 --- !u!23 &1243923526
@@ -1235,6 +1281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a297567cd606678418bb157c093433b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BES::BES.Gameplay.Collectible
+  instanceId: 
   itemId: herb_common
   amount: 1
 --- !u!23 &1261587543
@@ -1410,6 +1457,9 @@ MonoBehaviour:
   regionId: region_forest
   regionName: Whispering Forest
   description: 
+  autoCreateTrigger: 1
+  mapBoundsMin: {x: -25, y: -25}
+  mapBoundsMax: {x: 25, y: 25}
 --- !u!1 &1415358948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1471,6 +1521,9 @@ MonoBehaviour:
   regionId: region_ruins
   regionName: Ancient Ruins
   description: 
+  autoCreateTrigger: 1
+  mapBoundsMin: {x: -25, y: -25}
+  mapBoundsMax: {x: 25, y: 25}
 --- !u!1 &1442227893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1598,6 +1651,9 @@ MonoBehaviour:
   regionId: region_creation_city
   regionName: Creation City Outskirts
   description: 
+  autoCreateTrigger: 1
+  mapBoundsMin: {x: -25, y: -25}
+  mapBoundsMax: {x: 25, y: 25}
 --- !u!1 &1783723918
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,6 +2147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c01736212420f4dbe23b959d554150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BES::BES.Gameplay.EnemyHealth
+  enemyId: 
   maxHealth: 50
   defense: 2
   experienceReward: 10
@@ -2219,6 +2276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a297567cd606678418bb157c093433b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BES::BES.Gameplay.Collectible
+  instanceId: 
   itemId: herb_common
   amount: 1
 --- !u!23 &2033344028
