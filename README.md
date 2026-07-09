@@ -1,5 +1,97 @@
 # Beneath Enchanted Sky (BES) — Unity MVP
 
+## Dev Update Log & Feature-to-Script Map
+
+Cập nhật gần nhất: 2026-07-10. Mục này dùng cho dev/QA đối chiếu nhanh tính năng trong game với script đang phụ trách.
+
+### Update mới đã code
+
+| Nhóm tính năng | Trạng thái hiện tại | Script / Asset chính |
+|---|---|---|
+| Movement WASD | Player đọc trực tiếp `W/A/S/D` và arrow fallback, không phụ thuộc hoàn toàn InputAction | `Assets/_Project/Scripts/Gameplay/PlayerMotor.cs`, `PlayerInputReader.cs` |
+| Camera third-person | Chuột xoay camera; giữ `Shift` để khóa camera, không xoay theo chuột | `Assets/_Project/Scripts/Gameplay/ThirdPersonCamera.cs` |
+| Input fallback | Fallback keyboard cho move, jump, skill, interact, menu | `Assets/_Project/Scripts/Gameplay/PlayerInputReader.cs` |
+| Player bootstrap | Nếu scene đã có `Player`, vẫn tự gắn đủ component gameplay cần thiết | `Assets/_Project/Scripts/Gameplay/GameplaySceneBootstrap.cs` |
+| NPC "Người yêu cũ" | Đã thêm NPC test trong scene, interact bằng `F` hoặc `E` | `Assets/_Project/Scenes/Gameplay.unity`, `Assets/_Project/Scripts/Narrative/NPCInteractable.cs` |
+| Dialogue "Người yêu cũ" | Đã có câu chào, nút Next, lựa chọn `Có/Không`, branch hội thoại | `Assets/_Project/Scripts/Narrative/DialogueSystem.cs`, `Assets/_Project/Scripts/UI/DialogueUI.cs`, `Assets/_Project/Resources/Dialogue/Node_NguoiYeuCu*.asset` |
+| Dialogue UI fallback | Nếu prefab UI thiếu binding, runtime tự tạo panel hội thoại compact | `Assets/_Project/Scripts/UI/DialogueUI.cs` |
+| Party 4 nhân vật | Đã có 4 nhân vật test, đổi bằng phím `1-4` | `Assets/_Project/Scripts/UI/Data/CharacterDatabase.cs`, `PartyRoster.cs`, `PartySwapController.cs` |
+| Party visual test | Đổi party sẽ đổi visual capsule màu/scale để test nhanh | `Assets/_Project/Scripts/Gameplay/PartyCharacterVisualSwitcher.cs` |
+| Skill theo nhân vật | Mỗi nhân vật có 2 skill riêng qua `skill1Id/skill2Id` | `Assets/_Project/Scripts/Gameplay/Combat/SkillController.cs`, `CharacterDatabase.asset` |
+| Skill bar | Hiện cooldown skill/attack trên HUD | `Assets/_Project/Scripts/UI/SkillBarUI.cs`, `SkillBarDriver.cs` |
+| Gacha/Wish | Roll x1/x10, pity, reward character/weapon/item local | `Assets/_Project/Scripts/UI/WishUI.cs`, `GachaBannerDefinition.cs`, `GachaPityState.cs`, `GachaRewardService.cs` |
+| Mini map | Hiện player/objective marker theo world bounds | `Assets/_Project/Scripts/UI/MiniMapUI.cs` |
+| Quest checker | Tự check tiến độ quest theo NPC, region, enemy, item, dialogue | `Assets/_Project/Scripts/Narrative/QuestObjectiveTracker.cs`, `QuestManager.cs` |
+| Quest tracker/log | HUD tracker + quest log active/completed | `Assets/_Project/Scripts/UI/QuestTrackerUI.cs`, `QuestLogUI.cs` |
+| QA checklist | Context menu runtime để check HUD, party, gacha, quest, save | `Assets/_Project/Scripts/Gameplay/OpenWorldSliceValidator.cs` |
+| Animation gameplay | Chưa có clip/controller animation production; hiện mới có visual test capsule | Chưa có `.anim` / Animator Controller trong `Assets/_Project` |
+
+### Tên NPC và nhân vật test
+
+| Loại | ID / Slot | Tên hiển thị | Ghi chú |
+|---|---|---|---|
+| NPC | `npc_merchant` | `Người yêu cũ` | Object scene: `NPC_NguoiYeuCu`; dialogue node: `nguoi_yeu_cu_intro` |
+| NPC | `npc_guard` | `City Guard` | Main quest guard cũ |
+| Party slot 1 | `hero_01` | `Đau hơn NYC bạn` | Skill: `Void Slash`, `Guard Break` |
+| Party slot 2 | `hero_02` | `Mất cô ấy rồi` | Skill: `Quick Cut`, `Flare Dash` |
+| Party slot 3 | `hero_03` | `Anh là thằng tồi` | Skill: `Shield Wave`, `Ground Lock` |
+| Party slot 4 | `hero_04` | `Nhìn em bên ai khác` | Skill: `Arc Bolt`, `Focus Shot` |
+
+### Flow dialogue mẫu của `Người yêu cũ`
+
+| Bước | Speaker | Nội dung / Lựa chọn | Next |
+|---|---|---|---|
+| 1 | Người yêu cũ | `Mừng vì anh đã quay lại...Lốp Trưởng!` | Nút `Tiếp tục` |
+| 2 | Người yêu cũ | `Anh có nhớ em không?` | Lựa chọn `Có` / `Không` |
+| 3A | Người yêu cũ | Nếu chọn `Có`: `Vậy hả, em cũng không nhớ anh...` | Kết thúc |
+| 3B | Người yêu cũ | Nếu chọn `Không`: `Không thể ngừng nhớ em đúng không?` | Nút `Tiếp tục` |
+| 4B | Nhân vật | `Đu...Đúng.........` | Kết thúc |
+
+### Feature script map chi tiết
+
+| Feature | Script/Asset | Vai trò dev |
+|---|---|---|
+| Scene gameplay setup | `GameplaySceneBootstrap.cs` | Tạo player/camera/system cần thiết nếu scene thiếu |
+| Event bus | `GameEvents.cs` | Nối các hệ thống UI, quest, dialogue, party |
+| Input gameplay | `PlayerInputReader.cs` | InputAction + fallback keyboard |
+| Di chuyển | `PlayerMotor.cs` | WASD, jump, sprint/stamina, gravity |
+| Camera | `ThirdPersonCamera.cs` | Third-person follow/orbit, Shift lock camera |
+| Block input | `GameplayInputGate.cs` | Chặn combat/UI; movement chỉ bị chặn khi dialogue active |
+| Basic attack | `BasicAttackController.cs` | Combo attack và damage hit check |
+| Skill combat | `SkillController.cs` | Skill theo nhân vật, cooldown/mana/range/damage |
+| Dodge | `DodgeController.cs` | Dash/dodge và i-frame |
+| Damage formula | `DamageCalculator.cs` | Tính damage/crit |
+| Enemy AI | `EnemyAI.cs` | Chase/attack target |
+| Boss | `BossController.cs` | Boss phase/special attack |
+| Party state | `PartyRoster.cs` | Slot party, active character, unlock/save |
+| Character DB | `CharacterDatabase.cs`, `CharacterDatabaseLoader.cs`, `CharacterDatabase.asset` | Tên, stat, visual test, skill id, default party |
+| Party UI | `PartyStripUI.cs`, `TeamSetupUI.cs`, `CharacterProfileUI.cs` | Hiện và đổi nhân vật trên UI |
+| Party visual | `PartyCharacterVisualSwitcher.cs` | Đổi màu/scale capsule hoặc prefab gameplay theo character |
+| NPC interact | `NPCInteractable.cs`, `QuestMarker.cs` | Range prompt, phím `F/E`, mở story dialogue |
+| Dialogue graph | `DialogueNode.cs`, `DialogueSystem.cs` | Node, next, choice, branch, fallback built-in |
+| Dialogue UI | `DialogueUI.cs` | Panel hội thoại, Next, choices, free chat fallback |
+| AI chat | `AIDialogueService.cs`, `NPCMemoryStore.cs`, `RelationshipSystem.cs` | Response fallback/HTTP optional, memory, affinity |
+| Quest data | `QuestDefinition.cs`, `QuestDatabase.cs` | ScriptableObject quest definitions |
+| Quest runtime | `QuestManager.cs`, `QuestObjectiveTracker.cs` | Active quest, step progress, auto-check objective |
+| Quest marker | `QuestMarker.cs` | Target id cho NPC/objective/minimap |
+| Quest UI | `QuestTrackerUI.cs`, `QuestLogUI.cs` | HUD current quest + quest log |
+| Mini map | `MiniMapUI.cs` | Player/objective marker |
+| World map/teleport | `GameMapUI.cs`, `TeleportService.cs`, `TeleportPoint.cs`, `WorldRegion.cs` | Region, fast travel, discovery |
+| Inventory | `InventorySystem.cs`, `ItemDatabase.cs`, `InventoryUI.cs` | Item bag, add/use/equip |
+| Save/load | `SaveSystem.cs`, `SaveData.cs`, `GameAutoSave.cs` | JSON save/load meta + world state |
+| Wallet | `PlayerWallet.cs` | Gems/coins local |
+| Gacha | `WishUI.cs`, `GachaBannerDefinition.cs`, `GachaPityState.cs`, `GachaRewardService.cs` | Banner, pity, reward apply |
+| Weapon | `WeaponDatabase.cs`, `WeaponDefinition.cs`, `EquippedWeaponState.cs`, `WeaponScreenUI.cs` | Equip/enhance/rank/refine state/UI |
+| Artifact | `ArtifactDatabase.cs`, `ArtifactDefinition.cs`, `ArtifactsUI.cs` | Artifact equip/stat bonus |
+| Event daily | `EventDefinition.cs`, `EventUI.cs` | Daily check-in local |
+| HUD assets | `HUDSpriteManifest.cs`, `HUDSpriteManifestLoader.cs` | Icon/frame sprite map |
+| Screen backgrounds | `UIScreenBackgroundManifest.cs`, `UIScreenBackgroundBootstrap.cs` | Background theo screen |
+| UI navigation | `UINavigationController.cs`, `UIScreenBase.cs` | Mở/đóng các layer UI |
+| UI setup/editor | `BESProjectSetup.cs`, `BESUIDataSetup.cs`, `BESUIPrefabBuilder.cs` | Tạo data/prefab/default setup trong Unity Editor |
+| Runtime QA | `OpenWorldSliceValidator.cs` | Checklist nhanh trong scene |
+
+---
+
 Action RPG vertical slice: **Story + Quest + AI NPC + Open World demo** (backlog 3 tháng, 13 Epics / 70 User Stories).
 
 ---
@@ -553,4 +645,4 @@ Assets/_Project/
 
 ---
 
-*Tài liệu BA này được tổng hợp từ: backlog 70 US, GDD extract, docs/design/*, QA checklist, và toàn bộ codebase + asset hierarchy. Cập nhật lần cuối: 2026-07-09.*
+*Tài liệu BA này được tổng hợp từ: backlog 70 US, GDD extract, docs/design/*, QA checklist, và toàn bộ codebase + asset hierarchy. Cập nhật lần cuối: 2026-07-10.*
