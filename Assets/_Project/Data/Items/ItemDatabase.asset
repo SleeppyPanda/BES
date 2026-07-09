@@ -13,5 +13,179 @@ MonoBehaviour:
   m_Name: ItemDatabase
   m_EditorClassIdentifier: BES::BES.Gameplay.ItemDatabase
   items:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400001}
+  - {fileID: 11400002}
+  - {fileID: 11400003}
+  - {fileID: 11400004}
+  - {fileID: 11400005}
+  - {fileID: 11400006}
+  - {fileID: 11400007}
+  - {fileID: 11400008}
+--- !u!114 &11400001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: herb_common
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: herb_common
+  displayName: Common Herb
+  description: Side quest herb from Whispering Forest.
+  maxStack: 99
+  itemType: 0
+  rarity: 1
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: material_ore
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: material_ore
+  displayName: Ore
+  description: Weapon enhancement material.
+  maxStack: 99
+  itemType: 0
+  rarity: 2
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &11400003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: material_crystal
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: material_crystal
+  displayName: Crystal
+  description: Crafting material.
+  maxStack: 99
+  itemType: 0
+  rarity: 2
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: potion_heal
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: potion_heal
+  displayName: Healing Potion
+  description: Restores 30 HP.
+  maxStack: 99
+  itemType: 1
+  rarity: 2
+  healAmount: 30
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &11400005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: relic_shard
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: relic_shard
+  displayName: Relic Shard
+  description: Main quest reward from the Void Guardian.
+  maxStack: 1
+  itemType: 3
+  rarity: 3
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &11400006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: weapon_iron_sword
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: weapon_iron_sword
+  displayName: Iron Sword
+  description: Starter 3-star sword.
+  maxStack: 1
+  itemType: 2
+  rarity: 3
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: weapon_iron_sword
+--- !u!114 &11400007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: weapon_void_edge
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: weapon_void_edge
+  displayName: Void Edge
+  description: 4-star void-touched weapon.
+  maxStack: 1
+  itemType: 2
+  rarity: 4
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: weapon_void_edge
+--- !u!114 &11400008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: weapon_flame_blade
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: weapon_flame_blade
+  displayName: Bane of Flame and Water
+  description: 5-star dual-element weapon.
+  maxStack: 1
+  itemType: 2
+  rarity: 5
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: weapon_flame_blade

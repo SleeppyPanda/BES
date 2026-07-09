@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac288821dca35b40881d2430d65a144, type: 3}
+  m_Name: CharacterDatabase
+  m_EditorClassIdentifier: 
+  characters:
+  - characterId: hero_01
+    displayName: Đau hơn NYC bạn
+    rarity: 5
+    level: 20
+    maxLevel: 100
+    baseAttack: 15
+    baseHealth: 100
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 0.35, g: 0.75, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    skill1Id: skill_void_slash
+    skill2Id: skill_guard_break
+  - characterId: hero_02
+    displayName: Mất cô ấy rồi
+    rarity: 4
+    level: 20
+    maxLevel: 100
+    baseAttack: 18
+    baseHealth: 90
+    baseDefense: 6
+    baseMana: 100
+    critRate: 0.12
+    critDamage: 1.6
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 0.45, b: 0.32, a: 1}
+    testVisualScale: {x: 0.92, y: 1.05, z: 0.92}
+    skill1Id: skill_quick_cut
+    skill2Id: skill_flare_dash
+  - characterId: hero_03
+    displayName: Anh là thằng tồi
+    rarity: 4
+    level: 20
+    maxLevel: 100
+    baseAttack: 14
+    baseHealth: 110
+    baseDefense: 8
+    baseMana: 110
+    critRate: 0.08
+    critDamage: 1.4
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 0.45, g: 1, b: 0.58, a: 1}
+    testVisualScale: {x: 1.08, y: 1.12, z: 1.08}
+    skill1Id: skill_shield_wave
+    skill2Id: skill_ground_lock
+  - characterId: hero_04
+    displayName: Nhìn em bên ai khác
+    rarity: 4
+    level: 20
+    maxLevel: 100
+    baseAttack: 16
+    baseHealth: 95
+    baseDefense: 5
+    baseMana: 120
+    critRate: 0.15
+    critDamage: 1.7
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 0.92, g: 0.55, b: 1, a: 1}
+    testVisualScale: {x: 0.86, y: 1, z: 0.86}
+    skill1Id: skill_arc_bolt
+    skill2Id: skill_focus_shot
+  defaultPartyIds:
+  - hero_01
+  - hero_02
+  - hero_03
+  - hero_04

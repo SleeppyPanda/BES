@@ -78,8 +78,13 @@ namespace BES.Gameplay
 
         void Update()
         {
+            ResetFrameInputs();
+
             if (!isBound)
+            {
+                ReadKeyboardFallback();
                 return;
+            }
 
             Move = moveAction.ReadValue<Vector2>();
             Look = lookAction.ReadValue<Vector2>();
@@ -99,6 +104,9 @@ namespace BES.Gameplay
             TeamMenuPressed = teamMenuAction.WasPressedThisFrame();
             EventMenuPressed = eventMenuAction.WasPressedThisFrame();
             ArtifactsMenuPressed = artifactsMenuAction.WasPressedThisFrame();
+
+            if (Move.sqrMagnitude < 0.001f)
+                ReadKeyboardMoveFallback();
         }
 
         void ResolveInputAsset()
@@ -158,6 +166,72 @@ namespace BES.Gameplay
                 return;
 
             inputActions.Disable();
+        }
+
+        void ResetFrameInputs()
+        {
+            Move = Vector2.zero;
+            Look = Vector2.zero;
+            JumpPressed = false;
+            SprintHeld = false;
+            AttackPressed = false;
+            Skill1Pressed = false;
+            Skill2Pressed = false;
+            DodgePressed = false;
+            InteractPressed = false;
+            InventoryPressed = false;
+            CharacterMenuPressed = false;
+            MapTogglePressed = false;
+            CloseMenuPressed = false;
+            WeaponMenuPressed = false;
+            WishMenuPressed = false;
+            TeamMenuPressed = false;
+            EventMenuPressed = false;
+            ArtifactsMenuPressed = false;
+        }
+
+        void ReadKeyboardFallback()
+        {
+            ReadKeyboardMoveFallback();
+
+            var keyboard = Keyboard.current;
+            var mouse = Mouse.current;
+            if (keyboard == null)
+                return;
+
+            JumpPressed = keyboard.spaceKey.wasPressedThisFrame;
+            SprintHeld = keyboard.leftShiftKey.isPressed || keyboard.rightShiftKey.isPressed;
+            AttackPressed = mouse != null && mouse.leftButton.wasPressedThisFrame;
+            Skill1Pressed = keyboard.qKey.wasPressedThisFrame;
+            Skill2Pressed = keyboard.eKey.wasPressedThisFrame;
+            DodgePressed = keyboard.leftCtrlKey.wasPressedThisFrame || keyboard.cKey.wasPressedThisFrame;
+            InteractPressed = keyboard.fKey.wasPressedThisFrame || keyboard.eKey.wasPressedThisFrame;
+            InventoryPressed = keyboard.iKey.wasPressedThisFrame;
+            CharacterMenuPressed = keyboard.cKey.wasPressedThisFrame;
+            MapTogglePressed = keyboard.mKey.wasPressedThisFrame;
+            CloseMenuPressed = keyboard.escapeKey.wasPressedThisFrame;
+            WeaponMenuPressed = keyboard.vKey.wasPressedThisFrame;
+            WishMenuPressed = keyboard.gKey.wasPressedThisFrame;
+            TeamMenuPressed = keyboard.tKey.wasPressedThisFrame;
+            EventMenuPressed = keyboard.oKey.wasPressedThisFrame;
+            ArtifactsMenuPressed = keyboard.rKey.wasPressedThisFrame;
+        }
+
+        void ReadKeyboardMoveFallback()
+        {
+            var keyboard = Keyboard.current;
+            if (keyboard == null)
+                return;
+
+            var x = 0f;
+            var y = 0f;
+            if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed) x -= 1f;
+            if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) x += 1f;
+            if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed) y -= 1f;
+            if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed) y += 1f;
+
+            var move = new Vector2(x, y);
+            Move = move.sqrMagnitude > 1f ? move.normalized : move;
         }
     }
 }

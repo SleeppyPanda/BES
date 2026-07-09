@@ -16,6 +16,7 @@ namespace BES.Gameplay
         {
             EnsureCombatManager();
             EnsureNarrativeSystems();
+            EnsureDialogueUi();
             SpawnPlayerIfMissing();
             ApplySaveIfLoaded();
             StartMainQuestIfNeeded();
@@ -31,6 +32,15 @@ namespace BES.Gameplay
             go.AddComponent<AIDialogueService>();
         }
 
+        void EnsureDialogueUi()
+        {
+            if (FindAnyObjectByType<DialogueUI>() != null)
+                return;
+
+            var go = new GameObject("DialogueUI");
+            go.AddComponent<DialogueUI>();
+        }
+
         void EnsureCombatManager()
         {
             if (FindAnyObjectByType<CombatManager>() == null)
@@ -42,8 +52,13 @@ namespace BES.Gameplay
 
         void SpawnPlayerIfMissing()
         {
-            if (GameObject.FindGameObjectWithTag("Player") != null)
+            var existingPlayer = GameObject.FindGameObjectWithTag("Player");
+            if (existingPlayer != null)
+            {
+                EnsurePlayerComponents(existingPlayer);
+                SetupFollowCamera(existingPlayer.transform);
                 return;
+            }
 
             var player = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             player.name = "Player";
@@ -57,20 +72,39 @@ namespace BES.Gameplay
             controller.radius = 0.4f;
             controller.center = new Vector3(0f, 1f, 0f);
 
-            var inputReader = player.AddComponent<PlayerInputReader>();
-            inputReader.SetInputActions(inputActions);
-
-            player.AddComponent<PlayerMotor>();
-            player.AddComponent<StaminaSystem>();
-            player.AddComponent<PlayerStats>();
-            player.AddComponent<DodgeController>();
-            player.AddComponent<BasicAttackController>();
-            player.AddComponent<SkillController>();
-            player.AddComponent<PlayerBuildStats>();
-            player.AddComponent<PartySwapController>();
-
+            EnsurePlayerComponents(player);
             SetupFollowCamera(player.transform);
             player.transform.position = new Vector3(0f, 1f, 0f);
+        }
+
+        void EnsurePlayerComponents(GameObject player)
+        {
+            if (player == null)
+                return;
+
+            var controller = player.GetComponent<CharacterController>();
+            if (controller == null)
+            {
+                controller = player.AddComponent<CharacterController>();
+                controller.height = 2f;
+                controller.radius = 0.4f;
+                controller.center = new Vector3(0f, 1f, 0f);
+            }
+
+            var inputReader = player.GetComponent<PlayerInputReader>();
+            if (inputReader == null)
+                inputReader = player.AddComponent<PlayerInputReader>();
+            inputReader.SetInputActions(inputActions);
+
+            if (player.GetComponent<PlayerMotor>() == null) player.AddComponent<PlayerMotor>();
+            if (player.GetComponent<StaminaSystem>() == null) player.AddComponent<StaminaSystem>();
+            if (player.GetComponent<PlayerStats>() == null) player.AddComponent<PlayerStats>();
+            if (player.GetComponent<DodgeController>() == null) player.AddComponent<DodgeController>();
+            if (player.GetComponent<BasicAttackController>() == null) player.AddComponent<BasicAttackController>();
+            if (player.GetComponent<SkillController>() == null) player.AddComponent<SkillController>();
+            if (player.GetComponent<PlayerBuildStats>() == null) player.AddComponent<PlayerBuildStats>();
+            if (player.GetComponent<PartySwapController>() == null) player.AddComponent<PartySwapController>();
+            if (player.GetComponent<PartyCharacterVisualSwitcher>() == null) player.AddComponent<PartyCharacterVisualSwitcher>();
         }
 
         void ApplySaveIfLoaded()

@@ -156,9 +156,11 @@ namespace BES.UI
 
             banner.drops = new System.Collections.Generic.List<GachaDropEntry>
             {
-                new() { rewardType = GachaRewardType.Weapon, rewardId = "weapon_iron_sword", rarity = 4, weight = 30, displayLabel = "Iron Sword" },
-                new() { rewardType = GachaRewardType.Item, rewardId = "material_ore", itemAmount = 5, rarity = 3, weight = 50, displayLabel = "Ore" },
-                new() { rewardType = GachaRewardType.Character, rewardId = "hero_03", rarity = 4, weight = 20, displayLabel = "Ally B" }
+                new() { entryId = "w5", rewardType = GachaRewardType.Weapon, rewardId = "weapon_flame_blade", rarity = 5, weight = 5, displayLabel = "Bane of Flame and Water" },
+                new() { entryId = "w4", rewardType = GachaRewardType.Weapon, rewardId = "weapon_void_edge", rarity = 4, weight = 25, displayLabel = "Void Edge" },
+                new() { entryId = "w3", rewardType = GachaRewardType.Item, rewardId = "material_ore", itemAmount = 5, rarity = 3, weight = 40, displayLabel = "Ore Bundle" },
+                new() { entryId = "c5", rewardType = GachaRewardType.Character, rewardId = "char_limited_01", rarity = 5, weight = 3, displayLabel = "Limited Hero" },
+                new() { entryId = "c4", rewardType = GachaRewardType.Character, rewardId = "hero_02", rarity = 4, weight = 27, displayLabel = "Ally A" }
             };
         }
     }

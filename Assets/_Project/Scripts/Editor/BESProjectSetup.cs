@@ -653,15 +653,7 @@ namespace BES.Editor
             }
 
             var itemDb = CreateOrLoadAsset<ItemDatabase>(itemsPath + "/ItemDatabase.asset");
-            if (itemDb.items.Count == 0)
-            {
-                itemDb.items.Add(CreateItem("herb_common", "Common Herb", ItemType.Material, 1));
-                itemDb.items.Add(CreateItem("material_ore", "Ore", ItemType.Material, 2));
-                itemDb.items.Add(CreateItem("material_crystal", "Crystal", ItemType.Material, 2));
-                itemDb.items.Add(CreateItem("potion_heal", "Healing Potion", ItemType.Consumable, 2, 30f));
-                itemDb.items.Add(CreateItem("relic_shard", "Relic Shard", ItemType.Quest, 3));
-                EditorUtility.SetDirty(itemDb);
-            }
+            EnsureDefaultItems(itemDb);
 
             var mainQuest = CreateOrLoadAsset<QuestDefinition>(questsPath + "/Quest_Main_Awakening.asset");
             mainQuest.questId = "main_awakening";
@@ -734,21 +726,61 @@ namespace BES.Editor
             };
             EditorUtility.SetDirty(introLore);
 
-            AssetDatabase.CopyAsset(itemsPath + "/ItemDatabase.asset", resourcesDataPath + "/ItemDatabase.asset");
-            AssetDatabase.CopyAsset(questsPath + "/QuestDatabase.asset", resourcesDataPath + "/QuestDatabase.asset");
-            AssetDatabase.CopyAsset(dialoguePath + "/Node_IntroGuard.asset", resourcesDialoguePath + "/Node_IntroGuard.asset");
-            AssetDatabase.CopyAsset(dialoguePath + "/Node_IntroGuard_Lore.asset", resourcesDialoguePath + "/Node_IntroGuard_Lore.asset");
+            AssetDatabase.SaveAssets();
+            CopyAssetOverwrite(itemsPath + "/ItemDatabase.asset", resourcesDataPath + "/ItemDatabase.asset");
+            CopyAssetOverwrite(questsPath + "/QuestDatabase.asset", resourcesDataPath + "/QuestDatabase.asset");
+            CopyAssetOverwrite(dialoguePath + "/Node_IntroGuard.asset", resourcesDialoguePath + "/Node_IntroGuard.asset");
+            CopyAssetOverwrite(dialoguePath + "/Node_IntroGuard_Lore.asset", resourcesDialoguePath + "/Node_IntroGuard_Lore.asset");
         }
 
-        static ItemDefinition CreateItem(string id, string name, ItemType type, int rarity, float healAmount = 0f)
+        static void EnsureDefaultItems(ItemDatabase itemDb)
         {
-            var item = ScriptableObject.CreateInstance<ItemDefinition>();
+            if (itemDb == null)
+                return;
+
+            itemDb.items ??= new System.Collections.Generic.List<ItemDefinition>();
+            itemDb.items.RemoveAll(item => item == null || string.IsNullOrEmpty(item.itemId));
+
+            UpsertItem(itemDb, "herb_common", "Common Herb", ItemType.Material, 1);
+            UpsertItem(itemDb, "material_ore", "Ore", ItemType.Material, 2);
+            UpsertItem(itemDb, "material_crystal", "Crystal", ItemType.Material, 2);
+            UpsertItem(itemDb, "potion_heal", "Healing Potion", ItemType.Consumable, 2, 30f);
+            UpsertItem(itemDb, "relic_shard", "Relic Shard", ItemType.Quest, 3, maxStack: 1);
+            UpsertItem(itemDb, "weapon_iron_sword", "Iron Sword", ItemType.Weapon, 3, linkedWeaponId: "weapon_iron_sword", maxStack: 1);
+            UpsertItem(itemDb, "weapon_void_edge", "Void Edge", ItemType.Weapon, 4, linkedWeaponId: "weapon_void_edge", maxStack: 1);
+            UpsertItem(itemDb, "weapon_flame_blade", "Bane of Flame and Water", ItemType.Weapon, 5, linkedWeaponId: "weapon_flame_blade", maxStack: 1);
+
+            itemDb.RebuildLookup();
+            EditorUtility.SetDirty(itemDb);
+        }
+
+        static void UpsertItem(
+            ItemDatabase itemDb,
+            string id,
+            string displayName,
+            ItemType type,
+            int rarity,
+            float healAmount = 0f,
+            string linkedWeaponId = "",
+            int maxStack = 99)
+        {
+            var item = itemDb.items.Find(candidate => candidate != null && candidate.itemId == id);
+            if (item == null)
+            {
+                item = ScriptableObject.CreateInstance<ItemDefinition>();
+                item.name = id;
+                AssetDatabase.AddObjectToAsset(item, itemDb);
+                itemDb.items.Add(item);
+            }
+
             item.itemId = id;
-            item.displayName = name;
+            item.displayName = displayName;
             item.itemType = type;
             item.rarity = rarity;
             item.healAmount = healAmount;
-            return item;
+            item.linkedWeaponId = linkedWeaponId;
+            item.maxStack = maxStack;
+            EditorUtility.SetDirty(item);
         }
 
         static T CreateOrLoadAsset<T>(string path) where T : ScriptableObject
@@ -757,9 +789,22 @@ namespace BES.Editor
             if (asset != null)
                 return asset;
 
+            var existing = AssetDatabase.LoadMainAssetAtPath(path);
+            if (existing != null || File.Exists(path))
+                AssetDatabase.DeleteAsset(path);
+
             asset = ScriptableObject.CreateInstance<T>();
             AssetDatabase.CreateAsset(asset, path);
             return asset;
+        }
+
+        static void CopyAssetOverwrite(string sourcePath, string destinationPath)
+        {
+            var existing = AssetDatabase.LoadMainAssetAtPath(destinationPath);
+            if (existing != null || File.Exists(destinationPath))
+                AssetDatabase.DeleteAsset(destinationPath);
+
+            AssetDatabase.CopyAsset(sourcePath, destinationPath);
         }
 
         static void ConfigureBuildSettings()

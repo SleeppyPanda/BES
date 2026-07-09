@@ -67,8 +67,12 @@ namespace BES.UI
 
                 if (slotNames != null && i < slotNames.Length && slotNames[i] != null)
                 {
-                    slotNames[i].text = member != null && member.isUnlocked && !string.IsNullOrEmpty(member.displayName)
-                        ? member.displayName
+                    var definition = member != null ? roster.GetCharacterDefinition(member.characterId) : null;
+                    var displayName = !string.IsNullOrEmpty(definition?.displayName)
+                        ? definition.displayName
+                        : member?.displayName;
+                    slotNames[i].text = member != null && member.isUnlocked && !string.IsNullOrEmpty(displayName)
+                        ? displayName
                         : "Character name";
                     slotNames[i].color = isActive ? new Color(0.95f, 0.9f, 0.65f) : Color.white;
                 }
@@ -77,7 +81,10 @@ namespace BES.UI
                 {
                     if (member != null && member.isUnlocked && !string.IsNullOrEmpty(member.characterId))
                     {
-                        var sprite = portraitManifest?.GetPortrait(member.characterId);
+                        var definition = roster.GetCharacterDefinition(member.characterId);
+                        var sprite = definition?.portrait != null
+                            ? definition.portrait
+                            : portraitManifest?.GetPortrait(member.characterId);
                         portraits[i].sprite = sprite;
                         portraits[i].preserveAspect = true;
                         portraits[i].color = isActive ? new Color(1f, 0.95f, 0.7f) : Color.white;

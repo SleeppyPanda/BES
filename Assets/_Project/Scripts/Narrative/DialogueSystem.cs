@@ -4,26 +4,6 @@ using UnityEngine;
 
 namespace BES.Narrative
 {
-    [CreateAssetMenu(fileName = "DialogueNode", menuName = "BES/Dialogue Node")]
-    public class DialogueNode : ScriptableObject
-    {
-        public string nodeId;
-        public string speakerId;
-        [TextArea] public string line;
-        public List<DialogueChoice> choices = new();
-        public string nextNodeId;
-        public string questTriggerId;
-    }
-
-    [System.Serializable]
-    public class DialogueChoice
-    {
-        public string choiceText;
-        public string nextNodeId;
-        public string branchId;
-        public int affinityDelta;
-    }
-
     public class DialogueSystem : MonoBehaviour
     {
         public static DialogueSystem Instance { get; private set; }
@@ -40,14 +20,22 @@ namespace BES.Narrative
         void Awake()
         {
             Instance = this;
-            if (nodes.Count == 0)
-            {
-                var loaded = Resources.LoadAll<DialogueNode>("Dialogue");
-                if (loaded != null && loaded.Length > 0)
-                    nodes.AddRange(loaded);
-            }
-
+            LoadResourceNodes();
+            EnsureBuiltInFallbackNodes();
             RebuildLookup();
+        }
+
+        void LoadResourceNodes()
+        {
+            var loaded = Resources.LoadAll<DialogueNode>("Dialogue");
+            if (loaded == null || loaded.Length == 0)
+                return;
+
+            foreach (var node in loaded)
+            {
+                if (node != null && !nodes.Contains(node))
+                    nodes.Add(node);
+            }
         }
 
         public void RebuildLookup()
@@ -63,7 +51,16 @@ namespace BES.Narrative
         public bool StartDialogue(string nodeId)
         {
             if (!lookup.TryGetValue(nodeId, out var node))
-                return false;
+            {
+                LoadResourceNodes();
+                EnsureBuiltInFallbackNodes();
+                RebuildLookup();
+                if (!lookup.TryGetValue(nodeId, out node))
+                {
+                    Debug.LogWarning($"[BES Dialogue] Dialogue node not found: {nodeId}");
+                    return false;
+                }
+            }
 
             currentNode = node;
             lastSpeakerId = node.speakerId;
@@ -109,6 +106,66 @@ namespace BES.Narrative
             }
 
             StartDialogue(nextNodeId);
+        }
+
+        void EnsureBuiltInFallbackNodes()
+        {
+            AddNodeIfMissing(CreateNode(
+                "nguoi_yeu_cu_intro",
+                "Người yêu cũ",
+                "Mừng vì anh đã quay lại...Lốp Trưởng!",
+                "nguoi_yeu_cu_remember"));
+
+            AddNodeIfMissing(CreateNode(
+                "nguoi_yeu_cu_remember",
+                "Người yêu cũ",
+                "Anh có nhớ em không?",
+                null,
+                new DialogueChoice { choiceText = "Có", nextNodeId = "nguoi_yeu_cu_yes", affinityDelta = 5 },
+                new DialogueChoice { choiceText = "Không", nextNodeId = "nguoi_yeu_cu_no", affinityDelta = -2 }));
+
+            AddNodeIfMissing(CreateNode(
+                "nguoi_yeu_cu_yes",
+                "Người yêu cũ",
+                "Vậy hả, em cũng không nhớ anh..."));
+
+            AddNodeIfMissing(CreateNode(
+                "nguoi_yeu_cu_no",
+                "Người yêu cũ",
+                "Không thể ngừng nhớ em đúng không?",
+                "nguoi_yeu_cu_player_admit"));
+
+            AddNodeIfMissing(CreateNode(
+                "nguoi_yeu_cu_player_admit",
+                "Nhân vật",
+                "Đu...Đúng........."));
+        }
+
+        void AddNodeIfMissing(DialogueNode node)
+        {
+            if (node == null || string.IsNullOrEmpty(node.nodeId))
+                return;
+
+            foreach (var existing in nodes)
+            {
+                if (existing != null && existing.nodeId == node.nodeId)
+                    return;
+            }
+
+            nodes.Add(node);
+        }
+
+        static DialogueNode CreateNode(string nodeId, string speakerId, string line, string nextNodeId = null, params DialogueChoice[] choices)
+        {
+            var node = ScriptableObject.CreateInstance<DialogueNode>();
+            node.nodeId = nodeId;
+            node.speakerId = speakerId;
+            node.line = line;
+            node.nextNodeId = nextNodeId;
+            node.choices = new List<DialogueChoice>();
+            if (choices != null)
+                node.choices.AddRange(choices);
+            return node;
         }
 
         public void EndDialogue()

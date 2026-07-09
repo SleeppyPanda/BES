@@ -1,0 +1,263 @@
+=== BES_Unity_Backlog (1).xlsx ===
+Sheets: [' Tổng Quan', ' Tất Cả Stories', ' Roadmap', 'E01', 'E02', 'E03', 'E04', 'E05', 'E06', 'E07', 'E08', 'E09', 'E10', 'E11', 'E12', 'E13']
+
+
+=== SHEET:  Tổng Quan (rows=32, cols=7) ===
+	Beneath Enchanted Sky (BES) — UNITY GAME PROJECT					
+	Open World Story Experience + Quest & Character Narrative System +  | Unity 3D | 3 tháng					
+	13.0	70.0	8.0	532.0	3.0	
+	Epics	User Stories	Simulation/Decision Features	Story Points	Tháng	
+	TECH STACK ĐỀ XUẤT					
+	Layer	Công nghệ			Ghi chú	
+	Game Engine	Unity 6.3 LTS + C#			Phát triển gameplay, hệ thống chiến đấu, quest và thế giới mở	
+	Render/Visual	URP, Shader Graph			Hiệu ứng ánh sáng, môi trường và phong cách art game	
+	3D Asset Creation	Blender			Modeling nhân vật, môi trường, vũ khí	
+	2D Art & UI Design	Photoshop, Illustrator, Procreate, Figma			Thiết kế UI, concept art, icon, texture	
+	Character Animation	Blender, Spine, Live2D Cubism			Animation nhân vật và UI động	
+	Data-Driven Config	ScriptableObject, JSON			Quản lý dữ liệu nhân vật, vũ khí, quái vật, quest	
+	Gameplay Architecture	State Machine, Event Bus			Tổ chức hệ thống gameplay và giảm phụ thuộc giữa các module	
+	Environment Data	ScriptableObject Database, Dialogue Database			Quản lý bản đồ, NPC, hội thoại và lore	
+	AI & Decision System	Behavior Tree, Finite State Machine (FSM)			AI quái vật, NPC và boss	
+	Version Control	Git, GitHub			Quản lý source code và làm việc nhóm	
+	Testing/Build	Unity Test Framework, Profiler, Windows Build			Kiểm thử chức năng và tối ưu hiệu năng	
+	Save & Persistence	JSON Save System, PlayerPrefs			Lưu tiến trình người chơi và cài đặt	
+	ĐIỂM ĐẶC BIỆT CỦA ĐỀ TÀI					
+	AI-Driven NPC Dialogue	NPC có thể trò chuyện tự nhiên bằng AI thay vì chỉ dùng hội thoại cố định				
+	Living Memory NPC System	NPC ghi nhớ các cuộc trò chuyện và hành động trước đây của người chơi				
+	Dynamic Story Evolution	Cốt truyện thay đổi theo lựa chọn và hành vi của người chơi				
+	Personalized Companion Experience	Mỗi người chơi có thể xây dựng mối quan hệ khác nhau với các nhân vật đồng hành				
+	Emotion-Based NPC Reactions	Một số nhiệm vụ phụ được tạo động theo bối cảnh hiện tại của người chơi				
+	Quest & Event Persistent World Consequences	NPC phản ứng khác nhau tùy cảm xúc, mức độ tin tưởng và lịch sử tương tác				
+	Persistent World Consequences	Quyết định của người chơi tạo ảnh hưởng lâu dài lên thế giới và NPC				
+
+=== SHEET:  Tất Cả Stories (rows=1000, cols=9) ===
+	MASTER BACKLOG___Beneath Enchanted Sky (BES) ___ (70 USER STORIES)							
+	Story ID	Epic	User Story	Tháng	Module	SP	Priority	Note
+	US-001	E01	Khởi tạo dự án Unity 6 LTS, thiết lập cấu trúc thư mục chuẩn cho Scripts, Art, UI, Audio, Prefabs và Scenes	Tháng 5	Setup	2.0	🔴 High	
+	US-002	E01	Thiết lập GitHub Repository, quy tắc branch và quy trình merge source code nhóm	Tháng 5	DevOps	2.0	🔴 High	
+	US-003	E01	Thiết lập Input System hỗ trợ di chuyển, tương tác và chiến đấu	Tháng 5	Input	2.0	🔴 High	
+	US-004	E01	Xây dựng Scene Management để quản lý chuyển cảnh giữa Menu, Gameplay và Cutscene	Tháng 5	Scene Management	3.0	🔴 High	
+	US-005	E01	Thiết lập Coding Convention, Naming Convention và quy chuẩn quản lý asset	Tháng 5	Architecture	2.0	🔴 High	
+	US-006	E01	Tạo Prototype Scene kiểm tra pipeline từ asset đến gameplay	Tháng 5	Prototype	2.0	🔴 High	
+	US-007	E02	Xây dựng bối cảnh tổng thể của thế giới và nguồn gốc các nền văn minh	Tháng 6	World Building	5.0	🔴 High	
+	US-008	E02	Thiết kế lịch sử thế giới và các sự kiện quan trọng ảnh hưởng tới cốt truyện	Tháng 6	Lore	5.0	🔴 High	
+	US-009	E02	Xây dựng các quốc gia/khu vực với văn hóa, môi trường và đặc điểm riêng	Tháng 6	Region Design	8.0	🔴 High	
+	US-010	E02	Thiết kế hệ thống phe phái, tổ chức và mối quan hệ giữa các phe	Tháng 6	Faction System	5.0	🔴 High	
+	US-011	E02	Hoàn thiện tài liệu World Building làm cơ sở cho Story và Quest	Tháng 6	Documentation	6.0	🔴 High	
+	US-012	E03	Viết cốt truyện chính và mục tiêu xuyên suốt của nhân vật người chơi	Tháng 6	Main Story	8.0	🔴 High	
+	US-013	E03	Thiết kế tuyến cốt truyện nhánh A với kết thúc riêng	Tháng 6	Branch Story A	8.0	🔴 High	
+	US-014	E03	Thiết kế tuyến cốt truyện nhánh B với kết thúc riêng	Tháng 6	Branch Story B	8.0	🔴 High	
+	US-015	E03	Xây dựng hồ sơ nhân vật chính, đồng hành và phản diện	Tháng 6	Character Profile	5.0	🔴 High	
+	US-016	E03	Hoàn thiện Story Bible bao gồm timeline, nhân vật và các sự kiện chính	Tháng 6	Story Bible	3.0	🔴 High	
+	US-017	E04	Thiết kế ngoại hình và tính cách nhân vật chính	Tháng 6	Main Character	8.0	🔴 High	
+	US-018	E04	Thiết kế ngoại hình và hồ sơ nhân vật đồng hành	Tháng 6	Companion	5.0	🔴 High	
+	US-019	E04	Thiết kế NPC dân thường phục vụ tương tác và thế giới sống động	Tháng 6	NPC Design	5.0	🔴 High	
+	US-020	E04	Thiết kế NPC quan trọng tham gia trực tiếp vào cốt truyện	Tháng 6	Story NPC	5.0	🔴 High	
+	US-021	E04	Thiết kế các loại quái vật và hành vi chiến đấu cơ bản	Tháng 6	Enemy Design	8.0	🔴 High	
+	US-022	E04	Thiết kế Boss với cơ chế chiến đấu và vai trò trong cốt truyện	Tháng 6	Boss Design	8.0	🔴 High	
+	US-023	E05	Thiết kế User Flow cho toàn bộ hành trình người chơi từ đăng nhập đến hoàn thành nhiệm vụ	Tháng 6	User Flow	5.0	🔴 High	
+	US-024	E05	Thiết kế giao diện Main Menu và các màn hình chức năng	Tháng 6	Main Menu	5.0	🔴 High	
+	US-025	E05	Thiết kế HUD hiển thị HP, Stamina, Mini Map và Quest Tracking	Tháng 6	HUD	8.0	🔴 High	
+	US-026	E05	Thiết kế giao diện hội thoại NPC và AI Chat	Tháng 6	Dialogue UI	5.0	🔴 High	
+	US-027	E05	Thiết kế giao diện Inventory, Character và Equipment	Tháng 6	Inventory UI	5.0	🔴 High	
+	US-028	E05	Xây dựng prototype UI/UX hoàn chỉnh trên Figma	Tháng 6	Figma Prototype	6.0	🔴 High	
+	US-029	E06	Vẽ concept art nhân vật chính và đồng hành	Tháng 6	Concept Art	8.0	🔴 High	
+	US-030	E06	Modeling nhân vật bằng Blender	Tháng 6	Character Modeling	21.0	🔴 High	
+	US-031	E06	Rigging nhân vật phục vụ animation	Tháng 6	Rigging	8.0	🔴 High	
+	US-032	E06	Tạo animation cơ bản: Idle, Walk, Run, Attack	Tháng 6	Animation	13.0	🔴 High	
+	US-033	E06	Thiết kế asset môi trường: nhà cửa, cây cối, vật thể	Tháng 6	Environment Art	13.0	🔴 High	
+	US-034	E06	Thiết kế icon, UI asset và hiệu ứng hình ảnh	Tháng 6	UI Assets	5.0	🔴 High	
+	US-035	E07	Xây dựng hệ thống Character Controller hỗ trợ di chuyển cơ bản	Tháng 6	Character Controller	8.0	🔴 High	
+	US-036	E07	Xây dựng Camera Controller theo dõi nhân vật	Tháng 6	Camera System	5.0	🔴 High	
+	US-037	E07	Xây dựng hệ thống chạy nước rút và tiêu hao Stamina	Tháng 6	Stamina System	8.0	🔴 High	
+	US-038	E07	Xây dựng hệ thống nhảy và tương tác môi trường	Tháng 6	Movement System	8.0	🔴 High	
+	US-039	E07	Xây dựng hệ thống Save/Load dữ liệu người chơi	Tháng 6	Save System	8.0	🔴 High	
+	US-040	E07	Xây dựng hệ thống Inventory quản lý vật phẩm	Tháng 6	Inventory System	15.0	🔴 High	
+	US-041	E08	Xây dựng hệ thống đánh thường của nhân vật	Tháng 6	Basic Attack	8.0	🔴 High	
+	US-042	E08	Xây dựng hệ thống kỹ năng chủ động	Tháng 6	Skill System	13.0	🔴 High	
+	US-043	E08	Xây dựng hệ thống né tránh và miễn sát thương tạm thời	Tháng 6	Dodge System	8.0	🔴 High	
+	US-044	E08	Xây dựng hệ thống tính toán sát thương và HP	Tháng 6	Damage System	8.0	🔴 High	
+	US-045	E08	Xây dựng hệ thống chiến đấu với quái vật và Boss	Tháng 6	Combat Manager	18.0	🔴 High	
+	US-046	E09	Xây dựng hệ thống tương tác với NPC	Tháng 6	NPC Interaction	8.0	🔴 High	
+	US-047	E09	Tích hợp AI hội thoại cho NPC	Tháng 6	AI Dialogue	21.0	🔴 High	
+	US-048	E09	Xây dựng hệ thống ghi nhớ lịch sử trò chuyện của NPC	Tháng 6	Memory System	13.0	🔴 High	
+	US-049	E09	Xây dựng hệ thống độ thân thiết và phản ứng của NPC	Tháng 6	Relationship System	13.0	🔴 High	
+	US-050	E10	Xây dựng hệ thống hội thoại theo cốt truyện	Tháng 6	Dialogue System	8.0	🔴 High	
+	US-051	E10	Xây dựng hệ thống nhiệm vụ chính	Tháng 6	Main Quest	8.0	🔴 High	
+	US-052	E10	Xây dựng hệ thống nhiệm vụ phụ	Tháng 7	Side Quest	5.0	🔴 High	
+	US-053	E10	Xây dựng hệ thống lựa chọn phân nhánh cốt truyện	Tháng 7	Branching Choice	13.0	🔴 High	
+	US-054	E10	Xây dựng hệ thống nhiều kết thúc khác nhau	Tháng 7	Multiple Ending	13.0	🔴 High	
+	US-055	E11	Xây dựng bản đồ thế giới mở và các khu vực khám phá	Tháng 7	World Map	13.0	🔴 High	
+	US-056	E11	Tích hợp NPC vào thế giới và vị trí tương tác	Tháng 7	NPC Placement	8.0	🔴 High	
+	US-057	E11	Tích hợp nhiệm vụ và sự kiện vào từng khu vực	Tháng 7	Quest Placement	8.0	🟡 Medium	
+	US-058	E11	Xây dựng hệ thống vật phẩm thu thập trong thế giới	Tháng 7	Collectible System	8.0	🔴 High	
+	US-059	E11	Xây dựng hệ thống dịch chuyển giữa các địa điểm	Tháng 7	Teleport System	5.0	🔴 High	
+	US-060	E11	Tích hợp toàn bộ gameplay vào bản đồ hoàn chỉnh	Tháng 7	World Integration	13.0	🔴 High	
+	US-061	E12	Kiểm thử chức năng di chuyển và điều khiển nhân vật	Tháng 7	Gameplay Testing	5.0	🟡 Medium	
+	US-062	E12	Kiểm thử hệ thống chiến đấu và tính sát thương	Tháng 7	Combat Testing	5.0	🟡 Medium	
+	US-063	E12	Kiểm thử AI NPC và phản hồi hội thoại	Tháng 7	AI Testing	5.0	🟡 Medium	
+	US-064	E12	Kiểm thử hệ thống nhiệm vụ và phân nhánh cốt truyện	Tháng 7	Quest Testing	5.0	🟡 Medium	
+	US-065	E12	Kiểm thử hệ thống lưu và tải dữ liệu	Tháng 7	Save Testing	5.0	🟡 Medium	
+	US-066	E13	Tối ưu hiệu năng và FPS của trò chơi	Tháng 7	Performance Optimization	8.0	🔴 High	
+	US-067	E13	Sửa lỗi gameplay và lỗi giao diện được ghi nhận	Tháng 7	Bug Fixing	5.0	🔴 High	
+	US-068	E13	Thực hiện Regression Testing sau các lần sửa lỗi	Tháng 7	Regression Testing	5.0	🔴 High	
+	US-069	E13	Build phiên bản hoàn chỉnh để nghiệm thu	Tháng 7	Final Build	5.0	🔴 High	
+	US-070	E13	Hoàn thiện tài liệu kỹ thuật, hướng dẫn sử dụng và báo cáo đồ án	Tháng 8	Presentation	5.0	🟢 Low	
+	TỔNG STORY POINTS					532		
+
+=== SHEET:  Roadmap (rows=24, cols=7) ===
+	ROADMAP 3 THÁNG — Beneath Enchanted Sky (BES)					
+	THÁNG 1 — PRE-PRODUCTION, WORLD BUILDING & DESIGN FOUNDATION					
+	Epic	Tên	Nội dung chính	Story Points		
+	E01	Project Setup & Infrastructure	Nền tảng kỹ thuật dự án: Unity setup, GitHub workflow, Input System, Scene Management và Prototype Pipeline.	13 sp		
+	E02	World Lore & Content Design	Xây dựng thế giới game, lịch sử, các quốc gia, phe phái và hệ thống lore làm nền tảng cho toàn bộ nội dung.	29 sp		
+	E03	Story & Narrative Design	Thiết kế cốt truyện chính, các tuyến truyện phân nhánh, hồ sơ nhân vật và tài liệu Story Bible.	34 sp		
+	E04	Character & NPC Design	Thiết kế nhân vật chính, đồng hành, NPC, quái vật và Boss, đồng thời xác định vai trò của từng nhân vật trong thế giới game.	39 sp		
+	THÁNG 2 — UI/UX, ART PRODUCTION, GAMEPLAY & AI DEVELOPMENT					
+	Epic	Tên	Nội dung chính	Story Points		
+	E05	UI/UX Design	Thiết kế User Flow, HUD, Inventory, Dialogue UI và xây dựng Prototype giao diện trên Figma	34 sp		
+	E06	Art Production	Concept Art, Character Modeling, Rigging, Animation, Environment Assets và UI Assets phục vụ gameplay	68 sp		
+	E07	Core Gameplay Development	Xây dựng Character Controller, Camera System, Stamina, Save/Load System và Inventory System	52 sp		
+	E08	Combat System Development	Phát triển hệ thống chiến đấu thời gian thực gồm Basic Attack, Skill System, Dodge Mechanic và Damage Calculation	55 sp		
+	E09	AI NPC System	Tích hợp AI Dialogue, NPC Memory, Relationship System và tương tác động giữa người chơi với NPC	55 sp		
+	THÁNG 3 — STORY INTEGRATION, OPEN WORLD, TESTING & RELEASE					
+	Epic	Tên	Nội dung chính	Story Points		
+	E10	Story & Quest System	Tích hợp Main Quest, Side Quest, Dialogue System, Branching Choices và Multiple Endings	47 sp		
+	E11	Open World Integration	Tích hợp World Map, NPC Placement, Quest Placement, Collectibles, Teleport System và World Events	55 sp		
+	E12	Functional Testing	Kiểm thử Gameplay, Combat, AI NPC, Quest System và Save/Load System nhằm đảm bảo tính ổn định	25 sp		
+	E13	Optimization & Release	Tối ưu hiệu năng, sửa lỗi, Regression Testing, đóng gói Final Build và hoàn thiện tài liệu bảo vệ	26 sp		
+
+=== SHEET: E01 (rows=12, cols=7) ===
+	PROJECT SETUP & INFRASTRUCTURE					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-001	Khởi tạo dự án Unity 6 LTS, thiết lập cấu trúc thư mục chuẩn cho Scripts, Art, UI, Audio, Prefabs và Scenes	Setup	Engine, Infrastructure	2.0	Project mở thành công trên tất cả máy thành viên; cấu trúc thư mục thống nhất và dễ mở rộng
+	US-002	Thiết lập GitHub Repository, quy tắc branch main/dev/feature và quy trình merge source code nhóm	DevOps	Infrastructure	2.0	Repository hoạt động ổn định; thành viên clone, commit và merge thành công
+	US-003	Thiết lập Input System hỗ trợ di chuyển, tương tác NPC, chiến đấu và điều hướng UI	Input System	Engine, Gameplay	2.0	Người chơi có thể thực hiện các thao tác cơ bản bằng bàn phím và chuột
+	US-004	Xây dựng Scene Management quản lý chuyển cảnh giữa Main Menu, Gameplay, Dialogue và Cutscene	Scene Management	Engine	3.0	Chuyển Scene ổn định, không lỗi mất dữ liệu hoặc crash
+	US-005	Thiết lập Coding Convention, Naming Convention và quy chuẩn quản lý Asset cho toàn bộ dự án	Architecture	Infrastructure	2.0	Source code và Asset tuân thủ quy tắc đặt tên thống nhất
+	US-006	Tạo Prototype Scene kiểm tra pipeline từ Asset → Gameplay → UI → Save System	Prototype	Engine, Prototype	2.0	Chạy được bản demo đơn giản thể hiện pipeline phát triển của dự án
+	TỔNG STORY POINTS				13	
+
+=== SHEET: E02 (rows=14, cols=7) ===
+	WORLD LORE & CONTENT DESIGN					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-007	Xây dựng bối cảnh tổng thể của thế giới và nguồn gốc các nền văn minh	World Building	Content, Narrative	5.0	Xác định được bối cảnh trung tâm, nguồn gốc thế giới và các yếu tố cốt lõi ảnh hưởng đến cốt truyện
+	US-008	Thiết kế lịch sử thế giới và các sự kiện quan trọng ảnh hưởng tới hiện tại	Lore	Content, Narrative	5.0	Hoàn thiện timeline các sự kiện chính, chiến tranh, thảm họa hoặc biến cố định hình thế giới
+	US-009	Xây dựng các quốc gia/khu vực với văn hóa, môi trường và đặc điểm riêng	Region Design	Content, World Design	8.0	Mỗi khu vực có bản sắc riêng về văn hóa, địa lý, kiến trúc và vai trò trong thế giới ga
+	US-010	Thiết kế các phe phái, tổ chức và mối quan hệ giữa các phe	Faction System	Content, Narrative	5.0	Xác định mục tiêu, ảnh hưởng và mối quan hệ giữa các phe phái trong thế giới
+	US-011	Hoàn thiện tài liệu World Building phục vụ Story, Quest và NPC Design	Documentation	Content, Design	6.0	Hoàn thiện tài liệu tổng hợp lore, quốc gia, phe phái và timeline để các nhóm khác sử dụng
+	TỔNG STORY POINTS				29	
+
+=== SHEET: E03 (rows=12, cols=7) ===
+	STORY & NARRATIVE DESIGN					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-012	Xây dựng cốt truyện chính và hành trình phát triển của nhân vật người chơi	Main Story	Narrative, Content	8.0	Hoàn thiện tuyến cốt truyện chính từ mở đầu, cao trào đến kết thúc; xác định mục tiêu và động cơ của nhân vật chính
+	US-013	Thiết kế tuyến cốt truyện nhánh A với các sự kiện, nhân vật và kết thúc riêng	Branch Story A	Narrative, Choice System	8.0	Người chơi có thể trải nghiệm tuyến truyện A với các sự kiện và kết thúc khác biệt so với tuyến chính
+	US-014	Thiết kế tuyến cốt truyện nhánh B với các sự kiện, nhân vật và kết thúc riêng	Branch Story B	Narrative, Choice System	8.0	Người chơi có thể trải nghiệm tuyến truyện B với các sự kiện và kết thúc riêng biệt
+	US-015	Xây dựng hồ sơ nhân vật chính, đồng hành và phản diện	Character Profile	Narrative, Character Design	5.0	Mỗi nhân vật chính có thông tin về tính cách, mục tiêu, mối quan hệ và vai trò trong cốt truyện
+	US-016	Hoàn thiện Story Bible bao gồm timeline, nhân vật, sự kiện và các nhánh truyện	Story Bible	Documentation	5.0	Tài liệu Story Bible hoàn chỉnh, làm cơ sở cho Quest Design, NPC Design và Dialogue System
+	TỔNG STORY POINTS				34	
+
+=== SHEET: E04 (rows=12, cols=7) ===
+	CHARACTER & NPC DESIGN					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-017	Thiết kế ngoại hình, tính cách và vai trò của nhân vật chính	Main Character	Character Design, Narrative	8.0	Hoàn thiện hồ sơ nhân vật chính gồm ngoại hình, tính cách, động cơ và vai trò trong cốt truyện
+	US-018	Thiết kế nhân vật đồng hành và mối quan hệ với người chơi	Companion Design	Character Design	5.0	Nhân vật đồng hành có hồ sơ, tính cách và vai trò rõ ràng trong hành trình
+	US-019	Thiết kế NPC dân thường phục vụ tương tác và xây dựng thế giới	NPC Design	World Building, NPC	5.0	NPC có chức năng, nghề nghiệp và đặc điểm riêng phù hợp với từng khu vực
+	US-020	Thiết kế NPC quan trọng tham gia trực tiếp vào cốt truyện	Story NPC	Narrative, NPC	5.0	NPC cốt truyện có hồ sơ, mục tiêu và ảnh hưởng đến các tuyến truyện
+	US-021	Thiết kế các loại quái vật và hành vi chiến đấu cơ bản	Enemy Design	Combat, Enemy	8.0	Hoàn thiện danh sách quái vật, ngoại hình và đặc điểm chiến đấu
+	US-022	Thiết kế Boss với cơ chế chiến đấu và vai trò trong cốt truyện	Boss Design	Combat, Narrative	8.0	Boss có ngoại hình, lore, cơ chế chiến đấu và vai trò trong Story
+	TỔNG STORY POINTS				39	
+
+=== SHEET: E05 (rows=12, cols=7) ===
+	UI/UX DESIGN					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-023	Thiết kế User Flow cho toàn bộ hành trình người chơi	User Flow	UX Design	5.0	Hoàn thiện sơ đồ luồng trải nghiệm từ Main Menu đến Gameplay
+	US-024	Thiết kế giao diện Main Menu và các màn hình chức năng	Main Menu UI	UI Design	5.0	Giao diện trực quan, thống nhất phong cách của BES
+	US-025	Thiết kế HUD hiển thị HP, Stamina, Mini Map và Quest Tracking	HUD	UI Design, Gameplay	8.0	HUD hiển thị đầy đủ thông tin cần thiết trong khi chơi
+	US-026	Thiết kế giao diện hội thoại NPC và AI Chat	Dialogue UI	UI Design, AI NPC	5.0	Giao diện hỗ trợ hiển thị hội thoại tự nhiên với NPC AI
+	US-027	Thiết kế giao diện Inventory, Character và Equipment	Inventory UI	UI Design	5.0	Người chơi dễ dàng quản lý vật phẩm và trang bị
+	US-028	Xây dựng Prototype UI/UX hoàn chỉnh trên Figma	Figma Prototype	UX Design, Prototype	6.0	Prototype mô phỏng đầy đủ luồng trải nghiệm người chơi
+	TỔNG STORY POINTS				34	
+
+=== SHEET: E06 (rows=12, cols=7) ===
+	ART PRODUCTION & ASSET CREATION					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-029	Tạo Concept Art cho nhân vật, NPC và môi trường	Concept Art	Art, Concept	8.0	Hoàn thiện concept phục vụ Modeling và Environment Design
+	US-030	Modeling nhân vật chính, NPC và quái vật bằng Blender	Character Modeling	3D Art	21.0	Model hoàn chỉnh, tối ưu topology và phù hợp cho rigging
+	US-031	Rigging nhân vật phục vụ animation	Rigging	Animation	8.0	Nhân vật có bộ xương và điều khiển chuyển động đầy đủ
+	US-032	Tạo animation cơ bản: Idle, Walk, Run, Attack	Character Animation	Animation	13.0	Hoàn thiện các animation gameplay cốt lõi
+	US-033	Thiết kế Environment Assets: nhà cửa, cây cối, vật thể tương tác	Environment Art	3D Art, Environment	13.0	Hoàn thiện asset môi trường đủ dùng cho world map demo
+	US-034	Thiết kế icon, UI Asset và hiệu ứng hình ảnh cơ bản	UI Assets	UI Art	5.0	Asset được export đúng định dạng để tích hợp vào Unity
+	TỔNG STORY POINTS				68	
+
+=== SHEET: E07 (rows=12, cols=7) ===
+	CORE GAMEPLAY DEVELOPMENT					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-035	Xây dựng Character Controller hỗ trợ di chuyển cơ bản	Character Controller	Gameplay, Movement	8.0	Nhân vật có thể di chuyển ổn định theo Input System và va chạm đúng với môi trường
+	US-036	Xây dựng Camera Controller theo dõi nhân vật	Camera System	Gameplay, Camera	5.0	Camera theo dõi nhân vật mượt mà và hỗ trợ xoay góc nhìn
+	US-037	Xây dựng hệ thống chạy nước rút và tiêu hao Stamina	Stamina System	Gameplay	8.0	Người chơi có thể Sprint và Stamina giảm/tăng theo thiết kế
+	US-038	Xây dựng hệ thống nhảy và tương tác môi trường	Movement System	Gameplay	8.0	Nhân vật có thể Jump, tiếp đất và tương tác với vật thể cơ bản
+	US-039	Xây dựng hệ thống Save/Load dữ liệu người chơi	Save System	Data, Persistence	8.0	Tiến trình chơi được lưu và tải chính xác
+	US-040	Xây dựng hệ thống Inventory quản lý vật phẩm	Inventory System	Gameplay, Data	13.0	Người chơi có thể thêm, sử dụng, loại bỏ và quản lý vật phẩm
+	TỔNG STORY POINTS				50	
+
+=== SHEET: E08 (rows=12, cols=7) ===
+	COMBAT SYSTEM DEVELOPMENT					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-041	Xây dựng hệ thống đánh thường của nhân vật	Basic Attack	Combat	8.0	Người chơi có thể thực hiện chuỗi đòn đánh cơ bản
+	US-042	Xây dựng hệ thống kỹ năng chủ động	Skill System	Combat, Ability	13.0	Kỹ năng được kích hoạt đúng, có cooldown và hiệu ứng
+	US-043	Xây dựng hệ thống né tránh và miễn sát thương tạm thời	Dodge System	Combat	8.0	Người chơi có thể né đòn và nhận hiệu ứng Invincible Frame
+	US-044	Xây dựng hệ thống tính toán sát thương và HP	Damage System	Combat	8.0	Hệ thống tính toán sát thương chính xác dựa trên chỉ số
+	US-045	Xây dựng hệ thống chiến đấu với quái vật và Boss	Combat Manager	Combat, Boss	21.0	Người chơi có thể chiến đấu hoàn chỉnh với Enemy và Boss
+	TỔNG STORY POINTS				58	
+
+=== SHEET: E09 (rows=12, cols=7) ===
+	AI NPC INTERACTION SYSTEM					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-046	Xây dựng hệ thống tương tác với NPC	NPC Interaction	AI, NPC	8.0	Người chơi có thể bắt đầu và kết thúc tương tác với NPC
+	US-047	Tích hợp AI hội thoại cho NPC	AI Dialogue	AI, LLM	21.0	NPC có thể phản hồi theo ngữ cảnh và nội dung hội thoại
+	US-048	Xây dựng hệ thống ghi nhớ lịch sử trò chuyện của NPC	Memory System	AI, Data	13.0	NPC lưu được thông tin quan trọng từ các lần trò chuyện trước
+	US-049	Xây dựng hệ thống độ thân thiết và phản ứng của NPC	Relationship System	AI, Narrative	13.0	Thái độ và phản ứng của NPC thay đổi theo mức độ quan hệ
+	TỔNG STORY POINTS				55	
+
+=== SHEET: E10 (rows=12, cols=7) ===
+	STORY & QUEST SYSTEM DEVELOPMENT					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-050	Xây dựng hệ thống hội thoại theo cốt truyện	Dialogue System	Narrative, Quest	8.0	Hệ thống hiển thị hội thoại theo tiến trình cốt truyện
+	US-051	Xây dựng hệ thống nhiệm vụ chính	Main Quest	Quest System	8.0	Người chơi có thể nhận, thực hiện và hoàn thành nhiệm vụ chính
+	US-052	Xây dựng hệ thống nhiệm vụ phụ	Side Quest	Quest System	5.0	Người chơi có thể thực hiện các nhiệm vụ phụ độc lập
+	US-053	Xây dựng hệ thống lựa chọn phân nhánh cốt truyện	Branching Choice	Narrative, Choice	13.0	Lựa chọn của người chơi ảnh hưởng đến tiến trình câu chuyện
+	US-054	Xây dựng hệ thống nhiều kết thúc khác nhau	Multiple Ending	Narrative, Ending	13.0	Trò chơi có các kết thúc khác nhau dựa trên lựa chọn và tiến trình
+	TỔNG STORY POINTS				47	
+
+=== SHEET: E11 (rows=12, cols=7) ===
+	OPEN WORLD INTEGRATION					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-055	Xây dựng bản đồ thế giới mở và các khu vực khám phá	World Map	Open World, Environment	13.0	Người chơi có thể tự do di chuyển giữa các khu vực trong thế giới
+	US-056	Tích hợp NPC vào thế giới và vị trí tương tác	NPC Placement	NPC, World	8.0	NPC xuất hiện đúng vị trí và hoạt động theo thiết kế
+	US-057	Tích hợp nhiệm vụ và sự kiện vào từng khu vực	Quest Placement	Quest, World	8.0	Nhiệm vụ được kích hoạt đúng điều kiện và vị trí
+	US-058	Xây dựng hệ thống vật phẩm thu thập trong thế giới	Collectible System	Gameplay, World	8.0	Người chơi có thể tìm kiếm và thu thập vật phẩm
+	US-059	Xây dựng hệ thống dịch chuyển giữa các địa điểm	Teleport System	Gameplay, Navigation	5.0	Người chơi có thể dịch chuyển giữa các điểm đã mở khóa
+	US-060	Tích hợp toàn bộ gameplay vào bản đồ hoàn chỉnh	World Integration	Integration, Open World	13.0	Các hệ thống Combat, Quest, NPC, Inventory hoạt động đồng bộ trong thế giới mở
+	TỔNG STORY POINTS				55	
+
+=== SHEET: E12 (rows=12, cols=7) ===
+	FUNCTIONAL TESTING & QUALITY ASSURANCE					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-061	Kiểm thử chức năng di chuyển và điều khiển nhân vật	Gameplay Testing	QA, Gameplay	5.0	Các thao tác di chuyển hoạt động ổn định và không phát sinh lỗi nghiêm trọng
+	US-062	Kiểm thử hệ thống chiến đấu và tính sát thương	Combat Testing	QA, Combat	5.0	Các cơ chế chiến đấu hoạt động đúng theo thiết kế
+	US-063	Kiểm thử AI NPC và phản hồi hội thoại	AI Testing	QA, AI	5.0	NPC phản hồi đúng ngữ cảnh và không lỗi hội thoại
+	US-064	Kiểm thử hệ thống nhiệm vụ và phân nhánh cốt truyện	Quest Testing	QA, Narrative	5.0	Quest hoạt động đúng tiến trình và các lựa chọn được ghi nhận
+	US-065	Kiểm thử hệ thống lưu và tải dữ liệu	Save Testing	QA, Data	5.0	Dữ liệu được lưu và tải chính xác, không mất tiến trình
+	TỔNG STORY POINTS				25	
+
+=== SHEET: E13 (rows=12, cols=7) ===
+	OPTIMIZATION, DEPLOYMENT & RELEASE					
+	Story ID	User Story	Module	Tags	SP	Ghi chú / Acceptance Criteria
+	US-066	Tối ưu hiệu năng và FPS của trò chơi	Performance Optimization	Optimization	8.0	Game duy trì hiệu năng ổn định trên cấu hình mục tiêu
+	US-067	Sửa lỗi gameplay và lỗi giao diện được ghi nhận	Bug Fixing	QA, Maintenance	5.0	Các lỗi mức High và Critical được xử lý hoàn chỉnh
+	US-068	Thực hiện Regression Testing sau các lần sửa lỗi	Regression Testing	QA	5.0	Các tính năng cũ vẫn hoạt động bình thường sau khi cập nhật
+	US-069	Build phiên bản hoàn chỉnh để nghiệm thu	Final Build	Release	3.0	Tạo được bản build ổn định phục vụ demo và bảo vệ đồ án
+	US-070	Hoàn thiện tài liệu kỹ thuật, hướng dẫn sử dụng và báo cáo đồ án	Documentation	Documentation	5.0	Hoàn thiện tài liệu phục vụ nghiệm thu và bảo vệ dự án
+	TỔNG STORY POINTS				26	

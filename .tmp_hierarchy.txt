@@ -1,0 +1,373 @@
+=== MainMenu.unity (5 objects) ===
+UI
+Systems
+  EventSystem
+Main Camera
+Directional Light
+
+=== Gameplay.unity (29 objects) ===
+Systems
+  GameplayBootstrap
+  NarrativeSystems
+  WorldIntegration
+  EventSystem
+UI
+Entities
+  NPCs
+    NPC_Guard
+  Enemies
+    Enemy_Slime
+  Bosses
+    Boss_VoidGuardian
+World
+  Regions
+    Region_CreationCity
+    Region_Ruins
+    Region_Forest
+  Teleports
+    Teleport_CityToRuins
+    Dest_Ruins
+  Collectibles
+    Collectible_Herb_0
+    Collectible_Herb_1
+    Collectible_Herb_2
+Environment
+  Ground
+Main Camera
+Directional Light
+
+=== PrototypeScene.unity (6 objects) ===
+Directional Light
+Environment
+  Ground
+Main Camera
+Systems
+  PrototypeBootstrap
+
+=== MainMenuScreen.prefab (38 objects) ===
+MainMenuScreen
+  Background
+  MainMenuController
+  Logo
+  Logo Shadow
+  Line
+  ClickToBegin
+  NewGameButton
+  EventButton
+  ContinueButton
+  QuitButton
+  ProfileButton
+  SettingsButton
+  PlayerProfileUI
+    Background
+    Username
+    Server
+    UID
+    CloseBtn
+      Label
+  SettingsUI
+    SettingsContent
+    CloseBtn
+      Label
+  ServerPickerUI
+    Title
+    ServerOptions
+    CloseBtn
+      Label
+  EventUI
+    Background
+    Title
+    Desc
+    DaySlots
+    CheckInBtn
+      Label
+    CloseBtn
+      Label
+
+=== GameplayHUD.prefab (232 objects) ===
+GameplayHUD
+  HUDLayer
+    HUD
+      LevelText
+      HealthBar
+        Background
+        Fill Area
+          Fill
+        HpValue
+      StaminaBar
+        Background
+        Fill Area
+          Fill
+      ManaBar
+        Background
+        Fill Area
+          Fill
+      RegionText
+    MiniMap
+      Ring
+      Face
+        PlayerIcon
+        ObjectiveIcon
+      NorthMark
+      ExpandHint
+    QuestTracker
+      TrackerFrame
+      BookIcon
+      QuestStarIcon
+      QuestTitle
+      QuestStep
+      CompassArrow
+    QuestLog
+      Panel
+        List
+          RowTemplate
+        CloseBtn
+          Label
+    InteractPrompt
+      PromptPanel
+        PromptText
+    HudNavBar
+      EventBtn
+      MapBtn
+      WishBtn
+      TeamBtn
+      InventoryBtn
+      CharacterBtn
+      WeaponBtn
+      ArtifactsBtn
+    PartyStrip
+      PartySlot1
+        Portrait
+        Name
+        Number
+      PartySlot2
+        Portrait
+        Name
+        Number
+      PartySlot3
+        Portrait
+        Name
+        Number
+      PartySlot4
+        Portrait
+        Name
+        Number
+    SkillBar
+      SkillSlot1
+        Icon
+        Cooldown
+        KeyLabel
+      SkillSlot2
+        Icon
+        Cooldown
+        KeyLabel
+      SkillSlot3
+        Icon
+        Cooldown
+        KeyLabel
+      SkillSlot4
+        Icon
+        Cooldown
+        KeyLabel
+    ChatHint
+      Icon
+      EnterLabel
+  OverlayLayer
+    InventoryUI
+      Background
+      Title
+      ItemsTab
+        Label
+      MaterialsTab
+        Label
+      CloseBtn
+        Label
+      ItemGrid
+      ItemRowPrefab
+    CharacterProfileUI
+      Background
+      CharacterPreview
+        PreviewBg
+        PreviewImage
+      StatsPanel
+        Name
+        Level
+        ATK
+        HP
+        DEF
+        CritRate
+        CritDmg
+        EquipmentUI
+          WeaponName
+          WeaponAtk
+      CloseBtn
+        Label
+      PartySlot1
+      PartySlot2
+      PartySlot3
+      PartySlot4
+    GameMapUI
+      Background
+      Title
+      MapMarkers
+      CloseBtn
+        Label
+    WeaponScreenUI
+      Background
+      GridContainer
+      WeaponName
+      WeaponDesc
+      ATK
+      HP
+      Level
+      Refine
+      SwitchBtn
+        Label
+      RemoveBtn
+        Label
+      EnhanceBtn
+        Label
+      CloseBtn
+        Label
+    ArtifactsUI
+      Background
+      GridContainer
+      DetailName
+      DetailDesc
+      EquipBtn
+        Label
+      CloseBtn
+        Label
+  MetaLayer
+    TeamSetupUI
+      Background
+      TeamSlots
+      RosterPicker
+      ConfirmBtn
+        Label
+      CloseBtn
+        Label
+    EventUI
+      Background
+      Title
+      Desc
+      DaySlots
+      CheckInBtn
+        Label
+      CloseBtn
+        Label
+    WishUI
+      Background
+      Banner
+      Coins
+      Gems
+      Result
+      ResultCards
+      WishOne
+        Label
+      WishTen
+        Label
+      CloseBtn
+        Label
+  ModalLayer
+    DialogueUI
+      DialoguePanel
+        Background
+        Portrait
+        Speaker
+        Line
+        ChatInput
+          Text
+        SendButton
+          Label
+        CloseButton
+          Label
+        Choices
+          ChoiceTemplate
+            Label
+    LoadingScreenUI
+      Background
+      ProgressBarHost
+        ProgressBar
+          Background
+          Fill Area
+            Fill
+      Status
+      Tip
+    WeaponEnhanceUI
+      Background
+      BeforeAtk
+      AfterAtk
+      Materials
+      ConfirmBtn
+        Label
+      BackBtn
+        Label
+    WeaponRankUpUI
+      Background
+      Rank
+      Result
+      ConfirmBtn
+        Label
+      BackBtn
+        Label
+    WeaponRefineUI
+      Background
+      RefineLevel
+      Effect
+      DoneBtn
+        Label
+
+=== UIButtonGhost.prefab (1 objects) ===
+UIButtonGhost
+
+=== UIButtonPrimary.prefab (1 objects) ===
+UIButtonPrimary
+
+=== UICloseButton.prefab (1 objects) ===
+UICloseButton
+
+=== UICurrencyPill.prefab (1 objects) ===
+UICurrencyPill
+
+=== UIDayCheckInSlot.prefab (3 objects) ===
+UIDayCheckInSlot
+  DayLabel
+  RewardLabel
+
+=== UIItemSlot.prefab (1 objects) ===
+UIItemSlot
+
+=== UIMapMarker.prefab (3 objects) ===
+UIMapMarker
+  Icon
+  RegionLabel
+
+=== UIPortraitSlot.prefab (1 objects) ===
+UIPortraitSlot
+
+=== UIResultCard.prefab (2 objects) ===
+UIResultCard
+  Label
+
+=== UIServerOption.prefab (3 objects) ===
+UIServerOption
+  Highlight
+  ServerName
+
+=== UISettingsRow.prefab (4 objects) ===
+UISettingsRow
+  Label
+  Toggle
+  Slider
+
+=== UITeamSlot.prefab (3 objects) ===
+UITeamSlot
+  Portrait
+  NameLabel
+
+=== UIWeaponSlot.prefab (3 objects) ===
+UIWeaponSlot
+  Selection
+  Label
+

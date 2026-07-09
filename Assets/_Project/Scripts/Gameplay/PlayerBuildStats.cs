@@ -36,7 +36,8 @@ namespace BES.Gameplay
         public void Refresh()
         {
             var characterId = PartyRoster.Instance?.ActiveCharacterId ?? "hero_01";
-            GetCharacterBase(characterId, out var baseAtk, out var baseHp, out var baseDef, out var baseCrit, out var baseCritDmg);
+            var character = CharacterDatabaseLoader.Load()?.Get(characterId);
+            GetCharacterBase(character, out var baseAtk, out var baseHp, out var baseDef, out var baseMana, out var baseCrit, out var baseCritDmg);
 
             var weaponAtk = EquippedWeaponState.Instance?.GetDisplayAtk() ?? 0;
             var artifactAtk = 0;
@@ -51,7 +52,7 @@ namespace BES.Gameplay
             ComputedAttack = baseAtk + weaponAtk + artifactAtk;
             ComputedDefense = baseDef + Mathf.RoundToInt(artifactAtk * 0.1f);
             ComputedMaxHealth = baseHp + artifactHp;
-            ComputedMaxMana = 100f;
+            ComputedMaxMana = baseMana;
             ComputedCritRate = baseCrit;
             ComputedCritDamage = baseCritDmg;
 
@@ -64,26 +65,25 @@ namespace BES.Gameplay
                 ComputedCritDamage);
         }
 
-        static void GetCharacterBase(string id, out float atk, out float hp, out float def, out float crit, out float critDmg)
+        static void GetCharacterBase(CharacterDefinition character, out float atk, out float hp, out float def, out float mana, out float crit, out float critDmg)
         {
-            switch (id)
+            if (character != null)
             {
-                case "hero_02":
-                    atk = 18f; hp = 90f; def = 6f; crit = 0.12f; critDmg = 1.6f;
-                    break;
-                case "hero_03":
-                    atk = 14f; hp = 110f; def = 8f; crit = 0.08f; critDmg = 1.4f;
-                    break;
-                case "hero_04":
-                    atk = 16f; hp = 95f; def = 5f; crit = 0.15f; critDmg = 1.7f;
-                    break;
-                case "char_limited_01":
-                    atk = 22f; hp = 100f; def = 6f; crit = 0.18f; critDmg = 1.8f;
-                    break;
-                default:
-                    atk = 15f; hp = 100f; def = 5f; crit = 0.1f; critDmg = 1.5f;
-                    break;
+                atk = character.baseAttack;
+                hp = character.baseHealth;
+                def = character.baseDefense;
+                mana = character.baseMana;
+                crit = character.critRate;
+                critDmg = character.critDamage;
+                return;
             }
+
+            atk = 15f;
+            hp = 100f;
+            def = 5f;
+            mana = 100f;
+            crit = 0.1f;
+            critDmg = 1.5f;
         }
     }
 }

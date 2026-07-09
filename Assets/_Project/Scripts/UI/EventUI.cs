@@ -1,3 +1,4 @@
+using BES.Core;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -60,6 +61,7 @@ namespace BES.UI
             eventData.MarkDayClaimed(day);
             if (PlayerWallet.Instance != null)
                 PlayerWallet.Instance.AddGems(eventData.GetRewardForDay(day));
+            GameManager.Instance?.SaveGame();
             Refresh();
         }
 

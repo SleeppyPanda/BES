@@ -1,5 +1,6 @@
 using BES.Core;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace BES.Gameplay
 {
@@ -52,10 +53,12 @@ namespace BES.Gameplay
 
         void HandleMovement()
         {
-            if (input == null || GameplayInputGate.IsGameplayBlocked)
+            if (GameplayInputGate.IsMovementBlocked)
                 return;
 
-            var moveInput = input.Move;
+            var moveInput = input != null ? input.Move : Vector2.zero;
+            if (moveInput.sqrMagnitude < 0.001f)
+                moveInput = ReadKeyboardMove();
             var moveDir = new Vector3(moveInput.x, 0f, moveInput.y);
 
             if (cameraTransform != null && moveDir.sqrMagnitude > 0.01f)
@@ -86,10 +89,15 @@ namespace BES.Gameplay
 
         void HandleJump()
         {
-            if (input == null || GameplayInputGate.IsGameplayBlocked)
+            if (GameplayInputGate.IsMovementBlocked)
                 return;
 
-            if (input.JumpPressed && isGrounded)
+            var jumpPressed = input != null && input.JumpPressed;
+            var keyboard = Keyboard.current;
+            if (!jumpPressed && keyboard != null)
+                jumpPressed = keyboard.spaceKey.wasPressedThisFrame;
+
+            if (jumpPressed && isGrounded)
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
 
@@ -102,6 +110,23 @@ namespace BES.Gameplay
         public void ApplyExternalForce(Vector3 force)
         {
             velocity += force;
+        }
+
+        static Vector2 ReadKeyboardMove()
+        {
+            var keyboard = Keyboard.current;
+            if (keyboard == null)
+                return Vector2.zero;
+
+            var x = 0f;
+            var y = 0f;
+            if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed) x -= 1f;
+            if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) x += 1f;
+            if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed) y -= 1f;
+            if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed) y += 1f;
+
+            var move = new Vector2(x, y);
+            return move.sqrMagnitude > 1f ? move.normalized : move;
         }
     }
 }

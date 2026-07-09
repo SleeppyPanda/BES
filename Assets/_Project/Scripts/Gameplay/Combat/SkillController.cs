@@ -1,4 +1,6 @@
 using System.Collections;
+using BES.Core;
+using BES.UI;
 using UnityEngine;
 
 namespace BES.Gameplay
@@ -31,7 +33,12 @@ namespace BES.Gameplay
             stats = GetComponent<PlayerStats>();
             if (enemyMask.value == 0)
                 enemyMask = LayerMask.GetMask("Enemy");
+            ApplyActiveCharacterSkills();
         }
+
+        void OnEnable() => GameEvents.OnPartyChanged += ApplyActiveCharacterSkills;
+
+        void OnDisable() => GameEvents.OnPartyChanged -= ApplyActiveCharacterSkills;
 
         void Update()
         {
@@ -47,6 +54,22 @@ namespace BES.Gameplay
                 StartCoroutine(CastSkill(skill2, false));
         }
 
+        void ApplyActiveCharacterSkills()
+        {
+            var character = PartyRoster.Instance?.ActiveCharacter;
+            if (character == null)
+            {
+                skill1 ??= CreateSkill("Void Slash", 18f, 1.8f, 2.5f, 3f);
+                skill2 ??= CreateSkill("Guard Break", 25f, 2.4f, 5f, 4f);
+                return;
+            }
+
+            skill1 = CreateSkillFromId(character.skill1Id, true);
+            skill2 = CreateSkillFromId(character.skill2Id, false);
+            skill1Cooldown = 0f;
+            skill2Cooldown = 0f;
+        }
+
         static bool CanCastSkills() => !GameplayInputGate.IsGameplayBlocked;
 
         public float Skill1CooldownNormalized =>
@@ -57,6 +80,9 @@ namespace BES.Gameplay
 
         IEnumerator CastSkill(SkillDefinition skill, bool isSkill1)
         {
+            if (skill == null)
+                yield break;
+
             var cooldown = isSkill1 ? skill1Cooldown : skill2Cooldown;
             if (cooldown > 0f || !stats.TrySpendMana(skill.manaCost))
                 yield break;
@@ -85,6 +111,38 @@ namespace BES.Gameplay
 
             yield return new WaitForSeconds(0.2f);
             isCasting = false;
+        }
+
+        static SkillDefinition CreateSkillFromId(string skillId, bool isSkill1)
+        {
+            return skillId switch
+            {
+                "skill_void_slash" => CreateSkill("Void Slash", 18f, 1.8f, 2.5f, 3.5f),
+                "skill_guard_break" => CreateSkill("Guard Break", 28f, 2.5f, 5.5f, 4.5f),
+                "skill_quick_cut" => CreateSkill("Quick Cut", 12f, 1.35f, 1.2f, 2.4f),
+                "skill_flare_dash" => CreateSkill("Flare Dash", 24f, 2.1f, 3.8f, 3.2f),
+                "skill_shield_wave" => CreateSkill("Shield Wave", 16f, 1.45f, 2.8f, 4.8f),
+                "skill_ground_lock" => CreateSkill("Ground Lock", 30f, 1.9f, 6f, 5.8f),
+                "skill_arc_bolt" => CreateSkill("Arc Bolt", 20f, 2.0f, 2.2f, 5.5f),
+                "skill_focus_shot" => CreateSkill("Focus Shot", 26f, 2.8f, 5.2f, 6.5f),
+                "skill_starfall" => CreateSkill("Starfall", 32f, 3.1f, 6f, 6f),
+                "skill_lunar_drive" => CreateSkill("Lunar Drive", 38f, 3.6f, 8f, 5f),
+                _ => isSkill1
+                    ? CreateSkill("Skill 1", 20f, 2f, 3f, 4f)
+                    : CreateSkill("Skill 2", 25f, 2.4f, 5f, 4f)
+            };
+        }
+
+        static SkillDefinition CreateSkill(string name, float manaCost, float damageMultiplier, float cooldown, float range)
+        {
+            return new SkillDefinition
+            {
+                skillName = name,
+                manaCost = manaCost,
+                damageMultiplier = damageMultiplier,
+                cooldown = cooldown,
+                range = range
+            };
         }
     }
 }

@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c49d5ff9d2a4342b6de8bafd7c6166, type: 3}
+  m_Name: WeaponDatabase
+  m_EditorClassIdentifier: BES::BES.UI.WeaponDatabase
+  weapons:
+  - {fileID: 11400001}
+  - {fileID: 11400002}
+  - {fileID: 11400003}
+--- !u!114 &11400001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4a06813d59d4698f4286849bbee2, type: 3}
+  m_Name: weapon_iron_sword
+  m_EditorClassIdentifier: BES::BES.UI.WeaponDefinition
+  weaponId: weapon_iron_sword
+  displayName: Iron Sword
+  description: Default starter sword for the BES MVP.
+  baseAtk: 120
+  baseHp: 0
+  rarity: 3
+  maxLevel: 100
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4a06813d59d4698f4286849bbee2, type: 3}
+  m_Name: weapon_void_edge
+  m_EditorClassIdentifier: BES::BES.UI.WeaponDefinition
+  weaponId: weapon_void_edge
+  displayName: Void Edge
+  description: Default 4-star weapon for the BES MVP.
+  baseAtk: 310
+  baseHp: 0
+  rarity: 4
+  maxLevel: 100
+--- !u!114 &11400003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10d4a06813d59d4698f4286849bbee2, type: 3}
+  m_Name: weapon_flame_blade
+  m_EditorClassIdentifier: BES::BES.UI.WeaponDefinition
+  weaponId: weapon_flame_blade
+  displayName: Bane of Flame and Water
+  description: Default 5-star weapon for the BES MVP.
+  baseAtk: 420
+  baseHp: 0
+  rarity: 5
+  maxLevel: 100

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a42e63367082e94aa73f16baf8f1aa5, type: 3}
+  m_Name: ArtifactDatabase
+  m_EditorClassIdentifier: BES::BES.UI.ArtifactDatabase
+  artifacts:
+  - {fileID: 11400001}
+--- !u!114 &11400001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08131ee06c5c16f4abe297d3632b1760, type: 3}
+  m_Name: artifact_starter
+  m_EditorClassIdentifier: BES::BES.UI.ArtifactDefinition
+  artifactId: artifact_starter
+  displayName: Starter Relic
+  description: Basic artifact set piece.
+  rarity: 4
+  atkBonus: 40
+  hpBonus: 0
+  setId: starter_set
+  setBonusAtk: 0

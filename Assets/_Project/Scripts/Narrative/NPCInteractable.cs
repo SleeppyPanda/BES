@@ -1,6 +1,7 @@
 using BES.Core;
 using BES.UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace BES.Narrative
 {
@@ -14,6 +15,7 @@ namespace BES.Narrative
 
         Transform player;
         bool wasInRange;
+        float nextInteractTime;
 
         void Start()
         {
@@ -38,19 +40,45 @@ namespace BES.Narrative
 
             wasInRange = inRange;
 
-            if (inRange && player.TryGetComponent<Gameplay.PlayerInputReader>(out var input) && input.InteractPressed)
+            if (inRange && Time.time >= nextInteractTime && WasInteractPressed())
                 StartInteraction();
         }
 
         void StartInteraction()
         {
+            nextInteractTime = Time.time + 0.35f;
+
             if (DialogueSystem.Instance != null && DialogueSystem.Instance.StartDialogue(startDialogueNodeId))
+            {
+                GameEvents.RaiseNpcOutOfRange();
                 return;
+            }
+
+            if (!string.IsNullOrEmpty(startDialogueNodeId))
+            {
+                Debug.LogWarning($"[BES NPC] Không mở được dialogue node '{startDialogueNodeId}' cho NPC '{npcDisplayName}'.");
+                return;
+            }
 
             var ai = FindAnyObjectByType<AIDialogueService>();
             var ui = FindAnyObjectByType<DialogueUI>();
             if (ui != null)
+            {
+                GameEvents.RaiseNpcOutOfRange();
                 ui.OpenFreeChat(npcId, npcDisplayName, ai);
+            }
+        }
+
+        bool WasInteractPressed()
+        {
+            if (player != null &&
+                player.TryGetComponent<Gameplay.PlayerInputReader>(out var input) &&
+                input.InteractPressed)
+                return true;
+
+            var keyboard = Keyboard.current;
+            return keyboard != null &&
+                (keyboard.fKey.wasPressedThisFrame || keyboard.eKey.wasPressedThisFrame);
         }
 
         void OnDrawGizmosSelected()

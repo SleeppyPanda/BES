@@ -1,3 +1,4 @@
+using BES.Core;
 using BES.Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,6 +39,10 @@ namespace BES.UI
                 closeButton.onClick.AddListener(Close);
         }
 
+        void OnEnable() => GameEvents.OnPartyChanged += Refresh;
+
+        void OnDisable() => GameEvents.OnPartyChanged -= Refresh;
+
         public void Toggle()
         {
             if (panel == null)
@@ -67,9 +72,16 @@ namespace BES.UI
 
             if (stats != null)
             {
+                var activeCharacter = partyRoster?.ActiveCharacter;
                 var weaponAtk = EquippedWeaponState.Instance?.GetDisplayAtk() ?? 0;
-                if (nameText != null) nameText.text = "Main Character";
-                if (levelText != null) levelText.text = "Lv. 99 / 100";
+                if (nameText != null)
+                    nameText.text = !string.IsNullOrEmpty(activeCharacter?.displayName) ? activeCharacter.displayName : "Main Character";
+                if (levelText != null)
+                {
+                    var level = activeCharacter != null ? activeCharacter.level : 99;
+                    var maxLevel = activeCharacter != null ? activeCharacter.maxLevel : 100;
+                    levelText.text = $"Lv. {level} / {maxLevel}";
+                }
                 if (atkText != null) atkText.text = $"ATK: {stats.AttackPower + weaponAtk:0} (base {stats.AttackPower:0} + weapon {weaponAtk})";
                 if (hpText != null) hpText.text = $"HP: {stats.MaxHealth:0}";
                 if (defText != null) defText.text = $"DEF: {stats.Defense:0}";
@@ -83,8 +95,11 @@ namespace BES.UI
                 {
                     if (partySlotTexts[i] == null)
                         continue;
+
                     var slot = partyRoster.GetSlot(i);
-                    partySlotTexts[i].text = slot != null ? $"{i + 1:D2} {slot.displayName}" : $"{i + 1:D2} —";
+                    var definition = slot != null ? partyRoster.GetCharacterDefinition(slot.characterId) : null;
+                    var displayName = !string.IsNullOrEmpty(definition?.displayName) ? definition.displayName : slot?.displayName;
+                    partySlotTexts[i].text = slot != null ? $"{i + 1:D2} {displayName}" : $"{i + 1:D2} -";
                 }
             }
 

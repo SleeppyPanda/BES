@@ -38,6 +38,7 @@ namespace BES.UI
             var streak = GetStreakDay();
             if (day > streak)
                 PlayerPrefs.SetInt(GetStreakKey(), day);
+            PlayerPrefs.Save();
         }
 
         public int GetRewardForDay(int day) => gemsPerDay > 0 ? gemsPerDay : checkInRewardGems;

@@ -14,6 +14,12 @@ namespace BES.UI
             var label = string.IsNullOrEmpty(entry.displayLabel)
                 ? entry.rewardId
                 : entry.displayLabel;
+            if (entry.rewardType == GachaRewardType.Character)
+            {
+                var definition = CharacterDatabaseLoader.Load()?.Get(entry.rewardId);
+                if (!string.IsNullOrEmpty(definition?.displayName))
+                    label = definition.displayName;
+            }
 
             var duplicate = false;
             switch (entry.rewardType)

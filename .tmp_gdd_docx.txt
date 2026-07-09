@@ -1,0 +1,194 @@
+=== GAME DESIGN DOCUMENT (1).docx ===
+Paragraphs: 228
+
+GAME DESIGN DOCUMENT
+I. Thông tin giới thiệu
+Tên game: Beneath Enchanted Sky (BES)
+Thể loại: Action RPG
+Nền tảng: PC / Mobile(Android/IOS)
+Góc nhìn: Góc nhìn thứ 3
+Chế độ chơi: Online multiplayer game
+Đối tượng người chơi: 12+
+II. Ý tưởng và tầm nhìn
+Thế giới mở rộng cho người chơi khám phá
+Có thể lựa chọn nhân vật đa dạng
+Kết hợp các yếu tố giả tưởng và năng lượng nguyên tố
+Theo đuổi cốt truyện dài hạn
+Nội dung game được cập nhật theo từng phiên bản
+Hệ thống co-op tăng trải nghiệm người dùng
+Thiết kế lối chơi tự do điều khiển, không auto
+Tích hợp AI giải đáp cho người chơi về các vấn đề trong game
+III. Thế giới & cốt truyện
+Guarem là thế giới được thần bảo vệ, thần được con người gọi là các Bảo hộ. Trước khi “The disappearance of Danvial” xảy ra, con người đã cố tình chạm những điều cấm kị khiến khe nứt hư không mở ra và gây hỗn loạn cho toàn bộ thế giới, đồng thời vô số quái vật tràn vào Guarem. Các Bảo Hộ đã tập trung lại chống lại “sự lan tràn” của hư không. Nhưng Bảy Ma Thần từ hư không đã hành động và phát động chiến tranh với toàn thể lục địa. Trong lúc thế sự giằng co, Bảo Hộ của hủy diệt đã đứng ra quyết định dùng sách cấm để chống lại hư không. Sau khi trận chiến kết thúc, đứng đầu là 7 Ma Thần đã bị trấn áp ngay tại lãnh địa mà Bảo Hộ của Hủy Diệt tạo ra. Quân đoàn quái vật sau đó đã chạy trốn trong sự sợ hãi. Từ đó Guarem đã hòa bình trở lại.
+Hàng trăm năm sau, tại nơi phong ấn 7 Ma Thần đã xuất hiện một khe nứt hư không, kết giới đã bị phá vỡ, đồng thời giải thoát cho những Ma Thần bị giam cầm. Bảo Hộ của Hủy Diệt đã xuất hiện tại di tích cổ. Trong lúc đó, bất ngờ ngài bị một lực lượng thần bí dịch chuyển đi. Ngay sau đó tất cả các Bảo Hộ còn lại đã có mặt nhưng không còn gì ngoài di tích hoang tàn.
+Vài trăm năm sau, nhân vật chính sau khi trải qua biến cố đã được một đại tu sĩ cứu và mang về nuôi dưỡng. Cho đến khi năm 17 tuổi, nhân vật chính đã bước lên con đường khám phá thế giới và nguồn gốc của bản thân. Khi đến thành phố được bảo vệ bởi Bảo Hộ của Sáng Tạo, nhân vật chính đã gặp được những người bạn đáng tin cậy. Nhưng giữa thành phố phồn hoa ấy đang tồn tại một thế lực dòm ngó đến bảo vật được bảo vệ tại thần điện. Nhóm của nhân vật chính liệu có thể ngăn cản âm mưu của của chúng và tiếp tục chuyến hành trình khám phá thế giới?
+IV. Gameplay Core Loop
+Khám phá thế giới
+Chiến đấu với kẻ địch
+Các sự kiện, giải đố
+Nhận vật phẩm, exp
+Nâng cấp nhân vật
+Mở các khu vực mới
+V. Hệ thống thế giới mở
+Bản đồ liền mạch
+Chu kỳ ngày/đêm
+Các hành động: Chạy, nhảy, leo trèo, bơi, bay, dịch chuyển nhanh
+Thời tiết có thể ảnh hưởng gameplay
+VI. Các Nguyên tố / Skill
+Nguyên tố
+Lửa
+Nước
+Lôi
+Băng
+Phong
+Nham
+Thảo
+Phản ứng nguyên tố
+Lửa:
+Lửa + Nước = Bốc hơi
+Lửa + Lôi = Bùng nổ
+Lửa + Băng = Sốc nhiệt
+Lửa + Nham = Phá vỡ
+Lửa + Thảo = Thiêu đốt
+Lửa + Phong = Xuyên phá
+Nước:
+Nước + Lửa = Bốc hơi
+Nước + Lôi = Tê liệt
+Nước + Băng = Đông cứng
+Nước + Nham = Phá vỡ
+Nước + Thảo = Sinh sôi
+Nước + Phong = Xuyên phá
+Lôi:
+Lôi + Lửa = Bùng nổ
+Lôi + Nước = Tê liệt
+Lôi + Băng = Tê buốt
+Lôi + Nham = Phá vỡ
+Lôi + Thảo = Tăng trưởng
+Lôi + Phong = Xuyên phá
+Băng:
+Băng + Lửa = Vụn vỡ
+Băng + Nước = Suy nhược
+Băng + Lôi = Choáng váng
+Băng + Nham = Phá vỡ
+Băng + Phong = Xuyên Phá
+Nham, Thảo, Phong không phản ứng với nhau
+Hệ thống Skill
+Skill 1: Trên PC mặc định là phím Q, Mobile mặc định là nút Skill 1, cần tiêu hao mana để thi triển
+Skill 2: Trên PC mặc định là phím E, Mobile mặc định là nút Skill 2, cần tiêu hao mana để thi triển
+Ulti: Trên PC mặc định là phím R, Mobile mặc định là nút Skill 3, cần tiêu hao mana để thi triển
+Skill tăng cường:
+Trên PC mặc định là phím C + Q / E và Ulti, Mobile mặc định là nút Energy + Skill 1 / Skill 2 và Skill 3.
+Tiêu hao thanh Energy để triển khai.
+Skill phụ: Trên PC mặc định là phím T, Mobile mặc định là nút Skill phụ, cần tiêu hao mana để thi triển
+VII. Hệ thống nhân vật
+Main Character
+Nhân vật chính sở có thể hữu tất cả nguyên tố (phát triển dần theo cốt truyện)
+Nhân vật chính có thể sở hữu tất cả Bảo Hộ (phát triển dần theo cốt truyện)
+Nhân vật chính có thể sở hữu tất cả vũ khí (mỗi vũ khí sẽ dựa theo 1 nguyên tố sở hữu)
+Nhân vật chính có thể sở hữu 1 bộ kỹ năng riêng cho từng loại nguyên tố / vũ khí
+Playable Character
+Người chơi sở hữu nhiều nhân vật
+Mỗi nhân vật có 1 nguyên tố
+Mỗi nhân vật có 1 loại vũ khí
+Mỗi nhân vật có 1 Bảo Hộ
+Mỗi nhân vật có 1 bộ kỹ năng riêng
+Chuyển đổi nhân vật
+Đội hình tối đa có 4 nhân vật
+Có thể chuyển đổi nhân vật trong combat
+Thời gian hồi của chuyển đổi nhân vật là 1s
+Chỉ số cơ bản của nhân vật
+Hp: Máu cơ bản của nhân vật (tăng theo cấp độ nhân vật, vũ khí)
+Atk: Tấn công cơ bản của nhân vật (tăng theo cấp độ nhân vật, vũ khí)
+Def: Phòng thủ cơ bản của nhân vật (tăng theo cấp độ nhân vật, vũ khí)
+Energy: Năng lượng mặc định chung dùng để kích hoạt Skill tăng cường và Ulti
+Elemental Damage: Sát thương nguyên tố mặc định của nhân vật (tăng theo…)
+Stamina: Thanh Sức bền của nhân vật (tăng theo tiến trình khám phá thế giới)
+Mana: Thanh mana mặc định chung cần tiêu hao để dùng skill
+VIII. Hệ thống vũ khí
+Các loại vũ khí:
+Kiếm đơn
+Trượng
+Cung
+Vũ khí cán dài
+Đại kiếm
+Artifact:
+Atk
+Hp
+Def
+Crit Rate
+Crit DMG
+Mana Recharge
+IX. Các Bảo Hộ / Ma Thần
+Bảo Hộ:
+Bảo Hộ của Sáng Tạo
+Bảo Hộ của Hủy Diệt
+Bảo Hộ của Thời Gian
+Bảo Hộ của Bầu Trời
+Bảo Hộ của Trí Tuệ
+Bảo Hộ của Kháng Chiến
+Bảo Hộ của Công Lý
+Bảo Hộ của Tình Yêu
+Ma Thần:
+Ma Thần kiêu ngạo
+Ma Thần tham lam
+Ma Thần dâm dục
+Ma Thần đố kỵ
+Ma Thần phẫn nộ
+Ma Thần phàm ăn
+Ma Thần lười biếng
+X. Kẻ địch & Boss
+Các loại kẻ địch phân cấp
+Quái vật thường
+Quái vật tinh anh
+Phe phái thù địch
+Quái vật thế giới (các chủng loài cổ như sinh vật bay / sinh vật đất liền / sinh vật biển)
+Boss thế giới
+Boss lãnh địa
+Cơ chế Boss:
+Có nhiều phase (2-3 phase)
+Boss có nguyên tố
+Hiệu ứng riêng đặc biệt
+Hiệu ứng lãnh địa áp dụng cho Boss lãnh địa riêng
+XI. Hệ thống nhiệm vụ
+Các loại nhiệm vụ
+Nhiệm vụ cốt truyện chính
+Nhiệm vụ khám phá thế giới
+Nhiệm vụ ủy thác
+Nhiệm vụ riêng của nhân vật
+Nhiệm vụ ngày
+XII. Hệ thống gacha
+Nhân vật:
+Standard Banner
+Limited Character Banner
+Phân cấp nhân vật 4 sao và 5 sao
+Vũ khí:
+Weapon Banner
+Phân cấp vũ khí 3 sao / 4 sao / 5 sao
+Sự kiện:
+Event Banner (Theo mùa / ngày lễ)
+Item đặc biệt
+Trang phục
+XIII. Hệ thống tiền tệ
+Cơ bản:
+Đồng bạc, Đồng vàng, Đồng bạch ngân
+Mảnh vỡ hư không: (Event Banner)
+Bụi sao khởi nguyên
+Bụi sao khởi nguyên có thể chuyển đổi:
+Tinh tú vĩnh hằng: (Limited Character Banner / Weapon Banner)
+Tinh tú tàn khuyết: (Standard Banner)
+XIV. UI/UX
+Giao diện người dùng:
+Mini-map
+Compass nhiệm vụ
+Menu nhân vật
+Inventory
+Map lớn
+Nút tương tác
+Trải nghiệm người dùng
+Dễ dàng thao tác trên PC / Mobile (Android / IOS)
+Hiệu ứng mượt mà, không bị đứt gãy
+Thiết kế gọn để tầm nhìn được bao quát
+XVI. Monetization
+Gacha
+Battle Pass
+Các gói nạp

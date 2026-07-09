@@ -17,5 +17,8 @@ namespace BES.Gameplay
                 return nav != null && nav.IsBlockingGameplay;
             }
         }
+
+        public static bool IsMovementBlocked =>
+            DialogueSystem.Instance != null && DialogueSystem.Instance.IsActive;
     }
 }

@@ -45,7 +45,7 @@ namespace BES.Gameplay
             eventStreakDay = 0;
             equippedArtifactId = string.Empty;
             ownedArtifactIds.Clear();
-            UnlockArtifact("artifact_anthem");
+            UnlockArtifact("artifact_starter");
         }
 
         public bool OwnsArtifact(string artifactId) =>

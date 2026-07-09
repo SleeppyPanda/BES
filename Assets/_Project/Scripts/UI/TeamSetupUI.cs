@@ -46,7 +46,9 @@ namespace BES.UI
                 var go = Instantiate(teamSlotPrefab, slotsContainer);
                 var slot = go.GetComponent<UITeamSlot>();
                 var member = roster.GetSlot(i);
-                slot?.Setup(i, member?.displayName, null, OnSlotClicked);
+                var definition = member != null ? roster.GetCharacterDefinition(member.characterId) : null;
+                var displayName = !string.IsNullOrEmpty(definition?.displayName) ? definition.displayName : member?.displayName;
+                slot?.Setup(i, displayName, definition?.portrait, OnSlotClicked);
             }
         }
 
@@ -69,7 +71,9 @@ namespace BES.UI
                 if (member == null)
                     continue;
 
-                BESUIHelper.CreatePickerButton(rosterPickerContainer, member.displayName, () =>
+                var definition = roster.GetCharacterDefinition(member.characterId);
+                var displayName = !string.IsNullOrEmpty(definition?.displayName) ? definition.displayName : member.displayName;
+                BESUIHelper.CreatePickerButton(rosterPickerContainer, displayName, () =>
                 {
                     roster.AssignSlot(selectedSlot, member);
                     RefreshSlots();

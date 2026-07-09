@@ -1,5 +1,6 @@
 using BES.Core;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace BES.Gameplay
 {
@@ -15,6 +16,7 @@ namespace BES.Gameplay
         [SerializeField] float minPitch = -12f;
         [SerializeField] float maxPitch = 42f;
         [SerializeField] float fieldOfView = 50f;
+        [SerializeField] bool lockCameraWhileShiftHeld = true;
 
         PlayerInputReader input;
         float yaw;
@@ -32,10 +34,16 @@ namespace BES.Gameplay
             if (target == null)
                 return;
 
-            var look = input != null ? input.Look : Vector2.zero;
-            yaw += look.x * sensitivity;
-            pitch -= look.y * sensitivity;
-            pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+            if (!IsCameraLocked())
+            {
+                var look = input != null ? input.Look : Vector2.zero;
+                if (look.sqrMagnitude < 0.001f)
+                    look = ReadMouseLook();
+
+                yaw += look.x * sensitivity;
+                pitch -= look.y * sensitivity;
+                pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
+            }
 
             var pivot = target.position + Vector3.up * lookHeight;
             var rotation = Quaternion.Euler(pitch, yaw, 0f);
@@ -44,5 +52,20 @@ namespace BES.Gameplay
         }
 
         public void SetTarget(Transform newTarget) => target = newTarget;
+
+        bool IsCameraLocked()
+        {
+            if (!lockCameraWhileShiftHeld)
+                return false;
+
+            var keyboard = Keyboard.current;
+            return keyboard != null && (keyboard.leftShiftKey.isPressed || keyboard.rightShiftKey.isPressed);
+        }
+
+        static Vector2 ReadMouseLook()
+        {
+            var mouse = Mouse.current;
+            return mouse != null ? mouse.delta.ReadValue() * 0.03f : Vector2.zero;
+        }
     }
 }

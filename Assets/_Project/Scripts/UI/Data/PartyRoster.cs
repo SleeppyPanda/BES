@@ -21,10 +21,13 @@ namespace BES.UI
         public const int MaxPartySize = 4;
 
         [SerializeField] PartyMemberSlot[] members = new PartyMemberSlot[MaxPartySize];
+
         readonly HashSet<string> unlockedCharacterIds = new();
+        CharacterDatabase characterDatabase;
         int activeCharacterIndex;
 
         public int ActiveCharacterIndex => Mathf.Clamp(activeCharacterIndex, 0, MaxPartySize - 1);
+        public int MemberCount => MaxPartySize;
 
         public string ActiveCharacterId
         {
@@ -35,16 +38,23 @@ namespace BES.UI
             }
         }
 
+        public CharacterDefinition ActiveCharacter => GetCharacterDefinition(ActiveCharacterId);
+
         public PartyMemberSlot GetSlot(int index)
         {
             if (index < 0 || index >= MaxPartySize)
                 return null;
+
             return members[index];
         }
 
-        public int MemberCount => MaxPartySize;
-
         public PartyMemberSlot GetMember(int index) => GetSlot(index);
+
+        public CharacterDefinition GetCharacterDefinition(string characterId)
+        {
+            characterDatabase ??= CharacterDatabaseLoader.Load();
+            return characterDatabase?.Get(characterId);
+        }
 
         public bool IsCharacterUnlocked(string characterId) =>
             !string.IsNullOrEmpty(characterId) && unlockedCharacterIds.Contains(characterId);
@@ -57,24 +67,41 @@ namespace BES.UI
             unlockedCharacterIds.Add(characterId);
             for (var i = 0; i < MaxPartySize; i++)
             {
-                if (members[i] != null && members[i].characterId == characterId)
-                {
-                    members[i].isUnlocked = true;
-                    return;
-                }
+                if (members[i] == null || members[i].characterId != characterId)
+                    continue;
+
+                members[i].displayName = ResolveDisplayName(characterId, displayName);
+                members[i].isUnlocked = true;
+                GameEvents.RaisePartyChanged();
+                return;
             }
+
+            GameEvents.RaisePartyChanged();
         }
 
         public IEnumerable<PartyMemberSlot> GetUnlockedRosterMembers()
         {
+            characterDatabase ??= CharacterDatabaseLoader.Load();
+            var emitted = new HashSet<string>();
+
+            if (characterDatabase?.Characters != null)
+            {
+                foreach (var character in characterDatabase.Characters)
+                {
+                    if (character == null || !IsCharacterUnlocked(character.characterId))
+                        continue;
+
+                    emitted.Add(character.characterId);
+                    yield return CreateMemberFromId(character.characterId);
+                }
+            }
+
             foreach (var id in unlockedCharacterIds)
             {
-                yield return new PartyMemberSlot
-                {
-                    characterId = id,
-                    displayName = GetDisplayNameForId(id),
-                    isUnlocked = true
-                };
+                if (emitted.Contains(id))
+                    continue;
+
+                yield return CreateMemberFromId(id);
             }
         }
 
@@ -84,6 +111,7 @@ namespace BES.UI
                 return;
             if (!IsCharacterUnlocked(member.characterId))
                 return;
+
             SetSlot(slotIndex, member.characterId, member.displayName);
         }
 
@@ -101,38 +129,41 @@ namespace BES.UI
             GameEvents.RaisePartyChanged();
         }
 
-        static void RefreshActiveBuild()
-        {
-            var player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null && player.TryGetComponent<PlayerBuildStats>(out var build))
-                build.Refresh();
-        }
-
         public void SetSlot(int index, string characterId, string displayName)
         {
-            if (index < 0 || index >= MaxPartySize)
+            if (index < 0 || index >= MaxPartySize || string.IsNullOrEmpty(characterId))
                 return;
 
             members[index] ??= new PartyMemberSlot();
             members[index].characterId = characterId;
-            members[index].displayName = displayName;
+            members[index].displayName = ResolveDisplayName(characterId, displayName);
             members[index].isUnlocked = IsCharacterUnlocked(characterId);
+
+            if (index == activeCharacterIndex)
+                RefreshActiveBuild();
+
+            GameEvents.RaisePartyChanged();
         }
 
         public void ResetToDefaults()
         {
             unlockedCharacterIds.Clear();
-            var defaults = new[] { "hero_01", "hero_02", "hero_03", "hero_04" };
-            var names = new[] { "Main Character", "Ally A", "Ally B", "Ally C" };
+            characterDatabase = CharacterDatabaseLoader.Load();
+            var defaults = GetDefaultPartyIds();
+
             for (var i = 0; i < MaxPartySize; i++)
             {
+                var id = i < defaults.Count ? defaults[i] : $"hero_{i + 1:00}";
                 members[i] ??= new PartyMemberSlot();
-                members[i].characterId = defaults[i];
-                members[i].displayName = names[i];
+                members[i].characterId = id;
+                members[i].displayName = GetDisplayNameForId(id);
                 members[i].isUnlocked = true;
-                unlockedCharacterIds.Add(defaults[i]);
+                unlockedCharacterIds.Add(id);
             }
+
             activeCharacterIndex = 0;
+            RefreshActiveBuild();
+            GameEvents.RaisePartyChanged();
         }
 
         void Awake()
@@ -145,6 +176,7 @@ namespace BES.UI
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            characterDatabase = CharacterDatabaseLoader.Load();
             EnsureDefaults();
         }
 
@@ -153,17 +185,16 @@ namespace BES.UI
             if (unlockedCharacterIds.Count > 0)
                 return;
 
-            var defaults = new[] { "hero_01", "hero_02", "hero_03", "hero_04" };
-            var names = new[] { "Main Character", "Ally A", "Ally B", "Ally C" };
+            var defaults = GetDefaultPartyIds();
             for (var i = 0; i < MaxPartySize; i++)
             {
+                var id = i < defaults.Count ? defaults[i] : $"hero_{i + 1:00}";
                 members[i] ??= new PartyMemberSlot();
-                if (string.IsNullOrEmpty(members[i].characterId))
-                {
-                    members[i].characterId = defaults[i];
-                    members[i].displayName = names[i];
-                }
 
+                if (string.IsNullOrEmpty(members[i].characterId))
+                    members[i].characterId = id;
+
+                members[i].displayName = GetDisplayNameForId(members[i].characterId);
                 members[i].isUnlocked = true;
                 unlockedCharacterIds.Add(members[i].characterId);
             }
@@ -218,16 +249,43 @@ namespace BES.UI
 
             activeCharacterIndex = Mathf.Clamp(data.activeCharacterIndex, 0, MaxPartySize - 1);
             RefreshActiveBuild();
+            GameEvents.RaisePartyChanged();
         }
 
-        static string GetDisplayNameForId(string id) => id switch
+        static void RefreshActiveBuild()
         {
-            "hero_01" => "Main Character",
-            "hero_02" => "Ally A",
-            "hero_03" => "Ally B",
-            "hero_04" => "Ally C",
-            "char_limited_01" => "Limited Hero",
-            _ => id
+            var player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null && player.TryGetComponent<PlayerBuildStats>(out var build))
+                build.Refresh();
+        }
+
+        PartyMemberSlot CreateMemberFromId(string id) => new()
+        {
+            characterId = id,
+            displayName = GetDisplayNameForId(id),
+            isUnlocked = true
         };
+
+        string ResolveDisplayName(string id, string fallback)
+        {
+            var name = GetDisplayNameForId(id);
+            return !string.IsNullOrEmpty(name) ? name : fallback;
+        }
+
+        string GetDisplayNameForId(string id)
+        {
+            characterDatabase ??= CharacterDatabaseLoader.Load();
+            return characterDatabase != null ? characterDatabase.GetDisplayName(id) : id;
+        }
+
+        IReadOnlyList<string> GetDefaultPartyIds()
+        {
+            characterDatabase ??= CharacterDatabaseLoader.Load();
+            var defaults = characterDatabase?.GetDefaultPartyIds();
+            if (defaults != null && defaults.Count > 0)
+                return defaults;
+
+            return new[] { "hero_01", "hero_02", "hero_03", "hero_04" };
+        }
     }
 }
