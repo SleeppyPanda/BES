@@ -113,6 +113,7 @@ namespace BES.Editor
         static void CreateScenes()
         {
             CreateMainMenuScene();
+            CreateLoadingScene();
             CreateGameplayScene();
             CreatePrototypeScene();
         }
@@ -130,6 +131,44 @@ namespace BES.Editor
 
             EnsureEventSystem(systems);
             SaveScene(SceneNames.MainMenu);
+        }
+
+        static void CreateLoadingScene()
+        {
+            BESLoadingSceneBuilder.RebuildLoadingScene();
+        }
+
+        static Slider CreateLoadingSlider(Transform parent)
+        {
+            var go = new GameObject("ProgressBar");
+            go.transform.SetParent(parent, false);
+            var rect = go.AddComponent<RectTransform>();
+            UIAnchorPresets.Center(rect, new Vector2(680, 24));
+            rect.anchoredPosition = new Vector2(0, -140);
+
+            var bg = go.AddComponent<Image>();
+            bg.color = new Color(1f, 1f, 1f, 0.18f);
+            var slider = go.AddComponent<Slider>();
+            slider.minValue = 0f;
+            slider.maxValue = 1f;
+            slider.value = 0f;
+            slider.transition = Selectable.Transition.None;
+
+            var fillArea = new GameObject("Fill Area");
+            fillArea.transform.SetParent(go.transform, false);
+            var fillAreaRect = fillArea.AddComponent<RectTransform>();
+            UIAnchorPresets.StretchFull(fillAreaRect);
+
+            var fill = new GameObject("Fill");
+            fill.transform.SetParent(fillArea.transform, false);
+            var fillRect = fill.AddComponent<RectTransform>();
+            UIAnchorPresets.StretchFull(fillRect);
+            var fillImage = fill.AddComponent<Image>();
+            fillImage.color = new Color(0.95f, 0.72f, 0.18f, 1f);
+
+            slider.fillRect = fillRect;
+            slider.targetGraphic = bg;
+            return slider;
         }
 
         static void CreateGameplayScene()
@@ -812,6 +851,7 @@ namespace BES.Editor
             var scenes = new[]
             {
                 ScenesPath + "/MainMenu.unity",
+                ScenesPath + "/Loading.unity",
                 ScenesPath + "/Gameplay.unity",
                 ScenesPath + "/PrototypeScene.unity"
             };

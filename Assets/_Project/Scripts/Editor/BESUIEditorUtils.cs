@@ -95,12 +95,13 @@ namespace BES.Editor
             return img;
         }
 
-        public static Button CreateMenuHitArea(Transform parent, string name, System.Action<RectTransform> applyAnchor)
+        public static Button CreateMenuHitArea(Transform parent, string name, Vector2 anchoredPos, Vector2 size)
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
             var rect = go.AddComponent<RectTransform>();
-            applyAnchor(rect);
+            UIAnchorPresets.Center(rect, size);
+            rect.anchoredPosition = anchoredPos;
 
             var img = go.AddComponent<Image>();
             img.color = new Color(1f, 1f, 1f, 0f);

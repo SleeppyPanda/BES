@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace BES.UI
 {
     /// <summary>
-    /// Fit the full 1920×1080 layout on screen (Shrink) — không cắt mất UI ở mép.
+    /// Keeps the UI authored against a fixed 1920x1080 frame.
     /// </summary>
     [RequireComponent(typeof(Canvas))]
     public class UICanvasFit : MonoBehaviour
