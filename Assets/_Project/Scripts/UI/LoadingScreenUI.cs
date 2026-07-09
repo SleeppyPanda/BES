@@ -66,7 +66,8 @@ namespace BES.UI
         {
             if (instance == null)
                 return;
-            instance.statusText.text = message;
+            if (instance.statusText != null)
+                instance.statusText.text = message;
             instance.Show();
         }
     }

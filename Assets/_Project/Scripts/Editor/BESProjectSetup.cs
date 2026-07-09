@@ -113,6 +113,7 @@ namespace BES.Editor
         static void CreateScenes()
         {
             CreateMainMenuScene();
+            CreateLoadingScene();
             CreateGameplayScene();
             CreatePrototypeScene();
         }
@@ -130,6 +131,12 @@ namespace BES.Editor
 
             EnsureEventSystem(systems);
             SaveScene(SceneNames.MainMenu);
+        }
+
+        static void CreateLoadingScene()
+        {
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            SaveScene(SceneNames.Loading);
         }
 
         static void CreateGameplayScene()
@@ -767,6 +774,7 @@ namespace BES.Editor
             var scenes = new[]
             {
                 ScenesPath + "/MainMenu.unity",
+                ScenesPath + "/Loading.unity",
                 ScenesPath + "/Gameplay.unity",
                 ScenesPath + "/PrototypeScene.unity"
             };
