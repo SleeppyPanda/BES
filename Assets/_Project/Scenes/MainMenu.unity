@@ -491,19 +491,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1739483057992615866, guid: b83dac6cfaa011247b234ff8c364a649, type: 3}
       propertyPath: m_Pivot.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1739483057992615866, guid: b83dac6cfaa011247b234ff8c364a649, type: 3}
       propertyPath: m_Pivot.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1739483057992615866, guid: b83dac6cfaa011247b234ff8c364a649, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1739483057992615866, guid: b83dac6cfaa011247b234ff8c364a649, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1739483057992615866, guid: b83dac6cfaa011247b234ff8c364a649, type: 3}
       propertyPath: m_AnchorMin.x

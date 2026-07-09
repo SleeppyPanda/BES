@@ -78,12 +78,12 @@ namespace BES.Editor
             var controller = controllerGo.AddComponent<MainMenuController>();
 
             var logo = CreateMainMenuLogo(canvasGo.transform);
-            var clickBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "ClickToBegin", UIAnchorPresets.ApplyMainMenuClickHit);
-            var regionBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "RegionButton", UIAnchorPresets.ApplyMainMenuRegionHit);
-            var eventBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "EventButton", UIAnchorPresets.ApplyMainMenuEventHit);
-            var quitBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "QuitButton", UIAnchorPresets.ApplyMainMenuQuitHit);
-            var profileBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "ProfileButton", UIAnchorPresets.ApplyMainMenuProfileHit);
-            var settingsBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "SettingsButton", UIAnchorPresets.ApplyMainMenuSettingsHit);
+            var clickBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "ClickToBegin", new Vector2(0, 500), new Vector2(560, 72));
+            var regionBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "RegionButton", new Vector2(0, 320), new Vector2(220, 52));
+            var eventBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "EventButton", new Vector2(812, -412), new Vector2(56, 56));
+            var quitBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "QuitButton", new Vector2(-884, -492), new Vector2(56, 56));
+            var profileBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "ProfileButton", new Vector2(812, -332), new Vector2(56, 56));
+            var settingsBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "SettingsButton", new Vector2(812, -492), new Vector2(56, 56));
             AddButtonLabel(clickBtn.transform, "Click to begin", 18f);
             AddButtonLabel(regionBtn.transform, "Region", 18f);
             AddButtonLabel(eventBtn.transform, "Event", 14f);

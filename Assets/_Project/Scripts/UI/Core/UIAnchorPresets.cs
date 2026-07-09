@@ -130,14 +130,5 @@ namespace BES.UI
             rect.anchoredPosition = anchoredPos;
         }
 
-        // Start.png @ 1920×1080
-        public static void ApplyMainMenuClickHit(RectTransform rect) => BottomCenter(rect, new Vector2(560, 72), new Vector2(0, 500));
-        public static void ApplyMainMenuRegionHit(RectTransform rect) => BottomCenter(rect, new Vector2(220, 52), new Vector2(0, 320));
-        public static void ApplyMainMenuEventHit(RectTransform rect) => BottomRight(rect, new Vector2(56, 56), new Vector2(48, 128));
-        public static void ApplyMainMenuPowerHit(RectTransform rect) => BottomLeft(rect, new Vector2(56, 56), new Vector2(48, 48));
-        public static void ApplyMainMenuProfileHit(RectTransform rect) => BottomRight(rect, new Vector2(56, 56), new Vector2(48, 208));
-        public static void ApplyMainMenuSettingsHit(RectTransform rect) => BottomRight(rect, new Vector2(56, 56), new Vector2(48, 48));
-        public static void ApplyMainMenuQuitHit(RectTransform rect) => ApplyMainMenuPowerHit(rect);
-        public static void ApplyMainMenuJournalHit(RectTransform rect) => ApplyMainMenuEventHit(rect);
     }
 }

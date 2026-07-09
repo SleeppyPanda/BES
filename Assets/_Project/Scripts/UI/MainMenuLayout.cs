@@ -24,13 +24,6 @@ namespace BES.UI
             }
 
             ApplyMainMenuBackground(canvasRoot);
-
-            ApplyHit(canvasRoot, "ClickToBegin", UIAnchorPresets.ApplyMainMenuClickHit);
-            ApplyHit(canvasRoot, "RegionButton", UIAnchorPresets.ApplyMainMenuRegionHit);
-            ApplyHit(canvasRoot, "EventButton", UIAnchorPresets.ApplyMainMenuEventHit);
-            ApplyHit(canvasRoot, "QuitButton", UIAnchorPresets.ApplyMainMenuQuitHit);
-            ApplyHit(canvasRoot, "ProfileButton", UIAnchorPresets.ApplyMainMenuProfileHit);
-            ApplyHit(canvasRoot, "SettingsButton", UIAnchorPresets.ApplyMainMenuSettingsHit);
         }
 
         static void ApplyMainMenuBackground(Transform canvasRoot)
@@ -40,16 +33,11 @@ namespace BES.UI
 
             var bg = canvasRoot.Find("Background");
             if (bg == null)
-            {
-                var go = new GameObject("Background");
-                go.transform.SetParent(canvasRoot, false);
-                go.transform.SetAsFirstSibling();
-                var rect = go.AddComponent<RectTransform>();
-                UIAnchorPresets.StretchFull(rect);
-                bg = go.transform;
-            }
+                return;
 
-            var img = bg.GetComponent<Image>() ?? bg.gameObject.AddComponent<Image>();
+            var img = bg.GetComponent<Image>();
+            if (img == null)
+                return;
             if (sprite != null)
                 img.sprite = sprite;
             img.preserveAspect = false;
@@ -57,14 +45,5 @@ namespace BES.UI
             img.raycastTarget = false;
         }
 
-        static void ApplyHit(Transform root, string name, System.Action<RectTransform> anchor)
-        {
-            var t = root.Find(name);
-            if (t == null)
-                return;
-            var rect = t.GetComponent<RectTransform>();
-            if (rect != null)
-                anchor(rect);
-        }
     }
 }
