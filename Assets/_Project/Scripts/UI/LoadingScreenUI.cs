@@ -1,7 +1,7 @@
 using BES.Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace BES.UI
 {
@@ -36,16 +36,13 @@ namespace BES.UI
         void OnLoadStarted(string sceneName)
         {
             Show();
-            if (statusText != null)
-                statusText.text = $"Loading {sceneName}...";
-            if (progressBar != null)
-                progressBar.value = 0.2f;
+            SetStatus($"Loading {sceneName}...");
+            SetProgress(0.2f);
         }
 
         void OnLoadCompleted(string sceneName)
         {
-            if (progressBar != null)
-                progressBar.value = 1f;
+            SetProgress(1f);
             Hide();
         }
 
@@ -59,15 +56,26 @@ namespace BES.UI
         public override void Refresh()
         {
             if (tipText != null)
-                tipText.text = "Tip: Nhấn F gần NPC để tương tác.";
+                tipText.text = "Tip: Press F near an NPC to interact.";
+        }
+
+        public void SetProgress(float value)
+        {
+            if (progressBar != null)
+                progressBar.value = Mathf.Clamp01(value);
+        }
+
+        public void SetStatus(string message)
+        {
+            if (statusText != null)
+                statusText.text = message;
         }
 
         public static void ShowStatic(string message)
         {
             if (instance == null)
                 return;
-            if (instance.statusText != null)
-                instance.statusText.text = message;
+            instance.SetStatus(message);
             instance.Show();
         }
     }

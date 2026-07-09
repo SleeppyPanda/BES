@@ -2093,6 +2093,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4530ec42003cc5e48a312bc068b24cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BES::BES.UI.MainMenuController
+  devMode: 0
+  logoObject: {fileID: 2018204685329947055}
   regionButton: {fileID: 6973145410332295172}
   quitButton: {fileID: 4370008530550185731}
   clickToBeginButton: {fileID: 209728935522715615}
@@ -2960,6 +2962,8 @@ MonoBehaviour:
   usernameText: {fileID: 3719395320030708482}
   serverText: {fileID: 8455068090960144648}
   uidText: {fileID: 6042854684018843935}
+  usernameInput: {fileID: 0}
+  createAccountButton: {fileID: 0}
   closeButton: {fileID: 2328456715353095300}
 --- !u!1 &8080182775781664267
 GameObject:

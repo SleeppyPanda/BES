@@ -77,18 +77,26 @@ namespace BES.Editor
             controllerGo.transform.SetParent(canvasGo.transform, false);
             var controller = controllerGo.AddComponent<MainMenuController>();
 
+            var logo = CreateMainMenuLogo(canvasGo.transform);
             var clickBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "ClickToBegin", UIAnchorPresets.ApplyMainMenuClickHit);
             var regionBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "RegionButton", UIAnchorPresets.ApplyMainMenuRegionHit);
             var eventBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "EventButton", UIAnchorPresets.ApplyMainMenuEventHit);
             var quitBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "QuitButton", UIAnchorPresets.ApplyMainMenuQuitHit);
             var profileBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "ProfileButton", UIAnchorPresets.ApplyMainMenuProfileHit);
             var settingsBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "SettingsButton", UIAnchorPresets.ApplyMainMenuSettingsHit);
+            AddButtonLabel(clickBtn.transform, "Click to begin", 18f);
+            AddButtonLabel(regionBtn.transform, "Region", 18f);
+            AddButtonLabel(eventBtn.transform, "Event", 14f);
+            AddButtonLabel(quitBtn.transform, "Logout", 13f);
+            AddButtonLabel(profileBtn.transform, "Account", 13f);
+            AddButtonLabel(settingsBtn.transform, "Settings", 12f);
 
             var profilePanel = BuildPlayerProfilePanel(canvasGo.transform);
             var settingsPanel = BuildSettingsPanel(canvasGo.transform);
             var serverPicker = BuildServerPickerPanel(canvasGo.transform);
             var eventPanel = BuildEventPanel(canvasGo.transform);
 
+            BESUIEditorUtils.SetPrivateField(controller, "logoObject", logo);
             BESUIEditorUtils.SetPrivateField(controller, "regionButton", regionBtn);
             BESUIEditorUtils.SetPrivateField(controller, "quitButton", quitBtn);
             BESUIEditorUtils.SetPrivateField(controller, "clickToBeginButton", clickBtn);
@@ -101,6 +109,38 @@ namespace BES.Editor
             BESUIEditorUtils.SetPrivateField(controller, "eventUI", eventPanel);
 
             return canvasGo;
+        }
+
+        static GameObject CreateMainMenuLogo(Transform parent)
+        {
+            var logoGo = new GameObject("Logo");
+            logoGo.transform.SetParent(parent, false);
+            var rect = logoGo.AddComponent<RectTransform>();
+            UIAnchorPresets.Center(rect, new Vector2(870, 578));
+            rect.anchoredPosition = new Vector2(0, 196);
+
+            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/_Project/Art/UI/UI - UX/Logo game.png");
+            var image = logoGo.AddComponent<RawImage>();
+            image.texture = texture;
+            image.raycastTarget = false;
+            return logoGo;
+        }
+
+        static void AddButtonLabel(Transform parent, string label, float fontSize)
+        {
+            var go = new GameObject("Label");
+            go.transform.SetParent(parent, false);
+            var rect = go.AddComponent<RectTransform>();
+            UIAnchorPresets.StretchFull(rect);
+            rect.offsetMin = new Vector2(4f, 2f);
+            rect.offsetMax = new Vector2(-4f, -2f);
+
+            var text = go.AddComponent<TextMeshProUGUI>();
+            text.text = label;
+            text.fontSize = fontSize;
+            text.alignment = TextAlignmentOptions.Center;
+            text.color = Color.white;
+            text.raycastTarget = false;
         }
 
         static GameObject BuildGameplayHudRoot()
@@ -929,14 +969,45 @@ namespace BES.Editor
             var username = BESUIEditorUtils.CreateText(go.transform, "Username", "Username PLayer", new Vector2(0, 80), 20f);
             var server = BESUIEditorUtils.CreateText(go.transform, "Server", "Server: Asian", new Vector2(0, 20), 16f);
             var uid = BESUIEditorUtils.CreateText(go.transform, "UID", "UID: 100000001", new Vector2(0, -20), 14f);
+            var input = CreateTMPInput(go.transform, "AccountNameInput", "Account name", new Vector2(0, -92), new Vector2(320, 44));
+            var create = BESUIEditorUtils.CreateButton(go.transform, "CreateAccountButton", "Create account", new Vector2(0, -152), new Vector2(220, 44));
             var close = BESUIEditorUtils.CreateButton(go.transform, "CloseBtn", "X", new Vector2(360, 200), new Vector2(48, 48));
             BESUIEditorUtils.SetPrivateField(ui, "root", go);
             BESUIEditorUtils.SetPrivateField(ui, "usernameText", username);
             BESUIEditorUtils.SetPrivateField(ui, "serverText", server);
             BESUIEditorUtils.SetPrivateField(ui, "uidText", uid);
+            BESUIEditorUtils.SetPrivateField(ui, "usernameInput", input);
+            BESUIEditorUtils.SetPrivateField(ui, "createAccountButton", create);
             BESUIEditorUtils.SetPrivateField(ui, "closeButton", close);
             go.SetActive(false);
             return ui;
+        }
+
+        static TMP_InputField CreateTMPInput(Transform parent, string name, string placeholderText, Vector2 anchoredPos, Vector2 size)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            var rect = go.AddComponent<RectTransform>();
+            UIAnchorPresets.Center(rect, size);
+            rect.anchoredPosition = anchoredPos;
+            var image = go.AddComponent<Image>();
+            image.color = new Color(0.05f, 0.07f, 0.11f, 0.72f);
+
+            var text = BESUIEditorUtils.CreateText(go.transform, "Text", string.Empty, Vector2.zero, 18f, TextAlignmentOptions.MidlineLeft);
+            UIAnchorPresets.StretchFull(text.rectTransform);
+            text.rectTransform.offsetMin = new Vector2(14f, 0f);
+            text.rectTransform.offsetMax = new Vector2(-14f, 0f);
+
+            var placeholder = BESUIEditorUtils.CreateText(go.transform, "Placeholder", placeholderText, Vector2.zero, 18f, TextAlignmentOptions.MidlineLeft);
+            UIAnchorPresets.StretchFull(placeholder.rectTransform);
+            placeholder.rectTransform.offsetMin = new Vector2(14f, 0f);
+            placeholder.rectTransform.offsetMax = new Vector2(-14f, 0f);
+            placeholder.color = new Color(1f, 1f, 1f, 0.42f);
+
+            var input = go.AddComponent<TMP_InputField>();
+            input.textComponent = text;
+            input.placeholder = placeholder;
+            return input;
         }
 
         static SettingsUI BuildSettingsPanel(Transform parent)

@@ -136,7 +136,75 @@ namespace BES.Editor
         static void CreateLoadingScene()
         {
             EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            var ui = CreateSceneGroup("UI");
+            var systems = CreateSceneGroup("Systems");
+
+            var canvas = CreateCanvas("LoadingCanvas");
+            canvas.transform.SetParent(ui, false);
+
+            var panel = new GameObject("LoadingScreenUI");
+            panel.transform.SetParent(canvas.transform, false);
+            var panelRect = panel.AddComponent<RectTransform>();
+            UIAnchorPresets.StretchFull(panelRect);
+            var panelImage = panel.AddComponent<Image>();
+            panelImage.color = new Color(0.03f, 0.035f, 0.055f, 1f);
+            var loadingUI = panel.AddComponent<LoadingScreenUI>();
+
+            var logo = new GameObject("Logo");
+            logo.transform.SetParent(panel.transform, false);
+            var logoRect = logo.AddComponent<RectTransform>();
+            UIAnchorPresets.Center(logoRect, new Vector2(360, 180));
+            logoRect.anchoredPosition = new Vector2(0, 80);
+            var logoImage = logo.AddComponent<RawImage>();
+            logoImage.texture = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/_Project/Art/UI/UI - UX/Logo game.png");
+            logoImage.raycastTarget = false;
+
+            var status = CreateText(panel.transform, "StatusText", "Preparing...", new Vector2(0, -84));
+            status.fontSize = 18;
+            var tip = CreateText(panel.transform, "TipText", "Tip: Press F near an NPC to interact.", new Vector2(0, -184));
+            tip.fontSize = 14;
+            var slider = CreateLoadingSlider(panel.transform);
+
+            SetPrivateField(loadingUI, "root", panel);
+            SetPrivateField(loadingUI, "progressBar", slider);
+            SetPrivateField(loadingUI, "statusText", status);
+            SetPrivateField(loadingUI, "tipText", tip);
+
+            EnsureEventSystem(systems);
             SaveScene(SceneNames.Loading);
+        }
+
+        static Slider CreateLoadingSlider(Transform parent)
+        {
+            var go = new GameObject("ProgressBar");
+            go.transform.SetParent(parent, false);
+            var rect = go.AddComponent<RectTransform>();
+            UIAnchorPresets.Center(rect, new Vector2(680, 24));
+            rect.anchoredPosition = new Vector2(0, -140);
+
+            var bg = go.AddComponent<Image>();
+            bg.color = new Color(1f, 1f, 1f, 0.18f);
+            var slider = go.AddComponent<Slider>();
+            slider.minValue = 0f;
+            slider.maxValue = 1f;
+            slider.value = 0f;
+            slider.transition = Selectable.Transition.None;
+
+            var fillArea = new GameObject("Fill Area");
+            fillArea.transform.SetParent(go.transform, false);
+            var fillAreaRect = fillArea.AddComponent<RectTransform>();
+            UIAnchorPresets.StretchFull(fillAreaRect);
+
+            var fill = new GameObject("Fill");
+            fill.transform.SetParent(fillArea.transform, false);
+            var fillRect = fill.AddComponent<RectTransform>();
+            UIAnchorPresets.StretchFull(fillRect);
+            var fillImage = fill.AddComponent<Image>();
+            fillImage.color = new Color(0.95f, 0.72f, 0.18f, 1f);
+
+            slider.fillRect = fillRect;
+            slider.targetGraphic = bg;
+            return slider;
         }
 
         static void CreateGameplayScene()
