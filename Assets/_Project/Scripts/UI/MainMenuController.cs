@@ -1,5 +1,4 @@
 using BES.Core;
-using BES.Gameplay;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,8 +9,7 @@ namespace BES.UI
     {
         const string DevBypassAccountKey = "BES_DevBypassAccount";
 
-        [SerializeField] Button newGameButton;
-        [SerializeField] Button continueButton;
+        [SerializeField] Button regionButton;
         [SerializeField] Button quitButton;
         [SerializeField] Button clickToBeginButton;
         [SerializeField] Button profileButton;
@@ -33,28 +31,12 @@ namespace BES.UI
 
         void Start()
         {
-            Wire(newGameButton, OpenServerPicker);
-            Wire(continueButton, OnContinue);
+            Wire(regionButton, OpenServerPicker);
             Wire(quitButton, () => Application.Quit());
             Wire(clickToBeginButton, OnClickToBegin);
             Wire(profileButton, () => playerProfileUI?.Show());
             Wire(settingsButton, () => settingsUI?.Show());
             Wire(eventButton, () => eventUI?.Show());
-
-            if (serverPickerUI != null)
-                serverPickerUI.OnServerSelected += OnServerSelected;
-
-            if (continueButton != null)
-            {
-                var hasSave = GameManager.Instance?.Save?.HasSave == true;
-                continueButton.gameObject.SetActive(hasSave);
-            }
-        }
-
-        void OnDestroy()
-        {
-            if (serverPickerUI != null)
-                serverPickerUI.OnServerSelected -= OnServerSelected;
         }
 
         static void Wire(Button btn, UnityEngine.Events.UnityAction action)
@@ -83,34 +65,22 @@ namespace BES.UI
             StartNewGame();
         }
 
-        void OnServerSelected(string serverId)
-        {
-            // Server is persisted by ServerPickerUI; this hook is reserved for later UI feedback.
-        }
-
         void StartNewGame()
         {
             LoadingScreenUI.ShowStatic("Starting new game...");
             GameManager.Instance?.NewGame();
         }
 
-        void OnContinue()
-        {
-            LoadingScreenUI.ShowStatic("Loading save...");
-            GameManager.Instance?.ContinueGame();
-        }
-
         bool IsDevBypassEnabled() => devBypassToggle != null && devBypassToggle.isOn;
 
         void EnsureMainMenuPresentation(Transform canvas)
         {
-            EnsureButtonLabel(newGameButton, "Region");
+            EnsureButtonLabel(regionButton, "Region");
             EnsureButtonLabel(quitButton, "Logout");
             EnsureButtonLabel(profileButton, "Account");
             EnsureButtonLabel(settingsButton, "Settings");
             EnsureButtonLabel(eventButton, "Event");
             EnsureButtonLabel(clickToBeginButton, "Click to begin");
-            EnsureButtonLabel(continueButton, "Continue");
             EnsureLogo(canvas);
             EnsureDevToggle(canvas);
         }

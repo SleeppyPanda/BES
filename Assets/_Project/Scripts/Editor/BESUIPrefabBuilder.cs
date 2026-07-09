@@ -78,9 +78,8 @@ namespace BES.Editor
             var controller = controllerGo.AddComponent<MainMenuController>();
 
             var clickBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "ClickToBegin", UIAnchorPresets.ApplyMainMenuClickHit);
-            var serverBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "NewGameButton", UIAnchorPresets.ApplyMainMenuServerHit);
+            var regionBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "RegionButton", UIAnchorPresets.ApplyMainMenuRegionHit);
             var eventBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "EventButton", UIAnchorPresets.ApplyMainMenuEventHit);
-            var contBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "ContinueButton", UIAnchorPresets.ApplyMainMenuContinueHit);
             var quitBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "QuitButton", UIAnchorPresets.ApplyMainMenuQuitHit);
             var profileBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "ProfileButton", UIAnchorPresets.ApplyMainMenuProfileHit);
             var settingsBtn = BESUIEditorUtils.CreateMenuHitArea(canvasGo.transform, "SettingsButton", UIAnchorPresets.ApplyMainMenuSettingsHit);
@@ -90,8 +89,7 @@ namespace BES.Editor
             var serverPicker = BuildServerPickerPanel(canvasGo.transform);
             var eventPanel = BuildEventPanel(canvasGo.transform);
 
-            BESUIEditorUtils.SetPrivateField(controller, "newGameButton", serverBtn);
-            BESUIEditorUtils.SetPrivateField(controller, "continueButton", contBtn);
+            BESUIEditorUtils.SetPrivateField(controller, "regionButton", regionBtn);
             BESUIEditorUtils.SetPrivateField(controller, "quitButton", quitBtn);
             BESUIEditorUtils.SetPrivateField(controller, "clickToBeginButton", clickBtn);
             BESUIEditorUtils.SetPrivateField(controller, "profileButton", profileBtn);

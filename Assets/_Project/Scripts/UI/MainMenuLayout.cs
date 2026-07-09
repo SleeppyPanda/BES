@@ -16,17 +16,18 @@ namespace BES.UI
                 var scaler = canvasRoot.GetComponent<CanvasScaler>();
                 if (scaler != null)
                 {
+                    scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
                     scaler.referenceResolution = new Vector2(UIAnchorPresets.RefWidth, UIAnchorPresets.RefHeight);
-                    scaler.matchWidthOrHeight = 0f;
+                    scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Shrink;
+                    scaler.matchWidthOrHeight = 0.5f;
                 }
             }
 
             ApplyMainMenuBackground(canvasRoot);
 
             ApplyHit(canvasRoot, "ClickToBegin", UIAnchorPresets.ApplyMainMenuClickHit);
-            ApplyHit(canvasRoot, "NewGameButton", UIAnchorPresets.ApplyMainMenuServerHit);
+            ApplyHit(canvasRoot, "RegionButton", UIAnchorPresets.ApplyMainMenuRegionHit);
             ApplyHit(canvasRoot, "EventButton", UIAnchorPresets.ApplyMainMenuEventHit);
-            ApplyHit(canvasRoot, "ContinueButton", UIAnchorPresets.ApplyMainMenuContinueHit);
             ApplyHit(canvasRoot, "QuitButton", UIAnchorPresets.ApplyMainMenuQuitHit);
             ApplyHit(canvasRoot, "ProfileButton", UIAnchorPresets.ApplyMainMenuProfileHit);
             ApplyHit(canvasRoot, "SettingsButton", UIAnchorPresets.ApplyMainMenuSettingsHit);
