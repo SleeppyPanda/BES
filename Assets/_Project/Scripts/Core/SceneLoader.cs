@@ -2,6 +2,7 @@ using System.Collections;
 using BES.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace BES.Core
 {
@@ -14,6 +15,7 @@ namespace BES.Core
 
         bool isLoading;
         LoadingScreenUI activeLoadingView;
+        CanvasGroup fadeGroup;
 
         void Awake()
         {
@@ -41,11 +43,13 @@ namespace BES.Core
             GameEvents.RaiseSceneLoadStarted(sceneName);
 
             if (fadeDuration > 0f)
-                yield return new WaitForSeconds(fadeDuration);
+                yield return FadeScreen(1f, fadeDuration);
 
             if (sceneName == SceneNames.Loading)
             {
                 yield return LoadSceneDirect(sceneName);
+                if (fadeDuration > 0f)
+                    yield return FadeScreen(0f, fadeDuration);
             }
             else
             {
@@ -73,9 +77,13 @@ namespace BES.Core
             if (activeLoadingView != null)
             {
                 activeLoadingView.Show();
+                activeLoadingView.PlayIntroFade();
                 activeLoadingView.SetStatus("Preparing world data...");
                 activeLoadingView.SetProgress(0f);
             }
+
+            if (fadeDuration > 0f)
+                yield return FadeScreen(0f, fadeDuration);
 
             yield return null;
 
@@ -124,6 +132,64 @@ namespace BES.Core
             if (progress < 0.85f)
                 return "Spawning world content...";
             return "Almost ready...";
+        }
+
+        IEnumerator FadeScreen(float targetAlpha, float duration)
+        {
+            EnsureFadeOverlay();
+            if (fadeGroup == null)
+                yield break;
+
+            fadeGroup.blocksRaycasts = targetAlpha > 0f;
+            fadeGroup.interactable = false;
+
+            var startAlpha = fadeGroup.alpha;
+            var elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                fadeGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, Mathf.Clamp01(elapsed / Mathf.Max(0.01f, duration)));
+                yield return null;
+            }
+
+            fadeGroup.alpha = targetAlpha;
+            fadeGroup.blocksRaycasts = targetAlpha > 0f;
+        }
+
+        void EnsureFadeOverlay()
+        {
+            if (fadeGroup != null)
+                return;
+
+            var canvasGo = new GameObject("SceneFadeCanvas");
+            DontDestroyOnLoad(canvasGo);
+
+            var canvas = canvasGo.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = 32767;
+
+            var scaler = canvasGo.AddComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(UIAnchorPresets.RefWidth, UIAnchorPresets.RefHeight);
+            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Shrink;
+            scaler.matchWidthOrHeight = 0.5f;
+
+            fadeGroup = canvasGo.AddComponent<CanvasGroup>();
+            fadeGroup.alpha = 0f;
+            fadeGroup.interactable = false;
+            fadeGroup.blocksRaycasts = false;
+
+            var imageGo = new GameObject("FadeOverlay");
+            imageGo.transform.SetParent(canvasGo.transform, false);
+            var rect = imageGo.AddComponent<RectTransform>();
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+
+            var image = imageGo.AddComponent<Image>();
+            image.color = Color.black;
+            image.raycastTarget = false;
         }
 
         public void LoadMainMenu() => LoadScene(SceneNames.MainMenu);
