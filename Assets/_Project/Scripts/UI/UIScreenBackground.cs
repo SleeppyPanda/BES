@@ -33,6 +33,15 @@ namespace BES.UI
             if (sprite == null)
                 return;
 
+            var rawBg = FindBackgroundRawImage();
+            if (rawBg != null)
+            {
+                rawBg.texture = sprite.texture;
+                rawBg.color = Color.white;
+                rawBg.raycastTarget = raycastTarget;
+                return;
+            }
+
             var bg = FindBackgroundImage();
             if (bg == null)
                 return;
@@ -58,6 +67,22 @@ namespace BES.UI
             }
 
             return GetComponent<Image>();
+        }
+
+        RawImage FindBackgroundRawImage()
+        {
+            if (!string.IsNullOrEmpty(backgroundChildName))
+            {
+                var child = transform.Find(backgroundChildName);
+                if (child != null)
+                {
+                    var childImg = child.GetComponent<RawImage>();
+                    if (childImg != null)
+                        return childImg;
+                }
+            }
+
+            return GetComponent<RawImage>();
         }
     }
 }

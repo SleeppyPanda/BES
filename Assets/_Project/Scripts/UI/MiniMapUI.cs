@@ -52,6 +52,13 @@ namespace BES.UI
 
         void Update()
         {
+            if (player == null)
+            {
+                var playerObj = GameObject.FindGameObjectWithTag("Player");
+                if (playerObj != null)
+                    player = playerObj.transform;
+            }
+
             if (player == null || mapRect == null || playerIcon == null)
                 return;
 

@@ -14,6 +14,7 @@
 1. File → Build Settings
 2. Scenes (in order):
    - `Assets/_Project/Scenes/MainMenu.unity`
+   - `Assets/_Project/Scenes/Loading.unity`
    - `Assets/_Project/Scenes/Gameplay.unity`
    - `Assets/_Project/Scenes/PrototypeScene.unity`
 3. Platform: PC, Mac & Linux Standalone → Windows

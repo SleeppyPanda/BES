@@ -328,6 +328,90 @@ namespace BES.Editor
             boss.AddComponent<BossController>();
             var bossMarker = boss.AddComponent<QuestMarker>();
             bossMarker.SetMarkerId("Boss_VoidGuardian");
+
+            CreateEnemySpawnRegions(enemies, enemy);
+        }
+
+        static void CreateEnemySpawnRegions(Transform enemiesRoot, GameObject enemyTemplate)
+        {
+            var spawnRegions = CreateSceneGroup("EnemySpawnRegions");
+            spawnRegions.SetParent(enemiesRoot, false);
+            CreateEnemySpawnRegion(
+                spawnRegions,
+                "SpawnRegion_CreationCity_East",
+                "region_creation_city",
+                "creation_city_east",
+                enemyTemplate,
+                new[]
+                {
+                    new Vector3(6f, 0.5f, -4f),
+                    new Vector3(10f, 0.5f, -2f),
+                    new Vector3(7f, 0.5f, -8f)
+                },
+                1,
+                3);
+            CreateEnemySpawnRegion(
+                spawnRegions,
+                "SpawnRegion_Ruins_Courtyard",
+                "region_ruins",
+                "ruins_courtyard",
+                enemyTemplate,
+                new[]
+                {
+                    new Vector3(12f, 0.5f, 2f),
+                    new Vector3(16f, 0.5f, 4f),
+                    new Vector3(18f, 0.5f, -3f)
+                },
+                2,
+                4);
+            CreateEnemySpawnRegion(
+                spawnRegions,
+                "SpawnRegion_Forest_Glade",
+                "region_forest",
+                "forest_glade",
+                enemyTemplate,
+                new[]
+                {
+                    new Vector3(-4f, 0.5f, 18f),
+                    new Vector3(2f, 0.5f, 22f),
+                    new Vector3(5f, 0.5f, 16f)
+                },
+                1,
+                5);
+        }
+
+        static void CreateEnemySpawnRegion(
+            Transform parent,
+            string name,
+            string regionId,
+            string subRegionId,
+            GameObject enemyTemplate,
+            Vector3[] positions,
+            int minCount,
+            int maxCount)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            var pointsRoot = CreateSceneGroup("SpawnPoints");
+            pointsRoot.SetParent(go.transform, false);
+
+            var points = new Transform[positions.Length];
+            for (var i = 0; i < positions.Length; i++)
+            {
+                var point = new GameObject($"SpawnPoint_{i + 1:D2}");
+                point.transform.SetParent(pointsRoot, false);
+                point.transform.position = positions[i];
+                points[i] = point.transform;
+            }
+
+            var region = go.AddComponent<EnemySpawnRegion>();
+            SetPrivateField(region, "regionId", regionId);
+            SetPrivateField(region, "subRegionId", subRegionId);
+            SetPrivateField(region, "enemyPrefabs", enemyTemplate != null ? new[] { enemyTemplate } : System.Array.Empty<GameObject>());
+            SetPrivateField(region, "spawnPoints", points);
+            SetPrivateField(region, "spawnedParent", parent);
+            SetPrivateField(region, "minSpawnCount", minCount);
+            SetPrivateField(region, "maxSpawnCount", maxCount);
         }
 
         static void CreateNarrativeSystems(Transform systemsRoot)

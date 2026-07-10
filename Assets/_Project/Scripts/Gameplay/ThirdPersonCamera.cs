@@ -51,7 +51,11 @@ namespace BES.Gameplay
             transform.rotation = Quaternion.LookRotation(pivot - transform.position, Vector3.up);
         }
 
-        public void SetTarget(Transform newTarget) => target = newTarget;
+        public void SetTarget(Transform newTarget)
+        {
+            target = newTarget;
+            input = newTarget != null ? newTarget.GetComponent<PlayerInputReader>() : null;
+        }
 
         bool IsCameraLocked()
         {

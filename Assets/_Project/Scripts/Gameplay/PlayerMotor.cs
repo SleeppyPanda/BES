@@ -72,7 +72,7 @@ namespace BES.Gameplay
                 moveDir = camForward * moveInput.y + camRight * moveInput.x;
             }
 
-            IsSprinting = input.SprintHeld && stamina != null && stamina.CanSpend && moveDir.sqrMagnitude > 0.01f;
+            IsSprinting = input != null && input.SprintHeld && stamina != null && stamina.CanSpend && moveDir.sqrMagnitude > 0.01f;
             var speed = IsSprinting ? sprintSpeed : walkSpeed;
 
             if (IsSprinting)

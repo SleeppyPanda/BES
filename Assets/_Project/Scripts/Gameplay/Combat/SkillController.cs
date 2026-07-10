@@ -48,6 +48,9 @@ namespace BES.Gameplay
             if (isCasting || !CanCastSkills())
                 return;
 
+            if (input == null || stats == null)
+                return;
+
             if (input.Skill1Pressed)
                 StartCoroutine(CastSkill(skill1, true));
             else if (input.Skill2Pressed)

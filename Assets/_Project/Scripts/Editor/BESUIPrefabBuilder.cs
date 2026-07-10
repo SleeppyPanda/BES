@@ -9,6 +9,7 @@ namespace BES.Editor
 {
     public static class BESUIPrefabBuilder
     {
+        [MenuItem("BES/UI/Rebuild UI Prefabs")]
         public static void RebuildAllFromMenu()
         {
             BESUIAssetImporter.Import();
@@ -225,6 +226,35 @@ namespace BES.Editor
             return go;
         }
 
+        static RawImage AddRawArtworkPanel(Transform parent, string name, Vector2 size, Vector2 anchoredPosition, Color? color = null)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            var rect = go.AddComponent<RectTransform>();
+            UIAnchorPresets.Center(rect, size);
+            rect.anchoredPosition = anchoredPosition;
+
+            var raw = go.AddComponent<RawImage>();
+            raw.texture = null;
+            raw.color = color ?? new Color(1f, 1f, 1f, 0f);
+            raw.raycastTarget = false;
+            return raw;
+        }
+
+        static RawImage AddStretchRawArtworkPanel(Transform parent, string name, Color? color = null)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            var rect = go.AddComponent<RectTransform>();
+            UIAnchorPresets.StretchFull(rect);
+
+            var raw = go.AddComponent<RawImage>();
+            raw.texture = null;
+            raw.color = color ?? new Color(1f, 1f, 1f, 0f);
+            raw.raycastTarget = false;
+            return raw;
+        }
+
         static void BuildHudSection(Transform parent, HUDSpriteManifest manifest)
         {
             var go = new GameObject("HUD");
@@ -384,8 +414,6 @@ namespace BES.Editor
             var chr = BESUIEditorUtils.CreateIconButton(go.transform, "CharacterBtn", manifest?.navCharacter, new Vector2(HUDLayoutTokens.NavRightMostX, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
             var weapon = BESUIEditorUtils.CreateIconButton(go.transform, "WeaponBtn", manifest?.navWeapon, new Vector2(-10, -56), new Vector2(40, 40));
             var art = BESUIEditorUtils.CreateIconButton(go.transform, "ArtifactsBtn", manifest?.navArtifacts, new Vector2(-58, -56), new Vector2(40, 40));
-            weapon.gameObject.SetActive(false);
-            art.gameObject.SetActive(false);
 
             BESUIEditorUtils.SetPrivateField(nav, "inventoryButton", inv);
             BESUIEditorUtils.SetPrivateField(nav, "characterButton", chr);
@@ -565,6 +593,7 @@ namespace BES.Editor
             var itemsTab = BESUIEditorUtils.CreateButton(go.transform, "ItemsTab", "Items", new Vector2(-520, 360), new Vector2(120, 36));
             var matsTab = BESUIEditorUtils.CreateButton(go.transform, "MaterialsTab", "Materials", new Vector2(-380, 360), new Vector2(120, 36));
             var closeBtn = BESUIEditorUtils.CreateButton(go.transform, "CloseBtn", "X", new Vector2(880, 460), new Vector2(48, 48));
+            AddRawArtworkPanel(go.transform, "InventoryArtworkRaw", new Vector2(520, 680), new Vector2(450, -10));
 
             var gridGo = new GameObject("ItemGrid");
             gridGo.transform.SetParent(go.transform, false);
@@ -654,18 +683,60 @@ namespace BES.Editor
             var go = CreateFullScreenPanel(parent, "GameMapUI", BESUIEditorUtils.LoadBg(UIAssetPaths.BgEventScene), UIScreenBackgroundId.WorldMap);
             var map = go.AddComponent<GameMapUI>();
             BESUIEditorUtils.CreateText(go.transform, "Title", "World Map", new Vector2(0, 420), 24f);
+            AddStretchRawArtworkPanel(go.transform, "WorldMapArtworkRaw");
             var markersGo = new GameObject("MapMarkers");
             markersGo.transform.SetParent(go.transform, false);
             var mRect = markersGo.AddComponent<RectTransform>();
             UIAnchorPresets.Center(mRect, new Vector2(600, 400));
             var closeBtn = BESUIEditorUtils.CreateButton(go.transform, "CloseBtn", "X", new Vector2(880, 460), new Vector2(48, 48));
             var markerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(UIAssetPaths.AtomPrefabs + "/UIMapMarker.prefab");
+            var markerSlots = CreateWorldMapMarkerSlots(markersGo.transform, markerPrefab);
+            var status = BESUIEditorUtils.CreateText(go.transform, "TeleportStatus", string.Empty, new Vector2(0, -420), 16f);
             BESUIEditorUtils.SetPrivateField(map, "panel", go);
             BESUIEditorUtils.SetPrivateField(map, "markersContainer", markersGo.transform);
             BESUIEditorUtils.SetPrivateField(map, "mapMarkerPrefab", markerPrefab);
+            BESUIEditorUtils.SetPrivateField(map, "markerSlots", markerSlots);
             BESUIEditorUtils.SetPrivateField(map, "closeButton", closeBtn);
+            BESUIEditorUtils.SetPrivateField(map, "statusText", status);
             go.SetActive(false);
             return map;
+        }
+
+        static UIMapMarker[] CreateWorldMapMarkerSlots(Transform parent, GameObject markerPrefab)
+        {
+            var slots = new UIMapMarker[3];
+            var positions = new[]
+            {
+                new Vector2(-180f, -40f),
+                new Vector2(150f, 20f),
+                new Vector2(-40f, 130f)
+            };
+
+            for (var i = 0; i < slots.Length; i++)
+            {
+                GameObject slot;
+                if (markerPrefab != null)
+                    slot = (GameObject)PrefabUtility.InstantiatePrefab(markerPrefab, parent);
+                else
+                {
+                    slot = new GameObject($"TeleportMarker_{i + 1}");
+                    slot.transform.SetParent(parent, false);
+                    slot.AddComponent<RectTransform>().sizeDelta = new Vector2(180, 44);
+                    var button = slot.AddComponent<Button>();
+                    var label = BESUIEditorUtils.CreateText(slot.transform, "Label", $"Teleport {i + 1}", Vector2.zero, 14f);
+                    var marker = slot.AddComponent<UIMapMarker>();
+                    BESUIEditorUtils.SetPrivateField(marker, "regionLabel", label);
+                    BESUIEditorUtils.SetPrivateField(marker, "button", button);
+                }
+
+                slot.name = $"TeleportMarker_{i + 1}";
+                var rect = slot.GetComponent<RectTransform>();
+                if (rect != null)
+                    rect.anchoredPosition = positions[i];
+                slots[i] = slot.GetComponent<UIMapMarker>();
+            }
+
+            return slots;
         }
 
         static WeaponScreenUI BuildWeaponPanel(Transform parent)
@@ -674,6 +745,7 @@ namespace BES.Editor
                 BESUIEditorUtils.LoadBg(UIAssetPaths.BgWeaponInfo) ?? BESUIEditorUtils.LoadBg(UIAssetPaths.BgWeapon),
                 UIScreenBackgroundId.Weapon);
             var weapon = go.AddComponent<WeaponScreenUI>();
+            AddRawArtworkPanel(go.transform, "WeaponArtworkRaw", new Vector2(500, 620), new Vector2(300, -20));
             var grid = new GameObject("GridContainer");
             grid.transform.SetParent(go.transform, false);
             var gridRect = grid.AddComponent<RectTransform>();
@@ -740,6 +812,7 @@ namespace BES.Editor
         {
             var go = CreateFullScreenPanel(parent, "TeamSetupUI", BESUIEditorUtils.LoadBg(UIAssetPaths.BgTeamSetup), UIScreenBackgroundId.TeamSetup);
             var ui = go.AddComponent<TeamSetupUI>();
+            AddRawArtworkPanel(go.transform, "TeamArtworkRaw", new Vector2(900, 480), new Vector2(0, 40));
             var slotsGo = new GameObject("TeamSlots");
             slotsGo.transform.SetParent(go.transform, false);
             var sRect = slotsGo.AddComponent<RectTransform>();
@@ -771,6 +844,7 @@ namespace BES.Editor
         {
             var go = CreateFullScreenPanel(parent, "EventUI", BESUIEditorUtils.LoadBg(UIAssetPaths.BgEventCheckIn), UIScreenBackgroundId.EventCheckIn);
             var ui = go.AddComponent<EventUI>();
+            AddRawArtworkPanel(go.transform, "EventArtworkRaw", new Vector2(900, 500), new Vector2(0, 20));
             var title = BESUIEditorUtils.CreateText(go.transform, "Title", "Daily Check-In", new Vector2(0, 320), 24f);
             var desc = BESUIEditorUtils.CreateText(go.transform, "Desc", "Claim your daily reward.", new Vector2(0, 260), 16f);
             var daysGo = new GameObject("DaySlots");
@@ -799,6 +873,7 @@ namespace BES.Editor
         {
             var go = CreateFullScreenPanel(parent, "WishUI", BESUIEditorUtils.LoadBg(UIAssetPaths.BgWish), UIScreenBackgroundId.Wish);
             var ui = go.AddComponent<WishUI>();
+            AddRawArtworkPanel(go.transform, "WishBannerArtworkRaw", new Vector2(880, 360), new Vector2(0, 120));
             var banner = BESUIEditorUtils.CreateText(go.transform, "Banner", "Character Wish", new Vector2(0, 360), 24f);
             var coins = BESUIEditorUtils.CreateText(go.transform, "Coins", "Money 99999", new Vector2(600, 460), 16f, TextAlignmentOptions.Right);
             var gems = BESUIEditorUtils.CreateText(go.transform, "Gems", "GEM 1600", new Vector2(760, 460), 16f, TextAlignmentOptions.Right);
@@ -1060,7 +1135,16 @@ namespace BES.Editor
             var rect = go.AddComponent<RectTransform>();
             UIAnchorPresets.StretchFull(rect);
             if (bgSprite != null)
-                BESUIEditorUtils.CreateBackground(go.transform, bgSprite, "Background");
+            {
+                var bgGo = new GameObject("Background");
+                bgGo.transform.SetParent(go.transform, false);
+                var bgRect = bgGo.AddComponent<RectTransform>();
+                UIAnchorPresets.StretchFull(bgRect);
+                var bg = bgGo.AddComponent<RawImage>();
+                bg.texture = bgSprite.texture;
+                bg.color = Color.white;
+                bg.raycastTarget = true;
+            }
             else
                 go.AddComponent<Image>().color = new Color(0.05f, 0.05f, 0.1f, 0.92f);
 

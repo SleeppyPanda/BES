@@ -102,7 +102,7 @@ Action RPG vertical slice: **Story + Quest + AI NPC + Open World demo** (backlog
 2. Menu: **BES → Setup Project (US-001 to US-006)**
 3. Play scene `Assets/_Project/Scenes/MainMenu.unity`
 
-**Build:** `MainMenu` → `Gameplay` → `PrototypeScene` (xem [docs/BUILD.md](docs/BUILD.md))
+**Build:** `MainMenu` → `Loading` → `Gameplay` → `PrototypeScene` (xem [docs/BUILD.md](docs/BUILD.md))
 
 ---
 
@@ -234,7 +234,7 @@ Action RPG vertical slice: **Story + Quest + AI NPC + Open World demo** (backlog
 |-----------|-------------------|
 | `Bootstrapper` | Khởi tạo persistent systems trước scene đầu |
 | `GameManager` | Orchestrator: NewGame, Continue, SaveGame |
-| `SceneLoader` | Chuyển MainMenu ↔ Gameplay ↔ Prototype |
+| `SceneLoader` | Chuyển MainMenu → Loading → Gameplay / Prototype |
 | `GameplaySceneBootstrap` | Spawn player, camera, apply save, start main quest |
 | `UINavigationController` | Điều hướng 4 layer UI, chặn input gameplay |
 
@@ -449,6 +449,7 @@ HUD Nav Bar / Hotkey
 | Scene | Root objects | Prefab instance |
 |-------|--------------|-----------------|
 | `MainMenu` | UI, Systems, Camera, Light | `MainMenuScreen` |
+| `Loading` | UI, Systems | `LoadingScreenUI` |
 | `Gameplay` | Systems, UI, Entities, World, Environment, Camera, Light | `GameplayHUD` |
 | `PrototypeScene` | Environment, Camera, Systems | — |
 
@@ -551,7 +552,7 @@ Chi tiết đầy đủ: file `.tmp_hierarchy.txt` trong project root.
 ### 12.1 Đã hoàn thành (code + scene)
 
 - [x] Bootstrap persistent systems
-- [x] Scene flow MainMenu → Gameplay
+- [x] Scene flow MainMenu → Loading → Gameplay
 - [x] Third-person movement, stamina, jump, dodge
 - [x] Combat loop (attack, 2 skills, enemy, boss)
 - [x] Quest system + objective tracker + branching
@@ -625,13 +626,13 @@ Assets/_Project/
 ├── Art/UI/          # 830 PNG mockup Figma
 ├── Data/            # Quest, Dialogue, Items, UI manifests
 ├── Resources/       # Runtime-loadable copies
-├── Scenes/          # MainMenu, Gameplay, PrototypeScene
+├── Scenes/          # MainMenu, Loading, Gameplay, PrototypeScene
 ├── Scripts/         # Core, Gameplay, Narrative, UI, Editor, AI
 ├── Tests/           # Unit tests (5 classes)
 └── UI/Prefabs/      # MainMenuScreen, GameplayHUD, 13 atoms
 ```
 
-**Thống kê `_Project`:** 128 CS · 19 asset · 15 prefab · 3 scene · 830 PNG
+**Thống kê `_Project`:** 128+ CS · 19+ asset · 15 prefab · 4 scene · 830 PNG
 
 ---
 

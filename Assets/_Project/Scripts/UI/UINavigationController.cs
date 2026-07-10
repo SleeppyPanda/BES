@@ -91,7 +91,11 @@ namespace BES.UI
         void Update()
         {
             if (input == null)
-                return;
+            {
+                input = FindAnyObjectByType<PlayerInputReader>();
+                if (input == null)
+                    return;
+            }
 
             if (UnityEngine.InputSystem.Keyboard.current != null &&
                 UnityEngine.InputSystem.Keyboard.current.jKey.wasPressedThisFrame)

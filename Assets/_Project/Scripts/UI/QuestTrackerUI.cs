@@ -54,6 +54,13 @@ namespace BES.UI
 
         void UpdateCompass()
         {
+            if (player == null)
+            {
+                var playerObj = GameObject.FindGameObjectWithTag("Player");
+                if (playerObj != null)
+                    player = playerObj.transform;
+            }
+
             if (player == null || compassArrow == null)
                 return;
 

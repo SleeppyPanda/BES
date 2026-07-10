@@ -15,11 +15,28 @@ namespace BES.Gameplay
             if (timer >= autoSaveInterval)
             {
                 timer = 0f;
-                GameManager.Instance?.SaveGame();
+                SaveNow();
             }
         }
 
+        void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+                SaveNow();
+        }
+
+        void OnApplicationFocus(bool hasFocus)
+        {
+            if (!hasFocus)
+                SaveNow();
+        }
+
         void OnApplicationQuit()
+        {
+            SaveNow();
+        }
+
+        void SaveNow()
         {
             GameManager.Instance?.SaveGame();
         }

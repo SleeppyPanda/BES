@@ -45,7 +45,7 @@ namespace BES.Gameplay
                     isDodging = false;
             }
 
-            if (input.DodgePressed && !GameplayInputGate.IsGameplayBlocked && CanDodge())
+            if (input != null && input.DodgePressed && !GameplayInputGate.IsGameplayBlocked && CanDodge())
                 StartDodge();
         }
 

@@ -40,6 +40,13 @@ namespace BES.Gameplay
 
         void Update()
         {
+            if (target == null)
+            {
+                var player = GameObject.FindGameObjectWithTag("Player");
+                if (player != null)
+                    target = player.transform;
+            }
+
             if (!health.IsAlive || target == null)
                 return;
 

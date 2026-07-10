@@ -30,6 +30,13 @@ namespace BES.Narrative
         void Update()
         {
             if (player == null)
+            {
+                var playerObj = GameObject.FindGameObjectWithTag("Player");
+                if (playerObj != null)
+                    player = playerObj.transform;
+            }
+
+            if (player == null)
                 return;
 
             var inRange = Vector3.Distance(transform.position, player.position) <= interactRange;

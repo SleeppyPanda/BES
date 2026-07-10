@@ -27,7 +27,11 @@ namespace BES.UI
         void Update()
         {
             if (input == null)
-                return;
+            {
+                input = FindAnyObjectByType<PlayerInputReader>();
+                if (input == null)
+                    return;
+            }
 
             if (input.InventoryPressed)
                 ToggleInventory();

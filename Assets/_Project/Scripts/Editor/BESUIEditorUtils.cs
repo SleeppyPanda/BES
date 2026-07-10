@@ -246,11 +246,10 @@ namespace BES.Editor
             var rect = go.AddComponent<RectTransform>();
             rect.sizeDelta = size;
             rect.anchoredPosition = anchoredPos;
-            var img = go.AddComponent<Image>();
+            var img = go.AddComponent<RawImage>();
             if (icon != null)
             {
-                img.sprite = icon;
-                img.preserveAspect = true;
+                img.texture = icon.texture;
                 img.color = Color.white;
             }
             else
@@ -258,6 +257,7 @@ namespace BES.Editor
 
             var btn = go.AddComponent<Button>();
             btn.transition = Selectable.Transition.ColorTint;
+            btn.targetGraphic = img;
             return btn;
         }
 

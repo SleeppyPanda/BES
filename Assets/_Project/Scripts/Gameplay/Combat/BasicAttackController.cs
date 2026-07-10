@@ -38,7 +38,7 @@ namespace BES.Gameplay
                     comboIndex = 0;
             }
 
-            if (input.AttackPressed && !isAttacking && !GameplayInputGate.IsGameplayBlocked)
+            if (input != null && stats != null && input.AttackPressed && !isAttacking && !GameplayInputGate.IsGameplayBlocked)
                 StartCoroutine(AttackRoutine());
         }
 
