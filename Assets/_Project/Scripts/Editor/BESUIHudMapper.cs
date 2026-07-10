@@ -70,9 +70,6 @@ namespace BES.Editor
                 AssetDatabase.SaveAssets();
             }
 
-            if (GUILayout.Button("Rebuild Gameplay HUD Prefab"))
-                BESUIPrefabBuilder.BuildGameplayHudPrefab();
-
             scroll = EditorGUILayout.BeginScrollView(scroll);
             DrawSlot("Minimap Frame", ref manifest.minimapFrame);
             DrawSlot("Player Dot", ref manifest.playerDot);

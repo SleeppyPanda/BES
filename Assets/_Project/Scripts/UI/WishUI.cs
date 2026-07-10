@@ -137,6 +137,9 @@ namespace BES.UI
             for (var i = 0; i < entries.Count; i++)
             {
                 var go = CreateResultCard();
+                if (go == null)
+                    continue;
+
                 var rect = go.GetComponent<RectTransform>();
                 if (rect != null)
                 {
@@ -174,16 +177,8 @@ namespace BES.UI
             if (resultCardPrefab != null)
                 return Instantiate(resultCardPrefab, resultCardsContainer);
 
-            var go = new GameObject("GachaCard");
-            go.transform.SetParent(resultCardsContainer, false);
-            go.AddComponent<RectTransform>().sizeDelta = cardSize;
-            go.AddComponent<Image>().color = new Color(0.2f, 0.18f, 0.28f, 0.95f);
-            var label = new GameObject("Label").AddComponent<TextMeshProUGUI>();
-            label.transform.SetParent(go.transform, false);
-            label.text = "Reward";
-            label.fontSize = 12f;
-            label.alignment = TextAlignmentOptions.Center;
-            return go;
+            Debug.LogWarning("[BES] WishUI resultCardPrefab is missing. Assign UIGachaCard prefab in Unity.");
+            return null;
         }
 
         IEnumerator AnimateCard(RectTransform rect, Vector2 start, Vector2 target)

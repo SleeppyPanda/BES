@@ -9,26 +9,18 @@ namespace BES.Editor
 {
     public static class BESUIPrefabBuilder
     {
-        [MenuItem("BES/UI/Rebuild UI Prefabs")]
         public static void RebuildAllFromMenu()
         {
-            BESUIAssetImporter.Import();
-            BESUIDataSetup.EnsureDefaultData();
-            BESUIScreenBackgroundSetup.EnsureManifest();
-            BuildAllPrefabs();
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-            Debug.Log("[BES] UI prefabs rebuilt.");
+            Debug.LogWarning("[BES] UI Prefab Builder is disabled. Edit UI prefabs directly in Unity.");
         }
 
         public static void BuildAllPrefabs()
         {
-            BuildAtomPrefabs();
-            BuildMainMenuPrefab();
-            BuildGameplayHudPrefab();
+            Debug.LogWarning("[BES] BuildAllPrefabs skipped. Edit UI prefabs directly in Unity.");
         }
 
-        public static void BuildAtomPrefabs() => BESUIAtomBuilder.BuildAll();
+        public static void BuildAtomPrefabs() =>
+            Debug.LogWarning("[BES] BuildAtomPrefabs skipped. Edit atom prefabs directly in Unity.");
 
         public static GameObject InstantiateGameplayHud()
         {
@@ -36,11 +28,11 @@ namespace BES.Editor
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
             if (prefab == null)
             {
-                BuildGameplayHudPrefab();
-                prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                Debug.LogError($"[BES] Missing prefab at {path}. UI builder is disabled; create/fix it in Unity.");
+                return null;
             }
 
-            return prefab != null ? (GameObject)PrefabUtility.InstantiatePrefab(prefab) : BuildGameplayHudRoot();
+            return (GameObject)PrefabUtility.InstantiatePrefab(prefab);
         }
 
         public static GameObject InstantiateMainMenu()
@@ -49,23 +41,21 @@ namespace BES.Editor
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
             if (prefab == null)
             {
-                BuildMainMenuPrefab();
-                prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                Debug.LogError($"[BES] Missing prefab at {path}. UI builder is disabled; create/fix it in Unity.");
+                return null;
             }
 
-            return prefab != null ? (GameObject)PrefabUtility.InstantiatePrefab(prefab) : BuildMainMenuRoot();
+            return (GameObject)PrefabUtility.InstantiatePrefab(prefab);
         }
 
         public static void BuildMainMenuPrefab()
         {
-            var root = BuildMainMenuRoot();
-            BESUIEditorUtils.SavePrefab(root, UIAssetPaths.ScreenPrefabs + "/MainMenuScreen.prefab");
+            Debug.LogWarning("[BES] BuildMainMenuPrefab skipped. Edit MainMenuScreen.prefab directly in Unity.");
         }
 
         public static void BuildGameplayHudPrefab()
         {
-            var root = BuildGameplayHudRoot();
-            BESUIEditorUtils.SavePrefab(root, UIAssetPaths.ScreenPrefabs + "/GameplayHUD.prefab");
+            Debug.LogWarning("[BES] BuildGameplayHudPrefab skipped. Edit GameplayHUD.prefab directly in Unity.");
         }
 
         static GameObject BuildMainMenuRoot()
