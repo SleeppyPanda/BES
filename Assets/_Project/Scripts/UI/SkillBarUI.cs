@@ -14,7 +14,7 @@ namespace BES.UI
         [SerializeField] TMP_Text[] keyLabels = new TMP_Text[2];
         [SerializeField] Sprite[] characterSkillIcons = new Sprite[2];
 
-        static readonly string[] DefaultKeyHints = { "E", "Q" };
+        static readonly string[] DefaultKeyHints = { "Q", "E" };
 
         void Awake()
         {
@@ -53,7 +53,7 @@ namespace BES.UI
             if (skillIcons == null || index < 0 || index >= skillIcons.Length || skillIcons[index] == null)
                 return;
 
-            if (icon != null && HUDPrimitiveStyles.IsWhitelistedIconSprite(icon))
+            if (icon != null)
             {
                 skillIcons[index].sprite = icon;
                 skillIcons[index].color = Color.white;

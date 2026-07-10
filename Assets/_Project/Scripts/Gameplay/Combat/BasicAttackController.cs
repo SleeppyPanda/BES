@@ -57,22 +57,25 @@ namespace BES.Gameplay
 
         void ApplyActiveCharacterProfile()
         {
-            profile = CharacterCombatProfile.Get(PartyRoster.Instance?.ActiveCharacterId);
+            profile = CharacterCombatProfile.Get(PartyRoster.Instance?.ActiveCharacter);
             comboIndex = 0;
             comboTimer = 0f;
         }
 
-        IEnumerator AttackRoutine(bool heavy)
+        IEnumerator AttackRoutine(bool rightClick)
         {
+            var move = rightClick ? profile.rightClick : profile.leftClick;
             isAttacking = true;
-            yield return new WaitForSeconds(heavy ? profile.heavyStartup : profile.startup);
+            yield return new WaitForSeconds(move.startup);
 
-            var multipliers = profile.comboMultipliers != null && profile.comboMultipliers.Length > 0
-                ? profile.comboMultipliers
+            var multipliers = move.comboMultipliers != null && move.comboMultipliers.Length > 0
+                ? move.comboMultipliers
                 : comboMultipliers;
-            var multiplier = heavy
-                ? profile.heavyMultiplier
-                : multipliers[Mathf.Min(comboIndex, multipliers.Length - 1)];
+            var multiplier = move.useCombo
+                ? multipliers[Mathf.Min(comboIndex, multipliers.Length - 1)]
+                : move.damageMultiplier;
+            var range = move.range > 0f ? move.range : attackRange;
+            var angle = move.angle > 0f ? move.angle : attackAngle;
             var amount = DamageCalculator.Calculate(
                 stats.AttackPower * multiplier,
                 0f,
@@ -80,10 +83,12 @@ namespace BES.Gameplay
                 stats.CritDamage,
                 out var isCrit);
 
-            var range = heavy ? profile.heavyRange : profile.range;
-            var angle = heavy ? Mathf.Min(180f, profile.angle + 35f) : profile.angle;
             var center = transform.position + transform.forward * Mathf.Max(1f, range * 0.55f);
-            CombatVfx.SpawnPulse(center + Vector3.up * 0.9f, profile.effectColor, heavy ? 1.35f : 0.85f, heavy ? 0.32f : 0.22f);
+            CombatVfx.SpawnPulse(
+                center + Vector3.up * 0.9f,
+                move.effectColor,
+                Mathf.Max(0.1f, move.effectRadius),
+                Mathf.Max(0.05f, move.effectDuration));
 
             var hits = Physics.OverlapSphere(center, range, enemyMask);
             foreach (var hit in hits)
@@ -96,10 +101,12 @@ namespace BES.Gameplay
                 }
             }
 
-            if (!heavy)
+            if (move.useCombo)
                 comboIndex = (comboIndex + 1) % multipliers.Length;
+            else
+                comboIndex = 0;
             comboTimer = comboResetTime;
-            yield return new WaitForSeconds(heavy ? profile.heavyRecovery : profile.recovery);
+            yield return new WaitForSeconds(move.recovery);
             isAttacking = false;
         }
     }

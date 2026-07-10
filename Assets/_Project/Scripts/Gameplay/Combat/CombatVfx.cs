@@ -19,8 +19,9 @@ namespace BES.Gameplay
             var renderer = go.GetComponent<Renderer>();
             if (renderer != null)
             {
-                renderer.material = new Material(Shader.Find("Standard"));
-                renderer.material.color = color;
+                var material = renderer.material;
+                if (material != null)
+                    material.color = color;
             }
 
             var runner = go.AddComponent<CombatVfxLifetime>();

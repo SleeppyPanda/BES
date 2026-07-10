@@ -136,6 +136,8 @@ namespace BES.Gameplay
                 "skill_focus_shot" => CreateSkill("Focus Shot", 26f, 2.8f, 5.2f, 6.5f, new Color(0.95f, 0.55f, 1f, 0.9f), 0.28f, 1.5f),
                 "skill_starfall" => CreateSkill("Starfall", 32f, 3.1f, 6f, 6f, new Color(1f, 0.82f, 0.18f, 0.9f), 0.25f, 2.25f),
                 "skill_lunar_drive" => CreateSkill("Lunar Drive", 38f, 3.6f, 8f, 5f, new Color(1f, 0.95f, 0.35f, 0.9f), 0.35f, 2.6f),
+                "skill_spark_step" => CreateSkill("Spark Step", 10f, 1.25f, 1.1f, 3.4f, new Color(0.45f, 0.65f, 1f, 0.9f), 0.06f, 0.8f),
+                "skill_comet_burst" => CreateSkill("Comet Burst", 22f, 2.15f, 4.2f, 4.8f, new Color(0.45f, 0.95f, 1f, 0.9f), 0.18f, 1.55f),
                 _ => isSkill1
                     ? CreateSkill("Skill 1", 20f, 2f, 3f, 4f, Color.cyan, 0.15f, 1.2f)
                     : CreateSkill("Skill 2", 25f, 2.4f, 5f, 4f, Color.magenta, 0.2f, 1.5f)

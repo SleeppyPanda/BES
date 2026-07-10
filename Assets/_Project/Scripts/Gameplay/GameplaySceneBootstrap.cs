@@ -214,6 +214,7 @@ namespace BES.Gameplay
                 return;
 
             GameManager.Instance?.Quests.StartQuest("main_awakening");
+            GameManager.Instance?.Quests.StartQuestPanelTestQuests();
         }
 
         void SetupFollowCamera(Transform playerTransform)

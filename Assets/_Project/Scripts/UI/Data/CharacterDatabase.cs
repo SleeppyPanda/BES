@@ -22,8 +22,14 @@ namespace BES.UI
         public GameObject gameplayPrefab;
         public Color testVisualColor = Color.white;
         public Vector3 testVisualScale = Vector3.one;
+        [Header("Mouse Attacks")]
+        public string leftClickAttackId;
+        public string rightClickAttackId;
+        [Header("Skills")]
         public string skill1Id;
         public string skill2Id;
+        public Sprite skill1Icon;
+        public Sprite skill2Icon;
     }
 
     [CreateAssetMenu(fileName = "CharacterDatabase", menuName = "BES/Character Database")]
@@ -73,6 +79,8 @@ namespace BES.UI
                     critDamage = 1.5f,
                     testVisualColor = new Color(0.35f, 0.75f, 1f, 1f),
                     testVisualScale = new Vector3(1f, 1f, 1f),
+                    leftClickAttackId = "attack_void_edge_left",
+                    rightClickAttackId = "attack_void_burst_right",
                     skill1Id = "skill_void_slash",
                     skill2Id = "skill_guard_break"
                 },
@@ -89,6 +97,8 @@ namespace BES.UI
                     critDamage = 1.6f,
                     testVisualColor = new Color(1f, 0.45f, 0.32f, 1f),
                     testVisualScale = new Vector3(0.92f, 1.05f, 0.92f),
+                    leftClickAttackId = "attack_flare_cuts_left",
+                    rightClickAttackId = "attack_flare_lunge_right",
                     skill1Id = "skill_quick_cut",
                     skill2Id = "skill_flare_dash"
                 },
@@ -105,6 +115,8 @@ namespace BES.UI
                     critDamage = 1.4f,
                     testVisualColor = new Color(0.45f, 1f, 0.58f, 1f),
                     testVisualScale = new Vector3(1.08f, 1.12f, 1.08f),
+                    leftClickAttackId = "attack_guard_sweep_left",
+                    rightClickAttackId = "attack_earth_slam_right",
                     skill1Id = "skill_shield_wave",
                     skill2Id = "skill_ground_lock"
                 },
@@ -121,6 +133,8 @@ namespace BES.UI
                     critDamage = 1.7f,
                     testVisualColor = new Color(0.92f, 0.55f, 1f, 1f),
                     testVisualScale = new Vector3(0.86f, 1f, 0.86f),
+                    leftClickAttackId = "attack_arc_shot_left",
+                    rightClickAttackId = "attack_marked_burst_right",
                     skill1Id = "skill_arc_bolt",
                     skill2Id = "skill_focus_shot"
                 },
@@ -137,6 +151,8 @@ namespace BES.UI
                     critDamage = 1.8f,
                     testVisualColor = new Color(1f, 0.9f, 0.25f, 1f),
                     testVisualScale = new Vector3(1.05f, 1.1f, 1.05f),
+                    leftClickAttackId = "attack_star_edge_left",
+                    rightClickAttackId = "attack_lunar_cleave_right",
                     skill1Id = "skill_starfall",
                     skill2Id = "skill_lunar_drive"
                 },
@@ -153,8 +169,10 @@ namespace BES.UI
                     critDamage = 1.35f,
                     testVisualColor = new Color(0.52f, 0.68f, 1f, 1f),
                     testVisualScale = new Vector3(0.9f, 0.95f, 0.9f),
-                    skill1Id = "skill_quick_cut",
-                    skill2Id = "skill_arc_bolt"
+                    leftClickAttackId = "attack_spark_jab_left",
+                    rightClickAttackId = "attack_rookie_blast_right",
+                    skill1Id = "skill_spark_step",
+                    skill2Id = "skill_comet_burst"
                 }
             };
 

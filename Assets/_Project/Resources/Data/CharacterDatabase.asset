@@ -28,8 +28,12 @@ MonoBehaviour:
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 0.35, g: 0.75, b: 1, a: 1}
     testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: attack_void_edge_left
+    rightClickAttackId: attack_void_burst_right
     skill1Id: skill_void_slash
     skill2Id: skill_guard_break
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
   - characterId: hero_02
     displayName: "M\u1EA5t c\xF4 \u1EA5y r\u1ED3i"
     rarity: 4
@@ -45,8 +49,12 @@ MonoBehaviour:
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 1, g: 0.45, b: 0.32, a: 1}
     testVisualScale: {x: 0.92, y: 1.05, z: 0.92}
+    leftClickAttackId: attack_flare_cuts_left
+    rightClickAttackId: attack_flare_lunge_right
     skill1Id: skill_quick_cut
     skill2Id: skill_flare_dash
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
   - characterId: hero_03
     displayName: "Anh l\xE0 th\u1EB1ng t\u1ED3i"
     rarity: 4
@@ -62,8 +70,12 @@ MonoBehaviour:
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 0.45, g: 1, b: 0.58, a: 1}
     testVisualScale: {x: 1.08, y: 1.12, z: 1.08}
+    leftClickAttackId: attack_guard_sweep_left
+    rightClickAttackId: attack_earth_slam_right
     skill1Id: skill_shield_wave
     skill2Id: skill_ground_lock
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
   - characterId: hero_04
     displayName: "Nh\xECn em b\xEAn ai kh\xE1c"
     rarity: 4
@@ -79,8 +91,12 @@ MonoBehaviour:
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 0.92, g: 0.55, b: 1, a: 1}
     testVisualScale: {x: 0.86, y: 1, z: 0.86}
+    leftClickAttackId: attack_arc_shot_left
+    rightClickAttackId: attack_marked_burst_right
     skill1Id: skill_arc_bolt
     skill2Id: skill_focus_shot
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
   - characterId: char_limited_01
     displayName: Limited Hero
     rarity: 5
@@ -96,8 +112,12 @@ MonoBehaviour:
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 1, g: 0.9, b: 0.25, a: 1}
     testVisualScale: {x: 1.05, y: 1.1, z: 1.05}
+    leftClickAttackId: attack_star_edge_left
+    rightClickAttackId: attack_lunar_cleave_right
     skill1Id: skill_starfall
     skill2Id: skill_lunar_drive
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
   - characterId: hero_05
     displayName: Starbound Rookie
     rarity: 3
@@ -113,8 +133,12 @@ MonoBehaviour:
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 0.52, g: 0.68, b: 1, a: 1}
     testVisualScale: {x: 0.9, y: 0.95, z: 0.9}
-    skill1Id: skill_quick_cut
-    skill2Id: skill_arc_bolt
+    leftClickAttackId: attack_spark_jab_left
+    rightClickAttackId: attack_rookie_blast_right
+    skill1Id: skill_spark_step
+    skill2Id: skill_comet_burst
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
   defaultPartyIds:
   - hero_01
   - hero_02

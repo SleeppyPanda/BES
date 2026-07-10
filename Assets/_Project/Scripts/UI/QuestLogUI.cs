@@ -33,6 +33,7 @@ namespace BES.UI
 
         void Awake()
         {
+            ConfigureQuestListLayout();
             if (panel != null)
                 panel.SetActive(false);
             if (closeButton != null)
@@ -74,7 +75,7 @@ namespace BES.UI
             if (quests == null)
                 return;
 
-            foreach (var questId in quests.ActiveQuests)
+            foreach (var questId in BuildOrderedQuestIds(quests))
             {
                 var quest = quests.GetQuest(questId);
                 if (quest == null)
@@ -82,6 +83,7 @@ namespace BES.UI
 
                 AddQuestCard(GetContainerForQuest(quest), quest, quests.GetCurrentStep(questId));
             }
+            RebuildQuestListLayout();
 
             if (selectedQuest == null || !IsQuestActive(quests, selectedQuest.questId))
             {
@@ -98,6 +100,7 @@ namespace BES.UI
                 return;
 
             var card = Instantiate(questCardPrefab, container);
+            EnsureCardLayout(card);
             card.Setup(quest, step != null ? step.description : quest.summary, SelectQuest);
             cards.Add(card);
         }
@@ -109,9 +112,40 @@ namespace BES.UI
 
             if (quest.questType == QuestType.Main)
                 return storyQuestContainer;
-            if (!string.IsNullOrEmpty(quest.questId) && quest.questId.ToLowerInvariant().Contains("commission"))
+            if (IsCommissionQuest(quest))
                 return commissionQuestContainer;
             return worldQuestContainer;
+        }
+
+        static List<string> BuildOrderedQuestIds(QuestManager quests)
+        {
+            var ordered = new List<string>();
+            AddQuestIdsBySection(quests, ordered, QuestType.Main, false);
+            AddQuestIdsBySection(quests, ordered, QuestType.Side, true);
+            AddQuestIdsBySection(quests, ordered, QuestType.Side, false);
+            return ordered;
+        }
+
+        static void AddQuestIdsBySection(QuestManager quests, List<string> ordered, QuestType type, bool commission)
+        {
+            if (quests == null)
+                return;
+
+            foreach (var questId in quests.ActiveQuests)
+            {
+                var quest = quests.GetQuest(questId);
+                if (quest == null || quest.questType != type || IsCommissionQuest(quest) != commission)
+                    continue;
+
+                ordered.Add(questId);
+            }
+        }
+
+        static bool IsCommissionQuest(QuestDefinition quest)
+        {
+            return quest != null &&
+                   !string.IsNullOrEmpty(quest.questId) &&
+                   quest.questId.ToLowerInvariant().Contains("commission");
         }
 
         void SelectQuest(QuestDefinition quest)
@@ -176,6 +210,7 @@ namespace BES.UI
             ClearChildren(storyQuestContainer);
             ClearChildren(commissionQuestContainer);
             ClearChildren(worldQuestContainer);
+            RebuildQuestListLayout();
         }
 
         void ClearRewards() => ClearChildren(rewardContainer);
@@ -186,7 +221,82 @@ namespace BES.UI
                 return;
 
             for (var i = root.childCount - 1; i >= 0; i--)
-                Destroy(root.GetChild(i).gameObject);
+            {
+                var child = root.GetChild(i).gameObject;
+                child.SetActive(false);
+                Destroy(child);
+            }
+        }
+
+        void ConfigureQuestListLayout()
+        {
+            ConfigureSectionContainer(storyQuestContainer);
+            ConfigureSectionContainer(commissionQuestContainer);
+            ConfigureSectionContainer(worldQuestContainer);
+            ConfigureSectionRoot(storyQuestContainer);
+            ConfigureSectionRoot(commissionQuestContainer);
+            ConfigureSectionRoot(worldQuestContainer);
+            RebuildQuestListLayout();
+        }
+
+        static void ConfigureSectionContainer(Transform container)
+        {
+            if (container == null)
+                return;
+
+            var layout = container.GetComponent<VerticalLayoutGroup>();
+            if (layout == null)
+                layout = container.gameObject.AddComponent<VerticalLayoutGroup>();
+            layout.childControlHeight = true;
+            layout.childControlWidth = true;
+            layout.childForceExpandHeight = false;
+            layout.childForceExpandWidth = true;
+
+            var fitter = container.GetComponent<ContentSizeFitter>();
+            if (fitter == null)
+                fitter = container.gameObject.AddComponent<ContentSizeFitter>();
+            fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        }
+
+        static void ConfigureSectionRoot(Transform container)
+        {
+            if (container == null || container.parent == null)
+                return;
+
+            ConfigureSectionContainer(container.parent);
+        }
+
+        static void EnsureCardLayout(QuestCardUI card)
+        {
+            if (card == null)
+                return;
+
+            var layoutElement = card.GetComponent<LayoutElement>();
+            if (layoutElement == null)
+                layoutElement = card.gameObject.AddComponent<LayoutElement>();
+
+            if (layoutElement.preferredHeight <= 0f)
+                layoutElement.preferredHeight = 72f;
+            layoutElement.flexibleHeight = 0f;
+        }
+
+        void RebuildQuestListLayout()
+        {
+            RebuildLayout(storyQuestContainer);
+            RebuildLayout(commissionQuestContainer);
+            RebuildLayout(worldQuestContainer);
+        }
+
+        static void RebuildLayout(Transform root)
+        {
+            if (root == null)
+                return;
+
+            if (root is RectTransform rect)
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+            if (root.parent is RectTransform parentRect)
+                LayoutRebuilder.ForceRebuildLayoutImmediate(parentRect);
         }
 
         void AddReward(string itemId, int amount)

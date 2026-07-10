@@ -1,3 +1,4 @@
+using BES.Core;
 using BES.Gameplay;
 using UnityEngine;
 
@@ -17,7 +18,15 @@ namespace BES.UI
             ApplyIcons();
         }
 
-        void Start() => BindPlayer();
+        void OnEnable() => GameEvents.OnPartyChanged += ApplyIcons;
+
+        void OnDisable() => GameEvents.OnPartyChanged -= ApplyIcons;
+
+        void Start()
+        {
+            BindPlayer();
+            ApplyIcons();
+        }
 
         void Update()
         {
@@ -45,11 +54,21 @@ namespace BES.UI
 
         void ApplyIcons()
         {
-            if (skillBar == null || manifest == null)
+            if (skillBar == null)
                 return;
 
-            skillBar.SetSkillIcon(0, manifest.skillIconSkill1);
-            skillBar.SetSkillIcon(1, manifest.skillIconSkill2);
+            var character = PartyRoster.Instance?.ActiveCharacter;
+            var skill1Icon = character != null && character.skill1Icon != null
+                ? character.skill1Icon
+                : (manifest != null ? manifest.skillIconSkill1 : null);
+            var skill2Icon = character != null && character.skill2Icon != null
+                ? character.skill2Icon
+                : (manifest != null ? manifest.skillIconSkill2 : null);
+
+            skillBar.SetSkillIcon(0, skill1Icon);
+            skillBar.SetSkillIcon(1, skill2Icon);
+            skillBar.SetKeyLabel(0, "Q");
+            skillBar.SetKeyLabel(1, "E");
         }
     }
 }

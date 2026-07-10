@@ -11,6 +11,8 @@ namespace BES.UI
     {
         [SerializeField] Slider healthBar;
         [SerializeField] Slider staminaBar;
+        [SerializeField] Image healthFillImage;
+        [SerializeField] Image staminaFillImage;
         [SerializeField] TMP_Text hpValueText;
         [SerializeField] TMP_Text staminaValueText;
         [SerializeField] TMP_Text regionText;
@@ -19,6 +21,10 @@ namespace BES.UI
         {
             HideLegacyChild("ManaBar");
             HideLegacyChild("LevelText");
+            healthFillImage = ResolveFillImage(healthFillImage, healthBar);
+            staminaFillImage = ResolveFillImage(staminaFillImage, staminaBar);
+            ConfigureFillImage(healthFillImage);
+            ConfigureFillImage(staminaFillImage);
         }
 
         void OnEnable()
@@ -48,11 +54,7 @@ namespace BES.UI
 
         void UpdateHealth(float current, float max)
         {
-            if (healthBar != null)
-            {
-                healthBar.maxValue = max;
-                healthBar.value = current;
-            }
+            SetFillAmount(healthFillImage, current, max);
 
             if (hpValueText != null)
                 hpValueText.text = $"{Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
@@ -60,11 +62,7 @@ namespace BES.UI
 
         void UpdateStamina(float current, float max)
         {
-            if (staminaBar != null)
-            {
-                staminaBar.maxValue = max;
-                staminaBar.value = current;
-            }
+            SetFillAmount(staminaFillImage, current, max);
 
             if (staminaValueText != null)
                 staminaValueText.text = $"{Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
@@ -81,6 +79,34 @@ namespace BES.UI
             var child = transform.Find(childName);
             if (child != null)
                 child.gameObject.SetActive(false);
+        }
+
+        static Image ResolveFillImage(Image assignedImage, Slider slider)
+        {
+            if (assignedImage != null)
+                return assignedImage;
+
+            return slider != null && slider.fillRect != null
+                ? slider.fillRect.GetComponent<Image>()
+                : null;
+        }
+
+        static void ConfigureFillImage(Image fillImage)
+        {
+            if (fillImage == null)
+                return;
+
+            fillImage.type = Image.Type.Filled;
+            fillImage.fillMethod = Image.FillMethod.Horizontal;
+            fillImage.fillOrigin = (int)Image.OriginHorizontal.Left;
+        }
+
+        static void SetFillAmount(Image fillImage, float current, float max)
+        {
+            if (fillImage == null)
+                return;
+
+            fillImage.fillAmount = max > 0f ? Mathf.Clamp01(current / max) : 0f;
         }
     }
 }

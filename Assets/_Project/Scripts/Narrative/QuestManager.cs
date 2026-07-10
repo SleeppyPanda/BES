@@ -14,6 +14,18 @@ namespace BES.Narrative
         readonly Dictionary<string, int> questStepProgress = new();
         readonly HashSet<string> activeQuests = new();
         readonly HashSet<string> completedQuests = new();
+        static readonly string[] QuestPanelTestQuestIds =
+        {
+            "story_arc_01",
+            "story_arc_02",
+            "commission_delivery_01",
+            "commission_hunt_01",
+            "commission_scout_01",
+            "world_ruins_01",
+            "world_gather_01",
+            "world_trial_01",
+            "world_lost_relic_01"
+        };
 
         string currentBranch = "main";
         string currentEndingId = string.Empty;
@@ -34,6 +46,8 @@ namespace BES.Narrative
 
             foreach (var quest in questDefinitions)
                 RegisterQuest(quest);
+
+            EnsureQuestPanelTestQuests();
         }
 
         void RegisterQuest(QuestDefinition quest)
@@ -64,6 +78,12 @@ namespace BES.Narrative
                 trackedQuestId = questId;
             GameEvents.RaiseQuestUpdated(questId);
             return true;
+        }
+
+        public void StartQuestPanelTestQuests()
+        {
+            foreach (var questId in QuestPanelTestQuestIds)
+                StartQuest(questId);
         }
 
         public void AdvanceQuest(string questId, int stepDelta = 1)
@@ -275,6 +295,135 @@ namespace BES.Narrative
                 return string.Empty;
 
             return quest.steps[stepIndex].targetId;
+        }
+
+        void EnsureQuestPanelTestQuests()
+        {
+            RegisterQuest(CreateRuntimeQuest(
+                "story_arc_01",
+                "Echoes of the First Gate",
+                QuestType.Main,
+                "Follow the signal coming from the old gate.",
+                QuestStepType.Reach,
+                "first_gate",
+                "Reach the first gate and inspect the broken anchor.",
+                "gold_coin",
+                120));
+            RegisterQuest(CreateRuntimeQuest(
+                "story_arc_02",
+                "A Name in the Ashes",
+                QuestType.Main,
+                "Ask the archive keeper about the burned crest.",
+                QuestStepType.Talk,
+                "archive_keeper",
+                "Talk to the archive keeper near the central plaza.",
+                "upgrade_crystal",
+                2));
+            RegisterQuest(CreateRuntimeQuest(
+                "commission_delivery_01",
+                "Commission: Field Supplies",
+                QuestType.Side,
+                "Deliver emergency supplies to the outer camp.",
+                QuestStepType.Reach,
+                "outer_camp",
+                "Bring the supply crate to the outer camp marker.",
+                "gold_coin",
+                80));
+            RegisterQuest(CreateRuntimeQuest(
+                "commission_hunt_01",
+                "Commission: Hostile Patrol",
+                QuestType.Side,
+                "Clear a small hostile patrol near the ridge.",
+                QuestStepType.Defeat,
+                "ridge_patrol",
+                "Defeat the hostile patrol blocking the ridge road.",
+                "upgrade_crystal",
+                1));
+            RegisterQuest(CreateRuntimeQuest(
+                "commission_scout_01",
+                "Commission: Scout Report",
+                QuestType.Side,
+                "Check the marked overlook and report the route condition.",
+                QuestStepType.Reach,
+                "overlook_marker",
+                "Reach the overlook and verify the route condition.",
+                "gold_coin",
+                65));
+            RegisterQuest(CreateRuntimeQuest(
+                "world_ruins_01",
+                "Silent Ruins",
+                QuestType.Side,
+                "Investigate the inactive ruins beyond the lake.",
+                QuestStepType.Reach,
+                "silent_ruins",
+                "Enter the ruins and search for the inactive device.",
+                "artifact_shard",
+                1));
+            RegisterQuest(CreateRuntimeQuest(
+                "world_gather_01",
+                "Bright Herb Cache",
+                QuestType.Side,
+                "Collect bright herbs for field medicine.",
+                QuestStepType.Collect,
+                "bright_herb",
+                "Collect three bright herbs from the river path.",
+                "gold_coin",
+                50,
+                3));
+            RegisterQuest(CreateRuntimeQuest(
+                "world_trial_01",
+                "Trial of the Wind Step",
+                QuestType.Side,
+                "Reach the old platform before the marker fades.",
+                QuestStepType.Reach,
+                "wind_step_platform",
+                "Reach the wind step platform and activate the trial sigil.",
+                "upgrade_crystal",
+                1));
+            RegisterQuest(CreateRuntimeQuest(
+                "world_lost_relic_01",
+                "The Lost Relic",
+                QuestType.Side,
+                "Recover a relic reported near the cliff shrine.",
+                QuestStepType.Collect,
+                "lost_relic",
+                "Find the lost relic near the cliff shrine.",
+                "artifact_shard",
+                1));
+        }
+
+        static QuestDefinition CreateRuntimeQuest(
+            string questId,
+            string title,
+            QuestType type,
+            string summary,
+            QuestStepType stepType,
+            string targetId,
+            string stepDescription,
+            string rewardItemId,
+            int rewardCount,
+            int requiredCount = 1)
+        {
+            var quest = ScriptableObject.CreateInstance<QuestDefinition>();
+            quest.name = questId;
+            quest.questId = questId;
+            quest.questTitle = title;
+            quest.questType = type;
+            quest.summary = summary;
+            quest.rewardItemId = rewardItemId;
+            quest.rewardItemCount = rewardCount;
+            quest.steps = new List<QuestStep>
+            {
+                new QuestStep
+                {
+                    stepId = $"{questId}_step_01",
+                    stepType = stepType,
+                    targetId = targetId,
+                    requiredCount = requiredCount,
+                    description = stepDescription
+                }
+            };
+            return quest;
         }
 
         public string GetActiveQuestTitle()
