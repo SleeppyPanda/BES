@@ -14,6 +14,7 @@ namespace BES.UI
         [SerializeField] Slider manaBar;
         [SerializeField] TMP_Text levelText;
         [SerializeField] TMP_Text hpValueText;
+        [SerializeField] TMP_Text staminaValueText;
         [SerializeField] TMP_Text regionText;
 
         void OnEnable()
@@ -68,6 +69,9 @@ namespace BES.UI
                 staminaBar.maxValue = max;
                 staminaBar.value = current;
             }
+
+            if (staminaValueText != null)
+                staminaValueText.text = $"{Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
         }
 
         void UpdateMana(float current, float max)

@@ -1,4 +1,5 @@
 using BES.Core;
+using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 
@@ -8,6 +9,7 @@ namespace BES.UI
     {
         [SerializeField] TMP_Text questTitleText;
         [SerializeField] TMP_Text questStepText;
+        [SerializeField] RawImage questImage;
         [SerializeField] RectTransform compassArrow;
 
         Transform player;
@@ -44,8 +46,8 @@ namespace BES.UI
             {
                 var title = quests.GetActiveQuestTitle();
                 questTitleText.text = string.IsNullOrEmpty(title)
-                    ? "TITLE OF MISSIONS"
-                    : title.ToUpperInvariant();
+                    ? "Tracked Quest"
+                    : title;
             }
 
             if (questStepText != null)

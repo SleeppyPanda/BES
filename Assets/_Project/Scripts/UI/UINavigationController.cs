@@ -8,7 +8,6 @@ namespace BES.UI
         [Header("Layer 0 — HUD (always visible in gameplay)")]
         [SerializeField] HUDController hud;
         [SerializeField] MiniMapUI miniMap;
-        [SerializeField] QuestTrackerUI questTracker;
         [SerializeField] InteractPromptUI interactPrompt;
         [SerializeField] HudNavBarUI hudNavBar;
 
@@ -16,23 +15,18 @@ namespace BES.UI
         [SerializeField] InventoryUI inventoryUI;
         [SerializeField] CharacterProfileUI characterProfileUI;
         [SerializeField] GameMapUI gameMapUI;
-        [SerializeField] WeaponScreenUI weaponScreenUI;
-        [SerializeField] ArtifactsUI artifactsUI;
 
         [Header("Layer 2 — Full-screen meta")]
-        [SerializeField] TeamSetupUI teamSetupUI;
         [SerializeField] EventUI eventUI;
         [SerializeField] WishUI wishUI;
+        [SerializeField] BattlePassUI battlePassUI;
+        [SerializeField] SettingsUI settingsUI;
 
         [Header("Layer 3 — Modals")]
         [SerializeField] DialogueUI dialogueUI;
         [SerializeField] LoadingScreenUI loadingScreenUI;
-        [SerializeField] PlayerProfileUI playerProfileUI;
 
-        [Header("Weapon flow")]
-        [SerializeField] WeaponEnhanceUI weaponEnhanceUI;
-        [SerializeField] WeaponRankUpUI weaponRankUpUI;
-        [SerializeField] WeaponRefineUI weaponRefineUI;
+        [Header("Mission")]
         [SerializeField] QuestLogUI questLogUI;
 
         PlayerInputReader input;
@@ -41,15 +35,10 @@ namespace BES.UI
             (inventoryUI != null && inventoryUI.IsOpen) ||
             (characterProfileUI != null && characterProfileUI.IsOpen) ||
             (gameMapUI != null && gameMapUI.IsOpen) ||
-            (weaponScreenUI != null && weaponScreenUI.IsOpen) ||
-            (artifactsUI != null && artifactsUI.IsOpen) ||
-            (teamSetupUI != null && teamSetupUI.IsOpen) ||
             (eventUI != null && eventUI.IsOpen) ||
             (wishUI != null && wishUI.IsOpen) ||
-            (playerProfileUI != null && playerProfileUI.IsOpen) ||
-            (weaponEnhanceUI != null && weaponEnhanceUI.IsOpen) ||
-            (weaponRankUpUI != null && weaponRankUpUI.IsOpen) ||
-            (weaponRefineUI != null && weaponRefineUI.IsOpen) ||
+            (battlePassUI != null && battlePassUI.IsOpen) ||
+            (settingsUI != null && settingsUI.IsOpen) ||
             (questLogUI != null && questLogUI.IsOpen) ||
             (dialogueUI != null && dialogueUI.IsStoryOpen);
 
@@ -68,23 +57,17 @@ namespace BES.UI
         {
             hud ??= GetComponentInChildren<HUDController>(true);
             miniMap ??= GetComponentInChildren<MiniMapUI>(true);
-            questTracker ??= GetComponentInChildren<QuestTrackerUI>(true);
             interactPrompt ??= GetComponentInChildren<InteractPromptUI>(true);
             hudNavBar ??= GetComponentInChildren<HudNavBarUI>(true);
             inventoryUI ??= GetComponentInChildren<InventoryUI>(true);
             characterProfileUI ??= GetComponentInChildren<CharacterProfileUI>(true);
             gameMapUI ??= GetComponentInChildren<GameMapUI>(true);
-            weaponScreenUI ??= GetComponentInChildren<WeaponScreenUI>(true);
-            artifactsUI ??= GetComponentInChildren<ArtifactsUI>(true);
-            teamSetupUI ??= GetComponentInChildren<TeamSetupUI>(true);
             eventUI ??= GetComponentInChildren<EventUI>(true);
             wishUI ??= GetComponentInChildren<WishUI>(true);
+            battlePassUI ??= GetComponentInChildren<BattlePassUI>(true);
+            settingsUI ??= GetComponentInChildren<SettingsUI>(true);
             dialogueUI ??= GetComponentInChildren<DialogueUI>(true);
             loadingScreenUI ??= GetComponentInChildren<LoadingScreenUI>(true);
-            playerProfileUI ??= GetComponentInChildren<PlayerProfileUI>(true);
-            weaponEnhanceUI ??= GetComponentInChildren<WeaponEnhanceUI>(true);
-            weaponRankUpUI ??= GetComponentInChildren<WeaponRankUpUI>(true);
-            weaponRefineUI ??= GetComponentInChildren<WeaponRefineUI>(true);
             questLogUI ??= GetComponentInChildren<QuestLogUI>(true);
         }
 
@@ -98,7 +81,8 @@ namespace BES.UI
             }
 
             if (UnityEngine.InputSystem.Keyboard.current != null &&
-                UnityEngine.InputSystem.Keyboard.current.jKey.wasPressedThisFrame)
+                (UnityEngine.InputSystem.Keyboard.current.jKey.wasPressedThisFrame ||
+                 UnityEngine.InputSystem.Keyboard.current.vKey.wasPressedThisFrame))
                 ToggleQuestLog();
 
             if (input.CloseMenuPressed)
@@ -110,24 +94,16 @@ namespace BES.UI
             if (input.InventoryPressed) ToggleInventory();
             if (input.CharacterMenuPressed) ToggleCharacter();
             if (input.MapTogglePressed) ToggleWorldMap();
-            if (input.WeaponMenuPressed) ToggleWeapon();
             if (input.WishMenuPressed) ToggleWish();
-            if (input.TeamMenuPressed) ToggleTeam();
             if (input.EventMenuPressed) ToggleEvent();
-            if (input.ArtifactsMenuPressed) ToggleArtifacts();
         }
 
         public void CloseTopLayer()
         {
-            if (weaponRefineUI != null && weaponRefineUI.IsOpen) { weaponRefineUI.Hide(); return; }
-            if (weaponRankUpUI != null && weaponRankUpUI.IsOpen) { weaponRankUpUI.Hide(); return; }
-            if (weaponEnhanceUI != null && weaponEnhanceUI.IsOpen) { weaponEnhanceUI.Hide(); return; }
-            if (weaponScreenUI != null && weaponScreenUI.IsOpen) { weaponScreenUI.Hide(); return; }
-            if (artifactsUI != null && artifactsUI.IsOpen) { artifactsUI.Hide(); return; }
             if (wishUI != null && wishUI.IsOpen) { wishUI.Hide(); return; }
-            if (teamSetupUI != null && teamSetupUI.IsOpen) { teamSetupUI.Hide(); return; }
+            if (battlePassUI != null && battlePassUI.IsOpen) { battlePassUI.Hide(); return; }
+            if (settingsUI != null && settingsUI.IsOpen) { settingsUI.Hide(); return; }
             if (eventUI != null && eventUI.IsOpen) { eventUI.Hide(); return; }
-            if (playerProfileUI != null && playerProfileUI.IsOpen) { playerProfileUI.Hide(); return; }
             if (inventoryUI != null && inventoryUI.IsOpen) { inventoryUI.Close(); return; }
             if (characterProfileUI != null && characterProfileUI.IsOpen) { characterProfileUI.Close(); return; }
             if (gameMapUI != null && gameMapUI.IsOpen) { gameMapUI.Close(); return; }
@@ -139,15 +115,14 @@ namespace BES.UI
             inventoryUI?.Close();
             characterProfileUI?.Close();
             gameMapUI?.Close();
-            weaponScreenUI?.Hide();
-            artifactsUI?.Hide();
         }
 
         void CloseMetaScreens()
         {
-            teamSetupUI?.Hide();
             eventUI?.Hide();
             wishUI?.Hide();
+            battlePassUI?.Hide();
+            settingsUI?.Hide();
         }
 
         public void ToggleInventory()
@@ -174,30 +149,6 @@ namespace BES.UI
             gameMapUI.Toggle();
         }
 
-        public void ToggleWeapon()
-        {
-            if (weaponScreenUI == null) return;
-            var opening = !weaponScreenUI.IsOpen;
-            if (opening) { CloseOverlayMenus(); CloseMetaScreens(); weaponScreenUI.Show(); }
-            else weaponScreenUI.Hide();
-        }
-
-        public void ToggleArtifacts()
-        {
-            if (artifactsUI == null) return;
-            var opening = !artifactsUI.IsOpen;
-            if (opening) { CloseOverlayMenus(); CloseMetaScreens(); artifactsUI.Show(); }
-            else artifactsUI.Hide();
-        }
-
-        public void ToggleTeam()
-        {
-            if (teamSetupUI == null) return;
-            var opening = !teamSetupUI.IsOpen;
-            if (opening) { CloseOverlayMenus(); CloseMetaScreens(); teamSetupUI.Show(); }
-            else teamSetupUI.Hide();
-        }
-
         public void ToggleEvent()
         {
             if (eventUI == null) return;
@@ -214,10 +165,20 @@ namespace BES.UI
             else wishUI.Hide();
         }
 
-        public void ShowPlayerProfile()
+        public void ToggleBattlePass()
         {
-            CloseMetaScreens();
-            playerProfileUI?.Show();
+            if (battlePassUI == null) return;
+            var opening = !battlePassUI.IsOpen;
+            if (opening) { CloseOverlayMenus(); CloseMetaScreens(); battlePassUI.Show(); }
+            else battlePassUI.Hide();
+        }
+
+        public void ToggleSettings()
+        {
+            if (settingsUI == null) return;
+            var opening = !settingsUI.IsOpen;
+            if (opening) { CloseOverlayMenus(); CloseMetaScreens(); settingsUI.Show(); }
+            else settingsUI.Hide();
         }
 
         public void ToggleQuestLog()

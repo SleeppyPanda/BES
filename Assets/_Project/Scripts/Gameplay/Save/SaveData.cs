@@ -30,6 +30,7 @@ namespace BES.Gameplay
         public float playerPosZ;
         public List<string> activeQuestIds = new();
         public List<string> completedQuestIds = new();
+        public string trackedQuestId = string.Empty;
         public List<StringIntPair> inventory = new();
         public List<StringIntPair> relationships = new();
         public List<StringListPair> npcMemories = new();

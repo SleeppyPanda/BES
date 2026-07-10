@@ -1,24 +1,36 @@
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace BES.UI
 {
     public class WishUI : UIScreenBase
     {
+        enum CurrencyMode { Money, Gem }
+
         [SerializeField] GachaBannerDefinition banner;
         [SerializeField] TMP_Text bannerText;
         [SerializeField] TMP_Text coinsText;
         [SerializeField] TMP_Text gemsText;
         [SerializeField] TMP_Text resultText;
+        [SerializeField] Button moneyButton;
+        [SerializeField] Button gemButton;
         [SerializeField] Button wishOneButton;
         [SerializeField] Button wishTenButton;
         [SerializeField] Button closeButton;
         [SerializeField] Transform resultCardsContainer;
         [SerializeField] GameObject resultCardPrefab;
+        [SerializeField] GameObject controlsRoot;
+        [SerializeField] float cardFlyDuration = 0.42f;
+        [SerializeField] float cardStaggerDelay = 0.1f;
+        [SerializeField] Vector2 cardSpacing = new Vector2(160f, 210f);
+        [SerializeField] Vector2 cardSize = new Vector2(108f, 180f);
 
-        readonly System.Random rng = new();
+        readonly System.Random rng = new System.Random();
+        CurrencyMode currencyMode = CurrencyMode.Gem;
+        bool isAnimating;
 
         void Awake()
         {
@@ -26,7 +38,10 @@ namespace BES.UI
             EnsureBannerDrops();
             if (root == null)
                 root = gameObject;
+
             Hide();
+            if (moneyButton != null) moneyButton.onClick.AddListener(() => SetCurrency(CurrencyMode.Money));
+            if (gemButton != null) gemButton.onClick.AddListener(() => SetCurrency(CurrencyMode.Gem));
             if (wishOneButton != null) wishOneButton.onClick.AddListener(() => Pull(1));
             if (wishTenButton != null) wishTenButton.onClick.AddListener(() => Pull(10));
             if (closeButton != null) closeButton.onClick.AddListener(Hide);
@@ -48,10 +63,13 @@ namespace BES.UI
         {
             if (bannerText != null)
                 bannerText.text = banner != null ? banner.displayName : "Character Wish";
+
             RefreshWallet();
             ClearResultCards();
+            RefreshCurrencyButtons();
+            SetControlsVisible(true);
             if (resultText != null)
-                resultText.text = "Chọn Wish x1 hoặc Wish x10";
+                resultText.text = "Select Wish x1 or Wish x10";
         }
 
         void RefreshWallet()
@@ -64,72 +82,135 @@ namespace BES.UI
 
         void Pull(int count)
         {
-            if (banner == null || PlayerWallet.Instance == null)
+            if (isAnimating || banner == null || PlayerWallet.Instance == null)
                 return;
 
             if (banner.drops == null || banner.drops.Count == 0)
             {
                 if (resultText != null)
-                    resultText.text = "Banner chưa có drop table.";
+                    resultText.text = "Banner drop table is empty.";
                 return;
             }
 
-            var cost = count == 1 ? banner.singleCostGems : banner.tenPullCostGems;
-            if (!PlayerWallet.Instance.TrySpendGems(cost))
+            var cost = GetCost(count);
+            if (!TrySpend(cost))
             {
                 if (resultText != null)
-                    resultText.text = "Không đủ gems.";
+                    resultText.text = currencyMode == CurrencyMode.Gem ? "Not enough GEM." : "Not enough Money.";
                 return;
             }
 
-            var results = new List<string>();
+            var entries = new List<GachaDropEntry>();
+            var labels = new List<string>();
             for (var i = 0; i < count; i++)
             {
                 var entry = RollWithPity();
-                results.Add(GachaRewardService.ApplyReward(entry));
+                entries.Add(entry);
+                labels.Add(GachaRewardService.ApplyReward(entry));
             }
 
-            ShowResultCards(results);
-            if (resultText != null)
-                resultText.text = count == 1 ? "Wish x1 hoàn tất!" : "Wish x10 hoàn tất!";
+            StartCoroutine(ShowResultCardsRoutine(entries, labels));
         }
 
         void ClearResultCards()
         {
             if (resultCardsContainer == null)
                 return;
+
             for (var i = resultCardsContainer.childCount - 1; i >= 0; i--)
                 Destroy(resultCardsContainer.GetChild(i).gameObject);
         }
 
-        void ShowResultCards(List<string> results)
+        IEnumerator ShowResultCardsRoutine(List<GachaDropEntry> entries, List<string> labels)
         {
+            isAnimating = true;
+            SetControlsVisible(false);
             ClearResultCards();
-            if (resultCardsContainer == null)
-                return;
 
-            foreach (var r in results)
+            if (resultCardsContainer == null)
             {
-                GameObject go;
-                if (resultCardPrefab != null)
-                    go = Instantiate(resultCardPrefab, resultCardsContainer);
-                else
+                isAnimating = false;
+                SetControlsVisible(true);
+                yield break;
+            }
+
+            for (var i = 0; i < entries.Count; i++)
+            {
+                var go = CreateResultCard();
+                var rect = go.GetComponent<RectTransform>();
+                if (rect != null)
                 {
-                    go = new GameObject("ResultCard");
-                    go.transform.SetParent(resultCardsContainer, false);
-                    go.AddComponent<RectTransform>().sizeDelta = new Vector2(64, 96);
-                    go.AddComponent<Image>().color = new Color(0.2f, 0.18f, 0.28f, 0.95f);
-                    var label = new GameObject("Label").AddComponent<TextMeshProUGUI>();
-                    label.transform.SetParent(go.transform, false);
-                    label.text = r;
-                    label.fontSize = 10f;
-                    label.alignment = TextAlignmentOptions.Center;
+                    rect.sizeDelta = cardSize;
+                    var target = GetCardTargetPosition(i, entries.Count);
+                    var start = target + (i < 5 ? new Vector2(0f, 560f) : new Vector2(0f, -560f));
+                    rect.anchoredPosition = start;
+                    StartCoroutine(AnimateCard(rect, start, target));
                 }
 
-                var text = go.GetComponentInChildren<TMP_Text>();
-                if (text != null)
-                    text.text = r;
+                var label = i < labels.Count ? labels[i] : string.Empty;
+                var card = go.GetComponent<GachaCardUI>();
+                if (card != null)
+                    card.Setup(entries[i], label);
+                else
+                {
+                    var text = go.GetComponentInChildren<TMP_Text>();
+                    if (text != null)
+                        text.text = label;
+                }
+
+                yield return new WaitForSeconds(cardStaggerDelay);
             }
+
+            yield return new WaitForSeconds(cardFlyDuration);
+            if (resultText != null)
+                resultText.text = entries.Count == 1 ? "Wish x1 complete!" : "Wish x10 complete!";
+            RefreshWallet();
+            SetControlsVisible(true);
+            isAnimating = false;
+        }
+
+        GameObject CreateResultCard()
+        {
+            if (resultCardPrefab != null)
+                return Instantiate(resultCardPrefab, resultCardsContainer);
+
+            var go = new GameObject("GachaCard");
+            go.transform.SetParent(resultCardsContainer, false);
+            go.AddComponent<RectTransform>().sizeDelta = cardSize;
+            go.AddComponent<Image>().color = new Color(0.2f, 0.18f, 0.28f, 0.95f);
+            var label = new GameObject("Label").AddComponent<TextMeshProUGUI>();
+            label.transform.SetParent(go.transform, false);
+            label.text = "Reward";
+            label.fontSize = 12f;
+            label.alignment = TextAlignmentOptions.Center;
+            return go;
+        }
+
+        IEnumerator AnimateCard(RectTransform rect, Vector2 start, Vector2 target)
+        {
+            var elapsed = 0f;
+            while (elapsed < cardFlyDuration)
+            {
+                elapsed += Time.deltaTime;
+                var t = Mathf.Clamp01(elapsed / cardFlyDuration);
+                t = 1f - Mathf.Pow(1f - t, 3f);
+                rect.anchoredPosition = Vector2.LerpUnclamped(start, target, t);
+                yield return null;
+            }
+
+            rect.anchoredPosition = target;
+        }
+
+        Vector2 GetCardTargetPosition(int index, int count)
+        {
+            if (count == 1)
+                return Vector2.zero;
+
+            var column = index % 5;
+            var row = index / 5;
+            var x = (column - 2f) * cardSpacing.x;
+            var y = row == 0 ? cardSpacing.y * 0.5f : -cardSpacing.y * 0.5f;
+            return new Vector2(x, y);
         }
 
         GachaDropEntry RollWithPity()
@@ -146,21 +227,63 @@ namespace BES.UI
             return banner.Roll(rng);
         }
 
+        void SetCurrency(CurrencyMode mode)
+        {
+            currencyMode = mode;
+            RefreshCurrencyButtons();
+        }
+
+        void RefreshCurrencyButtons()
+        {
+            if (moneyButton != null)
+                moneyButton.interactable = currencyMode != CurrencyMode.Money;
+            if (gemButton != null)
+                gemButton.interactable = currencyMode != CurrencyMode.Gem;
+        }
+
+        int GetCost(int count)
+        {
+            if (currencyMode == CurrencyMode.Money)
+                return count == 1 ? banner.singleCostCoins : banner.tenPullCostCoins;
+            return count == 1 ? banner.singleCostGems : banner.tenPullCostGems;
+        }
+
+        bool TrySpend(int cost)
+        {
+            return currencyMode == CurrencyMode.Money
+                ? PlayerWallet.Instance.TrySpendCoins(cost)
+                : PlayerWallet.Instance.TrySpendGems(cost);
+        }
+
+        void SetControlsVisible(bool visible)
+        {
+            if (controlsRoot != null)
+            {
+                controlsRoot.SetActive(visible);
+                return;
+            }
+
+            if (moneyButton != null) moneyButton.gameObject.SetActive(visible);
+            if (gemButton != null) gemButton.gameObject.SetActive(visible);
+            if (wishOneButton != null) wishOneButton.gameObject.SetActive(visible);
+            if (wishTenButton != null) wishTenButton.gameObject.SetActive(visible);
+            if (closeButton != null) closeButton.gameObject.SetActive(visible);
+        }
+
         void EnsureBannerDrops()
         {
-            if (banner == null)
+            if (banner == null || (banner.drops != null && banner.drops.Count > 0))
                 return;
 
-            if (banner.drops != null && banner.drops.Count > 0)
-                return;
-
-            banner.drops = new System.Collections.Generic.List<GachaDropEntry>
+            banner.drops = new List<GachaDropEntry>
             {
-                new() { entryId = "w5", rewardType = GachaRewardType.Weapon, rewardId = "weapon_flame_blade", rarity = 5, weight = 5, displayLabel = "Bane of Flame and Water" },
-                new() { entryId = "w4", rewardType = GachaRewardType.Weapon, rewardId = "weapon_void_edge", rarity = 4, weight = 25, displayLabel = "Void Edge" },
-                new() { entryId = "w3", rewardType = GachaRewardType.Item, rewardId = "material_ore", itemAmount = 5, rarity = 3, weight = 40, displayLabel = "Ore Bundle" },
-                new() { entryId = "c5", rewardType = GachaRewardType.Character, rewardId = "char_limited_01", rarity = 5, weight = 3, displayLabel = "Limited Hero" },
-                new() { entryId = "c4", rewardType = GachaRewardType.Character, rewardId = "hero_02", rarity = 4, weight = 27, displayLabel = "Ally A" }
+                new GachaDropEntry { entryId = "c5_01", rewardType = GachaRewardType.Character, rewardId = "char_limited_01", rarity = 5, weight = 4, displayLabel = "Limited Hero" },
+                new GachaDropEntry { entryId = "c4_01", rewardType = GachaRewardType.Character, rewardId = "hero_01", rarity = 4, weight = 12, displayLabel = "Hero 01" },
+                new GachaDropEntry { entryId = "c4_02", rewardType = GachaRewardType.Character, rewardId = "hero_02", rarity = 4, weight = 12, displayLabel = "Hero 02" },
+                new GachaDropEntry { entryId = "c4_03", rewardType = GachaRewardType.Character, rewardId = "hero_03", rarity = 4, weight = 12, displayLabel = "Hero 03" },
+                new GachaDropEntry { entryId = "c4_04", rewardType = GachaRewardType.Character, rewardId = "hero_04", rarity = 4, weight = 12, displayLabel = "Hero 04" },
+                new GachaDropEntry { entryId = "c3_01", rewardType = GachaRewardType.Character, rewardId = "hero_05", rarity = 3, weight = 20, displayLabel = "Hero 05" },
+                new GachaDropEntry { entryId = "i3_01", rewardType = GachaRewardType.Item, rewardId = "gacha_item_01", itemAmount = 1, rarity = 3, weight = 40, displayLabel = "Gacha Item 01" }
             };
         }
     }

@@ -17,9 +17,11 @@ namespace BES.Narrative
 
         string currentBranch = "main";
         string currentEndingId = string.Empty;
+        string trackedQuestId = string.Empty;
 
         public string CurrentBranch => currentBranch;
         public string CurrentEndingId => currentEndingId;
+        public string TrackedQuestId => trackedQuestId;
         public IReadOnlyCollection<string> ActiveQuests => activeQuests;
 
         void Awake()
@@ -47,6 +49,7 @@ namespace BES.Narrative
             questStepProgress.Clear();
             currentBranch = "main";
             currentEndingId = string.Empty;
+            trackedQuestId = string.Empty;
         }
 
         public bool StartQuest(string questId)
@@ -57,6 +60,8 @@ namespace BES.Narrative
             activeQuests.Add(questId);
             if (!questStepProgress.ContainsKey(questId))
                 questStepProgress[questId] = 0;
+            if (string.IsNullOrEmpty(trackedQuestId))
+                trackedQuestId = questId;
             GameEvents.RaiseQuestUpdated(questId);
             return true;
         }
@@ -132,6 +137,8 @@ namespace BES.Narrative
 
             activeQuests.Remove(questId);
             completedQuests.Add(questId);
+            if (trackedQuestId == questId)
+                trackedQuestId = GetPrimaryActiveQuestId();
 
             if (!string.IsNullOrEmpty(quest.rewardItemId))
                 GameManager.Instance?.Inventory.AddItem(quest.rewardItemId, quest.rewardItemCount);
@@ -150,6 +157,15 @@ namespace BES.Narrative
 
         public QuestDefinition GetQuest(string questId) =>
             lookup.TryGetValue(questId, out var quest) ? quest : null;
+
+        public void TrackQuest(string questId)
+        {
+            if (string.IsNullOrEmpty(questId) || !activeQuests.Contains(questId))
+                return;
+
+            trackedQuestId = questId;
+            GameEvents.RaiseQuestUpdated(questId);
+        }
 
         public int GetStepIndex(string questId) =>
             questStepProgress.TryGetValue(questId, out var step) ? step : -1;
@@ -176,7 +192,8 @@ namespace BES.Narrative
             List<string> completed,
             string branch,
             string ending,
-            Dictionary<string, int> stepProgress = null)
+            Dictionary<string, int> stepProgress = null,
+            string trackedQuest = "")
         {
             activeQuests.Clear();
             completedQuests.Clear();
@@ -203,6 +220,9 @@ namespace BES.Narrative
 
             currentBranch = string.IsNullOrEmpty(branch) ? "main" : branch;
             currentEndingId = ending ?? string.Empty;
+            trackedQuestId = !string.IsNullOrEmpty(trackedQuest) && activeQuests.Contains(trackedQuest)
+                ? trackedQuest
+                : GetPrimaryActiveQuestId();
         }
 
         public void SetDatabase(QuestDatabase database)
@@ -217,6 +237,9 @@ namespace BES.Narrative
 
         public string GetPrimaryActiveQuestId()
         {
+            if (!string.IsNullOrEmpty(trackedQuestId) && activeQuests.Contains(trackedQuestId))
+                return trackedQuestId;
+
             if (activeQuests.Contains("main_awakening"))
                 return "main_awakening";
 

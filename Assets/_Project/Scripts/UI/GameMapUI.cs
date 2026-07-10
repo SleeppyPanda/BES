@@ -20,6 +20,9 @@ namespace BES.UI
         [SerializeField] TMP_Text regionRuinsText;
         [SerializeField] TMP_Text regionForestText;
         [SerializeField] Transform markersContainer;
+        [SerializeField] RectTransform mapRect;
+        [SerializeField] RawImage mapImage;
+        [SerializeField] RectTransform playerIcon;
         [SerializeField] GameObject mapMarkerPrefab;
         [SerializeField] UIMapMarker[] markerSlots;
         [SerializeField] TeleportMarkerConfig[] teleportMarkers =
@@ -30,6 +33,10 @@ namespace BES.UI
         };
         [SerializeField] Button closeButton;
         [SerializeField] TMP_Text statusText;
+        [SerializeField] Vector2 worldMin = new Vector2(-25f, -25f);
+        [SerializeField] Vector2 worldMax = new Vector2(25f, 25f);
+
+        Transform player;
 
         public bool IsOpen => panel != null && panel.activeSelf;
 
@@ -41,6 +48,22 @@ namespace BES.UI
                 closeButton.onClick.AddListener(Close);
         }
 
+        void Update()
+        {
+            if (!IsOpen || playerIcon == null || mapRect == null)
+                return;
+
+            if (player == null)
+            {
+                var playerObj = GameObject.FindGameObjectWithTag("Player");
+                if (playerObj != null)
+                    player = playerObj.transform;
+            }
+
+            if (player != null)
+                playerIcon.anchoredPosition = WorldToMap(player.position);
+        }
+
         public void Toggle()
         {
             if (panel == null)
@@ -48,7 +71,10 @@ namespace BES.UI
 
             panel.SetActive(!panel.activeSelf);
             if (panel.activeSelf)
+            {
+                RefreshWorldBounds();
                 Refresh();
+            }
         }
 
         public void Close()
@@ -148,6 +174,32 @@ namespace BES.UI
                         : "Khu vực chưa mở khóa.";
                 }
             });
+        }
+
+        void RefreshWorldBounds()
+        {
+            var regions = FindObjectsByType<WorldRegion>(FindObjectsSortMode.None);
+            if (regions.Length == 0)
+                return;
+
+            var min = regions[0].MapBoundsMin;
+            var max = regions[0].MapBoundsMax;
+            foreach (var region in regions)
+            {
+                min = Vector2.Min(min, region.MapBoundsMin);
+                max = Vector2.Max(max, region.MapBoundsMax);
+            }
+
+            worldMin = min;
+            worldMax = max;
+        }
+
+        Vector2 WorldToMap(Vector3 worldPos)
+        {
+            var nx = Mathf.InverseLerp(worldMin.x, worldMax.x, worldPos.x);
+            var ny = Mathf.InverseLerp(worldMin.y, worldMax.y, worldPos.z);
+            var size = mapRect.rect.size;
+            return new Vector2((nx - 0.5f) * size.x, (ny - 0.5f) * size.y);
         }
     }
 }

@@ -1,18 +1,33 @@
 using System.Collections.Generic;
 using BES.Core;
+using BES.Gameplay;
 using BES.Narrative;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace BES.UI
 {
     public class QuestLogUI : MonoBehaviour
     {
         [SerializeField] GameObject panel;
-        [SerializeField] Transform listContainer;
-        [SerializeField] TMP_Text rowPrefab;
+        [SerializeField] Transform storyQuestContainer;
+        [SerializeField] Transform commissionQuestContainer;
+        [SerializeField] Transform worldQuestContainer;
+        [SerializeField] QuestCardUI questCardPrefab;
         [SerializeField] Button closeButton;
+        [SerializeField] Button navigateButton;
+        [SerializeField] RawImage fixedArtworkA;
+        [SerializeField] RawImage fixedArtworkB;
+        [SerializeField] RawImage locationImage;
+        [SerializeField] TMP_Text questTitleText;
+        [SerializeField] TMP_Text questLocationText;
+        [SerializeField] TMP_Text questDetailText;
+        [SerializeField] Transform rewardContainer;
+        [SerializeField] QuestRewardItemUI rewardItemPrefab;
+
+        readonly List<QuestCardUI> cards = new List<QuestCardUI>();
+        QuestDefinition selectedQuest;
 
         public bool IsOpen => panel != null && panel.activeSelf;
 
@@ -22,6 +37,18 @@ namespace BES.UI
                 panel.SetActive(false);
             if (closeButton != null)
                 closeButton.onClick.AddListener(Close);
+            if (navigateButton != null)
+                navigateButton.onClick.AddListener(NavigateSelectedQuest);
+        }
+
+        void OnEnable() => GameEvents.OnQuestUpdated += OnQuestUpdated;
+
+        void OnDisable() => GameEvents.OnQuestUpdated -= OnQuestUpdated;
+
+        void OnQuestUpdated(string _)
+        {
+            if (IsOpen)
+                Refresh();
         }
 
         public void Toggle()
@@ -42,34 +69,137 @@ namespace BES.UI
 
         void Refresh()
         {
-            if (listContainer == null || rowPrefab == null)
-                return;
-
-            for (var i = listContainer.childCount - 1; i >= 0; i--)
-                Destroy(listContainer.GetChild(i).gameObject);
-
+            ClearQuestCards();
             var quests = GameManager.Instance?.Quests;
             if (quests == null)
                 return;
 
             foreach (var questId in quests.ActiveQuests)
-                AddRow($"[Active] {GetQuestLabel(questId, quests)}");
+            {
+                var quest = quests.GetQuest(questId);
+                if (quest == null)
+                    continue;
 
-            AddRow("— Completed —");
-            foreach (var questId in quests.ExportCompletedQuests())
-                AddRow($"[Done] {GetQuestLabel(questId, quests)}");
+                AddQuestCard(GetContainerForQuest(quest), quest, quests.GetCurrentStep(questId));
+            }
+
+            if (selectedQuest == null || !IsQuestActive(quests, selectedQuest.questId))
+            {
+                var tracked = quests.GetQuest(quests.GetPrimaryActiveQuestId());
+                selectedQuest = tracked;
+            }
+
+            SelectQuest(selectedQuest);
         }
 
-        void AddRow(string text)
+        void AddQuestCard(Transform container, QuestDefinition quest, QuestStep step)
         {
-            var row = Instantiate(rowPrefab, listContainer);
-            row.text = text;
+            if (container == null || questCardPrefab == null)
+                return;
+
+            var card = Instantiate(questCardPrefab, container);
+            card.Setup(quest, step != null ? step.description : quest.summary, SelectQuest);
+            cards.Add(card);
         }
 
-        static string GetQuestLabel(string questId, QuestManager quests)
+        Transform GetContainerForQuest(QuestDefinition quest)
         {
-            var quest = quests.GetQuest(questId);
-            return quest != null ? quest.questTitle : questId;
+            if (quest == null)
+                return worldQuestContainer;
+
+            if (quest.questType == QuestType.Main)
+                return storyQuestContainer;
+            if (!string.IsNullOrEmpty(quest.questId) && quest.questId.ToLowerInvariant().Contains("commission"))
+                return commissionQuestContainer;
+            return worldQuestContainer;
+        }
+
+        void SelectQuest(QuestDefinition quest)
+        {
+            selectedQuest = quest;
+            foreach (var card in cards)
+                card.SetSelected(card != null && quest != null && card.QuestId == quest.questId);
+
+            RefreshDetail();
+        }
+
+        void RefreshDetail()
+        {
+            ClearRewards();
+            var quests = GameManager.Instance?.Quests;
+            if (selectedQuest == null || quests == null)
+            {
+                if (questTitleText != null) questTitleText.text = "No quest selected";
+                if (questLocationText != null) questLocationText.text = "Quest location";
+                if (questDetailText != null) questDetailText.text = string.Empty;
+                return;
+            }
+
+            var step = quests.GetCurrentStep(selectedQuest.questId);
+            if (questTitleText != null)
+                questTitleText.text = selectedQuest.questTitle;
+            if (questLocationText != null)
+                questLocationText.text = step != null && !string.IsNullOrEmpty(step.targetId)
+                    ? $"Quest location: {step.targetId}"
+                    : "Quest location: not assigned";
+            if (questDetailText != null)
+                questDetailText.text = step != null ? step.description : selectedQuest.summary;
+
+            AddReward(selectedQuest.rewardItemId, selectedQuest.rewardItemCount);
+        }
+
+        void NavigateSelectedQuest()
+        {
+            if (selectedQuest == null)
+                return;
+
+            GameManager.Instance?.Quests.TrackQuest(selectedQuest.questId);
+        }
+
+        static bool IsQuestActive(QuestManager quests, string questId)
+        {
+            if (quests == null || string.IsNullOrEmpty(questId))
+                return false;
+
+            foreach (var activeQuestId in quests.ActiveQuests)
+            {
+                if (activeQuestId == questId)
+                    return true;
+            }
+
+            return false;
+        }
+
+        void ClearQuestCards()
+        {
+            cards.Clear();
+            ClearChildren(storyQuestContainer);
+            ClearChildren(commissionQuestContainer);
+            ClearChildren(worldQuestContainer);
+        }
+
+        void ClearRewards() => ClearChildren(rewardContainer);
+
+        void ClearChildren(Transform root)
+        {
+            if (root == null)
+                return;
+
+            for (var i = root.childCount - 1; i >= 0; i--)
+                Destroy(root.GetChild(i).gameObject);
+        }
+
+        void AddReward(string itemId, int amount)
+        {
+            if (string.IsNullOrEmpty(itemId) || rewardContainer == null || rewardItemPrefab == null)
+                return;
+
+            var reward = Instantiate(rewardItemPrefab, rewardContainer);
+            var item = GameManager.Instance?.Inventory.GetDefinition(itemId);
+            var label = item != null ? item.displayName : itemId;
+            if (amount > 1)
+                label += $" x{amount}";
+            reward.Setup(label, item != null ? item.rarity : 3);
         }
     }
 }

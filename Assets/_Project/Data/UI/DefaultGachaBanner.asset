@@ -15,41 +15,134 @@ MonoBehaviour:
   bannerId: banner_standard
   displayName: Character Wish
   description: Standard wish banner.
+  singleCostCoins: 1600
+  tenPullCostCoins: 16000
   singleCostGems: 160
   tenPullCostGems: 1600
   drops:
-  - entryId: w5
-    rewardType: 0
-    rewardId: weapon_flame_blade
-    itemAmount: 1
-    rarity: 5
-    weight: 5
-    displayLabel: Bane of Flame and Water
-  - entryId: w4
-    rewardType: 0
-    rewardId: weapon_void_edge
-    itemAmount: 1
-    rarity: 4
-    weight: 25
-    displayLabel: Void Edge
-  - entryId: w3
-    rewardType: 2
-    rewardId: material_ore
-    itemAmount: 5
-    rarity: 3
-    weight: 40
-    displayLabel: Ore Bundle
-  - entryId: c5
+  - entryId: char_limited_01
     rewardType: 1
     rewardId: char_limited_01
     itemAmount: 1
     rarity: 5
     weight: 3
     displayLabel: Limited Hero
-  - entryId: c4
+  - entryId: char_hero_01
+    rewardType: 1
+    rewardId: hero_01
+    itemAmount: 1
+    rarity: 4
+    weight: 9
+    displayLabel: Hero 01
+  - entryId: char_hero_02
     rewardType: 1
     rewardId: hero_02
     itemAmount: 1
     rarity: 4
-    weight: 27
-    displayLabel: "M\u1EA5t c\xF4 \u1EA5y r\u1ED3i"
+    weight: 9
+    displayLabel: Hero 02
+  - entryId: char_hero_03
+    rewardType: 1
+    rewardId: hero_03
+    itemAmount: 1
+    rarity: 4
+    weight: 9
+    displayLabel: Hero 03
+  - entryId: char_hero_04
+    rewardType: 1
+    rewardId: hero_04
+    itemAmount: 1
+    rarity: 4
+    weight: 9
+    displayLabel: Hero 04
+  - entryId: char_hero_05
+    rewardType: 1
+    rewardId: hero_05
+    itemAmount: 1
+    rarity: 3
+    weight: 16
+    displayLabel: Hero 05
+  - entryId: item_01
+    rewardType: 2
+    rewardId: gacha_item_01
+    itemAmount: 1
+    rarity: 4
+    weight: 8
+    displayLabel: Gacha Item 01
+  - entryId: item_02
+    rewardType: 2
+    rewardId: gacha_item_02
+    itemAmount: 1
+    rarity: 4
+    weight: 8
+    displayLabel: Gacha Item 02
+  - entryId: item_03
+    rewardType: 2
+    rewardId: gacha_item_03
+    itemAmount: 1
+    rarity: 4
+    weight: 8
+    displayLabel: Gacha Item 03
+  - entryId: item_04
+    rewardType: 2
+    rewardId: gacha_item_04
+    itemAmount: 1
+    rarity: 4
+    weight: 8
+    displayLabel: Gacha Item 04
+  - entryId: item_05
+    rewardType: 2
+    rewardId: gacha_item_05
+    itemAmount: 2
+    rarity: 3
+    weight: 24
+    displayLabel: Gacha Item 05
+  - entryId: item_06
+    rewardType: 2
+    rewardId: gacha_item_06
+    itemAmount: 2
+    rarity: 3
+    weight: 24
+    displayLabel: Gacha Item 06
+  - entryId: item_07
+    rewardType: 2
+    rewardId: gacha_item_07
+    itemAmount: 2
+    rarity: 3
+    weight: 24
+    displayLabel: Gacha Item 07
+  - entryId: item_08
+    rewardType: 2
+    rewardId: gacha_item_08
+    itemAmount: 2
+    rarity: 3
+    weight: 24
+    displayLabel: Gacha Item 08
+  - entryId: item_09
+    rewardType: 2
+    rewardId: gacha_item_09
+    itemAmount: 3
+    rarity: 3
+    weight: 24
+    displayLabel: Gacha Item 09
+  - entryId: item_10
+    rewardType: 2
+    rewardId: gacha_item_10
+    itemAmount: 3
+    rarity: 3
+    weight: 24
+    displayLabel: Gacha Item 10
+  - entryId: item_11
+    rewardType: 2
+    rewardId: gacha_item_11
+    itemAmount: 3
+    rarity: 3
+    weight: 24
+    displayLabel: Gacha Item 11
+  - entryId: item_12
+    rewardType: 2
+    rewardId: gacha_item_12
+    itemAmount: 3
+    rarity: 3
+    weight: 24
+    displayLabel: Gacha Item 12

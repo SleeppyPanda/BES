@@ -8,7 +8,6 @@ namespace BES.UI
         [SerializeField] SkillBarUI skillBar;
         [SerializeField] HUDSpriteManifest manifest;
 
-        BasicAttackController attack;
         SkillController skills;
 
         void Awake()
@@ -22,19 +21,16 @@ namespace BES.UI
 
         void Update()
         {
-            if (attack == null)
+            if (skills == null)
                 BindPlayer();
 
             if (skillBar == null)
                 return;
 
-            if (attack != null)
-                skillBar.SetCooldown(0, attack.AttackBusyNormalized);
-
             if (skills != null)
             {
-                skillBar.SetCooldown(1, skills.Skill1CooldownNormalized);
-                skillBar.SetCooldown(2, skills.Skill2CooldownNormalized);
+                skillBar.SetCooldown(0, skills.Skill1CooldownNormalized);
+                skillBar.SetCooldown(1, skills.Skill2CooldownNormalized);
             }
         }
 
@@ -44,7 +40,6 @@ namespace BES.UI
             if (player == null)
                 return;
 
-            attack = player.GetComponent<BasicAttackController>();
             skills = player.GetComponent<SkillController>();
         }
 
@@ -53,9 +48,8 @@ namespace BES.UI
             if (skillBar == null || manifest == null)
                 return;
 
-            skillBar.SetSkillIcon(0, manifest.skillIconAttack);
-            skillBar.SetSkillIcon(1, manifest.skillIconSkill1);
-            skillBar.SetSkillIcon(2, manifest.skillIconSkill2);
+            skillBar.SetSkillIcon(0, manifest.skillIconSkill1);
+            skillBar.SetSkillIcon(1, manifest.skillIconSkill2);
         }
     }
 }

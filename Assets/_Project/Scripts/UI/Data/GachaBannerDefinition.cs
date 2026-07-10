@@ -29,6 +29,8 @@ namespace BES.UI
         public string bannerId;
         public string displayName;
         [TextArea] public string description;
+        public int singleCostCoins = 1600;
+        public int tenPullCostCoins = 16000;
         public int singleCostGems = 160;
         public int tenPullCostGems = 1600;
         public List<GachaDropEntry> drops = new();

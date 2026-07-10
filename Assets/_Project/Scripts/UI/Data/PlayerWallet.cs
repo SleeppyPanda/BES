@@ -38,6 +38,16 @@ namespace BES.UI
             return true;
         }
 
+        public bool TrySpendCoins(int amount)
+        {
+            if (coins < amount)
+                return false;
+
+            coins -= amount;
+            WalletChanged?.Invoke();
+            return true;
+        }
+
         public void AddGems(int amount)
         {
             gems += amount;

@@ -6,6 +6,7 @@ namespace BES.UI
     public class HUDSpriteManifest : ScriptableObject
     {
         [Header("Mini-map")]
+        public Sprite minimapMap;
         public Sprite minimapFrame;
         public Sprite minimapRing;
         public Sprite playerDot;
@@ -27,13 +28,19 @@ namespace BES.UI
         [Header("Top navigation")]
         public Sprite navBarBackground;
         public Sprite navInventory;
+        public Sprite navBag;
         public Sprite navCharacter;
+        public Sprite navPersonal;
         public Sprite navMap;
         public Sprite navWish;
         public Sprite navTeam;
+        public Sprite navBattlePass;
         public Sprite navEvent;
         public Sprite navArtifacts;
         public Sprite navWeapon;
+        public Sprite settingsIcon;
+        public Sprite guideLineIcon;
+        public Sprite missionIcon;
 
         [Header("Party & skills")]
         public Sprite partySlotFrame;

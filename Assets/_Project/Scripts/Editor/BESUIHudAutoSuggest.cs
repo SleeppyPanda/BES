@@ -13,6 +13,7 @@ namespace BES.Editor
                 return;
 
             manifest.minimapFrame = null;
+            manifest.minimapMap = null;
             manifest.minimapRing = LoadFrame("Union.png");
             manifest.questTrackerFrame = null;
             manifest.navBarBackground = null;
@@ -38,8 +39,14 @@ namespace BES.Editor
             manifest.navTeam = LoadIcon("Object-2.png");
             manifest.navInventory = LoadIcon("Object.png");
             manifest.navCharacter = LoadIcon("Mask group.png");
+            manifest.navBattlePass = manifest.navTeam;
+            manifest.navBag = manifest.navInventory;
+            manifest.navPersonal = manifest.navCharacter;
             manifest.navArtifacts = LoadIcon("Object-4.png");
             manifest.navWeapon = LoadIcon("Object-5.png");
+            manifest.settingsIcon = LoadIcon("Vector.png");
+            manifest.guideLineIcon = LoadIcon("Object-1.png");
+            manifest.missionIcon = LoadIcon("Object-4.png");
 
             manifest.partySlotFrame = LoadFrame("Rectangle 39782.png");
             manifest.skillSlotFrame = LoadFrame("Rectangle 40003.png") ?? manifest.partySlotFrame;

@@ -25,8 +25,7 @@ namespace BES.UI
                 return;
 
             RemoveLegacyMockupLayers();
-            TopLeftHudWidgets.ApplyTopLeftCluster(transform.Find("HUDLayer"), manifest);
-            ChatEnterWidgets.Build(transform.Find("HUDLayer"), manifest);
+            TopLeftHudWidgets.ApplyMiniMap(transform.Find("HUDLayer/MiniMap"), manifest);
             ApplyNavBar();
             ApplyBars();
             ApplyPartyStripFromComponent();
@@ -69,9 +68,8 @@ namespace BES.UI
             if (bar == null)
                 return;
 
-            bar.SetSkillIcon(0, manifest.skillIconAttack);
-            bar.SetSkillIcon(1, manifest.skillIconSkill1);
-            bar.SetSkillIcon(2, manifest.skillIconSkill2);
+            bar.SetSkillIcon(0, manifest.skillIconSkill1);
+            bar.SetSkillIcon(1, manifest.skillIconSkill2);
         }
 
         void ApplyNavBar()
@@ -80,14 +78,11 @@ namespace BES.UI
             if (navRoot == null)
                 return;
 
-            ApplyNavIcon(navRoot, "InventoryBtn", manifest.navInventory);
-            ApplyNavIcon(navRoot, "CharacterBtn", manifest.navCharacter);
-            ApplyNavIcon(navRoot, "MapBtn", manifest.navMap);
+            ApplyNavIcon(navRoot, "BattlePassBtn", manifest.navBattlePass != null ? manifest.navBattlePass : manifest.navTeam);
+            ApplyNavIcon(navRoot, "BagBtn", manifest.navBag != null ? manifest.navBag : manifest.navInventory);
+            ApplyNavIcon(navRoot, "PersonalBtn", manifest.navPersonal != null ? manifest.navPersonal : manifest.navCharacter);
             ApplyNavIcon(navRoot, "WishBtn", manifest.navWish);
-            ApplyNavIcon(navRoot, "TeamBtn", manifest.navTeam);
             ApplyNavIcon(navRoot, "EventBtn", manifest.navEvent);
-            ApplyNavIcon(navRoot, "ArtifactsBtn", manifest.navArtifacts);
-            ApplyNavIcon(navRoot, "WeaponBtn", manifest.navWeapon);
         }
 
         void ApplyPartyStripFromComponent()
@@ -155,17 +150,29 @@ namespace BES.UI
             if (t == null)
                 return;
 
+            var raw = t.GetComponent<RawImage>();
+            if (raw != null)
+            {
+                if (sprite != null && HUDPrimitiveStyles.IsWhitelistedIconSprite(sprite))
+                {
+                    raw.texture = sprite.texture;
+                    raw.color = Color.white;
+                }
+                else
+                    raw.color = HUDPrimitiveStyles.NavIconFallback;
+            }
+
             var img = t.GetComponent<Image>();
-            if (img == null)
+            if (img == null && raw == null)
                 return;
 
-            if (sprite != null && HUDPrimitiveStyles.IsWhitelistedIconSprite(sprite))
+            if (img != null && sprite != null && HUDPrimitiveStyles.IsWhitelistedIconSprite(sprite))
             {
                 img.sprite = sprite;
                 img.preserveAspect = true;
                 img.color = Color.white;
             }
-            else
+            else if (img != null)
                 HUDPrimitiveStyles.ApplySolidPanel(img, HUDPrimitiveStyles.NavIconFallback);
 
             var label = t.Find("Label");

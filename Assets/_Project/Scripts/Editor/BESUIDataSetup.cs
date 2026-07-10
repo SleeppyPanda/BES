@@ -19,6 +19,7 @@ namespace BES.Editor
             BESUIEditorUtils.EnsureFolder("Assets/_Project/Resources/Data");
 
             CreateWeaponDatabase();
+            CreateGachaItemDefinitions();
             CreateArtifactDatabase();
             CreateCharacterDatabase();
             CreateGachaBanner();
@@ -107,6 +108,43 @@ namespace BES.Editor
             EditorUtility.SetDirty(db);
         }
 
+        static void CreateGachaItemDefinitions()
+        {
+            var path = "Assets/_Project/Resources/Data/ItemDatabase.asset";
+            var db = CreateOrLoadAsset<ItemDatabase>(path);
+            db.items ??= new System.Collections.Generic.List<ItemDefinition>();
+
+            for (var i = 1; i <= 12; i++)
+            {
+                var id = $"gacha_item_{i:D2}";
+                var rarity = i <= 4 ? 4 : 3;
+                UpsertItem(db, id, $"Gacha Item {i:D2}", $"Gacha reward material #{i:D2}.", rarity);
+            }
+
+            db.RebuildLookup();
+            EditorUtility.SetDirty(db);
+        }
+
+        static void UpsertItem(ItemDatabase db, string id, string displayName, string description, int rarity)
+        {
+            var item = db.items.Find(candidate => candidate != null && candidate.itemId == id);
+            if (item == null)
+            {
+                item = ScriptableObject.CreateInstance<ItemDefinition>();
+                item.name = id;
+                AssetDatabase.AddObjectToAsset(item, db);
+                db.items.Add(item);
+            }
+
+            item.itemId = id;
+            item.displayName = displayName;
+            item.description = description;
+            item.itemType = ItemType.Material;
+            item.maxStack = 99;
+            item.rarity = rarity;
+            EditorUtility.SetDirty(item);
+        }
+
         static void CreateCharacterDatabase()
         {
             var db = CreateOrLoadAsset<CharacterDatabase>("Assets/_Project/Resources/Data/CharacterDatabase.asset");
@@ -133,6 +171,8 @@ namespace BES.Editor
             banner.bannerId = "banner_standard";
             banner.displayName = "Character Wish";
             banner.description = "Standard wish banner.";
+            banner.singleCostCoins = 1600;
+            banner.tenPullCostCoins = 16000;
             banner.singleCostGems = 160;
             banner.tenPullCostGems = 1600;
 
@@ -144,7 +184,33 @@ namespace BES.Editor
                 new() { entryId = "c5", rewardType = GachaRewardType.Character, rewardId = "char_limited_01", rarity = 5, weight = 3, displayLabel = "Limited Hero" },
                 new() { entryId = "c4", rewardType = GachaRewardType.Character, rewardId = "hero_02", rarity = 4, weight = 27, displayLabel = "Mất cô ấy rồi" }
             };
+            banner.drops = BuildDefaultGachaDrops();
             EditorUtility.SetDirty(banner);
+        }
+
+        static System.Collections.Generic.List<GachaDropEntry> BuildDefaultGachaDrops()
+        {
+            return new System.Collections.Generic.List<GachaDropEntry>
+            {
+                new() { entryId = "char_limited_01", rewardType = GachaRewardType.Character, rewardId = "char_limited_01", rarity = 5, weight = 3, displayLabel = "Limited Hero" },
+                new() { entryId = "char_hero_01", rewardType = GachaRewardType.Character, rewardId = "hero_01", rarity = 4, weight = 9, displayLabel = "Hero 01" },
+                new() { entryId = "char_hero_02", rewardType = GachaRewardType.Character, rewardId = "hero_02", rarity = 4, weight = 9, displayLabel = "Hero 02" },
+                new() { entryId = "char_hero_03", rewardType = GachaRewardType.Character, rewardId = "hero_03", rarity = 4, weight = 9, displayLabel = "Hero 03" },
+                new() { entryId = "char_hero_04", rewardType = GachaRewardType.Character, rewardId = "hero_04", rarity = 4, weight = 9, displayLabel = "Hero 04" },
+                new() { entryId = "char_hero_05", rewardType = GachaRewardType.Character, rewardId = "hero_05", rarity = 3, weight = 16, displayLabel = "Hero 05" },
+                new() { entryId = "item_01", rewardType = GachaRewardType.Item, rewardId = "gacha_item_01", itemAmount = 1, rarity = 4, weight = 8, displayLabel = "Gacha Item 01" },
+                new() { entryId = "item_02", rewardType = GachaRewardType.Item, rewardId = "gacha_item_02", itemAmount = 1, rarity = 4, weight = 8, displayLabel = "Gacha Item 02" },
+                new() { entryId = "item_03", rewardType = GachaRewardType.Item, rewardId = "gacha_item_03", itemAmount = 1, rarity = 4, weight = 8, displayLabel = "Gacha Item 03" },
+                new() { entryId = "item_04", rewardType = GachaRewardType.Item, rewardId = "gacha_item_04", itemAmount = 1, rarity = 4, weight = 8, displayLabel = "Gacha Item 04" },
+                new() { entryId = "item_05", rewardType = GachaRewardType.Item, rewardId = "gacha_item_05", itemAmount = 2, rarity = 3, weight = 24, displayLabel = "Gacha Item 05" },
+                new() { entryId = "item_06", rewardType = GachaRewardType.Item, rewardId = "gacha_item_06", itemAmount = 2, rarity = 3, weight = 24, displayLabel = "Gacha Item 06" },
+                new() { entryId = "item_07", rewardType = GachaRewardType.Item, rewardId = "gacha_item_07", itemAmount = 2, rarity = 3, weight = 24, displayLabel = "Gacha Item 07" },
+                new() { entryId = "item_08", rewardType = GachaRewardType.Item, rewardId = "gacha_item_08", itemAmount = 2, rarity = 3, weight = 24, displayLabel = "Gacha Item 08" },
+                new() { entryId = "item_09", rewardType = GachaRewardType.Item, rewardId = "gacha_item_09", itemAmount = 3, rarity = 3, weight = 24, displayLabel = "Gacha Item 09" },
+                new() { entryId = "item_10", rewardType = GachaRewardType.Item, rewardId = "gacha_item_10", itemAmount = 3, rarity = 3, weight = 24, displayLabel = "Gacha Item 10" },
+                new() { entryId = "item_11", rewardType = GachaRewardType.Item, rewardId = "gacha_item_11", itemAmount = 3, rarity = 3, weight = 24, displayLabel = "Gacha Item 11" },
+                new() { entryId = "item_12", rewardType = GachaRewardType.Item, rewardId = "gacha_item_12", itemAmount = 3, rarity = 3, weight = 24, displayLabel = "Gacha Item 12" }
+            };
         }
 
         static void CreateEventDefinition()

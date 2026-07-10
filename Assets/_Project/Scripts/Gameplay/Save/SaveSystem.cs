@@ -116,6 +116,7 @@ namespace BES.Gameplay
                 Current.relationships = SaveDataUtility.ToPairs(GameManager.Instance.Relationships.ExportState());
                 Current.activeQuestIds = GameManager.Instance.Quests.ExportActiveQuests();
                 Current.completedQuestIds = GameManager.Instance.Quests.ExportCompletedQuests();
+                Current.trackedQuestId = GameManager.Instance.Quests.TrackedQuestId;
                 Current.questStepProgress = SaveDataUtility.ToPairs(GameManager.Instance.Quests.ExportStepProgress());
                 Current.storyBranch = GameManager.Instance.Quests.CurrentBranch;
                 Current.endingId = GameManager.Instance.Quests.CurrentEndingId;
@@ -161,7 +162,8 @@ namespace BES.Gameplay
                     Current.completedQuestIds,
                     Current.storyBranch,
                     Current.endingId,
-                    SaveDataUtility.FromPairs(Current.questStepProgress));
+                    SaveDataUtility.FromPairs(Current.questStepProgress),
+                    Current.trackedQuestId);
                 NPCMemoryStore.ImportAll(SaveDataUtility.FromMemoryPairs(Current.npcMemories));
             }
 

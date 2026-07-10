@@ -98,6 +98,23 @@ MonoBehaviour:
     testVisualScale: {x: 1.05, y: 1.1, z: 1.05}
     skill1Id: skill_starfall
     skill2Id: skill_lunar_drive
+  - characterId: hero_05
+    displayName: Starbound Rookie
+    rarity: 3
+    level: 1
+    maxLevel: 100
+    baseAttack: 12
+    baseHealth: 88
+    baseDefense: 4
+    baseMana: 90
+    critRate: 0.08
+    critDamage: 1.35
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 0.52, g: 0.68, b: 1, a: 1}
+    testVisualScale: {x: 0.9, y: 0.95, z: 0.9}
+    skill1Id: skill_quick_cut
+    skill2Id: skill_arc_bolt
   defaultPartyIds:
   - hero_01
   - hero_02

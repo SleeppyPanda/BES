@@ -159,58 +159,44 @@ namespace BES.Editor
             BuildQuestTracker(hudLayer.transform, manifest);
             BuildQuestLog(hudLayer.transform);
             BuildInteractPrompt(hudLayer.transform, manifest);
+            BuildHudCornerButtons(hudLayer.transform, manifest);
             BuildHudNavBar(hudLayer.transform, manifest);
             BuildPartyStrip(hudLayer.transform, manifest);
             BuildSkillBar(hudLayer.transform, manifest);
-            ChatEnterWidgets.Build(hudLayer.transform, manifest);
-            TopLeftHudWidgets.ApplyPortraitChip(hudLayer.transform, manifest);
-            TopLeftHudWidgets.ApplyLockBtn(hudLayer.transform, manifest);
+            BuildChatBox(hudLayer.transform, manifest);
 
             // Layer 1 overlays
             var overlayLayer = CreateChild(canvasGo.transform, "OverlayLayer");
             var inventory = BuildInventoryPanel(overlayLayer.transform);
             var character = BuildCharacterPanel(overlayLayer.transform);
-            var map = BuildWorldMapPanel(overlayLayer.transform);
-            var weapon = BuildWeaponPanel(overlayLayer.transform);
-            var artifacts = BuildArtifactsPanel(overlayLayer.transform);
+            var map = BuildWorldMapPanel(overlayLayer.transform, manifest);
 
             // Layer 2 meta
             var metaLayer = CreateChild(canvasGo.transform, "MetaLayer");
-            var team = BuildTeamPanel(metaLayer.transform);
             var evt = BuildEventPanel(metaLayer.transform);
+            var battlePass = BuildBattlePassPanel(metaLayer.transform);
             var wish = BuildWishPanel(metaLayer.transform);
+            var settings = BuildSettingsPanel(metaLayer.transform);
 
             // Layer 3 modals + weapon flow
             var modalLayer = CreateChild(canvasGo.transform, "ModalLayer");
             var dialogue = BuildDialoguePanel(modalLayer.transform);
             var loading = BuildLoadingPanel(modalLayer.transform);
-            var enhance = BuildWeaponEnhancePanel(modalLayer.transform);
-            var rankUp = BuildWeaponRankUpPanel(modalLayer.transform);
-            var refine = BuildWeaponRefinePanel(modalLayer.transform);
-
-            BESUIEditorUtils.SetPrivateField(weapon, "enhanceUI", enhance);
-            BESUIEditorUtils.SetPrivateField(enhance, "rankUpUI", rankUp);
-            BESUIEditorUtils.SetPrivateField(rankUp, "refineUI", refine);
 
             BESUIEditorUtils.SetPrivateField(nav, "hud", hudLayer.GetComponentInChildren<HUDController>(true));
             BESUIEditorUtils.SetPrivateField(nav, "miniMap", hudLayer.GetComponentInChildren<MiniMapUI>(true));
-            BESUIEditorUtils.SetPrivateField(nav, "questTracker", hudLayer.GetComponentInChildren<QuestTrackerUI>(true));
             BESUIEditorUtils.SetPrivateField(nav, "questLogUI", hudLayer.GetComponentInChildren<QuestLogUI>(true));
             BESUIEditorUtils.SetPrivateField(nav, "interactPrompt", hudLayer.GetComponentInChildren<InteractPromptUI>(true));
             BESUIEditorUtils.SetPrivateField(nav, "hudNavBar", hudLayer.GetComponentInChildren<HudNavBarUI>(true));
             BESUIEditorUtils.SetPrivateField(nav, "inventoryUI", inventory);
             BESUIEditorUtils.SetPrivateField(nav, "characterProfileUI", character);
             BESUIEditorUtils.SetPrivateField(nav, "gameMapUI", map);
-            BESUIEditorUtils.SetPrivateField(nav, "weaponScreenUI", weapon);
-            BESUIEditorUtils.SetPrivateField(nav, "artifactsUI", artifacts);
-            BESUIEditorUtils.SetPrivateField(nav, "teamSetupUI", team);
             BESUIEditorUtils.SetPrivateField(nav, "eventUI", evt);
+            BESUIEditorUtils.SetPrivateField(nav, "battlePassUI", battlePass);
             BESUIEditorUtils.SetPrivateField(nav, "wishUI", wish);
+            BESUIEditorUtils.SetPrivateField(nav, "settingsUI", settings);
             BESUIEditorUtils.SetPrivateField(nav, "dialogueUI", dialogue);
             BESUIEditorUtils.SetPrivateField(nav, "loadingScreenUI", loading);
-            BESUIEditorUtils.SetPrivateField(nav, "weaponEnhanceUI", enhance);
-            BESUIEditorUtils.SetPrivateField(nav, "weaponRankUpUI", rankUp);
-            BESUIEditorUtils.SetPrivateField(nav, "weaponRefineUI", refine);
 
             canvasGo.AddComponent<UIScreenBackgroundBootstrap>();
 
@@ -284,10 +270,11 @@ namespace BES.Editor
             var hpValue = BESUIEditorUtils.CreateText(health.transform, "HpValue", "100/100", Vector2.zero, 14f, TextAlignmentOptions.Center);
             hpValue.color = new Color(0.12f, 0.14f, 0.18f, 0.95f);
 
-            var stamina = BESUIEditorUtils.CreateFilledSlider(go.transform, "StaminaBar", new Vector2(HUDLayoutTokens.HealthBarPos.x, HUDLayoutTokens.HealthBarPos.y - 18f), new Vector2(HUDLayoutTokens.HealthBarSize.x, 4f),
+            var stamina = BESUIEditorUtils.CreateFilledSlider(go.transform, "StaminaBar", new Vector2(HUDLayoutTokens.HealthBarPos.x, HUDLayoutTokens.HealthBarPos.y - 24f), new Vector2(HUDLayoutTokens.HealthBarSize.x, 10f),
                 null, null, HUDPrimitiveStyles.StaminaBarFill);
             ApplyPrimitiveBar(stamina, HUDPrimitiveStyles.HpBarBackground, HUDPrimitiveStyles.StaminaBarFill);
-            stamina.gameObject.SetActive(false);
+            var staminaValue = BESUIEditorUtils.CreateText(stamina.transform, "StaminaValue", "100/100", Vector2.zero, 12f, TextAlignmentOptions.Center);
+            staminaValue.color = new Color(0.12f, 0.14f, 0.18f, 0.95f);
 
             var mana = BESUIEditorUtils.CreateFilledSlider(go.transform, "ManaBar", new Vector2(HUDLayoutTokens.HealthBarPos.x, HUDLayoutTokens.HealthBarPos.y - 24f), new Vector2(HUDLayoutTokens.HealthBarSize.x, 3f),
                 null, null, HUDPrimitiveStyles.ManaBarFill);
@@ -302,6 +289,7 @@ namespace BES.Editor
             BESUIEditorUtils.SetPrivateField(hud, "manaBar", mana);
             BESUIEditorUtils.SetPrivateField(hud, "levelText", level);
             BESUIEditorUtils.SetPrivateField(hud, "hpValueText", hpValue);
+            BESUIEditorUtils.SetPrivateField(hud, "staminaValueText", staminaValue);
             BESUIEditorUtils.SetPrivateField(hud, "regionText", region);
         }
 
@@ -339,8 +327,21 @@ namespace BES.Editor
             var go = new GameObject("QuestTracker");
             go.transform.SetParent(parent, false);
             go.AddComponent<RectTransform>();
-            go.AddComponent<QuestTrackerUI>();
+            var tracker = go.AddComponent<QuestTrackerUI>();
             TopLeftHudWidgets.ApplyQuestTracker(go.transform, manifest);
+
+            var imageGo = new GameObject("QuestImage");
+            imageGo.transform.SetParent(go.transform, false);
+            var imageRect = imageGo.AddComponent<RectTransform>();
+            imageRect.anchorMin = imageRect.anchorMax = new Vector2(0f, 1f);
+            imageRect.pivot = new Vector2(0f, 1f);
+            imageRect.anchoredPosition = new Vector2(0f, -42f);
+            imageRect.sizeDelta = new Vector2(44f, 44f);
+            var questImage = imageGo.AddComponent<RawImage>();
+            questImage.texture = null;
+            questImage.color = new Color(1f, 1f, 1f, 0.16f);
+            questImage.raycastTarget = false;
+            BESUIEditorUtils.SetPrivateField(tracker, "questImage", questImage);
         }
 
         static void BuildQuestLog(Transform parent)
@@ -350,12 +351,154 @@ namespace BES.Editor
             var rect = go.AddComponent<RectTransform>();
             UIAnchorPresets.StretchFull(rect);
             var log = go.AddComponent<QuestLogUI>();
+
             var panel = new GameObject("Panel");
             panel.transform.SetParent(go.transform, false);
             var panelRect = panel.AddComponent<RectTransform>();
-            panelRect.sizeDelta = new Vector2(520, 360);
-            panelRect.anchorMin = panelRect.anchorMax = new Vector2(0.5f, 0.5f);
-            panelRect.anchoredPosition = Vector2.zero;
+            UIAnchorPresets.Center(panelRect, new Vector2(1800f, 990f));
+            panel.AddComponent<Image>().color = new Color(0.03f, 0.14f, 0.25f, 0.88f);
+
+            var fixedA = AddStretchRawArtworkPanel(panel.transform, "FixedArtworkA", new Color(1f, 1f, 1f, 0.06f));
+            fixedA.transform.SetAsFirstSibling();
+            var fixedB = AddRawArtworkPanel(panel.transform, "FixedArtworkB", new Vector2(220f, 120f), new Vector2(-710f, 404f), new Color(1f, 1f, 1f, 0.1f));
+
+            var title = BESUIEditorUtils.CreateText(panel.transform, "PanelTitle", "In Progress", new Vector2(-775f, 425f), 26f, TextAlignmentOptions.Left);
+            title.fontStyle = FontStyles.Bold;
+            var closeBtn = BESUIEditorUtils.CreateButton(panel.transform, "BackBtn", "Back", new Vector2(810f, 425f), new Vector2(96f, 44f));
+            var navigateBtn = BESUIEditorUtils.CreateButton(panel.transform, "NavigateBtn", "Navigate", new Vector2(700f, -410f), new Vector2(220f, 58f));
+
+            var divider = new GameObject("Divider");
+            divider.transform.SetParent(panel.transform, false);
+            var dividerRect = divider.AddComponent<RectTransform>();
+            UIAnchorPresets.Center(dividerRect, new Vector2(3f, 840f));
+            dividerRect.anchoredPosition = new Vector2(-250f, -20f);
+            divider.AddComponent<Image>().color = new Color(1f, 1f, 1f, 0.45f);
+
+            var scrollGo = new GameObject("QuestListScroll");
+            scrollGo.transform.SetParent(panel.transform, false);
+            var scrollRectTransform = scrollGo.AddComponent<RectTransform>();
+            UIAnchorPresets.Center(scrollRectTransform, new Vector2(560f, 780f));
+            scrollRectTransform.anchoredPosition = new Vector2(-610f, -40f);
+            var scroll = scrollGo.AddComponent<ScrollRect>();
+            scroll.horizontal = false;
+            scroll.movementType = ScrollRect.MovementType.Clamped;
+
+            var viewportGo = new GameObject("Viewport");
+            viewportGo.transform.SetParent(scrollGo.transform, false);
+            var viewportRect = viewportGo.AddComponent<RectTransform>();
+            UIAnchorPresets.StretchFull(viewportRect);
+            viewportGo.AddComponent<Image>().color = new Color(0f, 0f, 0f, 0.02f);
+            viewportGo.AddComponent<Mask>().showMaskGraphic = false;
+
+            var contentGo = new GameObject("Content");
+            contentGo.transform.SetParent(viewportGo.transform, false);
+            var contentRect = contentGo.AddComponent<RectTransform>();
+            contentRect.anchorMin = new Vector2(0f, 1f);
+            contentRect.anchorMax = new Vector2(1f, 1f);
+            contentRect.pivot = new Vector2(0.5f, 1f);
+            contentRect.anchoredPosition = Vector2.zero;
+            contentRect.sizeDelta = new Vector2(0f, 900f);
+            var contentLayout = contentGo.AddComponent<VerticalLayoutGroup>();
+            contentLayout.padding = new RectOffset(8, 16, 8, 16);
+            contentLayout.spacing = 12f;
+            contentLayout.childForceExpandHeight = false;
+            contentLayout.childForceExpandWidth = true;
+            contentGo.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            scroll.viewport = viewportRect;
+            scroll.content = contentRect;
+
+            var storyContainer = CreateQuestSection(contentGo.transform, "Story Quest");
+            var commissionContainer = CreateQuestSection(contentGo.transform, "Commission Quests");
+            var worldContainer = CreateQuestSection(contentGo.transform, "World Quest");
+
+            var detailRoot = new GameObject("QuestDetail");
+            detailRoot.transform.SetParent(panel.transform, false);
+            var detailRect = detailRoot.AddComponent<RectTransform>();
+            UIAnchorPresets.Center(detailRect, new Vector2(980f, 760f));
+            detailRect.anchoredPosition = new Vector2(360f, -40f);
+
+            var questTitle = BESUIEditorUtils.CreateText(detailRoot.transform, "QuestTitle", "NAME OF QUEST", new Vector2(-450f, 330f), 24f, TextAlignmentOptions.Left);
+            questTitle.fontStyle = FontStyles.Bold;
+            var locationImage = AddRawArtworkPanel(detailRoot.transform, "QuestLocationImage", new Vector2(34f, 34f), new Vector2(-465f, 286f), new Color(1f, 1f, 1f, 0.18f));
+            var locationText = BESUIEditorUtils.CreateText(detailRoot.transform, "QuestLocationText", "Quest location", new Vector2(-260f, 286f), 16f, TextAlignmentOptions.Left);
+            locationText.rectTransform.sizeDelta = new Vector2(460f, 36f);
+            locationText.color = new Color(1f, 0.86f, 0.28f, 0.95f);
+            var detailText = BESUIEditorUtils.CreateText(detailRoot.transform, "QuestDetailText", "Quest detail", new Vector2(-450f, 190f), 16f, TextAlignmentOptions.TopLeft);
+            detailText.rectTransform.sizeDelta = new Vector2(900f, 250f);
+
+            var rewardLabel = BESUIEditorUtils.CreateText(detailRoot.transform, "RewardLabel", "Quest Reward", new Vector2(-450f, -180f), 20f, TextAlignmentOptions.Left);
+            rewardLabel.fontStyle = FontStyles.Bold;
+            var rewardGo = new GameObject("RewardContainer");
+            rewardGo.transform.SetParent(detailRoot.transform, false);
+            var rewardRect = rewardGo.AddComponent<RectTransform>();
+            UIAnchorPresets.Center(rewardRect, new Vector2(650f, 120f));
+            rewardRect.anchoredPosition = new Vector2(-120f, -270f);
+            var rewardLayout = rewardGo.AddComponent<HorizontalLayoutGroup>();
+            rewardLayout.spacing = 18f;
+            rewardLayout.childForceExpandWidth = false;
+            rewardLayout.childForceExpandHeight = false;
+
+            var cardPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(UIAssetPaths.AtomPrefabs + "/UIQuestCard.prefab")?.GetComponent<QuestCardUI>();
+            var rewardPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(UIAssetPaths.AtomPrefabs + "/UIQuestRewardItem.prefab")?.GetComponent<QuestRewardItemUI>();
+
+            BESUIEditorUtils.SetPrivateField(log, "panel", panel);
+            BESUIEditorUtils.SetPrivateField(log, "storyQuestContainer", storyContainer);
+            BESUIEditorUtils.SetPrivateField(log, "commissionQuestContainer", commissionContainer);
+            BESUIEditorUtils.SetPrivateField(log, "worldQuestContainer", worldContainer);
+            BESUIEditorUtils.SetPrivateField(log, "questCardPrefab", cardPrefab);
+            BESUIEditorUtils.SetPrivateField(log, "closeButton", closeBtn);
+            BESUIEditorUtils.SetPrivateField(log, "navigateButton", navigateBtn);
+            BESUIEditorUtils.SetPrivateField(log, "fixedArtworkA", fixedA);
+            BESUIEditorUtils.SetPrivateField(log, "fixedArtworkB", fixedB);
+            BESUIEditorUtils.SetPrivateField(log, "locationImage", locationImage);
+            BESUIEditorUtils.SetPrivateField(log, "questTitleText", questTitle);
+            BESUIEditorUtils.SetPrivateField(log, "questLocationText", locationText);
+            BESUIEditorUtils.SetPrivateField(log, "questDetailText", detailText);
+            BESUIEditorUtils.SetPrivateField(log, "rewardContainer", rewardGo.transform);
+            BESUIEditorUtils.SetPrivateField(log, "rewardItemPrefab", rewardPrefab);
+            panel.SetActive(false);
+        }
+
+        static Transform CreateQuestSection(Transform parent, string label)
+        {
+            var sectionRoot = new GameObject(label.Replace(" ", string.Empty) + "Section");
+            sectionRoot.transform.SetParent(parent, false);
+            var rootRect = sectionRoot.AddComponent<RectTransform>();
+            rootRect.sizeDelta = new Vector2(0f, 180f);
+            var rootLayout = sectionRoot.AddComponent<VerticalLayoutGroup>();
+            rootLayout.spacing = 8f;
+            rootLayout.childForceExpandHeight = false;
+            rootLayout.childForceExpandWidth = true;
+            sectionRoot.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            var sectionLabel = BESUIEditorUtils.CreateText(sectionRoot.transform, "Header", label, Vector2.zero, 21f, TextAlignmentOptions.Left);
+            sectionLabel.fontStyle = FontStyles.Bold;
+            sectionLabel.rectTransform.sizeDelta = new Vector2(0f, 34f);
+
+            var containerGo = new GameObject("Cards");
+            containerGo.transform.SetParent(sectionRoot.transform, false);
+            var containerRect = containerGo.AddComponent<RectTransform>();
+            containerRect.sizeDelta = new Vector2(0f, 96f);
+            var layout = containerGo.AddComponent<VerticalLayoutGroup>();
+            layout.spacing = 8f;
+            layout.childForceExpandHeight = false;
+            layout.childForceExpandWidth = true;
+            containerGo.AddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            return containerGo.transform;
+        }
+
+#if false
+        static void BuildQuestLogLegacy(Transform parent)
+        {
+            var go = new GameObject("QuestLog");
+            go.transform.SetParent(parent, false);
+            var rect = go.AddComponent<RectTransform>();
+            UIAnchorPresets.StretchFull(rect);
+            var log = go.AddComponent<QuestLogUI>();
+            var panel = new GameObject("Panel");
+            panel.transform.SetParent(go.transform, false);
+            var panelRect = panel.AddComponent<RectTransform>();
+            UIAnchorPresets.TopLeft(panelRect, new Vector2(420, 420), new Vector2(20, -300));
             panel.AddComponent<Image>().color = new Color(0.08f, 0.07f, 0.12f, 0.95f);
             var listGo = new GameObject("List");
             listGo.transform.SetParent(panel.transform, false);
@@ -370,6 +513,62 @@ namespace BES.Editor
             BESUIEditorUtils.SetPrivateField(log, "listContainer", listGo.transform);
             BESUIEditorUtils.SetPrivateField(log, "rowPrefab", rowPrefab);
             BESUIEditorUtils.SetPrivateField(log, "closeButton", closeBtn);
+            panel.SetActive(false);
+        }
+
+#endif
+        static void BuildHudCornerButtons(Transform parent, HUDSpriteManifest manifest)
+        {
+            var go = new GameObject("HudCornerButtons");
+            go.transform.SetParent(parent, false);
+            var rect = go.AddComponent<RectTransform>();
+            UIAnchorPresets.StretchFull(rect);
+            var controls = go.AddComponent<HudCornerButtonsUI>();
+
+            var settings = BESUIEditorUtils.CreateIconButton(go.transform, "SettingsBtn", manifest?.settingsIcon, new Vector2(20f, -20f), new Vector2(44f, 44f));
+            UIAnchorPresets.TopLeft(settings.GetComponent<RectTransform>(), new Vector2(44f, 44f), new Vector2(20f, -20f));
+
+            var guide = BESUIEditorUtils.CreateIconButton(go.transform, "GuideLineBtn", manifest?.guideLineIcon, new Vector2(244f, -78f), new Vector2(36f, 36f));
+            UIAnchorPresets.TopLeft(guide.GetComponent<RectTransform>(), new Vector2(36f, 36f), new Vector2(244f, -78f));
+
+            var mission = BESUIEditorUtils.CreateIconButton(go.transform, "MissionBtn", manifest?.missionIcon, new Vector2(20f, -252f), new Vector2(44f, 44f));
+            UIAnchorPresets.TopLeft(mission.GetComponent<RectTransform>(), new Vector2(44f, 44f), new Vector2(20f, -252f));
+
+            BESUIEditorUtils.SetPrivateField(controls, "settingsButton", settings);
+            BESUIEditorUtils.SetPrivateField(controls, "guideLineButton", guide);
+            BESUIEditorUtils.SetPrivateField(controls, "missionButton", mission);
+        }
+
+        static void BuildChatBox(Transform parent, HUDSpriteManifest manifest)
+        {
+            var go = new GameObject("ChatBox");
+            go.transform.SetParent(parent, false);
+            var rect = go.AddComponent<RectTransform>();
+            UIAnchorPresets.BottomLeft(rect, new Vector2(520, 260), new Vector2(24f, 24f));
+            var chat = go.AddComponent<ChatBoxUI>();
+
+            var button = BESUIEditorUtils.CreateIconButton(go.transform, "ChatButton", manifest?.chatBubbleIcon, Vector2.zero, new Vector2(44f, 44f));
+            UIAnchorPresets.BottomLeft(button.GetComponent<RectTransform>(), new Vector2(44f, 44f), Vector2.zero);
+
+            var panel = new GameObject("Panel");
+            panel.transform.SetParent(go.transform, false);
+            var panelRect = panel.AddComponent<RectTransform>();
+            UIAnchorPresets.BottomLeft(panelRect, new Vector2(480f, 220f), new Vector2(52f, 0f));
+            panel.AddComponent<Image>().color = new Color(0.05f, 0.06f, 0.1f, 0.88f);
+
+            var history = BESUIEditorUtils.CreateText(panel.transform, "History", string.Empty, Vector2.zero, 13f, TextAlignmentOptions.BottomLeft);
+            UIAnchorPresets.StretchFull(history.rectTransform);
+            history.rectTransform.offsetMin = new Vector2(12f, 48f);
+            history.rectTransform.offsetMax = new Vector2(-12f, -12f);
+
+            var input = CreateTMPInput(panel.transform, "Input", "Chat...", new Vector2(-48f, 20f), new Vector2(360f, 36f));
+            var send = BESUIEditorUtils.CreateButton(panel.transform, "SendBtn", "Send", new Vector2(188f, 20f), new Vector2(76f, 36f));
+
+            BESUIEditorUtils.SetPrivateField(chat, "chatButton", button);
+            BESUIEditorUtils.SetPrivateField(chat, "panel", panel);
+            BESUIEditorUtils.SetPrivateField(chat, "historyText", history);
+            BESUIEditorUtils.SetPrivateField(chat, "inputField", input);
+            BESUIEditorUtils.SetPrivateField(chat, "sendButton", send);
             panel.SetActive(false);
         }
 
@@ -406,23 +605,17 @@ namespace BES.Editor
             UIAnchorPresets.ApplyTopNavRegion(rect);
             var nav = go.AddComponent<HudNavBarUI>();
 
-            var evt = BESUIEditorUtils.CreateIconButton(go.transform, "EventBtn", manifest?.navEvent, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing * 5f, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
-            var map = BESUIEditorUtils.CreateIconButton(go.transform, "MapBtn", manifest?.navMap, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing * 4f, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
-            var wish = BESUIEditorUtils.CreateIconButton(go.transform, "WishBtn", manifest?.navWish, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing * 3f, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
-            var team = BESUIEditorUtils.CreateIconButton(go.transform, "TeamBtn", manifest?.navTeam, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing * 2f, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
-            var inv = BESUIEditorUtils.CreateIconButton(go.transform, "InventoryBtn", manifest?.navInventory, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
-            var chr = BESUIEditorUtils.CreateIconButton(go.transform, "CharacterBtn", manifest?.navCharacter, new Vector2(HUDLayoutTokens.NavRightMostX, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
-            var weapon = BESUIEditorUtils.CreateIconButton(go.transform, "WeaponBtn", manifest?.navWeapon, new Vector2(-10, -56), new Vector2(40, 40));
-            var art = BESUIEditorUtils.CreateIconButton(go.transform, "ArtifactsBtn", manifest?.navArtifacts, new Vector2(-58, -56), new Vector2(40, 40));
+            var evt = BESUIEditorUtils.CreateIconButton(go.transform, "EventBtn", manifest?.navEvent, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing * 4f, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
+            var battlePass = BESUIEditorUtils.CreateIconButton(go.transform, "BattlePassBtn", manifest?.navBattlePass ?? manifest?.navTeam, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing * 3f, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
+            var wish = BESUIEditorUtils.CreateIconButton(go.transform, "WishBtn", manifest?.navWish, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing * 2f, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
+            var bag = BESUIEditorUtils.CreateIconButton(go.transform, "BagBtn", manifest?.navBag ?? manifest?.navInventory, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
+            var personal = BESUIEditorUtils.CreateIconButton(go.transform, "PersonalBtn", manifest?.navPersonal ?? manifest?.navCharacter, new Vector2(HUDLayoutTokens.NavRightMostX, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
 
-            BESUIEditorUtils.SetPrivateField(nav, "inventoryButton", inv);
-            BESUIEditorUtils.SetPrivateField(nav, "characterButton", chr);
-            BESUIEditorUtils.SetPrivateField(nav, "mapButton", map);
-            BESUIEditorUtils.SetPrivateField(nav, "weaponButton", weapon);
             BESUIEditorUtils.SetPrivateField(nav, "wishButton", wish);
-            BESUIEditorUtils.SetPrivateField(nav, "teamButton", team);
             BESUIEditorUtils.SetPrivateField(nav, "eventButton", evt);
-            BESUIEditorUtils.SetPrivateField(nav, "artifactsButton", art);
+            BESUIEditorUtils.SetPrivateField(nav, "battlePassButton", battlePass);
+            BESUIEditorUtils.SetPrivateField(nav, "bagButton", bag);
+            BESUIEditorUtils.SetPrivateField(nav, "personalButton", personal);
         }
 
         static void BuildPartyStrip(Transform parent, HUDSpriteManifest manifest)
@@ -522,7 +715,6 @@ namespace BES.Editor
             var keyLabels = new TMP_Text[SkillBarUI.VisibleSlotCount];
             var layouts = new[]
             {
-                (pos: HUDLayoutTokens.SkillZPos, size: HUDLayoutTokens.SkillZSize, key: "Z"),
                 (pos: HUDLayoutTokens.SkillEPos, size: HUDLayoutTokens.SkillESize, key: "E"),
                 (pos: HUDLayoutTokens.SkillQPos, size: HUDLayoutTokens.SkillQSize, key: "Q"),
             };
@@ -553,7 +745,9 @@ namespace BES.Editor
                 cooldowns[i] = cdGo.AddComponent<Image>();
                 cooldowns[i].color = new Color(0, 0, 0, 0.5f);
                 cooldowns[i].type = Image.Type.Filled;
-                cooldowns[i].fillMethod = Image.FillMethod.Vertical;
+                cooldowns[i].fillMethod = Image.FillMethod.Radial360;
+                cooldowns[i].fillOrigin = (int)Image.Origin360.Top;
+                cooldowns[i].fillClockwise = true;
                 cooldowns[i].fillAmount = 0f;
 
                 var keyGo = BESUIEditorUtils.CreateText(slotGo.transform, "KeyLabel", layout.key, new Vector2(0, -layout.size.y * 0.55f), 11f, TMPro.TextAlignmentOptions.Center);
@@ -678,22 +872,34 @@ namespace BES.Editor
             return profile;
         }
 
-        static GameMapUI BuildWorldMapPanel(Transform parent)
+        static GameMapUI BuildWorldMapPanel(Transform parent, HUDSpriteManifest manifest)
         {
             var go = CreateFullScreenPanel(parent, "GameMapUI", BESUIEditorUtils.LoadBg(UIAssetPaths.BgEventScene), UIScreenBackgroundId.WorldMap);
             var map = go.AddComponent<GameMapUI>();
             BESUIEditorUtils.CreateText(go.transform, "Title", "World Map", new Vector2(0, 420), 24f);
-            AddStretchRawArtworkPanel(go.transform, "WorldMapArtworkRaw");
+            var mapArtwork = AddRawArtworkPanel(go.transform, "WorldMapArtworkRaw", new Vector2(1160, 720), new Vector2(0, -20), new Color(1f, 1f, 1f, 0.04f));
+            if (manifest?.minimapMap != null)
+            {
+                mapArtwork.texture = manifest.minimapMap.texture;
+                mapArtwork.color = Color.white;
+            }
+            var mapRect = mapArtwork.GetComponent<RectTransform>();
             var markersGo = new GameObject("MapMarkers");
             markersGo.transform.SetParent(go.transform, false);
             var mRect = markersGo.AddComponent<RectTransform>();
-            UIAnchorPresets.Center(mRect, new Vector2(600, 400));
+            UIAnchorPresets.Center(mRect, new Vector2(1160, 720));
+            mRect.anchoredPosition = new Vector2(0, -20);
             var closeBtn = BESUIEditorUtils.CreateButton(go.transform, "CloseBtn", "X", new Vector2(880, 460), new Vector2(48, 48));
             var markerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(UIAssetPaths.AtomPrefabs + "/UIMapMarker.prefab");
             var markerSlots = CreateWorldMapMarkerSlots(markersGo.transform, markerPrefab);
+            var playerDot = CreateMapDot(markersGo.transform, "PlayerPosition", null, new Color(0.35f, 1f, 0.45f, 0.95f));
+            playerDot.sizeDelta = new Vector2(18f, 18f);
             var status = BESUIEditorUtils.CreateText(go.transform, "TeleportStatus", string.Empty, new Vector2(0, -420), 16f);
             BESUIEditorUtils.SetPrivateField(map, "panel", go);
             BESUIEditorUtils.SetPrivateField(map, "markersContainer", markersGo.transform);
+            BESUIEditorUtils.SetPrivateField(map, "mapRect", mapRect);
+            BESUIEditorUtils.SetPrivateField(map, "mapImage", mapArtwork);
+            BESUIEditorUtils.SetPrivateField(map, "playerIcon", playerDot);
             BESUIEditorUtils.SetPrivateField(map, "mapMarkerPrefab", markerPrefab);
             BESUIEditorUtils.SetPrivateField(map, "markerSlots", markerSlots);
             BESUIEditorUtils.SetPrivateField(map, "closeButton", closeBtn);
@@ -869,38 +1075,61 @@ namespace BES.Editor
             return ui;
         }
 
+        static BattlePassUI BuildBattlePassPanel(Transform parent)
+        {
+            var go = CreateFullScreenPanel(parent, "BattlePassUI", null);
+            var ui = go.AddComponent<BattlePassUI>();
+            AddRawArtworkPanel(go.transform, "BattlePassArtworkRaw", new Vector2(980, 620), new Vector2(0, 0));
+            var title = BESUIEditorUtils.CreateText(go.transform, "Title", "Battle Pass", new Vector2(0, 320), 26f);
+            var progress = BESUIEditorUtils.CreateText(go.transform, "Progress", "Progress 0 / 100", new Vector2(0, 260), 16f);
+            var close = BESUIEditorUtils.CreateButton(go.transform, "CloseBtn", "X", new Vector2(880, 460), new Vector2(48, 48));
+            BESUIEditorUtils.SetPrivateField(ui, "root", go);
+            BESUIEditorUtils.SetPrivateField(ui, "titleText", title);
+            BESUIEditorUtils.SetPrivateField(ui, "progressText", progress);
+            BESUIEditorUtils.SetPrivateField(ui, "closeButton", close);
+            go.SetActive(false);
+            return ui;
+        }
+
         static WishUI BuildWishPanel(Transform parent)
         {
             var go = CreateFullScreenPanel(parent, "WishUI", BESUIEditorUtils.LoadBg(UIAssetPaths.BgWish), UIScreenBackgroundId.Wish);
             var ui = go.AddComponent<WishUI>();
-            AddRawArtworkPanel(go.transform, "WishBannerArtworkRaw", new Vector2(880, 360), new Vector2(0, 120));
+            AddStretchRawArtworkPanel(go.transform, "WishArtworkRaw");
             var banner = BESUIEditorUtils.CreateText(go.transform, "Banner", "Character Wish", new Vector2(0, 360), 24f);
-            var coins = BESUIEditorUtils.CreateText(go.transform, "Coins", "Money 99999", new Vector2(600, 460), 16f, TextAlignmentOptions.Right);
-            var gems = BESUIEditorUtils.CreateText(go.transform, "Gems", "GEM 1600", new Vector2(760, 460), 16f, TextAlignmentOptions.Right);
-            InstantiateAtom(go.transform, "CoinPill", UIAssetPaths.AtomPrefabs + "/UICurrencyPill.prefab", new Vector2(560, 460), new Vector2(160, 36));
-            InstantiateAtom(go.transform, "GemPill", UIAssetPaths.AtomPrefabs + "/UICurrencyPill.prefab", new Vector2(720, 460), new Vector2(160, 36));
-            var result = BESUIEditorUtils.CreateText(go.transform, "Result", "Select Wish x1 or x10", new Vector2(0, -200), 16f);
+            var coins = BESUIEditorUtils.CreateText(go.transform, "Coins", "Money 99999", new Vector2(560, 460), 16f, TextAlignmentOptions.Right);
+            var gems = BESUIEditorUtils.CreateText(go.transform, "Gems", "GEM 1600", new Vector2(740, 460), 16f, TextAlignmentOptions.Right);
             var resultGo = new GameObject("ResultCards");
             resultGo.transform.SetParent(go.transform, false);
             var rRect = resultGo.AddComponent<RectTransform>();
-            UIAnchorPresets.ApplyWishResultPanel(rRect);
-            var rLayout = resultGo.AddComponent<HorizontalLayoutGroup>();
-            rLayout.spacing = 8;
-            var resultCardPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(UIAssetPaths.AtomPrefabs + "/UIResultCard.prefab");
-            var one = BESUIEditorUtils.CreateButton(go.transform, "WishOne", "Wish x1", new Vector2(-120, 120), new Vector2(160, 44), UIAnchorPresets.ApplyWishPullButtons);
-            var ten = BESUIEditorUtils.CreateButton(go.transform, "WishTen", "Wish x10", new Vector2(120, 120), new Vector2(160, 44));
-            var close = BESUIEditorUtils.CreateButton(go.transform, "CloseBtn", "X", new Vector2(880, 460), new Vector2(48, 48));
+            UIAnchorPresets.Center(rRect, new Vector2(1000, 520));
+            rRect.anchoredPosition = new Vector2(0, 20);
+            var resultCardPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(UIAssetPaths.AtomPrefabs + "/UIGachaCard.prefab");
+            var result = BESUIEditorUtils.CreateText(go.transform, "Result", "Select Wish x1 or x10", new Vector2(0, -360), 16f);
+
+            var controls = new GameObject("Controls");
+            controls.transform.SetParent(go.transform, false);
+            var controlsRect = controls.AddComponent<RectTransform>();
+            UIAnchorPresets.StretchFull(controlsRect);
+            var money = BESUIEditorUtils.CreateButton(controls.transform, "MoneyBtn", "Money", new Vector2(560, 460), new Vector2(140, 34));
+            var gem = BESUIEditorUtils.CreateButton(controls.transform, "GemBtn", "GEM", new Vector2(740, 460), new Vector2(140, 34));
+            var close = BESUIEditorUtils.CreateButton(controls.transform, "BackBtn", "Back", new Vector2(880, 460), new Vector2(68, 44));
+            var one = BESUIEditorUtils.CreateButton(controls.transform, "WishOne", "Wish x 1", new Vector2(-140, -420), new Vector2(170, 42));
+            var ten = BESUIEditorUtils.CreateButton(controls.transform, "WishTen", "Wish x 10", new Vector2(140, -420), new Vector2(170, 42));
             BESUIEditorUtils.SetPrivateField(ui, "root", go);
             BESUIEditorUtils.SetPrivateField(ui, "banner", AssetDatabase.LoadAssetAtPath<GachaBannerDefinition>("Assets/_Project/Data/UI/DefaultGachaBanner.asset"));
             BESUIEditorUtils.SetPrivateField(ui, "bannerText", banner);
             BESUIEditorUtils.SetPrivateField(ui, "coinsText", coins);
             BESUIEditorUtils.SetPrivateField(ui, "gemsText", gems);
             BESUIEditorUtils.SetPrivateField(ui, "resultText", result);
+            BESUIEditorUtils.SetPrivateField(ui, "moneyButton", money);
+            BESUIEditorUtils.SetPrivateField(ui, "gemButton", gem);
             BESUIEditorUtils.SetPrivateField(ui, "resultCardsContainer", resultGo.transform);
             BESUIEditorUtils.SetPrivateField(ui, "resultCardPrefab", resultCardPrefab);
             BESUIEditorUtils.SetPrivateField(ui, "wishOneButton", one);
             BESUIEditorUtils.SetPrivateField(ui, "wishTenButton", ten);
             BESUIEditorUtils.SetPrivateField(ui, "closeButton", close);
+            BESUIEditorUtils.SetPrivateField(ui, "controlsRoot", controls);
             go.SetActive(false);
             return ui;
         }

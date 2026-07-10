@@ -152,11 +152,13 @@ namespace BES.UI
             UIAnchorPresets.StretchFull(faceRect);
             faceRect.offsetMin = new Vector2(8f, 8f);
             faceRect.offsetMax = new Vector2(-8f, -8f);
-            var faceImg = face.GetComponent<Image>() ?? face.gameObject.AddComponent<Image>();
-            faceImg.sprite = HUDPrimitiveStyles.GetMinimapFaceSprite();
-            faceImg.type = Image.Type.Simple;
-            faceImg.preserveAspect = true;
-            faceImg.color = Color.white;
+            var faceRaw = face.GetComponent<RawImage>() ?? face.gameObject.AddComponent<RawImage>();
+            faceRaw.texture = manifest?.minimapMap != null ? manifest.minimapMap.texture : null;
+            faceRaw.color = faceRaw.texture != null ? Color.white : new Color(1f, 1f, 1f, 0.08f);
+            if (face.GetComponent<RectMask2D>() == null)
+                face.gameObject.AddComponent<RectMask2D>();
+
+            var button = miniMapRoot.GetComponent<Button>() ?? miniMapRoot.gameObject.AddComponent<Button>();
 
             EnsureMapDot(face, "PlayerIcon", manifest?.playerDot, new Color(0.45f, 0.95f, 0.55f));
             EnsureMapDot(face, "ObjectiveIcon", manifest?.objectiveDot, new Color(0.98f, 0.88f, 0.35f));
@@ -172,8 +174,12 @@ namespace BES.UI
             if (miniMapUi != null)
             {
                 SetPrivate(miniMapUi, "mapRect", faceRect);
+                SetPrivate(miniMapUi, "mapImage", faceRaw);
                 SetPrivate(miniMapUi, "playerIcon", face.Find("PlayerIcon") as RectTransform);
                 SetPrivate(miniMapUi, "objectiveIcon", face.Find("ObjectiveIcon") as RectTransform);
+                SetPrivate(miniMapUi, "openMapButton", button);
+                if (manifest?.minimapMap != null)
+                    SetPrivate(miniMapUi, "mapTexture", manifest.minimapMap.texture);
             }
         }
 

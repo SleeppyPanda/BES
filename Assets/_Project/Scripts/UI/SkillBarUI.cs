@@ -6,25 +6,34 @@ namespace BES.UI
 {
     public class SkillBarUI : MonoBehaviour
     {
-        public const int VisibleSlotCount = 3;
+        public const int VisibleSlotCount = 2;
 
-        [SerializeField] Image[] slotFrames = new Image[3];
-        [SerializeField] Image[] skillIcons = new Image[3];
-        [SerializeField] Image[] cooldownOverlays = new Image[3];
-        [SerializeField] TMP_Text[] keyLabels = new TMP_Text[3];
+        [SerializeField] Image[] slotFrames = new Image[2];
+        [SerializeField] Image[] skillIcons = new Image[2];
+        [SerializeField] Image[] cooldownOverlays = new Image[2];
+        [SerializeField] TMP_Text[] keyLabels = new TMP_Text[2];
+        [SerializeField] Sprite[] characterSkillIcons = new Sprite[2];
 
-        static readonly string[] DefaultKeyHints = { "Z", "E", "Q" };
+        static readonly string[] DefaultKeyHints = { "E", "Q" };
 
         void Awake()
         {
             for (var i = 0; i < VisibleSlotCount; i++)
             {
                 if (cooldownOverlays != null && i < cooldownOverlays.Length && cooldownOverlays[i] != null)
+                {
+                    cooldownOverlays[i].type = Image.Type.Filled;
+                    cooldownOverlays[i].fillMethod = Image.FillMethod.Radial360;
+                    cooldownOverlays[i].fillOrigin = (int)Image.Origin360.Top;
+                    cooldownOverlays[i].fillClockwise = true;
                     cooldownOverlays[i].fillAmount = 0f;
+                }
 
                 if (keyLabels != null && i < keyLabels.Length && keyLabels[i] != null)
                     keyLabels[i].text = DefaultKeyHints[i];
             }
+
+            ApplyCharacterSkillIcons();
         }
 
         public void SetFrameSprites(Sprite frame)
@@ -68,6 +77,15 @@ namespace BES.UI
             if (keyLabels == null || index < 0 || index >= keyLabels.Length || keyLabels[index] == null)
                 return;
             keyLabels[index].text = label;
+        }
+
+        public void ApplyCharacterSkillIcons()
+        {
+            if (characterSkillIcons == null)
+                return;
+
+            for (var i = 0; i < characterSkillIcons.Length && i < VisibleSlotCount; i++)
+                SetSkillIcon(i, characterSkillIcons[i]);
         }
     }
 }

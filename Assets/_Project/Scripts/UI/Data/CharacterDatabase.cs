@@ -139,6 +139,22 @@ namespace BES.UI
                     testVisualScale = new Vector3(1.05f, 1.1f, 1.05f),
                     skill1Id = "skill_starfall",
                     skill2Id = "skill_lunar_drive"
+                },
+                new()
+                {
+                    characterId = "hero_05",
+                    displayName = "Starbound Rookie",
+                    rarity = 3,
+                    baseAttack = 12f,
+                    baseHealth = 88f,
+                    baseDefense = 4f,
+                    baseMana = 90f,
+                    critRate = 0.08f,
+                    critDamage = 1.35f,
+                    testVisualColor = new Color(0.52f, 0.68f, 1f, 1f),
+                    testVisualScale = new Vector3(0.9f, 0.95f, 0.9f),
+                    skill1Id = "skill_quick_cut",
+                    skill2Id = "skill_arc_bolt"
                 }
             };
 
