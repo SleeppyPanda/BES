@@ -4686,8 +4686,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 5.9}
-  m_SizeDelta: {x: 892, y: 6}
+  m_AnchoredPosition: {x: -1.999, y: 5.9000006}
+  m_SizeDelta: {x: 775, y: 6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2016520666695094586
 GameObject:
@@ -6036,6 +6036,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: BES::BES.UI.HUDController
   healthBar: {fileID: 5707705461152300260}
   staminaBar: {fileID: 122392854144847388}
+  healthFillImage: {fileID: 158420761731362722}
+  staminaFillImage: {fileID: 7218601812270059993}
   hpValueText: {fileID: 7297499705489278490}
   staminaValueText: {fileID: 2606015459689491012}
   regionText: {fileID: 5676824742519799090}
@@ -15262,8 +15264,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -49, y: 0}
-  m_SizeDelta: {x: 686, y: 6}
+  m_AnchoredPosition: {x: -45.5, y: 0}
+  m_SizeDelta: {x: -89, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7315439473141640013
 CanvasRenderer:
@@ -19638,7 +19640,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 775, y: 24}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2315327177583118358
 CanvasRenderer:

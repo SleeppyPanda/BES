@@ -32,8 +32,8 @@ MonoBehaviour:
     rightClickAttackId: attack_void_burst_right
     skill1Id: skill_void_slash
     skill2Id: skill_guard_break
-    skill1Icon: {fileID: 0}
-    skill2Icon: {fileID: 0}
+    skill1Icon: {fileID: 21300000, guid: d4bdddbe652135a44b69245fa5af3264, type: 3}
+    skill2Icon: {fileID: 21300000, guid: c6b1f49ba8f6dc44faa8ced613a2378a, type: 3}
   - characterId: hero_02
     displayName: "M\u1EA5t c\xF4 \u1EA5y r\u1ED3i"
     rarity: 4
@@ -53,8 +53,8 @@ MonoBehaviour:
     rightClickAttackId: attack_flare_lunge_right
     skill1Id: skill_quick_cut
     skill2Id: skill_flare_dash
-    skill1Icon: {fileID: 0}
-    skill2Icon: {fileID: 0}
+    skill1Icon: {fileID: 21300000, guid: cf82aaf063a32444cb19a4ef9069b208, type: 3}
+    skill2Icon: {fileID: 21300000, guid: ac529d2ac35170f41ac1b7959abcf6b1, type: 3}
   - characterId: hero_03
     displayName: "Anh l\xE0 th\u1EB1ng t\u1ED3i"
     rarity: 4
@@ -74,8 +74,8 @@ MonoBehaviour:
     rightClickAttackId: attack_earth_slam_right
     skill1Id: skill_shield_wave
     skill2Id: skill_ground_lock
-    skill1Icon: {fileID: 0}
-    skill2Icon: {fileID: 0}
+    skill1Icon: {fileID: 21300000, guid: 381970c3ec58fb44ebcbeb3df06958d0, type: 3}
+    skill2Icon: {fileID: 21300000, guid: 50c0aee561584084aabc68ad45372fe6, type: 3}
   - characterId: hero_04
     displayName: "Nh\xECn em b\xEAn ai kh\xE1c"
     rarity: 4
@@ -95,8 +95,8 @@ MonoBehaviour:
     rightClickAttackId: attack_marked_burst_right
     skill1Id: skill_arc_bolt
     skill2Id: skill_focus_shot
-    skill1Icon: {fileID: 0}
-    skill2Icon: {fileID: 0}
+    skill1Icon: {fileID: 21300000, guid: a09cfdef0aaf1b345989715eb2fd9b5d, type: 3}
+    skill2Icon: {fileID: 21300000, guid: d7a2504cf72e8454587dfd4a7c3c8dea, type: 3}
   - characterId: char_limited_01
     displayName: Limited Hero
     rarity: 5
@@ -116,8 +116,8 @@ MonoBehaviour:
     rightClickAttackId: attack_lunar_cleave_right
     skill1Id: skill_starfall
     skill2Id: skill_lunar_drive
-    skill1Icon: {fileID: 0}
-    skill2Icon: {fileID: 0}
+    skill1Icon: {fileID: 21300000, guid: e79c0a6c5e9b87a49a266d9d54d3e1cc, type: 3}
+    skill2Icon: {fileID: 21300000, guid: e810b1712573a8846a89b1c2ac21e41e, type: 3}
   - characterId: hero_05
     displayName: Starbound Rookie
     rarity: 3
@@ -137,8 +137,8 @@ MonoBehaviour:
     rightClickAttackId: attack_rookie_blast_right
     skill1Id: skill_spark_step
     skill2Id: skill_comet_burst
-    skill1Icon: {fileID: 0}
-    skill2Icon: {fileID: 0}
+    skill1Icon: {fileID: 21300000, guid: a09cfdef0aaf1b345989715eb2fd9b5d, type: 3}
+    skill2Icon: {fileID: 21300000, guid: 1492b0c6bb173964fa12b5ec576e1a64, type: 3}
   defaultPartyIds:
   - hero_01
   - hero_02
