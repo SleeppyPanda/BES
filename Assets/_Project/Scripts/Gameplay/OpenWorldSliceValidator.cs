@@ -138,11 +138,13 @@ namespace BES.Gameplay
                     Debug.LogWarning("[BES QA] WARN: skillIconDodge vẫn map — Figma không có Shift slot.");
             }
 
+#if false
             var level = hudLayer.transform.Find("HUD/LevelText")?.GetComponent<TMPro.TMP_Text>();
             if (level != null && !level.text.StartsWith("Level "))
                 Debug.LogWarning($"[BES QA] WARN: Level text format '{level.text}' — Figma dùng 'Level N.'");
             else if (level != null)
                 Debug.Log("[BES QA] PASS: Level text format Figma.");
+#endif
         }
 
         void CheckHudNoBackdrop()

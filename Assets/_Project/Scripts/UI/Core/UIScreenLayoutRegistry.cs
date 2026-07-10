@@ -37,7 +37,9 @@ namespace BES.UI
                     MainMenuLayout.Apply(root);
                     break;
                 case UIScreenId.GameplayHud:
-                    root.GetComponentInChildren<GameplayHudLayout>(true)?.Reapply();
+                    var layout = root.GetComponentInChildren<GameplayHudLayout>(true);
+                    if (layout != null && layout.ApplyRuntimeLayout)
+                        layout.Reapply();
                     break;
             }
         }

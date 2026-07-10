@@ -15,6 +15,9 @@ namespace BES.Gameplay
             public float damageMultiplier = 2f;
             public float cooldown = 3f;
             public float range = 4f;
+            public Color effectColor = Color.cyan;
+            public float startup = 0.15f;
+            public float effectRadius = 1.2f;
         }
 
         [SerializeField] SkillDefinition skill1;
@@ -62,8 +65,8 @@ namespace BES.Gameplay
             var character = PartyRoster.Instance?.ActiveCharacter;
             if (character == null)
             {
-                skill1 ??= CreateSkill("Void Slash", 18f, 1.8f, 2.5f, 3f);
-                skill2 ??= CreateSkill("Guard Break", 25f, 2.4f, 5f, 4f);
+                skill1 ??= CreateSkill("Void Slash", 18f, 1.8f, 2.5f, 3f, Color.cyan, 0.15f, 1.2f);
+                skill2 ??= CreateSkill("Guard Break", 25f, 2.4f, 5f, 4f, Color.magenta, 0.2f, 1.5f);
                 return;
             }
 
@@ -91,7 +94,7 @@ namespace BES.Gameplay
                 yield break;
 
             isCasting = true;
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(skill.startup);
 
             var amount = DamageCalculator.Calculate(
                 stats.AttackPower * skill.damageMultiplier,
@@ -100,7 +103,10 @@ namespace BES.Gameplay
                 stats.CritDamage,
                 out var isCrit);
 
-            var hits = Physics.OverlapSphere(transform.position + transform.forward * 1.5f, skill.range, enemyMask);
+            var center = transform.position + transform.forward * Mathf.Max(1.5f, skill.range * 0.45f);
+            CombatVfx.SpawnPulse(center + Vector3.up * 0.9f, skill.effectColor, skill.effectRadius, 0.32f);
+
+            var hits = Physics.OverlapSphere(center, skill.range, enemyMask);
             foreach (var hit in hits)
             {
                 if (hit.TryGetComponent<IDamageable>(out var damageable))
@@ -120,23 +126,23 @@ namespace BES.Gameplay
         {
             return skillId switch
             {
-                "skill_void_slash" => CreateSkill("Void Slash", 18f, 1.8f, 2.5f, 3.5f),
-                "skill_guard_break" => CreateSkill("Guard Break", 28f, 2.5f, 5.5f, 4.5f),
-                "skill_quick_cut" => CreateSkill("Quick Cut", 12f, 1.35f, 1.2f, 2.4f),
-                "skill_flare_dash" => CreateSkill("Flare Dash", 24f, 2.1f, 3.8f, 3.2f),
-                "skill_shield_wave" => CreateSkill("Shield Wave", 16f, 1.45f, 2.8f, 4.8f),
-                "skill_ground_lock" => CreateSkill("Ground Lock", 30f, 1.9f, 6f, 5.8f),
-                "skill_arc_bolt" => CreateSkill("Arc Bolt", 20f, 2.0f, 2.2f, 5.5f),
-                "skill_focus_shot" => CreateSkill("Focus Shot", 26f, 2.8f, 5.2f, 6.5f),
-                "skill_starfall" => CreateSkill("Starfall", 32f, 3.1f, 6f, 6f),
-                "skill_lunar_drive" => CreateSkill("Lunar Drive", 38f, 3.6f, 8f, 5f),
+                "skill_void_slash" => CreateSkill("Void Slash", 18f, 1.8f, 2.5f, 3.5f, new Color(0.35f, 0.75f, 1f, 0.9f), 0.12f, 1.25f),
+                "skill_guard_break" => CreateSkill("Guard Break", 28f, 2.5f, 5.5f, 4.5f, new Color(0.1f, 0.45f, 1f, 0.9f), 0.25f, 1.8f),
+                "skill_quick_cut" => CreateSkill("Quick Cut", 12f, 1.35f, 1.2f, 2.4f, new Color(1f, 0.38f, 0.18f, 0.9f), 0.07f, 0.85f),
+                "skill_flare_dash" => CreateSkill("Flare Dash", 24f, 2.1f, 3.8f, 3.2f, new Color(1f, 0.2f, 0.05f, 0.9f), 0.15f, 1.45f),
+                "skill_shield_wave" => CreateSkill("Shield Wave", 16f, 1.45f, 2.8f, 4.8f, new Color(0.35f, 1f, 0.45f, 0.9f), 0.18f, 1.6f),
+                "skill_ground_lock" => CreateSkill("Ground Lock", 30f, 1.9f, 6f, 5.8f, new Color(0.12f, 0.85f, 0.25f, 0.9f), 0.35f, 2.1f),
+                "skill_arc_bolt" => CreateSkill("Arc Bolt", 20f, 2.0f, 2.2f, 5.5f, new Color(0.75f, 0.35f, 1f, 0.9f), 0.13f, 1.25f),
+                "skill_focus_shot" => CreateSkill("Focus Shot", 26f, 2.8f, 5.2f, 6.5f, new Color(0.95f, 0.55f, 1f, 0.9f), 0.28f, 1.5f),
+                "skill_starfall" => CreateSkill("Starfall", 32f, 3.1f, 6f, 6f, new Color(1f, 0.82f, 0.18f, 0.9f), 0.25f, 2.25f),
+                "skill_lunar_drive" => CreateSkill("Lunar Drive", 38f, 3.6f, 8f, 5f, new Color(1f, 0.95f, 0.35f, 0.9f), 0.35f, 2.6f),
                 _ => isSkill1
-                    ? CreateSkill("Skill 1", 20f, 2f, 3f, 4f)
-                    : CreateSkill("Skill 2", 25f, 2.4f, 5f, 4f)
+                    ? CreateSkill("Skill 1", 20f, 2f, 3f, 4f, Color.cyan, 0.15f, 1.2f)
+                    : CreateSkill("Skill 2", 25f, 2.4f, 5f, 4f, Color.magenta, 0.2f, 1.5f)
             };
         }
 
-        static SkillDefinition CreateSkill(string name, float manaCost, float damageMultiplier, float cooldown, float range)
+        static SkillDefinition CreateSkill(string name, float manaCost, float damageMultiplier, float cooldown, float range, Color effectColor, float startup, float effectRadius)
         {
             return new SkillDefinition
             {
@@ -144,7 +150,10 @@ namespace BES.Gameplay
                 manaCost = manaCost,
                 damageMultiplier = damageMultiplier,
                 cooldown = cooldown,
-                range = range
+                range = range,
+                effectColor = effectColor,
+                startup = startup,
+                effectRadius = effectRadius
             };
         }
     }

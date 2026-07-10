@@ -1,4 +1,6 @@
 using System.Collections;
+using BES.Core;
+using BES.UI;
 using UnityEngine;
 
 namespace BES.Gameplay
@@ -13,6 +15,7 @@ namespace BES.Gameplay
 
         PlayerInputReader input;
         PlayerStats stats;
+        CharacterAttackProfile profile;
         int comboIndex;
         float comboTimer;
         bool isAttacking;
@@ -27,7 +30,12 @@ namespace BES.Gameplay
             stats = GetComponent<PlayerStats>();
             if (enemyMask.value == 0)
                 enemyMask = LayerMask.GetMask("Enemy");
+            ApplyActiveCharacterProfile();
         }
+
+        void OnEnable() => GameEvents.OnPartyChanged += ApplyActiveCharacterProfile;
+
+        void OnDisable() => GameEvents.OnPartyChanged -= ApplyActiveCharacterProfile;
 
         void Update()
         {
@@ -38,16 +46,33 @@ namespace BES.Gameplay
                     comboIndex = 0;
             }
 
-            if (input != null && stats != null && input.AttackPressed && !isAttacking && !GameplayInputGate.IsGameplayBlocked)
-                StartCoroutine(AttackRoutine());
+            if (input == null || stats == null || isAttacking || GameplayInputGate.IsGameplayBlocked)
+                return;
+
+            if (input.AttackPressed)
+                StartCoroutine(AttackRoutine(false));
+            else if (input.HeavyAttackPressed)
+                StartCoroutine(AttackRoutine(true));
         }
 
-        IEnumerator AttackRoutine()
+        void ApplyActiveCharacterProfile()
+        {
+            profile = CharacterCombatProfile.Get(PartyRoster.Instance?.ActiveCharacterId);
+            comboIndex = 0;
+            comboTimer = 0f;
+        }
+
+        IEnumerator AttackRoutine(bool heavy)
         {
             isAttacking = true;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(heavy ? profile.heavyStartup : profile.startup);
 
-            var multiplier = comboMultipliers[Mathf.Min(comboIndex, comboMultipliers.Length - 1)];
+            var multipliers = profile.comboMultipliers != null && profile.comboMultipliers.Length > 0
+                ? profile.comboMultipliers
+                : comboMultipliers;
+            var multiplier = heavy
+                ? profile.heavyMultiplier
+                : multipliers[Mathf.Min(comboIndex, multipliers.Length - 1)];
             var amount = DamageCalculator.Calculate(
                 stats.AttackPower * multiplier,
                 0f,
@@ -55,20 +80,26 @@ namespace BES.Gameplay
                 stats.CritDamage,
                 out var isCrit);
 
-            var hits = Physics.OverlapSphere(transform.position + transform.forward, attackRange, enemyMask);
+            var range = heavy ? profile.heavyRange : profile.range;
+            var angle = heavy ? Mathf.Min(180f, profile.angle + 35f) : profile.angle;
+            var center = transform.position + transform.forward * Mathf.Max(1f, range * 0.55f);
+            CombatVfx.SpawnPulse(center + Vector3.up * 0.9f, profile.effectColor, heavy ? 1.35f : 0.85f, heavy ? 0.32f : 0.22f);
+
+            var hits = Physics.OverlapSphere(center, range, enemyMask);
             foreach (var hit in hits)
             {
                 var dir = (hit.transform.position - transform.position).normalized;
-                if (Vector3.Angle(transform.forward, dir) <= attackAngle * 0.5f &&
+                if (Vector3.Angle(transform.forward, dir) <= angle * 0.5f &&
                     hit.TryGetComponent<IDamageable>(out var damageable))
                 {
                     damageable.TakeDamage(new DamageInfo(amount, gameObject, isCrit));
                 }
             }
 
-            comboIndex = (comboIndex + 1) % comboMultipliers.Length;
+            if (!heavy)
+                comboIndex = (comboIndex + 1) % multipliers.Length;
             comboTimer = comboResetTime;
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(heavy ? profile.heavyRecovery : profile.recovery);
             isAttacking = false;
         }
     }

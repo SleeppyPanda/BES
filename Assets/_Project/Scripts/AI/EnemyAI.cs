@@ -31,6 +31,15 @@ namespace BES.Gameplay
             health = GetComponent<EnemyHealth>();
         }
 
+        public void Configure(float newDetectRange, float newAttackRange, float newAttackDamage, float newAttackCooldown, float newMoveSpeed)
+        {
+            detectRange = Mathf.Max(0.1f, newDetectRange);
+            attackRange = Mathf.Max(0.1f, newAttackRange);
+            attackDamage = Mathf.Max(0f, newAttackDamage);
+            attackCooldown = Mathf.Max(0.1f, newAttackCooldown);
+            moveSpeed = Mathf.Max(0f, newMoveSpeed);
+        }
+
         void Start()
         {
             var player = GameObject.FindGameObjectWithTag("Player");

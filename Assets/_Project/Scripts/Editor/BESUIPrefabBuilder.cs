@@ -249,8 +249,6 @@ namespace BES.Editor
             UIAnchorPresets.ApplyHudBarsRegion(rect);
 
             var hud = go.AddComponent<HUDController>();
-            var level = BESUIEditorUtils.CreateText(go.transform, "LevelText", "Level 1.", HUDLayoutTokens.LevelTextPos, 16f, TextAlignmentOptions.MidlineLeft);
-            level.color = Color.white;
 
             var health = BESUIEditorUtils.CreateFilledSlider(go.transform, "HealthBar", HUDLayoutTokens.HealthBarPos, HUDLayoutTokens.HealthBarSize,
                 null, null, HUDPrimitiveStyles.HpBarFill);
@@ -276,18 +274,11 @@ namespace BES.Editor
             var staminaValue = BESUIEditorUtils.CreateText(stamina.transform, "StaminaValue", "100/100", Vector2.zero, 12f, TextAlignmentOptions.Center);
             staminaValue.color = new Color(0.12f, 0.14f, 0.18f, 0.95f);
 
-            var mana = BESUIEditorUtils.CreateFilledSlider(go.transform, "ManaBar", new Vector2(HUDLayoutTokens.HealthBarPos.x, HUDLayoutTokens.HealthBarPos.y - 24f), new Vector2(HUDLayoutTokens.HealthBarSize.x, 3f),
-                null, null, HUDPrimitiveStyles.ManaBarFill);
-            ApplyPrimitiveBar(mana, new Color(0.1f, 0.1f, 0.14f, 0.35f), HUDPrimitiveStyles.ManaBarFill);
-            mana.gameObject.SetActive(false);
-
             var region = BESUIEditorUtils.CreateText(go.transform, "RegionText", string.Empty, HUDLayoutTokens.RegionTextPos, 13f, TextAlignmentOptions.BottomLeft);
             region.color = new Color(1f, 1f, 1f, 0.75f);
 
             BESUIEditorUtils.SetPrivateField(hud, "healthBar", health);
             BESUIEditorUtils.SetPrivateField(hud, "staminaBar", stamina);
-            BESUIEditorUtils.SetPrivateField(hud, "manaBar", mana);
-            BESUIEditorUtils.SetPrivateField(hud, "levelText", level);
             BESUIEditorUtils.SetPrivateField(hud, "hpValueText", hpValue);
             BESUIEditorUtils.SetPrivateField(hud, "staminaValueText", staminaValue);
             BESUIEditorUtils.SetPrivateField(hud, "regionText", region);
@@ -625,11 +616,13 @@ namespace BES.Editor
             var rect = go.AddComponent<RectTransform>();
             UIAnchorPresets.ApplyPartyStripRegion(rect);
             var stripUi = go.AddComponent<PartyStripUI>();
+            var slotRoots = new RectTransform[4];
             var frames = new Image[4];
             var portraits = new Image[4];
             var buttons = new Button[4];
             var names = new TMP_Text[4];
             var numbers = new TMP_Text[4];
+            var healthBars = new Slider[4];
             var pillFrame = manifest?.partySlotFrame ?? LoadEditorFrame("Rectangle 39782.png");
 
             for (var i = 0; i < 4; i++)
@@ -639,6 +632,7 @@ namespace BES.Editor
                 var slotRect = slotGo.AddComponent<RectTransform>();
                 slotRect.sizeDelta = HUDLayoutTokens.PartySlotSize;
                 slotRect.anchoredPosition = new Vector2(0, 118 - i * HUDLayoutTokens.PartySlotSpacing);
+                slotRoots[i] = slotRect;
                 var img = slotGo.AddComponent<Image>();
                 frames[i] = img;
                 HUDPrimitiveStyles.ApplySolidPanel(img, HUDPrimitiveStyles.PartyPillBackground);
@@ -675,6 +669,11 @@ namespace BES.Editor
                 ringImg.raycastTarget = false;
 
                 names[i] = BESUIEditorUtils.CreateText(slotGo.transform, "Name", "Character name", new Vector2(8f, 0f), 13f, TextAlignmentOptions.MidlineLeft);
+                names[i].rectTransform.sizeDelta = new Vector2(104f, 22f);
+
+                healthBars[i] = BESUIEditorUtils.CreateFilledSlider(slotGo.transform, "HealthBar", new Vector2(36f, -20f), new Vector2(102f, 8f),
+                    null, null, HUDPrimitiveStyles.HpBarFill);
+                ApplyPrimitiveBar(healthBars[i], new Color(0.04f, 0.05f, 0.06f, 0.85f), HUDPrimitiveStyles.HpBarFill);
 
                 var numGo = new GameObject($"PartySlotNumber{i + 1}");
                 numGo.transform.SetParent(parent, false);
@@ -692,11 +691,14 @@ namespace BES.Editor
                 numbers[i].color = Color.white;
             }
 
+            BESUIEditorUtils.SetPrivateField(stripUi, "slotRoots", slotRoots);
             BESUIEditorUtils.SetPrivateField(stripUi, "slotFrames", frames);
             BESUIEditorUtils.SetPrivateField(stripUi, "portraits", portraits);
             BESUIEditorUtils.SetPrivateField(stripUi, "slotButtons", buttons);
             BESUIEditorUtils.SetPrivateField(stripUi, "slotNames", names);
             BESUIEditorUtils.SetPrivateField(stripUi, "slotNumbers", numbers);
+            BESUIEditorUtils.SetPrivateField(stripUi, "healthBars", healthBars);
+            BESUIEditorUtils.SetPrivateField(stripUi, "activeScale", 1.2f);
         }
 
         static Sprite LoadEditorFrame(string fileName) =>

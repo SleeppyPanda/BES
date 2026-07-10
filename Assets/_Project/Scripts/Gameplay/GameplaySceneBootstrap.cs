@@ -11,6 +11,15 @@ namespace BES.Gameplay
     {
         [SerializeField] InputActionAsset inputActions;
         [SerializeField] LayerMask enemyLayer;
+        [Header("Test Enemy")]
+        [SerializeField] bool spawnTestEnemyOnStart = true;
+        [SerializeField] GameObject testEnemyPrefab;
+        [SerializeField] Vector3 testEnemyOffset = new Vector3(0f, 0f, 6f);
+        [SerializeField] float testEnemyDetectRange = 18f;
+        [SerializeField] float testEnemyAttackRange = 2f;
+        [SerializeField] float testEnemyAttackDamage = 12f;
+        [SerializeField] float testEnemyAttackCooldown = 1.2f;
+        [SerializeField] float testEnemyMoveSpeed = 3.5f;
 
         void Start()
         {
@@ -19,6 +28,7 @@ namespace BES.Gameplay
             EnsureDialogueUi();
             SpawnPlayerIfMissing();
             ApplySaveIfLoaded();
+            EnsureTestEnemy();
             StartMainQuestIfNeeded();
         }
 
@@ -103,8 +113,62 @@ namespace BES.Gameplay
             if (player.GetComponent<BasicAttackController>() == null) player.AddComponent<BasicAttackController>();
             if (player.GetComponent<SkillController>() == null) player.AddComponent<SkillController>();
             if (player.GetComponent<PlayerBuildStats>() == null) player.AddComponent<PlayerBuildStats>();
-            if (player.GetComponent<PartySwapController>() == null) player.AddComponent<PartySwapController>();
+            if (FindAnyObjectByType<PartySwapController>() == null) player.AddComponent<PartySwapController>();
             if (player.GetComponent<PartyCharacterVisualSwitcher>() == null) player.AddComponent<PartyCharacterVisualSwitcher>();
+        }
+
+        void EnsureTestEnemy()
+        {
+            if (!spawnTestEnemyOnStart || FindAnyObjectByType<EnemyAI>() != null)
+                return;
+
+            var player = GameObject.FindGameObjectWithTag("Player");
+            if (player == null)
+                return;
+
+            var spawnPosition = player.transform.position + testEnemyOffset;
+            GameObject enemy;
+            if (testEnemyPrefab != null)
+                enemy = Instantiate(testEnemyPrefab, spawnPosition, Quaternion.identity);
+            else
+                enemy = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+
+            enemy.name = "Enemy_TestDamage";
+            TrySetTag(enemy, "Enemy");
+            enemy.transform.position = spawnPosition;
+            var lookDirection = player.transform.position - spawnPosition;
+            lookDirection.y = 0f;
+            if (lookDirection.sqrMagnitude > 0.01f)
+                enemy.transform.rotation = Quaternion.LookRotation(lookDirection.normalized);
+
+            var enemyLayerIndex = LayerMask.NameToLayer("Enemy");
+            if (enemyLayerIndex >= 0)
+                enemy.layer = enemyLayerIndex;
+
+            if (enemy.GetComponent<EnemyHealth>() == null)
+                enemy.AddComponent<EnemyHealth>();
+            if (enemy.GetComponent<EnemyDamageFeedback>() == null)
+                enemy.AddComponent<EnemyDamageFeedback>();
+            var ai = enemy.GetComponent<EnemyAI>();
+            if (ai == null)
+                ai = enemy.AddComponent<EnemyAI>();
+            ai.Configure(testEnemyDetectRange, testEnemyAttackRange, testEnemyAttackDamage, testEnemyAttackCooldown, testEnemyMoveSpeed);
+
+            var renderer = enemy.GetComponentInChildren<Renderer>();
+            if (renderer != null && testEnemyPrefab == null)
+                renderer.material.color = new Color(0.75f, 0.12f, 0.12f, 1f);
+        }
+
+        static void TrySetTag(GameObject go, string tagName)
+        {
+            try
+            {
+                go.tag = tagName;
+            }
+            catch (UnityException)
+            {
+                Debug.LogWarning($"[BES] Tag '{tagName}' is missing. Test enemy was spawned without that tag.");
+            }
         }
 
         void ApplySaveIfLoaded()

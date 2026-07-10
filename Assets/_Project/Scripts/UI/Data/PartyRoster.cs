@@ -12,6 +12,8 @@ namespace BES.UI
         public string characterId;
         public string displayName;
         public bool isUnlocked = true;
+        public float currentHealth = -1f;
+        public float maxHealth = -1f;
     }
 
     public class PartyRoster : MonoBehaviour
@@ -25,6 +27,7 @@ namespace BES.UI
         readonly HashSet<string> unlockedCharacterIds = new();
         CharacterDatabase characterDatabase;
         int activeCharacterIndex;
+        bool suppressHealthCapture;
 
         public int ActiveCharacterIndex => Mathf.Clamp(activeCharacterIndex, 0, MaxPartySize - 1);
         public int MemberCount => MaxPartySize;
@@ -124,8 +127,12 @@ namespace BES.UI
             if (slot == null || !slot.isUnlocked || string.IsNullOrEmpty(slot.characterId))
                 return;
 
+            CaptureActiveHealth();
             activeCharacterIndex = index;
+            suppressHealthCapture = true;
             RefreshActiveBuild();
+            suppressHealthCapture = false;
+            RestoreActiveHealth();
             GameEvents.RaisePartyChanged();
         }
 
@@ -138,9 +145,15 @@ namespace BES.UI
             members[index].characterId = characterId;
             members[index].displayName = ResolveDisplayName(characterId, displayName);
             members[index].isUnlocked = IsCharacterUnlocked(characterId);
+            EnsureSlotHealth(index);
 
             if (index == activeCharacterIndex)
+            {
+                suppressHealthCapture = true;
                 RefreshActiveBuild();
+                suppressHealthCapture = false;
+                RestoreActiveHealth();
+            }
 
             GameEvents.RaisePartyChanged();
         }
@@ -158,11 +171,15 @@ namespace BES.UI
                 members[i].characterId = id;
                 members[i].displayName = GetDisplayNameForId(id);
                 members[i].isUnlocked = true;
+                EnsureSlotHealth(i);
                 unlockedCharacterIds.Add(id);
             }
 
             activeCharacterIndex = 0;
+            suppressHealthCapture = true;
             RefreshActiveBuild();
+            suppressHealthCapture = false;
+            RestoreActiveHealth();
             GameEvents.RaisePartyChanged();
         }
 
@@ -196,8 +213,41 @@ namespace BES.UI
 
                 members[i].displayName = GetDisplayNameForId(members[i].characterId);
                 members[i].isUnlocked = true;
+                EnsureSlotHealth(i);
                 unlockedCharacterIds.Add(members[i].characterId);
             }
+        }
+
+        void OnEnable()
+        {
+            GameEvents.OnPlayerHealthChanged += OnPlayerHealthChanged;
+        }
+
+        void OnDisable()
+        {
+            GameEvents.OnPlayerHealthChanged -= OnPlayerHealthChanged;
+        }
+
+        void OnPlayerHealthChanged(float current, float max)
+        {
+            if (suppressHealthCapture)
+                return;
+
+            StoreHealth(ActiveCharacterIndex, current, max);
+        }
+
+        public void GetSlotHealth(int index, out float current, out float max)
+        {
+            current = 0f;
+            max = 1f;
+
+            var slot = GetSlot(index);
+            if (slot == null)
+                return;
+
+            EnsureSlotHealth(index);
+            current = Mathf.Clamp(slot.currentHealth, 0f, Mathf.Max(1f, slot.maxHealth));
+            max = Mathf.Max(1f, slot.maxHealth);
         }
 
         public void ExportToSave(SaveData data)
@@ -205,11 +255,21 @@ namespace BES.UI
             if (data == null)
                 return;
 
+            data.partySlotIds ??= new List<string>();
+            data.partyHealth ??= new List<StringIntPair>();
+            data.partyMaxHealth ??= new List<StringIntPair>();
             data.partySlotIds.Clear();
+            data.partyHealth.Clear();
+            data.partyMaxHealth.Clear();
             for (var i = 0; i < MaxPartySize; i++)
             {
                 var slot = members[i];
                 data.partySlotIds.Add(slot?.characterId ?? string.Empty);
+                if (slot != null && !string.IsNullOrEmpty(slot.characterId))
+                {
+                    data.partyHealth.Add(new StringIntPair { key = slot.characterId, value = Mathf.CeilToInt(slot.currentHealth) });
+                    data.partyMaxHealth.Add(new StringIntPair { key = slot.characterId, value = Mathf.CeilToInt(slot.maxHealth) });
+                }
             }
 
             data.unlockedCharacterIds = new List<string>(unlockedCharacterIds);
@@ -244,11 +304,33 @@ namespace BES.UI
                     members[i].characterId = id;
                     members[i].displayName = GetDisplayNameForId(id);
                     members[i].isUnlocked = IsCharacterUnlocked(id);
+                    EnsureSlotHealth(i);
                 }
             }
 
+            var savedHealth = data.partyHealth != null
+                ? SaveDataUtility.FromPairs(data.partyHealth)
+                : new Dictionary<string, int>();
+            var savedMaxHealth = data.partyMaxHealth != null
+                ? SaveDataUtility.FromPairs(data.partyMaxHealth)
+                : new Dictionary<string, int>();
+            for (var i = 0; i < MaxPartySize; i++)
+            {
+                var slot = members[i];
+                if (slot == null || string.IsNullOrEmpty(slot.characterId))
+                    continue;
+
+                if (savedMaxHealth.TryGetValue(slot.characterId, out var max))
+                    slot.maxHealth = Mathf.Max(1f, max);
+                if (savedHealth.TryGetValue(slot.characterId, out var current))
+                    slot.currentHealth = Mathf.Clamp(current, 0f, Mathf.Max(1f, slot.maxHealth));
+            }
+
             activeCharacterIndex = Mathf.Clamp(data.activeCharacterIndex, 0, MaxPartySize - 1);
+            suppressHealthCapture = true;
             RefreshActiveBuild();
+            suppressHealthCapture = false;
+            RestoreActiveHealth();
             GameEvents.RaisePartyChanged();
         }
 
@@ -257,6 +339,57 @@ namespace BES.UI
             var player = GameObject.FindGameObjectWithTag("Player");
             if (player != null && player.TryGetComponent<PlayerBuildStats>(out var build))
                 build.Refresh();
+        }
+
+        void CaptureActiveHealth()
+        {
+            var stats = FindPlayerStats();
+            if (stats != null)
+                StoreHealth(ActiveCharacterIndex, stats.CurrentHealth, stats.MaxHealth);
+        }
+
+        void StoreHealth(int index, float current, float max)
+        {
+            var slot = GetSlot(index);
+            if (slot == null)
+                return;
+
+            slot.maxHealth = Mathf.Max(1f, max);
+            slot.currentHealth = Mathf.Clamp(current, 0f, slot.maxHealth);
+        }
+
+        void RestoreActiveHealth()
+        {
+            var stats = FindPlayerStats();
+            var slot = GetSlot(ActiveCharacterIndex);
+            if (stats == null || slot == null)
+                return;
+
+            EnsureSlotHealth(ActiveCharacterIndex);
+            var ratio = slot.maxHealth > 0f ? slot.currentHealth / slot.maxHealth : 1f;
+            slot.maxHealth = Mathf.Max(1f, stats.MaxHealth);
+            slot.currentHealth = Mathf.Clamp(slot.maxHealth * ratio, 0f, slot.maxHealth);
+            stats.LoadState(slot.currentHealth, stats.CurrentMana);
+        }
+
+        void EnsureSlotHealth(int index)
+        {
+            var slot = GetSlot(index);
+            if (slot == null)
+                return;
+
+            var definition = GetCharacterDefinition(slot.characterId);
+            var max = Mathf.Max(1f, definition != null ? definition.baseHealth : 100f);
+            if (slot.maxHealth <= 0f)
+                slot.maxHealth = max;
+            if (slot.currentHealth < 0f)
+                slot.currentHealth = slot.maxHealth;
+        }
+
+        static PlayerStats FindPlayerStats()
+        {
+            var player = GameObject.FindGameObjectWithTag("Player");
+            return player != null && player.TryGetComponent<PlayerStats>(out var stats) ? stats : null;
         }
 
         PartyMemberSlot CreateMemberFromId(string id) => new()

@@ -11,6 +11,7 @@ namespace BES.Gameplay
         [SerializeField] int experienceReward = 10;
 
         float currentHealth;
+        EnemyDamageFeedback feedback;
 
         public string EnemyId => string.IsNullOrEmpty(enemyId) ? gameObject.name : enemyId;
         public bool IsAlive => currentHealth > 0f;
@@ -19,6 +20,9 @@ namespace BES.Gameplay
         void Awake()
         {
             currentHealth = maxHealth;
+            feedback = GetComponent<EnemyDamageFeedback>();
+            if (feedback == null)
+                feedback = gameObject.AddComponent<EnemyDamageFeedback>();
         }
 
         public void TakeDamage(DamageInfo damage)
@@ -28,6 +32,7 @@ namespace BES.Gameplay
 
             var reduced = Mathf.Max(1f, damage.Amount - defense * 0.4f);
             currentHealth -= reduced;
+            feedback?.PlayHit(reduced, damage.IsCritical);
 
             if (currentHealth <= 0f)
                 Die();

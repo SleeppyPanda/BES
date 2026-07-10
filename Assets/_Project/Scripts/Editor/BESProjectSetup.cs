@@ -451,12 +451,10 @@ namespace BES.Editor
             var hud = hudGo.AddComponent<HUDController>();
             var health = CreateSlider(hudGo.transform, "HealthBar", new Vector2(-300, 200));
             var stamina = CreateSlider(hudGo.transform, "StaminaBar", new Vector2(-300, 170));
-            var mana = CreateSlider(hudGo.transform, "ManaBar", new Vector2(-300, 140));
             var quest = CreateText(hudGo.transform, "QuestText", "Quest: —", new Vector2(-300, 110));
             var region = CreateText(hudGo.transform, "RegionText", "Region: Creation City", new Vector2(-300, 80));
             SetPrivateField(hud, "healthBar", health);
             SetPrivateField(hud, "staminaBar", stamina);
-            SetPrivateField(hud, "manaBar", mana);
             SetPrivateField(hud, "questText", quest);
             SetPrivateField(hud, "regionText", region);
         }

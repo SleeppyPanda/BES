@@ -7,11 +7,14 @@ namespace BES.UI
 {
     public class PartyStripUI : MonoBehaviour
     {
+        [SerializeField] RectTransform[] slotRoots = new RectTransform[4];
         [SerializeField] Image[] slotFrames = new Image[4];
         [SerializeField] Image[] portraits = new Image[4];
         [SerializeField] Button[] slotButtons = new Button[4];
         [SerializeField] TMP_Text[] slotNames = new TMP_Text[4];
         [SerializeField] TMP_Text[] slotNumbers = new TMP_Text[4];
+        [SerializeField] Slider[] healthBars = new Slider[4];
+        [SerializeField] float activeScale = 1.2f;
 
         PartyRoster roster;
         CharacterPortraitManifest portraitManifest;
@@ -38,6 +41,7 @@ namespace BES.UI
         {
             GameEvents.OnGameLoaded += Refresh;
             GameEvents.OnPartyChanged += Refresh;
+            GameEvents.OnPlayerHealthChanged += OnPlayerHealthChanged;
             Refresh();
         }
 
@@ -45,7 +49,10 @@ namespace BES.UI
         {
             GameEvents.OnGameLoaded -= Refresh;
             GameEvents.OnPartyChanged -= Refresh;
+            GameEvents.OnPlayerHealthChanged -= OnPlayerHealthChanged;
         }
+
+        void OnPlayerHealthChanged(float _, float __) => Refresh();
 
         public void Refresh()
         {
@@ -58,6 +65,9 @@ namespace BES.UI
             {
                 var member = roster.GetSlot(i);
                 var isActive = i == roster.ActiveCharacterIndex;
+
+                if (slotRoots != null && i < slotRoots.Length && slotRoots[i] != null)
+                    slotRoots[i].localScale = isActive ? Vector3.one * activeScale : Vector3.one;
 
                 if (slotNumbers != null && i < slotNumbers.Length && slotNumbers[i] != null)
                 {
@@ -102,6 +112,14 @@ namespace BES.UI
                     var ring = slotFrames[i].transform.Find("ActiveRing")?.GetComponent<Image>();
                     if (ring != null)
                         ring.color = isActive ? new Color(1f, 0.92f, 0.55f, 0.95f) : new Color(1f, 0.92f, 0.55f, 0f);
+                }
+
+                if (healthBars != null && i < healthBars.Length && healthBars[i] != null)
+                {
+                    roster.GetSlotHealth(i, out var currentHealth, out var maxHealth);
+                    healthBars[i].maxValue = maxHealth;
+                    healthBars[i].value = currentHealth;
+                    healthBars[i].gameObject.SetActive(member != null && member.isUnlocked);
                 }
             }
         }

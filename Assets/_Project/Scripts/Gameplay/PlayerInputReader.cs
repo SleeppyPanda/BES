@@ -36,6 +36,7 @@ namespace BES.Gameplay
         public bool JumpPressed { get; private set; }
         public bool SprintHeld { get; private set; }
         public bool AttackPressed { get; private set; }
+        public bool HeavyAttackPressed { get; private set; }
         public bool Skill1Pressed { get; private set; }
         public bool Skill2Pressed { get; private set; }
         public bool DodgePressed { get; private set; }
@@ -91,6 +92,7 @@ namespace BES.Gameplay
             JumpPressed = jumpAction.WasPressedThisFrame();
             SprintHeld = sprintAction.IsPressed();
             AttackPressed = attackAction.WasPressedThisFrame();
+            HeavyAttackPressed = Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame;
             Skill1Pressed = skill1Action.WasPressedThisFrame();
             Skill2Pressed = skill2Action.WasPressedThisFrame();
             DodgePressed = dodgeAction.WasPressedThisFrame();
@@ -175,6 +177,7 @@ namespace BES.Gameplay
             JumpPressed = false;
             SprintHeld = false;
             AttackPressed = false;
+            HeavyAttackPressed = false;
             Skill1Pressed = false;
             Skill2Pressed = false;
             DodgePressed = false;
@@ -202,6 +205,7 @@ namespace BES.Gameplay
             JumpPressed = keyboard.spaceKey.wasPressedThisFrame;
             SprintHeld = keyboard.leftShiftKey.isPressed || keyboard.rightShiftKey.isPressed;
             AttackPressed = mouse != null && mouse.leftButton.wasPressedThisFrame;
+            HeavyAttackPressed = mouse != null && mouse.rightButton.wasPressedThisFrame;
             Skill1Pressed = keyboard.qKey.wasPressedThisFrame;
             Skill2Pressed = keyboard.eKey.wasPressedThisFrame;
             DodgePressed = keyboard.leftCtrlKey.wasPressedThisFrame || keyboard.cKey.wasPressedThisFrame;

@@ -45,6 +45,8 @@ namespace BES.Gameplay
         public int eventStreakDay;
         public List<int> eventClaimedDays = new();
         public List<string> partySlotIds = new();
+        public List<StringIntPair> partyHealth = new();
+        public List<StringIntPair> partyMaxHealth = new();
         public List<string> unlockedCharacterIds = new();
         public List<string> unlockedTeleportIds = new();
         public List<string> discoveredRegionIds = new();

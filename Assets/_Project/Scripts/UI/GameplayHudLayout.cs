@@ -9,11 +9,14 @@ namespace BES.UI
     public class GameplayHudLayout : MonoBehaviour
     {
         [SerializeField] HUDSpriteManifest manifest;
+        [SerializeField] bool applyRuntimeLayout;
+
+        public bool ApplyRuntimeLayout => applyRuntimeLayout;
 
         void Awake()
         {
             manifest ??= HUDSpriteManifestLoader.Load();
-            if (manifest == null)
+            if (manifest == null || !applyRuntimeLayout)
                 return;
 
             Reapply();
@@ -107,7 +110,6 @@ namespace BES.UI
 
             ApplyBarSprites(hud, "HealthBar", manifest.hpBarBackground, manifest.hpBarFill, HUDPrimitiveStyles.HpBarBackground, HUDPrimitiveStyles.HpBarFill);
             ApplyBarSprites(hud, "StaminaBar", manifest.staminaBarBackground, manifest.staminaBarFill, HUDPrimitiveStyles.HpBarBackground, HUDPrimitiveStyles.StaminaBarFill);
-            ApplyBarSprites(hud, "ManaBar", manifest.manaBarBackground, manifest.manaBarFill, new Color(0.1f, 0.1f, 0.14f, 0.5f), HUDPrimitiveStyles.ManaBarFill);
         }
 
         void ApplyQuestCompass()
