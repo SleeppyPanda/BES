@@ -30,7 +30,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: BES::BES.UI.WeaponDefinition
   weaponId: weapon_iron_sword
   displayName: Iron Sword
-  description: Default starter sword for the BES MVP.
+  description: Default weapon for the BES MVP.
   baseAtk: 120
   baseHp: 0
   rarity: 3
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: BES::BES.UI.WeaponDefinition
   weaponId: weapon_void_edge
   displayName: Void Edge
-  description: Default 4-star weapon for the BES MVP.
+  description: Default weapon for the BES MVP.
   baseAtk: 310
   baseHp: 0
   rarity: 4
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: BES::BES.UI.WeaponDefinition
   weaponId: weapon_flame_blade
   displayName: Bane of Flame and Water
-  description: Default 5-star weapon for the BES MVP.
+  description: Default weapon for the BES MVP.
   baseAtk: 420
   baseHp: 0
   rarity: 5

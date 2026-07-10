@@ -33,7 +33,7 @@ MonoBehaviour:
   navMap: {fileID: 21300000, guid: de7a9e7a5f3779e4d93fba0d22301e04, type: 3}
   navWish: {fileID: 21300000, guid: 1c8fecf63dde1944ab98cfc75e7d6535, type: 3}
   navTeam: {fileID: 21300000, guid: 1492b0c6bb173964fa12b5ec576e1a64, type: 3}
-  navEvent: {fileID: 21300000, guid: a09cfdef0aaf1b345989715eb2fd9b5d, type: 3}
+  navEvent: {fileID: 21300000, guid: 5b54710fe8c77214d8ff338733d7d4aa, type: 3}
   navArtifacts: {fileID: 21300000, guid: d7a2504cf72e8454587dfd4a7c3c8dea, type: 3}
   navWeapon: {fileID: 21300000, guid: bf345deee36cadc4d945f27cc3fd36d5, type: 3}
   partySlotFrame: {fileID: 21300000, guid: 3e84a606bdf311c45962dde0016c2c0d, type: 3}
