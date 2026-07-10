@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b2c3d4e5f6478990abcdef12345678, type: 3}
   m_Name: HUDSpriteManifest
   m_EditorClassIdentifier: BES::BES.UI.HUDSpriteManifest
+  minimapMap: {fileID: 0}
   minimapFrame: {fileID: 0}
   minimapRing: {fileID: 21300000, guid: 624b43baad82f0241bbe84a32e636db4, type: 3}
   playerDot: {fileID: 21300000, guid: 0bc83ecdc60f22547a5fc4658b70ae3e, type: 3}
@@ -29,13 +30,19 @@ MonoBehaviour:
   manaBarFill: {fileID: 0}
   navBarBackground: {fileID: 0}
   navInventory: {fileID: 21300000, guid: c22923b38221c064a82acbd4d0b99c28, type: 3}
+  navBag: {fileID: 21300000, guid: c22923b38221c064a82acbd4d0b99c28, type: 3}
   navCharacter: {fileID: 21300000, guid: e299447480604764ba478cb01282c7ce, type: 3}
+  navPersonal: {fileID: 21300000, guid: e299447480604764ba478cb01282c7ce, type: 3}
   navMap: {fileID: 21300000, guid: de7a9e7a5f3779e4d93fba0d22301e04, type: 3}
   navWish: {fileID: 21300000, guid: 1c8fecf63dde1944ab98cfc75e7d6535, type: 3}
   navTeam: {fileID: 21300000, guid: 1492b0c6bb173964fa12b5ec576e1a64, type: 3}
+  navBattlePass: {fileID: 21300000, guid: 1492b0c6bb173964fa12b5ec576e1a64, type: 3}
   navEvent: {fileID: 21300000, guid: 5b54710fe8c77214d8ff338733d7d4aa, type: 3}
   navArtifacts: {fileID: 21300000, guid: d7a2504cf72e8454587dfd4a7c3c8dea, type: 3}
   navWeapon: {fileID: 21300000, guid: bf345deee36cadc4d945f27cc3fd36d5, type: 3}
+  settingsIcon: {fileID: 21300000, guid: 1dfd16d60168ba34fb4d4d89a14d2b1a, type: 3}
+  guideLineIcon: {fileID: 21300000, guid: de7a9e7a5f3779e4d93fba0d22301e04, type: 3}
+  missionIcon: {fileID: 21300000, guid: d7a2504cf72e8454587dfd4a7c3c8dea, type: 3}
   partySlotFrame: {fileID: 21300000, guid: 3e84a606bdf311c45962dde0016c2c0d, type: 3}
   partyPortraitDefault: {fileID: 21300000, guid: f45e664cdea2280439109288b95340c3, type: 3}
   skillSlotFrame: {fileID: 21300000, guid: ed32e80de23431e468df61839aeebf05, type: 3}

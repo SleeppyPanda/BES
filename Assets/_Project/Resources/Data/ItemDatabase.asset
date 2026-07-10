@@ -1,5 +1,47 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7207123612727541242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_09
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_09
+  displayName: Gacha Item 09
+  description: Gacha reward material #09.
+  maxStack: 99
+  itemType: 0
+  rarity: 3
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &-1004771087446165719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_04
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_04
+  displayName: Gacha Item 04
+  description: Gacha reward material #04.
+  maxStack: 99
+  itemType: 0
+  rarity: 4
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21,6 +63,18 @@ MonoBehaviour:
   - {fileID: 11400006}
   - {fileID: 11400007}
   - {fileID: 11400008}
+  - {fileID: 191827854403879003}
+  - {fileID: 825859868125414787}
+  - {fileID: 4385784813362165408}
+  - {fileID: -1004771087446165719}
+  - {fileID: 6375056683651494478}
+  - {fileID: 8049860997228700981}
+  - {fileID: 7012681403080993879}
+  - {fileID: 2274032641930632316}
+  - {fileID: -7207123612727541242}
+  - {fileID: 5800090538633997357}
+  - {fileID: 8451689294413696582}
+  - {fileID: 8854541538807644587}
 --- !u!114 &11400001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,3 +243,213 @@ MonoBehaviour:
   healAmount: 0
   manaRestore: 0
   linkedWeaponId: weapon_flame_blade
+--- !u!114 &191827854403879003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_01
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_01
+  displayName: Gacha Item 01
+  description: Gacha reward material #01.
+  maxStack: 99
+  itemType: 0
+  rarity: 4
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &825859868125414787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_02
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_02
+  displayName: Gacha Item 02
+  description: Gacha reward material #02.
+  maxStack: 99
+  itemType: 0
+  rarity: 4
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &2274032641930632316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_08
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_08
+  displayName: Gacha Item 08
+  description: Gacha reward material #08.
+  maxStack: 99
+  itemType: 0
+  rarity: 3
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &4385784813362165408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_03
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_03
+  displayName: Gacha Item 03
+  description: Gacha reward material #03.
+  maxStack: 99
+  itemType: 0
+  rarity: 4
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &5800090538633997357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_10
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_10
+  displayName: Gacha Item 10
+  description: Gacha reward material #10.
+  maxStack: 99
+  itemType: 0
+  rarity: 3
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &6375056683651494478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_05
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_05
+  displayName: Gacha Item 05
+  description: Gacha reward material #05.
+  maxStack: 99
+  itemType: 0
+  rarity: 3
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &7012681403080993879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_07
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_07
+  displayName: Gacha Item 07
+  description: Gacha reward material #07.
+  maxStack: 99
+  itemType: 0
+  rarity: 3
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &8049860997228700981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_06
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_06
+  displayName: Gacha Item 06
+  description: Gacha reward material #06.
+  maxStack: 99
+  itemType: 0
+  rarity: 3
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &8451689294413696582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_11
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_11
+  displayName: Gacha Item 11
+  description: Gacha reward material #11.
+  maxStack: 99
+  itemType: 0
+  rarity: 3
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
+--- !u!114 &8854541538807644587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c3e43215459a24bb1c347a48020b56, type: 3}
+  m_Name: gacha_item_12
+  m_EditorClassIdentifier: BES::BES.Gameplay.ItemDefinition
+  itemId: gacha_item_12
+  displayName: Gacha Item 12
+  description: Gacha reward material #12.
+  maxStack: 99
+  itemType: 0
+  rarity: 3
+  healAmount: 0
+  manaRestore: 0
+  linkedWeaponId: 
