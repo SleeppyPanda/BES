@@ -14,8 +14,9 @@ namespace BES.Core
             if (GameManager.Instance == null)
                 return;
 
-            if (itemDatabase != null)
-                GameManager.Instance.Inventory.SetDatabase(itemDatabase);
+            GameManager.Instance.Inventory.SetDatabase(itemDatabase != null
+                ? itemDatabase
+                : ItemDatabase.CreateDefaultRuntime());
 
             if (questDatabase != null)
                 GameManager.Instance.Quests.SetDatabase(questDatabase);

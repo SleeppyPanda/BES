@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BES.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -53,9 +54,9 @@ namespace BES.UI.Menu
         [SerializeField] Button bagButton;
         [SerializeField] Button chatButton;
         [SerializeField] SimpleModalPanel settingsPanel;
-        [SerializeField] SimpleModalPanel letterPanel;
+        [SerializeField] LetterUI letterPanel;
         [SerializeField] SimpleModalPanel eventPanel;
-        [SerializeField] SimpleModalPanel inventoryPanel;
+        [SerializeField] InventoryUI inventoryPanel;
         [SerializeField] SimpleModalPanel chatPanel;
 
         [Header("Character rank-up")]
@@ -74,9 +75,9 @@ namespace BES.UI.Menu
         [SerializeField] Button cashShopButton;
         [SerializeField] Button battlePassButton;
         [SerializeField] Button missionButton;
-        [SerializeField] SimpleModalPanel cashShopPanel;
+        [SerializeField] CashShopUI cashShopPanel;
         [SerializeField] SimpleModalPanel battlePassPanel;
-        [SerializeField] SimpleModalPanel missionPanel;
+        [SerializeField] MissionUI missionPanel;
 
         [Header("Story mode content")]
         [SerializeField] TMP_Text currentChapterText;
@@ -127,7 +128,9 @@ namespace BES.UI.Menu
             foreach (var view in currencies)
             {
                 var captured = view;
-                Wire(captured.addButton, () => captured.onAddPressed?.Invoke());
+                if (captured.addButton != null)
+                    captured.addButton.onClick.RemoveAllListeners();
+                Wire(captured.addButton, () => OpenCurrencyShop(captured));
             }
             EnsureStartingCharacter();
             Refresh();
@@ -138,6 +141,20 @@ namespace BES.UI.Menu
         static void Wire(Button button, UnityEngine.Events.UnityAction action)
         {
             if (button != null) button.onClick.AddListener(action);
+        }
+
+        void OpenCurrencyShop(HomeCurrencyView view)
+        {
+            if (cashShopPanel == null)
+                return;
+
+            cashShopPanel.OpenTab(view.currencyId switch
+            {
+                "energy" => CashShopTab.LightPurchase,
+                "gems" => CashShopTab.DiamondPurchase,
+                "coins" => CashShopTab.GoldenExchange,
+                _ => CashShopTab.DiamondPurchase
+            });
         }
 
         void EnsureStartingCharacter()

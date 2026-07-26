@@ -11920,19 +11920,7 @@ MonoBehaviour:
     addButton: {fileID: 3921794659277663576}
     onAddPressed:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 6375922709467154056}
-          m_TargetAssemblyTypeName: BES.UI.Menu.SimpleModalPanel, Assembly-CSharp
-          m_MethodName: Open
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - currencyId: gems
     background: {fileID: 7800285956619401814}
     icon: {fileID: 0}
@@ -11940,19 +11928,7 @@ MonoBehaviour:
     addButton: {fileID: 5213607314993071740}
     onAddPressed:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1189497373630194350}
-          m_TargetAssemblyTypeName: BES.UI.Menu.SimpleModalPanel, Assembly-CSharp
-          m_MethodName: Open
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - currencyId: coins
     background: {fileID: 2030886586572119296}
     icon: {fileID: 0}
@@ -11960,19 +11936,7 @@ MonoBehaviour:
     addButton: {fileID: 6905635318825897644}
     onAddPressed:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 8689164341396522163}
-          m_TargetAssemblyTypeName: BES.UI.Menu.SimpleModalPanel, Assembly-CSharp
-          m_MethodName: Open
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   cashShopButton: {fileID: 5292130179051127423}
   battlePassButton: {fileID: 3903699098036926056}
   missionButton: {fileID: 2123753401259596002}
@@ -14898,19 +14862,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 2132210474379021144}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 799da2907b8f4d9980c70843f437c76f, type: 3}
+  m_Script: {fileID: 11500000, guid: b0bb784e6ba849e482546584f7b05f68, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BES.UI.Menu.SimpleModalPanel
-  panelRoot: {fileID: 2132210474379021144}
+  m_EditorClassIdentifier: Assembly-CSharp::BES.UI.MissionUI
+  panel: {fileID: 2132210474379021144}
   closeButton: {fileID: 4456783898888780003}
+  closeSprite: {fileID: 21300000, guid: 886cd225b93fe5943a73f3ae0c4c5f21, type: 3}
   closeOnEscape: 1
-  showOnStart: 0
-  onOpened:
-    m_PersistentCalls:
-      m_Calls: []
-  onClosed:
-    m_PersistentCalls:
-      m_Calls: []
+  hideLegacyChildren: 1
+  spriteLibrary:
+  - name: Group 427323020
+    sprite: {fileID: 21300000, guid: a8568a15d019fd04da93246649f614a1, type: 3}
+  - name: Group 427323021
+    sprite: {fileID: 21300000, guid: 22a625f77224f894cbd01a35eee4cb07, type: 3}
+  - name: Group 427323022
+    sprite: {fileID: 21300000, guid: 92eb1c77bf622b34da2ecef7e3627a21, type: 3}
+  - name: Group 427323023
+    sprite: {fileID: 21300000, guid: 09d081be3f185b0469ed051c1d11f238, type: 3}
+  - name: Group 427323029
+    sprite: {fileID: 21300000, guid: 210491a1165a92143a0a42dbb76a849c, type: 3}
+  - name: Group 427323031
+    sprite: {fileID: 21300000, guid: c34a791bb1b174c4a9cdd55a84d094ee, type: 3}
+  - name: Group 427323032
+    sprite: {fileID: 21300000, guid: aeae126ee5d723345a6d187b0ceb960e, type: 3}
+  - name: Group 427323033
+    sprite: {fileID: 21300000, guid: b6e921398315b8c4cb9e4c79d1a73ec3, type: 3}
+  - name: Group 427323034
+    sprite: {fileID: 21300000, guid: 8a498d65bcfc05c429892d8278ef68e9, type: 3}
+  - name: Star 54
+    sprite: {fileID: 21300000, guid: 6d5c8066f59efaa47ac0e7b03439a82b, type: 3}
 --- !u!1 &2137680043979266801
 GameObject:
   m_ObjectHideFlags: 0
@@ -53433,19 +53413,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 7272975994300545780}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 799da2907b8f4d9980c70843f437c76f, type: 3}
+  m_Script: {fileID: 11500000, guid: ccbf62c5c5fa4c3eb80989338600ab36, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BES.UI.Menu.SimpleModalPanel
-  panelRoot: {fileID: 7272975994300545780}
+  m_EditorClassIdentifier: Assembly-CSharp::BES.UI.LetterUI
+  panel: {fileID: 7272975994300545780}
+  database: {fileID: 0}
+  listContainer: {fileID: 0}
+  titleText: {fileID: 0}
+  senderText: {fileID: 0}
+  bodyText: {fileID: 0}
+  rewardText: {fileID: 0}
   closeButton: {fileID: 2611101577262629996}
+  claimButton: {fileID: 0}
+  artworkSprite: {fileID: 21300000, guid: f376c496b045b054999e9506725b82f8, type: 3}
+  closeSprite: {fileID: 21300000, guid: 886cd225b93fe5943a73f3ae0c4c5f21, type: 3}
+  buildRuntimeFallback: 1
   closeOnEscape: 1
-  showOnStart: 0
-  onOpened:
-    m_PersistentCalls:
-      m_Calls: []
-  onClosed:
-    m_PersistentCalls:
-      m_Calls: []
+  useArtworkLayout: 1
+  hideLegacyChildren: 1
 --- !u!1 &7277503014027270628
 GameObject:
   m_ObjectHideFlags: 0
@@ -64705,19 +64690,84 @@ MonoBehaviour:
   m_GameObject: {fileID: 8688973168467695671}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 799da2907b8f4d9980c70843f437c76f, type: 3}
+  m_Script: {fileID: 11500000, guid: e196277dd50f4ca99d2f5706efb9c03b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BES.UI.Menu.SimpleModalPanel
-  panelRoot: {fileID: 8688973168467695671}
+  m_EditorClassIdentifier: Assembly-CSharp::BES.UI.CashShopUI
+  panel: {fileID: 8688973168467695671}
   closeButton: {fileID: 2212034845923987446}
+  closeSprite: {fileID: 21300000, guid: 886cd225b93fe5943a73f3ae0c4c5f21, type: 3}
   closeOnEscape: 1
-  showOnStart: 0
-  onOpened:
-    m_PersistentCalls:
-      m_Calls: []
-  onClosed:
-    m_PersistentCalls:
-      m_Calls: []
+  hideLegacyChildren: 1
+  startTab: 0
+  spriteLibrary:
+  - name: Group 427322940
+    sprite: {fileID: 21300000, guid: a9097dccaca7d7446bca686edb08367c, type: 3}
+  - name: Group 42
+    sprite: {fileID: 21300000, guid: 158bc2c03d8a6f44fbe8d74cbdb57654, type: 3}
+  - name: Group 44
+    sprite: {fileID: 21300000, guid: ca5ba10464ed55c40935fc55b3f63fad, type: 3}
+  - name: Group 427322941
+    sprite: {fileID: 21300000, guid: ef4250cdadabb284185e4a95b0bc97f7, type: 3}
+  - name: Group 427322942
+    sprite: {fileID: 21300000, guid: 20c2ed59bfeeed04791bd5db105b001f, type: 3}
+  - name: Group 427322742
+    sprite: {fileID: 21300000, guid: b293df40104aacb4db898daf41945823, type: 3}
+  - name: Group 427322916 ( 1 )
+    sprite: {fileID: 21300000, guid: 262a79884870e724d911ccb34b2ef77e, type: 3}
+  - name: Group 427322944 (1)
+    sprite: {fileID: 21300000, guid: 2ba5cffc3a29e2d48a1d053b7d9fb53d, type: 3}
+  - name: Group 4273229451
+    sprite: {fileID: 21300000, guid: bb23f3ab55d7d1f4091eda493bbe0d31, type: 3}
+  - name: Group 427323065
+    sprite: {fileID: 21300000, guid: deec508a242e51f40811d5e5ba4720a2, type: 3}
+  - name: Group 427323066
+    sprite: {fileID: 21300000, guid: 9aef9dc215f53f343b4b91a540192f74, type: 3}
+  - name: Group 427323067
+    sprite: {fileID: 21300000, guid: aa68f824714096745b1f8b229673ce68, type: 3}
+  - name: Group 427322951
+    sprite: {fileID: 21300000, guid: 720d816dc78ee7441b7bb87f52661489, type: 3}
+  - name: Group 427322952
+    sprite: {fileID: 21300000, guid: 22aea63285353454ea297c4e1fc306fb, type: 3}
+  - name: Group 4273229561
+    sprite: {fileID: 21300000, guid: 2eae319bbd3c16346b4bf4dabccd5e0d, type: 3}
+  - name: Group 427322960
+    sprite: {fileID: 21300000, guid: 684300a2b9cd3a54fa75eebc5bcb2b14, type: 3}
+  - name: Group 427322966
+    sprite: {fileID: 21300000, guid: 26c19528c184fe84b92b367501bdef41, type: 3}
+  - name: Group 427322967
+    sprite: {fileID: 21300000, guid: 1e8023c777cb7b74697b2af4e2fbb3fb, type: 3}
+  - name: Group 427322968
+    sprite: {fileID: 21300000, guid: 3a90a8a3b8e34bb40a3c94f004fd0d6d, type: 3}
+  - name: Group 427322969
+    sprite: {fileID: 21300000, guid: cf51bd79fe4593e4f85e60ddff03e5dd, type: 3}
+  - name: Group 427322970
+    sprite: {fileID: 21300000, guid: bacd55d579bb41741a060fc7deecdd07, type: 3}
+  - name: Group 427322972
+    sprite: {fileID: 21300000, guid: e917957b9e2997c4c9248a5b480bdbeb, type: 3}
+  - name: Group 427322973
+    sprite: {fileID: 21300000, guid: 0d9aa8a99ecc6ac43acfb6e31c962a74, type: 3}
+  - name: Group 427322974
+    sprite: {fileID: 21300000, guid: 612c5ef1a225de544955a05a1bfd62ef, type: 3}
+  - name: Group 427322977
+    sprite: {fileID: 21300000, guid: cb3906873165fd044bc9c60fa9962fab, type: 3}
+  - name: Group 427322978
+    sprite: {fileID: 21300000, guid: fe822f21578548a4e8f3f1ff2fe61df6, type: 3}
+  - name: Group 427322979
+    sprite: {fileID: 21300000, guid: def1e8ba35a0f434e85f399d1585bdb9, type: 3}
+  - name: Group 427322980
+    sprite: {fileID: 21300000, guid: 5207e91bbc31b0d478b85858b50598c9, type: 3}
+  - name: Group 427322981
+    sprite: {fileID: 21300000, guid: 970316a1f53c70f429b105fa8d00dddf, type: 3}
+  - name: Group 427322982
+    sprite: {fileID: 21300000, guid: 367c42c5e4dbeee48a4f19675d25c6b3, type: 3}
+  - name: Group 427322983
+    sprite: {fileID: 21300000, guid: 4e069f97c8e3b904bb05aa9a6d9146cc, type: 3}
+  - name: Group 427322984
+    sprite: {fileID: 21300000, guid: 3543bf105dc41174eaebf7f0109f6772, type: 3}
+  - name: Group 427322985
+    sprite: {fileID: 21300000, guid: 8641cfdbf14f8cb45941ad126b04fc2c, type: 3}
+  - name: Group 427322986
+    sprite: {fileID: 21300000, guid: b793e8b37781f004db51930856f5f317, type: 3}
 --- !u!1 &8705990084753822617
 GameObject:
   m_ObjectHideFlags: 0
@@ -67349,19 +67399,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 9023798259448795888}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 799da2907b8f4d9980c70843f437c76f, type: 3}
+  m_Script: {fileID: 11500000, guid: df15ce15d8f0dbf48825ba478c289dba, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BES.UI.Menu.SimpleModalPanel
-  panelRoot: {fileID: 9023798259448795888}
+  m_EditorClassIdentifier: Assembly-CSharp::BES.UI.InventoryUI
+  panel: {fileID: 9023798259448795888}
+  listContainer: {fileID: 0}
+  itemRowPrefab: {fileID: 0}
+  itemSlotPrefab: {fileID: 0}
   closeButton: {fileID: 1092974324497184435}
+  itemsTabButton: {fileID: 0}
+  materialsTabButton: {fileID: 0}
+  detailText: {fileID: 0}
+  artworkSprite: {fileID: 21300000, guid: 1148d76bc5013cc43a7394f5808d14ba, type: 3}
+  closeSprite: {fileID: 21300000, guid: 886cd225b93fe5943a73f3ae0c4c5f21, type: 3}
+  buildRuntimeFallback: 1
   closeOnEscape: 1
-  showOnStart: 0
-  onOpened:
-    m_PersistentCalls:
-      m_Calls: []
-  onClosed:
-    m_PersistentCalls:
-      m_Calls: []
+  useArtworkLayout: 1
+  hideLegacyChildren: 1
 --- !u!1 &9026921885829350387
 GameObject:
   m_ObjectHideFlags: 0
