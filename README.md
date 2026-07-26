@@ -329,6 +329,57 @@ Controller: `ResonanceSubTabController`.
 - Hai kiểu hiển thị section có thể xen kẽ.
 - Controller: `DivineRemnantCarousel`.
 
+## Battle turn-based
+
+`BattlePanel` nằm trong `MenuHub.prefab` và được mở bằng `ActiveButton` của Story sau khi đội hình thỏa requirement.
+
+Cấu trúc chính:
+
+```text
+BattlePanel
+|-- BattleHeader
+|   |-- RoundText
+|   |-- CurrentActorText
+|   |-- SpeedButton
+|   |-- AutoButton
+|   `-- PauseButton
+|-- TurnOrderRail
+|   `-- TurnOrderEntry_0..7
+|-- Ally_0..3
+|-- Enemy_0..3
+|-- SkillPanel
+|   `-- SkillButton_0..3
+`-- PauseOverlay
+```
+
+Controller: `Assets/UI/Scripts/Menu/TurnBattleUI.cs`.
+
+- Có bốn ally và bốn enemy, tùy chỉnh hoàn toàn trong Inspector.
+- Mỗi unit có HP, Attack, Defense, Speed, portrait, battlefield sprite, Animator và skill riêng.
+- Turn order sắp xếp Speed giảm dần.
+- Khi Speed bằng nhau, ally/player được ưu tiên trước enemy.
+- Lượt player yêu cầu chọn skill, sau đó chọn enemy mục tiêu.
+- Enemy tự chọn ally có tỷ lệ HP thấp nhất.
+- Queue bên trái hiển thị thứ tự hành động còn lại trong round.
+- `2X` nhân tốc độ delay và Animator của battle lên hai lần.
+- Auto tự chọn skill đầu tiên và enemy còn sống đầu tiên.
+- Pause dừng battle coroutine và Animator mà không đổi global `Time.timeScale`.
+- Battle reset mỗi lần panel được mở cho một nhiệm vụ Story mới.
+
+Dữ liệu mẫu:
+
+| Unit | HP | ATK | DEF | SPD |
+| --- | ---: | ---: | ---: | ---: |
+| Astra | 130 | 25 | 10 | 18 |
+| Blaze | 110 | 32 | 7 | 25 |
+| Terra | 180 | 20 | 18 | 10 |
+| Zephyr | 95 | 40 | 5 | 30 |
+| Wyrmling | 120 | 22 | 8 | 14 |
+| Golem | 150 | 25 | 12 | 11 |
+| Shade | 90 | 35 | 4 | 23 |
+| Titan | 210 | 28 | 16 | 8 |
+
+Các sprite/icon/Animator mẫu đang để trống để gán bằng Unity Inspector.
 ## Dữ liệu Menu
 
 Asset chính:

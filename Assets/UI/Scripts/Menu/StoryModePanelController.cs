@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -52,9 +53,13 @@ namespace BES.UI.Menu
         [SerializeField] GameObject characterSelectionPanel;
 
         [Header("Chapter display")]
-        [SerializeField] Image[] chapterBackgrounds;
         [SerializeField] TMP_Text[] chapterTitles;
         [SerializeField] TMP_Text[] chapterSummaries;
+        [SerializeField] RectTransform storyProgressMarker;
+        [SerializeField] List<RectTransform> storyProgressPositions = new();
+        [SerializeField, Min(.05f)] float storyProgressMoveDuration = .65f;
+        [SerializeField] AnimationCurve storyProgressMoveCurve =
+            AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
         [Header("Before selection")]
         [SerializeField] Button openSelectionButton;
@@ -75,6 +80,8 @@ namespace BES.UI.Menu
         StoryPartyPhase phase;
         int chapterIndex;
         int targetSlotIndex;
+        int storyProgressIndex;
+        Coroutine storyProgressRoutine;
 
         public StoryPartyPhase Phase => phase;
         public IReadOnlyList<CharacterEntry> SelectedParty => selectedParty;
@@ -128,9 +135,9 @@ namespace BES.UI.Menu
             if (database == null || database.storyChapters.Count == 0) return;
             chapterIndex = Mathf.Clamp(index, 0, database.storyChapters.Count - 1);
             var chapter = database.storyChapters[chapterIndex];
-            foreach (var image in chapterBackgrounds) if (image != null) image.sprite = chapter.background;
             foreach (var title in chapterTitles) if (title != null) title.text = chapter.title;
             foreach (var summary in chapterSummaries) if (summary != null) summary.text = chapter.summary;
+            RefreshStoryProgress();
         }
 
         public void ShowPhase(StoryPartyPhase next)
@@ -182,9 +189,75 @@ namespace BES.UI.Menu
             if (!MeetsPartyRequirements()) return;
             onPartyConfirmed?.Invoke(CurrentIds());
             ShowPhase(StoryPartyPhase.Main);
+            navigator?.Open(MenuScreenId.Battle);
         }
 
         void BackToHome() => navigator?.Back();
+
+        public void CompleteStoryBattle()
+        {
+            if (storyProgressPositions.Count == 0) return;
+            storyProgressIndex = Mathf.Min(storyProgressIndex + 1, storyProgressPositions.Count - 1);
+            MoveStoryProgressMarker();
+        }
+
+        void RefreshStoryProgress()
+        {
+            if (storyProgressMarker == null || storyProgressPositions.Count == 0) return;
+            var target = storyProgressPositions[
+                Mathf.Clamp(storyProgressIndex, 0, storyProgressPositions.Count - 1)];
+            if (target == null) return;
+            SnapStoryProgressMarker(target);
+        }
+
+        void MoveStoryProgressMarker()
+        {
+            if (storyProgressMarker == null || storyProgressPositions.Count == 0) return;
+            var target = storyProgressPositions[
+                Mathf.Clamp(storyProgressIndex, 0, storyProgressPositions.Count - 1)];
+            if (target == null) return;
+
+            if (!isActiveAndEnabled)
+            {
+                SnapStoryProgressMarker(target);
+                return;
+            }
+
+            if (storyProgressRoutine != null) StopCoroutine(storyProgressRoutine);
+            storyProgressRoutine = StartCoroutine(AnimateStoryProgressMarker(target));
+        }
+
+        IEnumerator AnimateStoryProgressMarker(RectTransform target)
+        {
+            Canvas.ForceUpdateCanvases();
+            var startPosition = storyProgressMarker.position;
+            var targetPosition = target.position;
+            var duration = Mathf.Max(.05f, storyProgressMoveDuration);
+            var elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                var normalized = Mathf.Clamp01(elapsed / duration);
+                var curved = storyProgressMoveCurve != null
+                    ? storyProgressMoveCurve.Evaluate(normalized)
+                    : normalized;
+                storyProgressMarker.position =
+                    Vector3.LerpUnclamped(startPosition, targetPosition, curved);
+                yield return null;
+            }
+
+            SnapStoryProgressMarker(target);
+            storyProgressRoutine = null;
+        }
+
+        void SnapStoryProgressMarker(RectTransform target)
+        {
+            storyProgressMarker.anchorMin = target.anchorMin;
+            storyProgressMarker.anchorMax = target.anchorMax;
+            storyProgressMarker.pivot = target.pivot;
+            storyProgressMarker.anchoredPosition = target.anchoredPosition;
+        }
 
         List<string> CurrentIds()
         {

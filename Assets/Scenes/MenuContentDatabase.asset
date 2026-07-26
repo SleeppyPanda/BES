@@ -22,8 +22,131 @@ MonoBehaviour:
   - id: coins
     icon: {fileID: 21300000, guid: 57fe28cdfe9856c4d814d8eae4c7d5c0, type: 3}
     amount: 0
-  characters: []
-  storyChapters: []
+  characters:
+  - id: astra
+    displayName: Astra
+    description: Balanced story character.
+    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    attributes: [StoryReady, Light]
+    rarity: 5
+    level: 20
+    maxHealth: 130
+    attack: 25
+  - id: blaze
+    displayName: Blaze
+    description: Fast fire attacker.
+    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    attributes: [StoryReady, Fire]
+    rarity: 5
+    level: 20
+    maxHealth: 110
+    attack: 32
+  - id: terra
+    displayName: Terra
+    description: Durable earth defender.
+    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    attributes: [StoryReady, Earth]
+    rarity: 4
+    level: 20
+    maxHealth: 180
+    attack: 20
+  - id: zephyr
+    displayName: Zephyr
+    description: High-speed wind attacker.
+    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    attributes: [StoryReady, Wind]
+    rarity: 5
+    level: 20
+    maxHealth: 95
+    attack: 40
+  - id: marina
+    displayName: Marina
+    description: Water support character.
+    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    attributes: [StoryReady, Water, Healer]
+    rarity: 4
+    level: 18
+    maxHealth: 125
+    attack: 18
+  - id: volt
+    displayName: Volt
+    description: Lightning damage character.
+    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    attributes: [StoryReady, Lightning]
+    rarity: 4
+    level: 18
+    maxHealth: 105
+    attack: 34
+  - id: frost
+    displayName: Frost
+    description: Ice control character.
+    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    attributes: [StoryReady, Ice]
+    rarity: 4
+    level: 18
+    maxHealth: 115
+    attack: 29
+  - id: luna
+    displayName: Luna
+    description: Dark ranged character.
+    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    attributes: [StoryReady, Dark, Ranged]
+    rarity: 5
+    level: 20
+    maxHealth: 100
+    attack: 38
+  - id: sol
+    displayName: Sol
+    description: Light support character.
+    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
+    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    attributes: [StoryReady, Light, Healer]
+    rarity: 5
+    level: 20
+    maxHealth: 135
+    attack: 22
+  storyChapters:
+  - id: chapter_1
+    title: CHAPTER I - THE INHERITED FLAME
+    summary: Assemble four characters and enter the first story battle.
+    background: {fileID: 21300000, guid: 53c5070cbb2dae54a9572c4e4ca57c5a, type: 3}
+    stages:
+    - id: chapter_1_stage_1
+      title: The First Trial
+      description: Select four available characters to begin.
+      preview: {fileID: 21300000, guid: dd1c02f6776dbd04db6a75e2fc2d0ba9, type: 3}
+      energyCost: 10
+      rewards: []
+      partyRequirements:
+      - attributeId: StoryReady
+        icon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+        minimumCount: 4
   resourceStages: []
   sanctumStages: []
   weaponStages: []
