@@ -8,6 +8,7 @@ namespace BES.Gameplay
         public string itemId;
         public string displayName;
         [TextArea] public string description;
+        public Sprite icon;
         public int maxStack = 99;
         public ItemType itemType = ItemType.Material;
         public int rarity = 1;

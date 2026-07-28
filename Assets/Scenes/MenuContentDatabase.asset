@@ -18,10 +18,19 @@ MonoBehaviour:
     amount: 0
   - id: gems
     icon: {fileID: 21300000, guid: 642780ad9c7b7174cae20a70a0ca5f98, type: 3}
-    amount: 0
+    amount: 99999
   - id: coins
     icon: {fileID: 21300000, guid: 57fe28cdfe9856c4d814d8eae4c7d5c0, type: 3}
-    amount: 0
+    amount: 99999
+  - id: crystal_apple
+    icon: {fileID: 0}
+    amount: 120
+  - id: golden_bean
+    icon: {fileID: 0}
+    amount: 40
+  - id: bean
+    icon: {fileID: 0}
+    amount: 250
   characters:
   - id: astra
     displayName: Astra
@@ -30,7 +39,9 @@ MonoBehaviour:
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
-    attributes: [StoryReady, Light]
+    attributes:
+    - StoryReady
+    - Light
     rarity: 5
     level: 20
     maxHealth: 130
@@ -42,7 +53,9 @@ MonoBehaviour:
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
-    attributes: [StoryReady, Fire]
+    attributes:
+    - StoryReady
+    - Fire
     rarity: 5
     level: 20
     maxHealth: 110
@@ -54,7 +67,9 @@ MonoBehaviour:
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
-    attributes: [StoryReady, Earth]
+    attributes:
+    - StoryReady
+    - Earth
     rarity: 4
     level: 20
     maxHealth: 180
@@ -66,7 +81,9 @@ MonoBehaviour:
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
-    attributes: [StoryReady, Wind]
+    attributes:
+    - StoryReady
+    - Wind
     rarity: 5
     level: 20
     maxHealth: 95
@@ -78,7 +95,10 @@ MonoBehaviour:
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
-    attributes: [StoryReady, Water, Healer]
+    attributes:
+    - StoryReady
+    - Water
+    - Healer
     rarity: 4
     level: 18
     maxHealth: 125
@@ -90,7 +110,9 @@ MonoBehaviour:
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
-    attributes: [StoryReady, Lightning]
+    attributes:
+    - StoryReady
+    - Lightning
     rarity: 4
     level: 18
     maxHealth: 105
@@ -102,7 +124,9 @@ MonoBehaviour:
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
-    attributes: [StoryReady, Ice]
+    attributes:
+    - StoryReady
+    - Ice
     rarity: 4
     level: 18
     maxHealth: 115
@@ -114,7 +138,10 @@ MonoBehaviour:
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
-    attributes: [StoryReady, Dark, Ranged]
+    attributes:
+    - StoryReady
+    - Dark
+    - Ranged
     rarity: 5
     level: 20
     maxHealth: 100
@@ -126,7 +153,10 @@ MonoBehaviour:
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
-    attributes: [StoryReady, Light, Healer]
+    attributes:
+    - StoryReady
+    - Light
+    - Healer
     rarity: 5
     level: 20
     maxHealth: 135
