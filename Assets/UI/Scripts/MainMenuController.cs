@@ -28,6 +28,9 @@ namespace BES.UI
             MainMenuLayout.Apply(canvas);
             if (logoObject != null)
                 logoObject.SetActive(true);
+
+            // Initialize AuthManager early for auto-login check
+            var auth = AuthManager.Instance;
         }
 
         void Start()

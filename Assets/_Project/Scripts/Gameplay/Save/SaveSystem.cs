@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using BES.Core;
 using BES.Narrative;
 using BES.UI;
@@ -192,6 +193,68 @@ namespace BES.Gameplay
 
             if (player.TryGetComponent<StaminaSystem>(out var stamina))
                 stamina.LoadState(currentSave.playerStamina);
+        }
+
+        // ==================== CLOUD SYNC SIMULATION ====================
+
+        public async Task SyncSaveToCloudAsync()
+        {
+            if (AuthManager.Instance == null || !AuthManager.Instance.IsAuthenticated)
+            {
+                Debug.LogWarning("[CloudSave] Player is not authenticated. Skipping cloud upload.");
+                return;
+            }
+
+            var userId = AuthManager.Instance.CurrentUserId;
+            Debug.Log($"[CloudSave] Starting upload for user: {userId}...");
+            
+            // Auto save locally first
+            Save();
+            
+            await Task.Delay(500); // Simulate network latency
+
+            if (File.Exists(SavePath))
+            {
+                var json = File.ReadAllText(SavePath);
+                // Simulate cloud database save
+                PlayerPrefs.SetString($"BES_CloudSave_{userId}", json);
+                PlayerPrefs.Save();
+                Debug.Log($"[CloudSave] Save data successfully synced to cloud for user: {userId}. Data size: {json.Length} bytes.");
+            }
+        }
+
+        public async Task<bool> SyncSaveFromCloudAsync()
+        {
+            if (AuthManager.Instance == null || !AuthManager.Instance.IsAuthenticated)
+            {
+                Debug.LogWarning("[CloudSave] Player is not authenticated. Skipping cloud download.");
+                return false;
+            }
+
+            var userId = AuthManager.Instance.CurrentUserId;
+            var cloudKey = $"BES_CloudSave_{userId}";
+
+            if (!PlayerPrefs.HasKey(cloudKey))
+            {
+                Debug.Log($"[CloudSave] No cloud save found for user: {userId}. Using local save.");
+                return false;
+            }
+
+            Debug.Log($"[CloudSave] Downloading save file for user: {userId}...");
+            await Task.Delay(600); // Simulate network latency
+
+            var json = PlayerPrefs.GetString(cloudKey);
+            if (!string.IsNullOrEmpty(json))
+            {
+                File.WriteAllText(SavePath, json);
+                currentSave = JsonUtility.FromJson<SaveData>(json);
+                LoadedFromContinue = true;
+                IsNewSession = false;
+                Debug.Log($"[CloudSave] Cloud save downloaded and loaded successfully for user: {userId}.");
+                return true;
+            }
+
+            return false;
         }
     }
 }
