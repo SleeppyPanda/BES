@@ -7,7 +7,7 @@ namespace BES.Tests
 {
     public class AuthSystemTest : MonoBehaviour
     {
-        [SerializeField] bool runOnStart = true;
+        [SerializeField] bool runOnStart = false;
 
         async void Start()
         {
@@ -21,6 +21,7 @@ namespace BES.Tests
         {
             Debug.Log("<color=cyan>====== STARTING AUTHENTICATION SYSTEM TESTS =====</color>");
             
+            AuthManager.IsTesting = true;
             var auth = AuthManager.Instance;
             if (auth == null)
             {
@@ -72,6 +73,42 @@ namespace BES.Tests
             Assert(auth.CurrentUserName == "TestPlayer", $"Expected username 'TestPlayer', got '{auth.CurrentUserName}'");
             Debug.Log($"✔ Test 6: Sign Up verified (UID: {auth.CurrentUserId}, Username: {auth.CurrentUserName}).");
 
+            // Test 6b: Sign Up Duplicate Check
+            Debug.Log("Testing Duplicate Sign Up...");
+            string signUpDupError = await auth.SignUpWithEmailAsync(email, "otherpassword", "TestPlayer2");
+            Assert(!string.IsNullOrEmpty(signUpDupError), "Signing up with an existing email should fail.");
+            Debug.Log($"✔ Test 6b: Duplicate Sign Up validation verified (Returned error: '{signUpDupError}').");
+
+            // Test 6c: Sign In with Incorrect Password
+            Debug.Log("Testing Sign In with incorrect password...");
+            auth.SignOut();
+            string signInWrongError = await auth.SignInWithEmailAsync(email, "wrongpassword");
+            Assert(!string.IsNullOrEmpty(signInWrongError), "Sign in with wrong password should fail.");
+            Assert(signInWrongError == "Incorrect password.", $"Expected 'Incorrect password.', got '{signInWrongError}'");
+            Debug.Log($"✔ Test 6c: Incorrect password sign in verified.");
+
+            // Test 6d: Sign In with Correct Password
+            Debug.Log("Testing Sign In with correct password...");
+            string signInOkError = await auth.SignInWithEmailAsync(email, "mypassword123");
+            Assert(string.IsNullOrEmpty(signInOkError), $"Sign in failed: {signInOkError}");
+            Assert(auth.IsAuthenticated, "Player should be authenticated after correct login.");
+            Assert(auth.CurrentUserName == "TestPlayer", "Username must match the registered username.");
+            Debug.Log("✔ Test 6d: Correct password sign in verified.");
+
+            // Test 6e: Forgot Password and Reset Code Verification
+            Debug.Log("Testing Forgot Password flow...");
+            string sendCodeError = await auth.SendResetCodeAsync(email);
+            Assert(string.IsNullOrEmpty(sendCodeError), $"Send reset code failed: {sendCodeError}");
+            
+            string resetPassError = await auth.ResetPasswordWithCodeAsync(email, "123456", "newpassword123");
+            Assert(string.IsNullOrEmpty(resetPassError), $"Password reset failed: {resetPassError}");
+            
+            // Test Login with new password
+            auth.SignOut();
+            string loginNewError = await auth.SignInWithEmailAsync(email, "newpassword123");
+            Assert(string.IsNullOrEmpty(loginNewError), $"Login with new password failed: {loginNewError}");
+            Debug.Log("✔ Test 6e: Forgot Password and password reset verified.");
+
             // Test 7: Cloud Save Sync Upload/Download
             Debug.Log("Testing Cloud Save synchronization...");
             var saveGo = new GameObject("TempSaveSystem");
@@ -108,19 +145,15 @@ namespace BES.Tests
             // Force reload instance to simulate restart
             auth.SignOut(); // Clear
             
-            // Re-save session manually to simulate auto-login on startup
-            PlayerPrefs.SetString("BES_SessionToken", "mock_token_email_" + savedUid);
-            PlayerPrefs.SetString("BES_SessionUserId", savedUid);
-            PlayerPrefs.SetString("BES_SessionUserEmail", email);
-            PlayerPrefs.SetString("BES_SessionUserName", "TestPlayer");
+            // Re-save session manually using encryption to simulate auto-login on startup
+            PlayerPrefs.SetString("BES_SessionToken", auth.Encrypt("mock_token_email_" + savedUid));
+            PlayerPrefs.SetString("BES_SessionUserId", auth.Encrypt(savedUid));
+            PlayerPrefs.SetString("BES_SessionUserEmail", auth.Encrypt(email));
+            PlayerPrefs.SetString("BES_SessionUserName", auth.Encrypt("TestPlayer"));
             PlayerPrefs.SetInt("BES_SessionIsGuest", 0);
             PlayerPrefs.Save();
 
             // Simulate startup trigger by accessing Instance or calling Awake equivalent
-            // We can just trigger the private TryAutoLogin using reflection or checking code
-            // Actually, we can check if it auto-logs in when we call a fresh auto-login trigger.
-            // Since we can't easily destroy/re-instantiate in the same frame without unity editor callbacks,
-            // we will simulate the TryAutoLogin call
             var autoLoginMethod = typeof(AuthManager).GetMethod("TryAutoLogin", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             autoLoginMethod?.Invoke(auth, null);
 
@@ -128,6 +161,7 @@ namespace BES.Tests
             Assert(auth.CurrentUserId == savedUid, $"Expected auto-logged UID '{savedUid}', got '{auth.CurrentUserId}'");
             Debug.Log("✔ Test 8: Session persistence and auto-login verified.");
 
+            AuthManager.IsTesting = false;
             Debug.Log("<color=green>====== ALL AUTHENTICATION SYSTEM TESTS PASSED SUCCESSFULLY! =====</color>");
         }
 
