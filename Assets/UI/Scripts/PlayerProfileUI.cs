@@ -727,6 +727,16 @@ namespace BES.UI
 
                 case AuthMode.SignUp:
                     error = await AuthManager.Instance.SignUpWithEmailAsync(email, password, displayName);
+                    if (error == null)
+                    {
+                        AuthManager.Instance.SignOut();
+                        _currentMode = AuthMode.SignIn;
+                        _lastStatusMessage = "Account created successfully! Please sign in.";
+                        if (usernameInput != null) usernameInput.text = email;
+                        if (passwordInput != null) passwordInput.text = "";
+                        if (confirmPasswordInput != null) confirmPasswordInput.text = "";
+                        if (displayNameInput != null) displayNameInput.text = "";
+                    }
                     break;
 
                 case AuthMode.ForgotPassword:
