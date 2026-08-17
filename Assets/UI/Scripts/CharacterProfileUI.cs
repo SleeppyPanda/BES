@@ -78,8 +78,9 @@ namespace BES.UI
                     nameText.text = !string.IsNullOrEmpty(activeCharacter?.displayName) ? activeCharacter.displayName : "Main Character";
                 if (levelText != null)
                 {
-                    var level = activeCharacter != null ? activeCharacter.level : 99;
-                    var maxLevel = activeCharacter != null ? activeCharacter.maxLevel : 100;
+                    var characterId = partyRoster?.ActiveCharacterId ?? activeCharacter?.characterId;
+                    var level = CharacterProgressionState.GetLevel(characterId);
+                    var maxLevel = CharacterProgressionState.GetLevelCap(characterId);
                     levelText.text = $"Lv. {level} / {maxLevel}";
                 }
                 if (atkText != null) atkText.text = $"ATK: {stats.AttackPower + weaponAtk:0} (base {stats.AttackPower:0} + weapon {weaponAtk})";

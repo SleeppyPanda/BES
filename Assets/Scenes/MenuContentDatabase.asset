@@ -36,129 +36,192 @@ MonoBehaviour:
     displayName: Astra
     description: Balanced story character.
     portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    cardBackground: {fileID: 21300000, guid: 3d707bdf5891e1f4e9556430f0c1bc10, type: 3}
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    equippedArtifacts: []
     attributes:
     - StoryReady
     - Light
     rarity: 5
+    starLevel: 0
     level: 20
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
     maxHealth: 130
     attack: 25
   - id: blaze
     displayName: Blaze
     description: Fast fire attacker.
     portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    cardBackground: {fileID: 21300000, guid: 6c874c71bb004e643adea315f5b86086, type: 3}
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    equippedArtifacts: []
     attributes:
     - StoryReady
     - Fire
     rarity: 5
+    starLevel: 0
     level: 20
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
     maxHealth: 110
     attack: 32
   - id: terra
     displayName: Terra
     description: Durable earth defender.
     portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    cardBackground: {fileID: 21300000, guid: 19fdd0dafe327db44b3191516969590e, type: 3}
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    equippedArtifacts: []
     attributes:
     - StoryReady
     - Earth
     rarity: 4
+    starLevel: 0
     level: 20
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
     maxHealth: 180
     attack: 20
   - id: zephyr
     displayName: Zephyr
     description: High-speed wind attacker.
     portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    cardBackground: {fileID: 21300000, guid: 049dfd20644f4be40a2a1c954e1dcd9a, type: 3}
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    equippedArtifacts: []
     attributes:
     - StoryReady
     - Wind
     rarity: 5
+    starLevel: 0
     level: 20
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
     maxHealth: 95
     attack: 40
   - id: marina
     displayName: Marina
     description: Water support character.
     portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    cardBackground: {fileID: 21300000, guid: f3699ebb8204037418c061523d5d01d5, type: 3}
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    equippedArtifacts: []
     attributes:
     - StoryReady
     - Water
     - Healer
     rarity: 4
+    starLevel: 0
     level: 18
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
     maxHealth: 125
     attack: 18
   - id: volt
     displayName: Volt
     description: Lightning damage character.
     portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    cardBackground: {fileID: 21300000, guid: 40a6a7b7cc9d85649aeac44d4a22635a, type: 3}
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    equippedArtifacts: []
     attributes:
     - StoryReady
     - Lightning
     rarity: 4
+    starLevel: 0
     level: 18
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
     maxHealth: 105
     attack: 34
   - id: frost
     displayName: Frost
     description: Ice control character.
     portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    cardBackground: {fileID: 21300000, guid: 8b1b86fac8779264d937c43dac699299, type: 3}
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    equippedArtifacts: []
     attributes:
     - StoryReady
     - Ice
     rarity: 4
+    starLevel: 0
     level: 18
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
     maxHealth: 115
     attack: 29
   - id: luna
     displayName: Luna
     description: Dark ranged character.
     portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    cardBackground: {fileID: 21300000, guid: 81049c21fef12c445a6a1cd9b1eaac6d, type: 3}
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    equippedArtifacts: []
     attributes:
     - StoryReady
     - Dark
     - Ranged
     rarity: 5
+    starLevel: 0
     level: 20
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
     maxHealth: 100
     attack: 38
   - id: sol
     displayName: Sol
     description: Light support character.
     portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
+    cardBackground: {fileID: 21300000, guid: 3b23043352afa2b48b1b63e4f3577156, type: 3}
     fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    equippedArtifacts: []
     attributes:
     - StoryReady
     - Light
     - Healer
     rarity: 5
+    starLevel: 0
     level: 20
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
     maxHealth: 135
     attack: 22
   storyChapters:

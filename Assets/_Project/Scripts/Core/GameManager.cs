@@ -60,6 +60,7 @@ namespace BES.Core
             PartyRoster.Instance?.ResetToDefaults();
             MetaProgressState.Instance?.ResetAll();
             GachaPityState.Instance?.ResetAll();
+            CharacterProgressionState.ResetAll();
             SceneLoader.Instance.LoadGameplay();
         }
 

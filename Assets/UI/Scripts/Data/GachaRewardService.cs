@@ -22,6 +22,7 @@ namespace BES.UI
             }
 
             var duplicate = false;
+            var duplicateCharacter = false;
             switch (entry.rewardType)
             {
                 case GachaRewardType.Weapon:
@@ -37,7 +38,12 @@ namespace BES.UI
                     break;
                 case GachaRewardType.Character:
                     if (PartyRoster.Instance != null && PartyRoster.Instance.IsCharacterUnlocked(entry.rewardId))
+                    {
                         duplicate = true;
+                        duplicateCharacter = true;
+                        var amount = CharacterDatabaseLoader.Load()?.Get(entry.rewardId)?.duplicateShardReward ?? 1;
+                        CharacterProgressionState.AddDuplicateShards(entry.rewardId, amount);
+                    }
                     else
                         PartyRoster.Instance?.UnlockCharacter(entry.rewardId, label);
                     break;
@@ -48,8 +54,13 @@ namespace BES.UI
 
             if (duplicate)
             {
-                GachaPityState.Instance?.AddStardust(GachaPityState.DuplicateShardReward);
-                label += " (duplicate → Stardust)";
+                if (!duplicateCharacter)
+                {
+                    GachaPityState.Instance?.AddStardust(GachaPityState.DuplicateShardReward);
+                    label += " (duplicate → Stardust)";
+                }
+                else
+                    label = $"{label} (duplicate character shard)";
             }
 
             GachaPityState.Instance?.RegisterPull(entry.rarity);

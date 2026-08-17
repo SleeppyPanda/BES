@@ -98,7 +98,7 @@ namespace BES.UI.Menu
                 if (slot.portrait != null) { slot.portrait.enabled = character != null; slot.portrait.sprite = character?.portrait; }
                 if (slot.elementIcon != null) { slot.elementIcon.enabled = character != null; slot.elementIcon.sprite = character?.elementIcon; }
                 if (slot.nameText != null) slot.nameText.text = character?.displayName ?? string.Empty;
-                if (slot.levelText != null) slot.levelText.text = character == null ? string.Empty : $"Lv. {character.level}";
+                if (slot.levelText != null) slot.levelText.text = character == null ? string.Empty : $"Lv. {CharacterProgressionState.GetLevel(character.id)}";
                 slot.emptyState?.SetActive(character == null);
             }
             if (startButton != null) startButton.interactable = party.Exists(x => x != null);

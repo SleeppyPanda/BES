@@ -77,6 +77,7 @@ namespace BES.UI.Menu
         [SerializeField] UnityEvent<List<string>> onPartyConfirmed;
 
         readonly List<CharacterEntry> selectedParty = new();
+        readonly List<CharacterEntry> ownedRoster = new();
         StoryPartyPhase phase;
         int chapterIndex;
         int targetSlotIndex;
@@ -167,9 +168,10 @@ namespace BES.UI.Menu
 
         void SelectCharacterForTargetSlot(int rosterIndex)
         {
-            if (database == null || rosterIndex < 0 || rosterIndex >= database.characters.Count) return;
+            RebuildOwnedRoster();
+            if (rosterIndex < 0 || rosterIndex >= ownedRoster.Count) return;
             EnsureFixedPartySlots();
-            var character = database.characters[rosterIndex];
+            var character = ownedRoster[rosterIndex];
             var existing = selectedParty.FindIndex(x => x != null && (x == character || x.id == character.id));
             if (existing >= 0 && existing != targetSlotIndex) selectedParty[existing] = null;
             selectedParty[targetSlotIndex] = character;
@@ -368,18 +370,33 @@ namespace BES.UI.Menu
 
         void RefreshRoster()
         {
+            RebuildOwnedRoster();
             for (var i = 0; i < rosterCards.Count; i++)
             {
                 var card = rosterCards[i];
-                var character = database != null && i < database.characters.Count ? database.characters[i] : null;
+                var character = i < ownedRoster.Count ? ownedRoster[i] : null;
                 if (card.button != null) card.button.gameObject.SetActive(character != null);
                 if (character == null) continue;
+                if (card.button != null && card.button.image != null)
+                    card.button.image.sprite = character.cardBackground;
                 if (card.portrait != null) card.portrait.sprite = character.portrait;
                 if (card.elementIcon != null) card.elementIcon.sprite = character.elementIcon;
                 if (card.nameText != null) card.nameText.text = character.displayName;
-                if (card.levelText != null) card.levelText.text = $"Lv. {character.level}";
+                if (card.levelText != null) card.levelText.text = $"Lv. {CharacterProgressionState.GetLevel(character.id)}";
                 if (card.selectedState != null)
                     card.selectedState.SetActive(selectedParty.Exists(x => x != null && (x == character || x.id == character.id)));
+            }
+        }
+
+        void RebuildOwnedRoster()
+        {
+            ownedRoster.Clear();
+            var roster = PartyRoster.Instance ?? FindAnyObjectByType<PartyRoster>();
+            if (roster == null || database == null) return;
+            foreach (var member in roster.GetUnlockedRosterMembers())
+            {
+                var character = database.FindCharacter(member.characterId);
+                if (character != null && !ownedRoster.Contains(character)) ownedRoster.Add(character);
             }
         }
 
@@ -402,7 +419,7 @@ namespace BES.UI.Menu
             if (slot.portrait != null) { slot.portrait.sprite = character?.portrait; slot.portrait.enabled = character != null; }
             if (slot.elementIcon != null) { slot.elementIcon.sprite = character?.elementIcon; slot.elementIcon.enabled = character != null; }
             if (slot.nameText != null) slot.nameText.text = character?.displayName ?? string.Empty;
-            if (slot.levelText != null) slot.levelText.text = character == null ? string.Empty : $"Lv. {character.level}";
+            if (slot.levelText != null) slot.levelText.text = character == null ? string.Empty : $"Lv. {CharacterProgressionState.GetLevel(character.id)}";
             if (slot.emptyState != null) slot.emptyState.SetActive(character == null);
         }
     }

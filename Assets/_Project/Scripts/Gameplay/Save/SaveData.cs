@@ -58,5 +58,10 @@ namespace BES.Gameplay
         public int stardust;
         public int activeCharacterIndex;
         public List<string> ownedArtifactIds = new();
+        public List<StringIntPair> characterLevels = new();
+        public List<StringIntPair> characterExperience = new();
+        public List<StringIntPair> characterBreakthroughs = new();
+        public List<StringIntPair> characterConstellations = new();
+        public List<StringIntPair> characterConstellationShards = new();
     }
 }

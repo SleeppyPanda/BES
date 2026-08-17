@@ -61,7 +61,6 @@ namespace BES.UI.Menu
         [Header("Character rank-up")]
         [SerializeField] Button rankUpButton;
         [SerializeField] Image rankUpBanner;
-        [SerializeField] SimpleModalPanel rankUpPanel;
         [SerializeField] List<Image> rankStars = new();
         [SerializeField] Sprite emptyStar;
         [SerializeField] Sprite filledStar;
@@ -90,8 +89,8 @@ namespace BES.UI.Menu
         [SerializeField] Button characterInfoButton;
         [SerializeField] Button galleryButton;
         [SerializeField] SimpleModalPanel wishPanel;
-        [SerializeField] SimpleModalPanel characterInfoPanel;
         [SerializeField] SimpleModalPanel galleryPanel;
+        [SerializeField] CharacterCollectionPanel characterCollection;
 
         [Header("Play mode content")]
         [Tooltip("Six main play-mode buttons. Each action can open a panel or invoke game logic.")]
@@ -109,14 +108,21 @@ namespace BES.UI.Menu
             Wire(eventButton, () => eventPanel?.Open());
             Wire(bagButton, () => inventoryPanel?.Open());
             Wire(chatButton, () => chatPanel?.Open());
-            Wire(rankUpButton, () => rankUpPanel?.Open());
+            Wire(rankUpButton, () => characterCollection?.OpenLevel(currentCharacterId));
             Wire(cashShopButton, () => cashShopPanel?.Open());
             Wire(battlePassButton, () => battlePassPanel?.Open());
             Wire(missionButton, () => missionPanel?.Open());
             Wire(enterStoryButton, () => navigator?.Open(MenuScreenId.StoryParty));
             Wire(wishButton, () => wishPanel?.Open());
-            Wire(characterInfoButton, () => characterInfoPanel?.Open());
-            Wire(galleryButton, () => galleryPanel?.Open());
+            Wire(characterInfoButton, () =>
+            {
+                characterCollection?.OpenCharacter(currentCharacterId);
+            });
+            Wire(galleryButton, () =>
+            {
+                if (characterCollection != null) characterCollection.OpenGallery();
+                else galleryPanel?.Open();
+            });
             Wire(gatheringValeButton, () => gatheringValePanel?.Open());
 
             foreach (var action in playModeActions)
@@ -149,15 +155,17 @@ namespace BES.UI.Menu
 
         public void SelectCharacter(string characterId)
         {
-            if (database == null || database.FindCharacter(characterId) == null) return;
+            if (database == null) return;
+            var character = database.FindCharacter(characterId);
+            if (character == null) return;
             currentCharacterId = characterId;
-            currentRank = 0;
+            currentRank = CharacterProgressionState.GetConstellation(characterId);
             Refresh();
         }
 
         public void SetRank(int rank)
         {
-            currentRank = Mathf.Clamp(rank, 0, 5);
+            currentRank = CharacterProgressionState.GetConstellation(currentCharacterId);
             RefreshRank();
         }
 
@@ -179,8 +187,8 @@ namespace BES.UI.Menu
 
         public void IncreaseRank()
         {
-            if (currentRank >= 5) return;
-            currentRank++;
+            CharacterProgressionState.TryUnlockNextConstellation(currentCharacterId);
+            currentRank = CharacterProgressionState.GetConstellation(currentCharacterId);
             RefreshRank();
         }
 

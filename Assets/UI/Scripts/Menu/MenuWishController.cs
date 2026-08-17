@@ -154,9 +154,10 @@ namespace BES.UI.Menu
                 var reward = RollReward();
                 if (reward == null) continue;
                 currentResults.Add(reward);
-                inventory?.AddItem(reward.itemId, reward.amount);
                 if (reward.unlockAsCharacter)
-                    PartyRoster.Instance?.UnlockCharacter(reward.itemId, reward.displayName);
+                    ApplyCharacterReward(reward);
+                else
+                    inventory?.AddItem(reward.itemId, reward.amount);
                 GachaPityState.Instance?.RegisterPull(reward.rarity);
             }
             GameManager.Instance?.SaveGame();
@@ -283,6 +284,33 @@ namespace BES.UI.Menu
                 if (value < accumulated) return reward;
             }
             return rewards[^1];
+        }
+
+        string CharacterIdFor(MenuWishReward reward)
+        {
+            if (reward == null || string.IsNullOrWhiteSpace(reward.itemId))
+                return string.Empty;
+
+            var id = reward.itemId.StartsWith("wish_", StringComparison.OrdinalIgnoreCase)
+                ? reward.itemId[5..]
+                : reward.itemId;
+            return database != null && database.FindCharacter(id) != null ? id : reward.itemId;
+        }
+
+        void ApplyCharacterReward(MenuWishReward reward)
+        {
+            var id = CharacterIdFor(reward);
+            var roster = PartyRoster.Instance;
+            var wasOwned = roster != null && roster.IsCharacterUnlocked(id);
+            roster?.UnlockCharacter(id, reward.displayName);
+            if (wasOwned)
+            {
+                var definition = CharacterDatabaseLoader.Load()?.Get(id);
+                var amount = Mathf.Max(1, definition?.duplicateShardReward ?? 1);
+                CharacterProgressionState.AddDuplicateShards(id, amount);
+                SetFeedback($"DUPLICATE: +{amount} CONSTELLATION SHARD");
+            }
+            GameEvents.RaisePartyChanged();
         }
 
         bool TrySpend(int count)

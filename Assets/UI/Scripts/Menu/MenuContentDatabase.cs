@@ -15,13 +15,22 @@ namespace BES.UI.Menu
         public string displayName;
         [TextArea] public string description;
         public Sprite portrait;
+        [Tooltip("Card background shared by Gallery, Story Mode and future Play Mode rosters.")]
+        public Sprite cardBackground;
         public Sprite fullBody;
         public Sprite chibi;
         public Sprite elementIcon;
+        [Tooltip("Four artifact slot sprites shown in Character Information and Equipment tabs.")]
+        public List<Sprite> equippedArtifacts = new();
         [Tooltip("IDs used by Story requirements, e.g. Fire, Ice, Healer or Ranged.")]
         public List<string> attributes = new();
         [Range(1, 6)] public int rarity = 4;
-        public int level = 1;
+        [HideInInspector] public int starLevel;
+        [HideInInspector] public int level = 1;
+        [Min(0)] public int combatPower;
+        [HideInInspector] public int constellation;
+        [Range(1, 10)] public int quality = 1;
+        [Range(0, 100)] public int affinity;
         public int maxHealth = 100;
         public int attack = 10;
     }

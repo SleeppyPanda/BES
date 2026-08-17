@@ -40,6 +40,8 @@ namespace BES.UI
             {
                 skillBar.SetCooldown(0, skills.Skill1CooldownNormalized);
                 skillBar.SetCooldown(1, skills.Skill2CooldownNormalized);
+                skillBar.SetSkillUnlocked(0, skills.Skill1Unlocked);
+                skillBar.SetSkillUnlocked(1, skills.Skill2Unlocked);
             }
         }
 
@@ -69,6 +71,9 @@ namespace BES.UI
             skillBar.SetSkillIcon(1, skill2Icon);
             skillBar.SetKeyLabel(0, "Q");
             skillBar.SetKeyLabel(1, "E");
+            var id = PartyRoster.Instance?.ActiveCharacterId;
+            skillBar.SetSkillUnlocked(0, CharacterProgressionState.GetActiveSkill(id, 0) != null);
+            skillBar.SetSkillUnlocked(1, CharacterProgressionState.GetActiveSkill(id, 1) != null);
         }
     }
 }

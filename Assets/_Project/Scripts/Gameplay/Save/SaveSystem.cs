@@ -139,6 +139,8 @@ namespace BES.Gameplay
             if (GachaPityState.Instance != null)
                 GachaPityState.Instance.ExportToSave(Current);
 
+            CharacterProgressionState.ExportToSave(Current);
+
             var json = JsonUtility.ToJson(Current, true);
             File.WriteAllText(SavePath, json);
             GameEvents.RaiseGameSaved();
@@ -173,6 +175,7 @@ namespace BES.Gameplay
             PartyRoster.Instance?.ImportFromSave(Current);
             MetaProgressState.Instance?.ImportFromSave(Current);
             GachaPityState.Instance?.ImportFromSave(Current);
+            CharacterProgressionState.ImportFromSave(Current);
 
             GameEvents.RaiseGameLoaded();
             return true;

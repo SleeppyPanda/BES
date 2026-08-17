@@ -17,6 +17,7 @@ namespace BES.Gameplay
         public float ComputedMaxMana { get; private set; }
         public float ComputedCritRate { get; private set; }
         public float ComputedCritDamage { get; private set; }
+        bool applyingBuild;
 
         void Awake()
         {
@@ -26,15 +27,28 @@ namespace BES.Gameplay
         void OnEnable()
         {
             GameEvents.OnGameLoaded += OnGameLoaded;
+            GameEvents.OnPartyChanged += Refresh;
+            GameEvents.OnPlayerHealthChanged += OnHealthChanged;
             Refresh();
         }
 
-        void OnDisable() => GameEvents.OnGameLoaded -= OnGameLoaded;
+        void OnDisable()
+        {
+            GameEvents.OnGameLoaded -= OnGameLoaded;
+            GameEvents.OnPartyChanged -= Refresh;
+            GameEvents.OnPlayerHealthChanged -= OnHealthChanged;
+        }
 
         void OnGameLoaded() => Refresh();
+        void OnHealthChanged(float current, float max)
+        {
+            if (!applyingBuild) Refresh();
+        }
 
         public void Refresh()
         {
+            if (applyingBuild) return;
+            applyingBuild = true;
             var characterId = PartyRoster.Instance?.ActiveCharacterId ?? "hero_01";
             var character = CharacterDatabaseLoader.Load()?.Get(characterId);
             GetCharacterBase(character, out var baseAtk, out var baseHp, out var baseDef, out var baseMana, out var baseCrit, out var baseCritDmg);
@@ -56,6 +70,14 @@ namespace BES.Gameplay
             ComputedCritRate = baseCrit;
             ComputedCritDamage = baseCritDmg;
 
+            var healthRatio = stats != null && stats.MaxHealth > 0f ? stats.CurrentHealth / stats.MaxHealth : 1f;
+            foreach (var passive in CharacterProgressionState.GetActivePassives(characterId, healthRatio))
+            {
+                ComputedAttack *= Mathf.Max(0f, passive.attackMultiplier);
+                ComputedDefense *= Mathf.Max(0f, passive.defenseMultiplier);
+                ComputedMaxHealth *= Mathf.Max(0f, passive.healthMultiplier);
+            }
+
             stats?.ApplyBuild(
                 ComputedMaxHealth,
                 ComputedMaxMana,
@@ -63,6 +85,7 @@ namespace BES.Gameplay
                 ComputedDefense,
                 ComputedCritRate,
                 ComputedCritDamage);
+            applyingBuild = false;
         }
 
         static void GetCharacterBase(CharacterDefinition character, out float atk, out float hp, out float def, out float mana, out float crit, out float critDmg)

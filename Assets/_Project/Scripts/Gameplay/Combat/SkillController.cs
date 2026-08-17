@@ -29,6 +29,8 @@ namespace BES.Gameplay
         float skill1Cooldown;
         float skill2Cooldown;
         bool isCasting;
+        bool skill1Unlocked;
+        bool skill2Unlocked;
 
         void Awake()
         {
@@ -54,24 +56,31 @@ namespace BES.Gameplay
             if (input == null || stats == null)
                 return;
 
-            if (input.Skill1Pressed)
+            if (input.Skill1Pressed && skill1Unlocked)
                 StartCoroutine(CastSkill(skill1, true));
-            else if (input.Skill2Pressed)
+            else if (input.Skill2Pressed && skill2Unlocked)
                 StartCoroutine(CastSkill(skill2, false));
         }
 
         void ApplyActiveCharacterSkills()
         {
             var character = PartyRoster.Instance?.ActiveCharacter;
+            var characterId = PartyRoster.Instance?.ActiveCharacterId;
             if (character == null)
             {
                 skill1 ??= CreateSkill("Void Slash", 18f, 1.8f, 2.5f, 3f, Color.cyan, 0.15f, 1.2f);
                 skill2 ??= CreateSkill("Guard Break", 25f, 2.4f, 5f, 4f, Color.magenta, 0.2f, 1.5f);
+                skill1Unlocked = true;
+                skill2Unlocked = true;
                 return;
             }
 
-            skill1 = CreateSkillFromId(character.skill1Id, true);
-            skill2 = CreateSkillFromId(character.skill2Id, false);
+            var unlocked1 = CharacterProgressionState.GetActiveSkill(characterId, 0);
+            var unlocked2 = CharacterProgressionState.GetActiveSkill(characterId, 1);
+            skill1Unlocked = unlocked1 != null;
+            skill2Unlocked = unlocked2 != null;
+            skill1 = skill1Unlocked ? CreateSkillFromId(unlocked1.skillId, true) : null;
+            skill2 = skill2Unlocked ? CreateSkillFromId(unlocked2.skillId, false) : null;
             skill1Cooldown = 0f;
             skill2Cooldown = 0f;
         }
@@ -83,6 +92,9 @@ namespace BES.Gameplay
 
         public float Skill2CooldownNormalized =>
             skill2 != null && skill2.cooldown > 0f ? Mathf.Clamp01(skill2Cooldown / skill2.cooldown) : 0f;
+
+        public bool Skill1Unlocked => skill1Unlocked;
+        public bool Skill2Unlocked => skill2Unlocked;
 
         IEnumerator CastSkill(SkillDefinition skill, bool isSkill1)
         {

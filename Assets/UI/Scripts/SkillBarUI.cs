@@ -79,6 +79,17 @@ namespace BES.UI
             keyLabels[index].text = label;
         }
 
+        public void SetSkillUnlocked(int index, bool unlocked)
+        {
+            if (skillIcons != null && index >= 0 && index < skillIcons.Length && skillIcons[index] != null)
+            {
+                skillIcons[index].color = unlocked ? Color.white : new Color(.22f, .22f, .25f, .55f);
+                skillIcons[index].raycastTarget = unlocked;
+            }
+            if (keyLabels != null && index >= 0 && index < keyLabels.Length && keyLabels[index] != null)
+                keyLabels[index].text = unlocked ? DefaultKeyHints[index] : "LOCK";
+        }
+
         public void ApplyCharacterSkillIcons()
         {
             if (characterSkillIcons == null)

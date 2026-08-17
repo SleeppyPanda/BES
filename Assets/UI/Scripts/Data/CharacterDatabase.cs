@@ -4,6 +4,31 @@ using UnityEngine;
 
 namespace BES.UI
 {
+    public enum CharacterSkillType { Active, Passive }
+    public enum PassiveSkillCondition { Always, HealthBelowPercent, HealthAbovePercent }
+
+    [Serializable]
+    public class CharacterSkillUnlock
+    {
+        public string skillId;
+        public CharacterSkillType skillType;
+        [Range(0, 1)] public int activeSlot;
+        [Range(0, 6)] public int requiredConstellation;
+        public PassiveSkillCondition passiveCondition;
+        [Range(0f, 1f)] public float healthThreshold = .5f;
+        [Min(0f)] public float attackMultiplier = 1f;
+        [Min(0f)] public float defenseMultiplier = 1f;
+        [Min(0f)] public float healthMultiplier = 1f;
+    }
+
+    [Serializable]
+    public class CharacterBreakthroughTier
+    {
+        [Range(20, 60)] public int levelCap = 20;
+        public string materialId;
+        [Min(0)] public int materialAmount;
+    }
+
     [Serializable]
     public class CharacterDefinition
     {
@@ -11,7 +36,7 @@ namespace BES.UI
         public string displayName;
         public int rarity = 4;
         public int level = 1;
-        public int maxLevel = 100;
+        [HideInInspector] public int maxLevel = 80;
         public float baseAttack = 15f;
         public float baseHealth = 100f;
         public float baseDefense = 5f;
@@ -30,6 +55,10 @@ namespace BES.UI
         public string skill2Id;
         public Sprite skill1Icon;
         public Sprite skill2Icon;
+        [Header("Constellation progression")]
+        [Min(1)] public int duplicateShardReward = 1;
+        public List<int> constellationShardCosts = new() { 1, 1, 1, 1, 1, 1 };
+        public List<CharacterSkillUnlock> skillUnlocks = new();
     }
 
     [CreateAssetMenu(fileName = "CharacterDatabase", menuName = "BES/Character Database")]
@@ -37,6 +66,11 @@ namespace BES.UI
     {
         public List<CharacterDefinition> characters = new();
         public List<string> defaultPartyIds = new() { "hero_01", "hero_02", "hero_03", "hero_04" };
+        [Header("Shared character progression")]
+        [Tooltip("EXP required to advance from level N to N+1. Index 0 is level 1. Empty entries use the fallback curve until final values are supplied.")]
+        public List<int> sharedExperienceToNextLevel = new();
+        [Tooltip("Shared breakthrough requirements at level caps 20, 40 and 60.")]
+        public List<CharacterBreakthroughTier> breakthroughTiers = new();
 
         public IReadOnlyList<CharacterDefinition> Characters => characters;
 
@@ -61,6 +95,28 @@ namespace BES.UI
         }
 
         public IReadOnlyList<string> GetDefaultPartyIds() => defaultPartyIds;
+
+        public int GetExperienceToNextLevel(int level)
+        {
+            if (level >= 80) return 0;
+            var index = Mathf.Max(0, level - 1);
+            if (sharedExperienceToNextLevel != null && index < sharedExperienceToNextLevel.Count && sharedExperienceToNextLevel[index] > 0)
+                return sharedExperienceToNextLevel[index];
+            return 100 + index * 25;
+        }
+
+        public CharacterBreakthroughTier GetBreakthroughTier(int currentCap)
+        {
+            if (breakthroughTiers != null)
+                foreach (var tier in breakthroughTiers)
+                    if (tier != null && tier.levelCap == currentCap) return tier;
+            return new CharacterBreakthroughTier
+            {
+                levelCap = currentCap,
+                materialId = $"character_breakthrough_{currentCap}",
+                materialAmount = currentCap / 20
+            };
+        }
 
         public void ResetToDefaultEntries()
         {

@@ -11,30 +11,16 @@ using UnityEngine.UI;
 
 namespace BES.EditorTools
 {
-    [InitializeOnLoad]
     public static class BESMenuHubBuilder
     {
         const string ScenePath = "Assets/Scenes/menuhub.unity";
         const string PrefabFolder = "Assets/_Project/UI/Prefabs/Screens";
         const string PrefabPath = PrefabFolder + "/MenuHub.prefab";
         const string DatabasePath = "Assets/Scenes/MenuContentDatabase.asset";
-        const string BuildKey = "BES.MenuHub.AutoBuild.v6";
         static readonly Color Cream = new(0.96f, 0.92f, 0.82f, 1f);
         static readonly Color Brown = new(0.35f, 0.16f, 0.13f, 1f);
         static readonly Color Red = new(0.52f, 0.20f, 0.17f, 1f);
         static readonly Color Gold = new(0.78f, 0.65f, 0.36f, 1f);
-
-        static BESMenuHubBuilder()
-        {
-            EditorApplication.delayCall += AutoBuildOnce;
-        }
-
-        static void AutoBuildOnce()
-        {
-            if (SessionState.GetBool(BuildKey, false) || EditorApplication.isPlayingOrWillChangePlaymode) return;
-            SessionState.SetBool(BuildKey, true);
-            BuildAndInstall();
-        }
 
         [MenuItem("BES/UI/Rebuild MenuHub Prefab And Scene")]
         public static void BuildAndInstall()
