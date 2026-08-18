@@ -39,6 +39,7 @@ namespace BES.Gameplay
         public string equippedWeaponId = "weapon_iron_sword";
         public List<string> ownedWeaponIds = new();
         public int weaponLevel = 1;
+        public int weaponExperience = 0;
         public int weaponRefinement = 1;
         public int gems = 1600;
         public int coins = 99999;
@@ -55,6 +56,8 @@ namespace BES.Gameplay
         public string storyBranch = "main";
         public string endingId = string.Empty;
         public int gachaPullsSinceFiveStar;
+        public int gachaPullsSinceFiveStarWeapon;
+        public int consecutiveOffRates;
         public int stardust;
         public int activeCharacterIndex;
         public List<string> ownedArtifactIds = new();

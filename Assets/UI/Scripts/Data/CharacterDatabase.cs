@@ -98,11 +98,7 @@ namespace BES.UI
 
         public int GetExperienceToNextLevel(int level)
         {
-            if (level >= 80) return 0;
-            var index = Mathf.Max(0, level - 1);
-            if (sharedExperienceToNextLevel != null && index < sharedExperienceToNextLevel.Count && sharedExperienceToNextLevel[index] > 0)
-                return sharedExperienceToNextLevel[index];
-            return 100 + index * 25;
+            return CharacterProgressionState.GetExperienceToNextLevelForLevel(level);
         }
 
         public CharacterBreakthroughTier GetBreakthroughTier(int currentCap)
@@ -110,11 +106,20 @@ namespace BES.UI
             if (breakthroughTiers != null)
                 foreach (var tier in breakthroughTiers)
                     if (tier != null && tier.levelCap == currentCap) return tier;
+
+            var amount = currentCap switch
+            {
+                20 => 5,
+                40 => 15,
+                60 => 25,
+                _ => currentCap / 20
+            };
+
             return new CharacterBreakthroughTier
             {
                 levelCap = currentCap,
                 materialId = $"character_breakthrough_{currentCap}",
-                materialAmount = currentCap / 20
+                materialAmount = amount
             };
         }
 

@@ -19,5 +19,7 @@ namespace BES.UI
         public int baseHp;
         public ItemRarity rarity = ItemRarity.FourStar;
         public int maxLevel = 100;
+        public string subStatName = "Crit Rate";
+        public float subStatValue = 5.0f;
     }
 }

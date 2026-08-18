@@ -79,7 +79,32 @@ namespace BES.Editor
             weapon.baseAtk = atk;
             weapon.rarity = rarity;
             weapon.maxLevel = 100;
-            weapon.description = "Default weapon for the BES MVP.";
+
+            if (id == "weapon_iron_sword")
+            {
+                weapon.subStatName = "Crit Rate";
+                weapon.subStatValue = 4.8f;
+                weapon.description = "Thanh kiếm sắt phổ thông nhưng cực kỳ chắc chắn.";
+            }
+            else if (id == "weapon_void_edge")
+            {
+                weapon.subStatName = "Physical DMG";
+                weapon.subStatValue = 11.2f;
+                weapon.description = "Thanh kiếm sắc bén được chế tác từ kim loại ngoài hành tinh.";
+            }
+            else if (id == "weapon_flame_blade")
+            {
+                weapon.subStatName = "Elemental DMG";
+                weapon.subStatValue = 8.0f;
+                weapon.description = "Thanh kiếm truyền thuyết ẩn chứa sức mạnh ngọn lửa và dòng nước.";
+            }
+            else
+            {
+                weapon.subStatName = "Crit Rate";
+                weapon.subStatValue = 5.0f;
+                weapon.description = "Default weapon for the BES MVP.";
+            }
+
             EditorUtility.SetDirty(weapon);
         }
 

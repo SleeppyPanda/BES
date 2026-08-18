@@ -29,10 +29,14 @@ namespace BES.UI
             var equipped = EquippedWeaponState.Instance;
             var atk = equipped?.GetDisplayAtk() ?? 15;
             if (beforeAtkText != null) beforeAtkText.text = $"ATK {atk}";
-            if (afterAtkText != null) afterAtkText.text = $"ATK {atk + 24}";
+
+            var nextLevel = equipped != null ? equipped.SimulateLevelAfterExp(6500) : 1;
+            var nextAtk = equipped != null ? equipped.GetSimulatedAtk(nextLevel) : atk;
+            if (afterAtkText != null) afterAtkText.text = $"ATK {nextAtk} (Lv.{nextLevel})";
+
             if (materialsText != null)
                 materialsText.text =
-                    $"Materials: Ore x{WeaponUpgradeCosts.EnhanceOreCost}, Crystal x{WeaponUpgradeCosts.EnhanceCrystalCost}";
+                    $"Cần: Ore x{WeaponUpgradeCosts.EnhanceOreCost}, Crystal x{WeaponUpgradeCosts.EnhanceCrystalCost}\nVàng: 4,550";
         }
 
         void OnConfirm()
@@ -40,6 +44,22 @@ namespace BES.UI
             var inv = GameManager.Instance?.Inventory;
             if (inv == null)
                 return;
+
+            var equipped = EquippedWeaponState.Instance;
+            if (equipped == null || equipped.Level >= 80)
+            {
+                if (materialsText != null)
+                    materialsText.text = "Vũ khí đã đạt cấp tối đa!";
+                return;
+            }
+
+            int goldCost = 4550;
+            if (PlayerWallet.Instance == null || PlayerWallet.Instance.Coins < goldCost)
+            {
+                if (materialsText != null)
+                    materialsText.text = "Không đủ vàng!";
+                return;
+            }
 
             if (!inv.RemoveItem(WeaponUpgradeCosts.OreItemId, WeaponUpgradeCosts.EnhanceOreCost) ||
                 !inv.RemoveItem(WeaponUpgradeCosts.CrystalItemId, WeaponUpgradeCosts.EnhanceCrystalCost))
@@ -49,7 +69,12 @@ namespace BES.UI
                 return;
             }
 
-            EquippedWeaponState.Instance?.EnhanceLevel(1);
+            // Deduct gold
+            PlayerWallet.Instance.TrySpendCoins(goldCost);
+
+            // Add EXP (5 Ores * 500 = 2500, 2 Crystals * 2000 = 4000, Total = 6500)
+            equipped.AddExperience(6500);
+
             GameManager.Instance?.SaveGame();
             Hide();
             rankUpUI?.Show();

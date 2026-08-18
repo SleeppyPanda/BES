@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using BES.Gameplay;
+using BES.Core;
 
 namespace BES.UI.Menu
 {
@@ -94,6 +96,8 @@ namespace BES.UI.Menu
         [SerializeField] UnityEvent onVictory;
         [SerializeField] UnityEvent onDefeat;
         [SerializeField] UnityEvent<int> onRoundStarted;
+
+        public static string ActiveStageId;
 
         readonly List<BattleUnitView> turnQueue = new();
         readonly List<BattleUnitView> turnOrderPreview = new();
@@ -245,6 +249,62 @@ namespace BES.UI.Menu
             if (actor?.definition?.skills == null || actor.definition.skills.Count == 0) return new BattleSkillDefinition();
             return actor.definition.skills[Mathf.Clamp(index, 0, actor.definition.skills.Count - 1)];
         }
+        void ProcessCombatDrops()
+        {
+            var stageId = ActiveStageId;
+            ActiveStageId = null;
+
+            if (string.IsNullOrEmpty(stageId))
+            {
+                if (PlayerWallet.Instance != null)
+                {
+                    PlayerWallet.Instance.AddCoins(200);
+                }
+                return;
+            }
+
+            var inventory = GameManager.Instance?.Inventory;
+            var wallet = PlayerWallet.Instance;
+            var rewardsList = new List<string>();
+
+            if (wallet != null)
+            {
+                wallet.AddCoins(1000);
+                rewardsList.Add("+ 1000 Vàng");
+            }
+
+            if (inventory != null)
+            {
+                inventory.AddItem("item_exp_green", 1);
+                rewardsList.Add("+ 1 Lọ EXP Xanh Lá (100%)");
+
+                if (UnityEngine.Random.Range(0, 100) < 50)
+                {
+                    inventory.AddItem("item_exp_blue", 1);
+                    rewardsList.Add("+ 1 Lọ EXP Xanh Dương (50%)");
+                }
+
+                if (UnityEngine.Random.Range(0, 100) < 5)
+                {
+                    inventory.AddItem("item_exp_gold", 1);
+                    rewardsList.Add("+ 1 Lọ EXP Vàng (5%)");
+                }
+            }
+
+            if (winPanel != null)
+            {
+                var texts = winPanel.GetComponentsInChildren<TMP_Text>(true);
+                foreach (var txt in texts)
+                {
+                    if (txt != null && (txt.name == "VictoryText" || txt.text.Contains("VICTORY") || txt.text.Contains("Chiến Thắng") || txt.text.Contains("victory") || txt.text.Contains("Victory")))
+                    {
+                        txt.text = $"VICTORY!\n\n<size=22><color=yellow>Phần thưởng nhận được:</color>\n" + string.Join("\n", rewardsList) + "</size>";
+                        break;
+                    }
+                }
+            }
+        }
+
         void FinishTurn()
         {
             resolving = false; selectedSkillIndex = -1;
@@ -252,6 +312,7 @@ namespace BES.UI.Menu
             {
                 HideSkills();
                 RefreshTurnOrder(true);
+                ProcessCombatDrops();
                 if (winPanel != null) winPanel.SetActive(true);
                 onVictory?.Invoke();
                 return;

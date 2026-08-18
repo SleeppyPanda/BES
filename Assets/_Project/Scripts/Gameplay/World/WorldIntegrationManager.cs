@@ -50,9 +50,17 @@ namespace BES.Gameplay
                 return;
 
             if (inv.GetCount("material_ore") == 0)
-                inv.AddItem("material_ore", 20);
+                inv.AddItem("material_ore", 50);
             if (inv.GetCount("material_crystal") == 0)
-                inv.AddItem("material_crystal", 10);
+                inv.AddItem("material_crystal", 30);
+            if (inv.GetCount("item_exp_green") == 0)
+                inv.AddItem("item_exp_green", 50);
+            if (inv.GetCount("item_exp_blue") == 0)
+                inv.AddItem("item_exp_blue", 20);
+            if (inv.GetCount("item_exp_gold") == 0)
+                inv.AddItem("item_exp_gold", 10);
+            if (inv.GetCount("material_special_breakthrough") == 0)
+                inv.AddItem("material_special_breakthrough", 5);
         }
     }
 }

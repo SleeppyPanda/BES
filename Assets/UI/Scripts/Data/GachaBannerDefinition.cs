@@ -29,6 +29,7 @@ namespace BES.UI
         public string bannerId;
         public string displayName;
         [TextArea] public string description;
+        public bool isWeaponBanner = false;
         public int singleCostCoins = 1600;
         public int tenPullCostCoins = 16000;
         public int singleCostGems = 160;

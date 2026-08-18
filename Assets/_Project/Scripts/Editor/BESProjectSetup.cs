@@ -870,6 +870,10 @@ namespace BES.Editor
             UpsertItem(itemDb, "weapon_iron_sword", "Iron Sword", ItemType.Weapon, 3, linkedWeaponId: "weapon_iron_sword", maxStack: 1);
             UpsertItem(itemDb, "weapon_void_edge", "Void Edge", ItemType.Weapon, 4, linkedWeaponId: "weapon_void_edge", maxStack: 1);
             UpsertItem(itemDb, "weapon_flame_blade", "Bane of Flame and Water", ItemType.Weapon, 5, linkedWeaponId: "weapon_flame_blade", maxStack: 1);
+            UpsertItem(itemDb, "item_exp_green", "Lọ EXP Xanh Lá", ItemType.Material, 2);
+            UpsertItem(itemDb, "item_exp_blue", "Lọ EXP Xanh Dương", ItemType.Material, 3);
+            UpsertItem(itemDb, "item_exp_gold", "Lọ EXP Vàng", ItemType.Material, 4);
+            UpsertItem(itemDb, "material_special_breakthrough", "Nguyên Liệu Đột Phá Đặc Biệt", ItemType.Material, 5);
 
             itemDb.RebuildLookup();
             EditorUtility.SetDirty(itemDb);

@@ -11,12 +11,14 @@ namespace BES.UI
         [SerializeField] WeaponDatabase database;
         [SerializeField] string equippedWeaponId = "weapon_iron_sword";
         [SerializeField] int level = 1;
+        [SerializeField] int experience = 0;
         [SerializeField] int refinement = 1;
 
         readonly HashSet<string> ownedWeaponIds = new();
 
         public string EquippedWeaponId => equippedWeaponId;
         public int Level => level;
+        public int Experience => experience;
         public int Refinement => refinement;
         public IReadOnlyCollection<string> OwnedWeaponIds => ownedWeaponIds;
 
@@ -61,16 +63,58 @@ namespace BES.UI
         }
 
         public void SetLevel(int newLevel) => level = Mathf.Max(1, newLevel);
+        public void SetExperience(int newExp) => experience = Mathf.Max(0, newExp);
         public void SetRefinement(int newRefine) => refinement = Mathf.Max(1, newRefine);
         public void EnhanceLevel(int delta = 1)
         {
-            level = Mathf.Min(100, level + delta);
+            level = Mathf.Min(80, level + delta);
             RefreshPlayerBuild();
         }
         public void EnhanceRefinement(int delta = 1)
         {
             refinement = Mathf.Min(5, refinement + delta);
             RefreshPlayerBuild();
+        }
+
+        public void AddExperience(int amount)
+        {
+            if (amount <= 0) return;
+            var cap = EquippedWeapon != null ? EquippedWeapon.maxLevel : 80;
+            cap = Mathf.Min(cap, 80);
+            var exp = experience + amount;
+            while (level < cap && level < 80)
+            {
+                var required = CharacterProgressionState.GetExperienceToNextLevelForLevel(level);
+                if (exp < required) break;
+                exp -= required;
+                level++;
+            }
+            experience = level >= cap ? 0 : exp;
+            RefreshPlayerBuild();
+        }
+
+        public int SimulateLevelAfterExp(int addedExp)
+        {
+            var simulatedLevel = level;
+            var cap = EquippedWeapon != null ? EquippedWeapon.maxLevel : 80;
+            cap = Mathf.Min(cap, 80);
+            var exp = experience + addedExp;
+            while (simulatedLevel < cap && simulatedLevel < 80)
+            {
+                var required = CharacterProgressionState.GetExperienceToNextLevelForLevel(simulatedLevel);
+                if (exp < required) break;
+                exp -= required;
+                simulatedLevel++;
+            }
+            return simulatedLevel;
+        }
+
+        public int GetSimulatedAtk(int targetLevel)
+        {
+            var w = EquippedWeapon;
+            if (w == null)
+                return 15;
+            return w.baseAtk + (targetLevel - 1) * 8 + refinement * 12;
         }
 
         static void RefreshPlayerBuild()
@@ -92,6 +136,7 @@ namespace BES.UI
         {
             equippedWeaponId = "weapon_iron_sword";
             level = 1;
+            experience = 0;
             refinement = 1;
             ownedWeaponIds.Clear();
             ownedWeaponIds.Add(equippedWeaponId);
@@ -104,6 +149,7 @@ namespace BES.UI
 
             data.equippedWeaponId = equippedWeaponId;
             data.weaponLevel = level;
+            data.weaponExperience = experience;
             data.weaponRefinement = refinement;
             data.ownedWeaponIds = new List<string>(ownedWeaponIds);
         }
@@ -128,6 +174,7 @@ namespace BES.UI
                 ? "weapon_iron_sword"
                 : data.equippedWeaponId;
             level = Mathf.Max(1, data.weaponLevel);
+            experience = Mathf.Max(0, data.weaponExperience);
             refinement = Mathf.Max(1, data.weaponRefinement);
         }
     }

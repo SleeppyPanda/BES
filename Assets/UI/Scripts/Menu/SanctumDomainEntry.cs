@@ -26,7 +26,11 @@ namespace BES.UI.Menu
             if (energyCostText != null) energyCostText.text = energyCost.ToString();
         }
 
-        public void Enter() => onEnterRequested?.Invoke(domainId, energyCost);
+        public void Enter()
+        {
+            TurnBattleUI.ActiveStageId = domainId;
+            onEnterRequested?.Invoke(domainId, energyCost);
+        }
         public void SetReward(int index, Sprite sprite)
         {
             if (index >= 0 && index < rewardSlots.Count && rewardSlots[index] != null)

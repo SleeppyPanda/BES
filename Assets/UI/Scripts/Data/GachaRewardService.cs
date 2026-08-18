@@ -63,7 +63,7 @@ namespace BES.UI
                     label = $"{label} (duplicate character shard)";
             }
 
-            GachaPityState.Instance?.RegisterPull(entry.rarity);
+            GachaPityState.Instance?.RegisterPull(entry.rarity, entry.rewardType == GachaRewardType.Weapon);
             GameManager.Instance?.SaveGame();
             return $"{entry.rarity}★ {label}";
         }

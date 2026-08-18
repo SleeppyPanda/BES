@@ -82,6 +82,18 @@ namespace BES.UI
             }
         }
 
+        public static string GetWeaponSkillDescription(string weaponId, int refinement)
+        {
+            refinement = Mathf.Clamp(refinement, 1, 5);
+            return weaponId switch
+            {
+                "weapon_iron_sword" => $"Tăng {5 + refinement * 5}% sát thương đòn đánh thường. Tinh luyện 5: hồi thêm 2% HP khi hạ gục kẻ địch.",
+                "weapon_void_edge" => $"Tăng {6 + refinement * 6}% Tấn công. Tinh luyện 5: bỏ qua 10% phòng thủ của mục tiêu.",
+                "weapon_flame_blade" => $"Tăng {7.5f + refinement * 7.5f}% sát thương nguyên tố. Tinh luyện 5: tạo lá chắn bảo vệ tương đương 15% HP tối đa khi dùng kỹ năng.",
+                _ => $"Kỹ năng vũ khí đặc biệt tăng {refinement * 10}% hiệu suất chiến đấu."
+            };
+        }
+
         void RefreshDetails()
         {
             var weapon = database?.GetById(selectedWeaponId);
@@ -90,11 +102,25 @@ namespace BES.UI
                 return;
 
             if (weaponNameText != null) weaponNameText.text = weapon.displayName;
-            if (weaponDescText != null) weaponDescText.text = weapon.description;
-            if (atkText != null) atkText.text = $"ATK {weapon.baseAtk + (equipped?.Level ?? 1) * 8}";
+
+            var isEquipped = equipped != null && equipped.EquippedWeaponId == selectedWeaponId;
+            var lvl = isEquipped ? equipped.Level : 1;
+            var refi = isEquipped ? equipped.Refinement : 1;
+            var displayAtk = weapon.baseAtk + (lvl - 1) * 8 + refi * 12;
+
+            var currentSubStatValue = weapon.subStatValue + (lvl - 1) * (weapon.subStatValue * 0.05f);
+
+            if (weaponDescText != null)
+            {
+                weaponDescText.text = $"{weapon.description}\n\n" +
+                    $"<b>[Thuộc tính phụ]</b> {weapon.subStatName}: +{currentSubStatValue:F1}%\n\n" +
+                    $"<b>[Kỹ năng vũ khí - Tinh luyện {refi}]</b> {GetWeaponSkillDescription(weapon.weaponId, refi)}";
+            }
+
+            if (atkText != null) atkText.text = $"ATK {displayAtk}";
             if (hpText != null) hpText.text = $"HP {weapon.baseHp}";
-            if (levelText != null) levelText.text = $"Lv. {equipped?.Level ?? 1} / {weapon.maxLevel}";
-            if (refineText != null) refineText.text = $"Refinement Rank {equipped?.Refinement ?? 1}";
+            if (levelText != null) levelText.text = $"Lv. {lvl} / {Mathf.Min(weapon.maxLevel, 80)}";
+            if (refineText != null) refineText.text = $"Refinement Rank {refi}";
         }
 
         void OnSwitch()

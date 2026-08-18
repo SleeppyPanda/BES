@@ -210,16 +210,117 @@ namespace BES.UI
 
         GachaDropEntry RollWithPity()
         {
-            if (GachaPityState.Instance != null && GachaPityState.Instance.ShouldForceFiveStar())
+            var isWeapon = banner != null && banner.isWeaponBanner;
+            GachaDropEntry drop;
+            if (GachaPityState.Instance != null && GachaPityState.Instance.ShouldForceFiveStar(isWeapon))
             {
-                foreach (var drop in banner.drops)
+                drop = banner.drops.Find(d => d != null && d.rarity >= 5);
+                if (drop == null)
+                    drop = new GachaDropEntry { entryId = "c5_01", rewardType = isWeapon ? GachaRewardType.Weapon : GachaRewardType.Character, rewardId = isWeapon ? "weapon_flame_blade" : "char_limited_01", rarity = 5, weight = 4, displayLabel = isWeapon ? "Bane of Flame and Water" : "Limited Hero" };
+            }
+            else
+            {
+                drop = banner.Roll(rng);
+            }
+
+            if (drop == null)
+                return null;
+
+            if (drop.rarity == 5)
+            {
+                if (isWeapon)
                 {
-                    if (drop != null && drop.rarity >= 5)
+                    if (rng.Next(0, 100) < 70)
+                    {
+                        return new GachaDropEntry
+                        {
+                            entryId = "c5_standard_weapon",
+                            rewardType = GachaRewardType.Weapon,
+                            rewardId = "weapon_flame_blade",
+                            rarity = 5,
+                            displayLabel = "Bane of Flame and Water"
+                        };
+                    }
+                }
+                else
+                {
+                    var pityState = GachaPityState.Instance;
+                    var guaranteed = pityState != null && pityState.ConsecutiveOffRates >= 2;
+
+                    if (guaranteed)
+                    {
+                        pityState?.ResetOffRates();
                         return drop;
+                    }
+                    else
+                    {
+                        if (rng.Next(0, 100) < 80)
+                        {
+                            pityState?.IncrementOffRates();
+                            return new GachaDropEntry
+                            {
+                                entryId = "c5_standard_char",
+                                rewardType = GachaRewardType.Character,
+                                rewardId = "hero_01",
+                                rarity = 5,
+                                displayLabel = "Đau hơn NYC bạn"
+                            };
+                        }
+                        else
+                        {
+                            pityState?.ResetOffRates();
+                        }
+                    }
+                }
+            }
+            else if (drop.rarity == 4)
+            {
+                if (isWeapon)
+                {
+                    if (rng.Next(0, 100) < 70)
+                    {
+                        return new GachaDropEntry
+                        {
+                            entryId = "c4_standard_weapon",
+                            rewardType = GachaRewardType.Weapon,
+                            rewardId = "weapon_void_edge",
+                            rarity = 4,
+                            displayLabel = "Void Edge"
+                        };
+                    }
+                }
+                else
+                {
+                    if (rng.Next(0, 100) < 80)
+                    {
+                        var choice = rng.Next(0, 2);
+                        if (choice == 0)
+                        {
+                            return new GachaDropEntry
+                            {
+                                entryId = "c4_standard_char1",
+                                rewardType = GachaRewardType.Character,
+                                rewardId = "hero_03",
+                                rarity = 4,
+                                displayLabel = "Pháp sư trung hoa"
+                            };
+                        }
+                        else
+                        {
+                            return new GachaDropEntry
+                            {
+                                entryId = "c4_standard_char2",
+                                rewardType = GachaRewardType.Character,
+                                rewardId = "hero_04",
+                                rarity = 4,
+                                displayLabel = "Hỗ trợ tâm lý"
+                            };
+                        }
+                    }
                 }
             }
 
-            return banner.Roll(rng);
+            return drop;
         }
 
         void SetCurrency(CurrencyMode mode)

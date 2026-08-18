@@ -18,15 +18,62 @@ namespace BES.UI
 
         public static int GetLevel(string characterId) => Get(levels, characterId, DefaultLevel(characterId));
         public static int GetExperience(string characterId) => Get(experience, characterId, 0);
-        public static int GetBreakthroughCount(string characterId) => Mathf.Clamp(Get(breakthroughs, characterId, 0), 0, 3);
-        public static int GetLevelCap(string characterId) => Mathf.Min(AbsoluteMaxLevel, 20 + GetBreakthroughCount(characterId) * 20);
+        public static int GetBreakthroughCount(string characterId) => Mathf.Clamp(Get(breakthroughs, characterId, 0), 0, 4);
+
+        public static int GetLevelCap(string characterId)
+        {
+            var definition = CharacterDatabaseLoader.Load()?.Get(characterId);
+            var rarity = definition?.rarity ?? 4;
+            var breakthroughCount = GetBreakthroughCount(characterId);
+
+            if (rarity >= 5)
+            {
+                return breakthroughCount switch
+                {
+                    0 => 20,
+                    1 => 40,
+                    2 => 60,
+                    _ => 80
+                };
+            }
+            else
+            {
+                return breakthroughCount switch
+                {
+                    0 => 20,
+                    1 => 40,
+                    2 => 60,
+                    3 => 70,
+                    _ => 80
+                };
+            }
+        }
+
         public static int GetConstellation(string characterId) => Mathf.Clamp(Get(constellations, characterId, 0), 0, ConstellationCount);
         public static int GetConstellationShards(string characterId) => Mathf.Max(0, Get(constellationShards, characterId, 0));
+
+        public static int GetCumulativeExperience(int level)
+        {
+            level = Mathf.Clamp(level, 1, 80);
+            if (level <= 20)
+                return Mathf.RoundToInt((level - 1) * (1400f / 19f));
+            if (level <= 40)
+                return 1400 + (level - 20) * 605;
+            if (level <= 60)
+                return 13500 + (level - 40) * 1230;
+            return 38100 + (level - 60) * 1845;
+        }
+
+        public static int GetExperienceToNextLevelForLevel(int level)
+        {
+            if (level >= 80) return 0;
+            return GetCumulativeExperience(level + 1) - GetCumulativeExperience(level);
+        }
 
         public static int GetExperienceToNextLevel(string characterId)
         {
             var level = GetLevel(characterId);
-            return CharacterDatabaseLoader.Load()?.GetExperienceToNextLevel(level) ?? (level < AbsoluteMaxLevel ? 100 + (level - 1) * 25 : 0);
+            return GetExperienceToNextLevelForLevel(level);
         }
 
         public static int AddExperience(string characterId, int amount)
@@ -37,7 +84,7 @@ namespace BES.UI
             var cap = GetLevelCap(characterId);
             while (level < cap && level < AbsoluteMaxLevel)
             {
-                var required = CharacterDatabaseLoader.Load()?.GetExperienceToNextLevel(level) ?? 100 + (level - 1) * 25;
+                var required = GetExperienceToNextLevelForLevel(level);
                 if (exp < required) break;
                 exp -= required;
                 level++;
@@ -52,11 +99,58 @@ namespace BES.UI
         {
             var cap = GetLevelCap(characterId);
             if (cap >= AbsoluteMaxLevel || GetLevel(characterId) < cap) return false;
-            var tier = CharacterDatabaseLoader.Load()?.GetBreakthroughTier(cap);
-            if (tier == null) return false;
+
+            var goldCost = cap switch
+            {
+                20 => 3000,
+                40 => 8000,
+                60 => 15000,
+                70 => 20000,
+                _ => 0
+            };
+
+            if (goldCost > 0)
+            {
+                if (PlayerWallet.Instance == null || PlayerWallet.Instance.Coins < goldCost)
+                    return false;
+            }
+
             var inventory = GameManager.Instance?.Inventory;
-            if (tier.materialAmount > 0 && (inventory == null || inventory.GetCount(tier.materialId) < tier.materialAmount)) return false;
-            if (tier.materialAmount > 0 && !inventory.RemoveItem(tier.materialId, tier.materialAmount)) return false;
+
+            if (cap == 70)
+            {
+                const string specialItemId = "material_special_breakthrough";
+                if (inventory == null || inventory.GetCount(specialItemId) < 1)
+                    return false;
+                if (!inventory.RemoveItem(specialItemId, 1))
+                    return false;
+            }
+            else
+            {
+                var tier = CharacterDatabaseLoader.Load()?.GetBreakthroughTier(cap);
+                if (tier != null)
+                {
+                    var materialAmount = cap switch
+                    {
+                        20 => 5,
+                        40 => 15,
+                        60 => 25,
+                        _ => tier.materialAmount
+                    };
+
+                    if (materialAmount > 0)
+                    {
+                        if (inventory == null || inventory.GetCount(tier.materialId) < materialAmount) return false;
+                        if (!inventory.RemoveItem(tier.materialId, materialAmount)) return false;
+                    }
+                }
+            }
+
+            if (goldCost > 0)
+            {
+                PlayerWallet.Instance.TrySpendCoins(goldCost);
+            }
+
             breakthroughs[characterId] = GetBreakthroughCount(characterId) + 1;
             GameEvents.RaisePartyChanged();
             GameManager.Instance?.SaveGame();

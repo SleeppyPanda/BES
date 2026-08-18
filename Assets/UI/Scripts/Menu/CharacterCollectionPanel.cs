@@ -148,10 +148,57 @@ namespace BES.UI.Menu
         public void AddSelectedCharacterExperience(int amount)
         {
             if (string.IsNullOrEmpty(selectedCharacterId) || amount <= 0) return;
-            CharacterProgressionState.AddExperience(selectedCharacterId, amount);
-            RefreshCharacter();
-            RefreshGallery();
-            GameManager.Instance?.SaveGame();
+
+            var currentLevel = CharacterProgressionState.GetLevel(selectedCharacterId);
+            var levelCap = CharacterProgressionState.GetLevelCap(selectedCharacterId);
+            if (currentLevel >= levelCap)
+            {
+                if (levelValue != null)
+                    levelValue.text = $"Cấp hiện tại: {currentLevel}/{levelCap}\nCần đột phá để tăng giới hạn";
+                return;
+            }
+
+            string itemId = amount switch
+            {
+                500 => "item_exp_green",
+                2000 => "item_exp_blue",
+                5000 => "item_exp_gold",
+                _ => ""
+            };
+
+            int goldCost = amount switch
+            {
+                500 => 350,
+                2000 => 1400,
+                5000 => 3500,
+                _ => 0
+            };
+
+            if (string.IsNullOrEmpty(itemId)) return;
+
+            var inventory = GameManager.Instance?.Inventory;
+            if (inventory == null || inventory.GetCount(itemId) < 1)
+            {
+                if (levelValue != null)
+                    levelValue.text = $"Cấp hiện tại: {currentLevel}/{levelCap}\nKhông đủ lọ EXP tương ứng!";
+                return;
+            }
+
+            if (PlayerWallet.Instance == null || PlayerWallet.Instance.Coins < goldCost)
+            {
+                if (levelValue != null)
+                    levelValue.text = $"Cấp hiện tại: {currentLevel}/{levelCap}\nKhông đủ Vàng để nâng cấp!";
+                return;
+            }
+
+            if (inventory.RemoveItem(itemId, 1))
+            {
+                PlayerWallet.Instance.TrySpendCoins(goldCost);
+                CharacterProgressionState.AddExperience(selectedCharacterId, amount);
+                RefreshCharacter();
+                RefreshGallery();
+                GameManager.Instance?.SaveGame();
+            }
         }
 
         public bool BreakthroughSelectedCharacter()
