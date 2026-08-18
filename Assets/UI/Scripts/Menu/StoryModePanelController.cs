@@ -189,6 +189,8 @@ namespace BES.UI.Menu
         public void ConfirmParty()
         {
             if (!MeetsPartyRequirements()) return;
+            TurnBattleUI.SelectedPartyCharacterIds = CurrentIds();
+            TurnBattleUI.IsPlayModeBattle = false;
             onPartyConfirmed?.Invoke(CurrentIds());
             ShowPhase(StoryPartyPhase.Main);
             navigator?.Open(MenuScreenId.Battle);

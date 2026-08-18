@@ -24,6 +24,7 @@ namespace BES.UI.Menu
         public List<Sprite> equippedArtifacts = new();
         [Tooltip("IDs used by Story requirements, e.g. Fire, Ice, Healer or Ranged.")]
         public List<string> attributes = new();
+        public UnityEngine.Video.VideoClip revealVideoClip;
         [Range(1, 6)] public int rarity = 4;
         [HideInInspector] public int starLevel;
         [HideInInspector] public int level = 1;
@@ -55,6 +56,10 @@ namespace BES.UI.Menu
         public int energyCost = 10;
         public List<RewardEntry> rewards = new();
         public List<PartyAttributeRequirement> partyRequirements = new();
+        [Header("Stage Combat Setup")]
+        public int enemyLevel = 1;
+        public List<BattleUnitDefinition> enemies = new();
+        public BattleUnitDefinition boss;
     }
 
     [Serializable]

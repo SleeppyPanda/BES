@@ -109,8 +109,22 @@ namespace BES.UI.Menu
         {
             var ids = new List<string>();
             foreach (var member in party) if (member != null) ids.Add(member.id);
+            TurnBattleUI.SelectedPartyCharacterIds = ids;
             onPartyConfirmed?.Invoke(ids);
             navigator?.Open(MenuScreenId.Battle);
+        }
+
+        void OnEnable()
+        {
+            if (TurnBattleUI.IsPlayModeBattle)
+            {
+                if (chapterTitle != null) chapterTitle.text = "CHỌN ĐỘI HÌNH BÍ CẢNH";
+                if (chapterSummary != null) chapterSummary.text = "Hãy chọn những nhân vật mạnh nhất để chinh phục bí cảnh.";
+            }
+            else
+            {
+                SelectChapter(chapterIndex);
+            }
         }
     }
 }

@@ -83,6 +83,22 @@ namespace BES.UI.Menu
         readonly Sprite[] informationEmptySlotSprites = new Sprite[4];
         string selectedCharacterId;
 
+        [Header("Weapon UI sprites")]
+        [SerializeField] Sprite weaponChangeSprite;
+        [SerializeField] Sprite weaponEnhanceSprite;
+        [SerializeField] Sprite weaponRefineSprite;
+        [SerializeField] Sprite weaponDetailFrameSprite;
+        [SerializeField] Sprite weaponSlotFrameSprite;
+
+        GameObject weaponListPage;
+        GameObject weaponDetailPage;
+        Image weaponPageFrame;
+        Image weaponPageSlot;
+        Image weaponPageIcon;
+        TMP_Text weaponPageName;
+        TMP_Text weaponPageStats;
+        TMP_Text weaponPageDesc;
+
         void Awake()
         {
             modal ??= GetComponent<SimpleModalPanel>();
@@ -237,6 +253,7 @@ namespace BES.UI.Menu
             BuildGalleryOverlay();
             BuildDetailOverlay();
             BuildLevelOverlay();
+            BuildWeaponOverlay();
             RefreshCharacterSelectors();
         }
 
@@ -255,6 +272,14 @@ namespace BES.UI.Menu
             artifactListPage = FindDeep(existing, "ArtifactListContent")?.gameObject;
             artifactDetailPage = FindDeep(existing, "ArtifactDetailContent")?.gameObject;
             weaponPage = FindDeep(existing, "WeaponContent")?.gameObject;
+            weaponListPage = FindDeep(existing, "WeaponListContent")?.gameObject;
+            weaponDetailPage = FindDeep(existing, "WeaponDetailContent")?.gameObject;
+            weaponPageFrame = FindDeep(existing, "WeaponDetailFrame")?.GetComponent<Image>();
+            weaponPageSlot = FindDeep(existing, "WeaponSlotFrame")?.GetComponent<Image>();
+            weaponPageIcon = FindDeep(existing, "WeaponIcon")?.GetComponent<Image>();
+            weaponPageName = FindDeep(existing, "WeaponNameText")?.GetComponent<TMP_Text>();
+            weaponPageStats = FindDeep(existing, "WeaponStatsText")?.GetComponent<TMP_Text>();
+            weaponPageDesc = FindDeep(existing, "WeaponDescText")?.GetComponent<TMP_Text>();
             breakthroughPage = FindDeep(existing, "BreakthroughContent")?.gameObject;
             detailNavigation = FindDeep(existing, "TabNavigation")?.gameObject;
             galleryContent = FindDeep(existing, "OwnedCharacterContent") as RectTransform;
@@ -283,6 +308,9 @@ namespace BES.UI.Menu
         {
             runtimeRoot = galleryPage = characterPage = detailPage = levelPage = affinityPage = constellationPage = null;
             artifactPage = artifactListPage = artifactDetailPage = weaponPage = breakthroughPage = null;
+            weaponListPage = weaponDetailPage = null;
+            weaponPageFrame = weaponPageSlot = weaponPageIcon = null;
+            weaponPageName = weaponPageStats = weaponPageDesc = null;
             detailNavigation = null;
             galleryCardTemplate = null;
             galleryContent = characterSelectorContent = null;
@@ -305,6 +333,9 @@ namespace BES.UI.Menu
             Wire("LevelTab", () => ShowPage(levelPage));
             Wire("ArtifactTab", () => ShowPage(artifactPage));
             Wire("WeaponTab", () => ShowPage(weaponPage));
+            Wire("WeaponChangeBtn", OpenWeaponList);
+            Wire("WeaponRefineBtn", RefineEquippedWeapon);
+            Wire("WeaponEnhanceBtn", EnhanceEquippedWeapon);
             Wire("ConstellationTab", () => ShowPage(constellationPage));
             Wire("AffinityTab", () => ShowPage(affinityPage));
             Wire("BackToGallery", OpenGallery);
@@ -524,9 +555,7 @@ namespace BES.UI.Menu
             card.name = entry.id;
             card.SetActive(true);
             var background = card.GetComponent<Image>();
-            background.sprite = entry.cardBackground != null
-                ? entry.cardBackground
-                : BackgroundFor(entry.rarity);
+            background.sprite = BackgroundFor(entry.rarity);
             background.color = Color.white;
             var portrait = FindDeep(card.transform, "Portrait")?.GetComponent<Image>();
             if (portrait != null) { portrait.sprite = entry.portrait; portrait.preserveAspect = true; }
@@ -608,7 +637,17 @@ namespace BES.UI.Menu
             if (affinityPage != null) affinityPage.SetActive(page == affinityPage);
             if (constellationPage != null) constellationPage.SetActive(page == constellationPage);
             if (artifactPage != null) artifactPage.SetActive(page == artifactPage);
-            if (weaponPage != null) weaponPage.SetActive(page == weaponPage);
+            
+            if (weaponPage != null)
+            {
+                weaponPage.SetActive(page == weaponPage);
+                if (page == weaponPage)
+                {
+                    RefreshWeaponUI();
+                    if (weaponListPage != null) weaponListPage.SetActive(false);
+                }
+            }
+
             if (detailNavigation != null) detailNavigation.SetActive(page != galleryPage);
             if (artifactListPage != null) artifactListPage.SetActive(false);
             if (artifactDetailPage != null) artifactDetailPage.SetActive(false);
@@ -735,6 +774,201 @@ namespace BES.UI.Menu
             var image = go.AddComponent<Image>(); image.color = new Color(1f, 1f, 1f, .001f);
             var button = go.AddComponent<Button>(); button.onClick.AddListener(action);
             return button;
+        }
+
+        void BuildWeaponOverlay()
+        {
+            if (weaponPage == null) return;
+
+            // 1. Create the details frame
+            weaponPageFrame = AddImage(weaponPage.transform, "WeaponDetailFrame", new Vector2(.525f, .075f), new Vector2(.80f, .88f));
+            weaponPageFrame.sprite = weaponDetailFrameSprite;
+            weaponPageFrame.color = Color.white;
+            weaponPageFrame.preserveAspect = false;
+
+            // 2. Create the weapon slot/frame
+            weaponPageSlot = AddImage(weaponPageFrame.transform, "WeaponSlotFrame", new Vector2(.05f, .70f), new Vector2(.30f, .95f));
+            weaponPageSlot.sprite = weaponSlotFrameSprite;
+            weaponPageSlot.color = Color.white;
+            weaponPageSlot.preserveAspect = true;
+
+            // 3. Create the weapon icon inside the slot
+            var iconGo = Rect("WeaponIcon", weaponPageSlot.transform, new Vector2(.15f, .15f), new Vector2(.85f, .85f));
+            weaponPageIcon = iconGo.gameObject.AddComponent<Image>();
+            weaponPageIcon.preserveAspect = true;
+            weaponPageIcon.raycastTarget = false;
+
+            // 4. Create the weapon name text
+            weaponPageName = AddText(weaponPageFrame.transform, "WeaponNameText", "Weapon Name", new Vector2(.35f, .80f), new Vector2(.95f, .95f), 28);
+            weaponPageName.alignment = TextAlignmentOptions.MidlineLeft;
+
+            // 5. Create stats text (ATK, HP, Level, Refinement)
+            weaponPageStats = AddText(weaponPageFrame.transform, "WeaponStatsText", "ATK: 0\nHP: 0\nLv. 1 / 80\nTinh luyện 1", new Vector2(.05f, .40f), new Vector2(.95f, .65f), 24);
+            weaponPageStats.alignment = TextAlignmentOptions.TopLeft;
+
+            // 6. Create description text
+            weaponPageDesc = AddText(weaponPageFrame.transform, "WeaponDescText", "Weapon description and skill effect", new Vector2(.05f, .12f), new Vector2(.95f, .38f), 20);
+            weaponPageDesc.alignment = TextAlignmentOptions.TopLeft;
+
+            // 7. Add buttons: "Thay đổi", "Tinh luyện", "Nâng cấp"
+            AddSpriteButton(weaponPageFrame.transform, "WeaponChangeBtn", weaponChangeSprite, new Vector2(.05f, .02f), new Vector2(.32f, .09f), OpenWeaponList);
+            AddSpriteButton(weaponPageFrame.transform, "WeaponRefineBtn", weaponRefineSprite, new Vector2(.36f, .02f), new Vector2(.63f, .09f), RefineEquippedWeapon);
+            AddSpriteButton(weaponPageFrame.transform, "WeaponEnhanceBtn", weaponEnhanceSprite, new Vector2(.67f, .02f), new Vector2(.94f, .09f), EnhanceEquippedWeapon);
+
+            // 8. Build the weapon list overlay page (inactive by default)
+            weaponListPage = Rect("WeaponListContent", weaponPage.transform, new Vector2(.05f, .055f), new Vector2(.50f, .825f)).gameObject;
+            var listBg = weaponListPage.AddComponent<Image>();
+            listBg.sprite = galleryPanelSprite;
+            listBg.color = Color.white;
+            listBg.preserveAspect = false;
+
+            // Title of selection list
+            AddText(weaponListPage.transform, "Title", "Chọn Vũ Khí", new Vector2(.05f, .88f), new Vector2(.95f, .97f), 26).alignment = TextAlignmentOptions.Center;
+
+            // Scroll view for weapons
+            var viewport = Rect("WeaponViewport", weaponListPage.transform, new Vector2(.05f, .05f), new Vector2(.95f, .85f));
+            var mask = viewport.gameObject.AddComponent<Image>();
+            mask.color = new Color(1f, 1f, 1f, .015f);
+            viewport.gameObject.AddComponent<Mask>().showMaskGraphic = false;
+            var scroll = viewport.gameObject.AddComponent<ScrollRect>();
+            scroll.horizontal = false;
+
+            var listContent = Rect("WeaponListGrid", viewport, new Vector2(0f, 1f), new Vector2(1f, 1f));
+            listContent.pivot = new Vector2(.5f, 1f);
+            var grid = listContent.gameObject.AddComponent<GridLayoutGroup>();
+            grid.cellSize = new Vector2(100f, 100f);
+            grid.spacing = new Vector2(16f, 16f);
+            grid.padding = new RectOffset(10, 10, 10, 10);
+            grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            grid.constraintCount = 4;
+            var fitter = listContent.gameObject.AddComponent<ContentSizeFitter>();
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            scroll.viewport = viewport;
+            scroll.content = listContent;
+
+            weaponListPage.SetActive(false);
+        }
+
+        void RefreshWeaponUI()
+        {
+            if (weaponPageFrame == null || !weaponPage.activeSelf) return;
+
+            var equipped = EquippedWeaponState.Instance;
+            var activeWeapon = equipped?.EquippedWeapon;
+            if (activeWeapon == null) return;
+
+            if (weaponPageName != null) weaponPageName.text = activeWeapon.displayName;
+
+            var lvl = equipped.Level;
+            var refi = equipped.Refinement;
+            var displayAtk = activeWeapon.baseAtk + (lvl - 1) * 8 + refi * 12;
+            var currentSubStatValue = activeWeapon.subStatValue + (lvl - 1) * (activeWeapon.subStatValue * 0.05f);
+
+            if (weaponPageStats != null)
+            {
+                weaponPageStats.text = $"Tấn công: {displayAtk}\nHP tối đa: {activeWeapon.baseHp}\nCấp: {lvl} / {activeWeapon.maxLevel}\nTinh luyện: {refi}";
+            }
+
+            if (weaponPageDesc != null)
+            {
+                weaponPageDesc.text = $"<b>[Thuộc tính phụ]</b> {activeWeapon.subStatName}: +{currentSubStatValue:F1}%\n\n" +
+                    $"<b>[Kỹ năng]</b> {WeaponScreenUI.GetWeaponSkillDescription(activeWeapon.weaponId, refi)}";
+            }
+
+            // Load weapon icon sprite from ItemDatabase using weaponId
+            if (weaponPageIcon != null)
+            {
+                var itemDb = Resources.Load<Gameplay.ItemDatabase>("Data/ItemDatabase");
+                var itemDef = itemDb?.Get(activeWeapon.weaponId);
+                weaponPageIcon.sprite = itemDef?.icon;
+                weaponPageIcon.enabled = weaponPageIcon.sprite != null;
+            }
+        }
+
+        void OpenWeaponList()
+        {
+            if (weaponListPage == null) return;
+            weaponListPage.SetActive(!weaponListPage.activeSelf);
+            if (weaponListPage.activeSelf)
+            {
+                RefreshWeaponList();
+            }
+        }
+
+        void RefreshWeaponList()
+        {
+            var grid = weaponListPage.transform.Find("WeaponViewport/WeaponListGrid");
+            if (grid == null) return;
+
+            // Clear old cards
+            foreach (Transform child in grid)
+            {
+                Destroy(child.gameObject);
+            }
+
+            var equipped = EquippedWeaponState.Instance;
+            var itemDb = Resources.Load<Gameplay.ItemDatabase>("Data/ItemDatabase");
+            var weaponDb = Resources.Load<WeaponDatabase>("Data/WeaponDatabase");
+            if (equipped == null || weaponDb == null) return;
+
+            foreach (var weaponId in equipped.OwnedWeaponIds)
+            {
+                var weapon = weaponDb.GetById(weaponId);
+                if (weapon == null) continue;
+
+                var itemDef = itemDb?.Get(weaponId);
+
+                var slot = new GameObject(weaponId, typeof(RectTransform), typeof(Image), typeof(Button));
+                slot.transform.SetParent(grid, false);
+                slot.GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 100f);
+
+                var bgImage = slot.GetComponent<Image>();
+                bgImage.sprite = weaponSlotFrameSprite;
+                bgImage.color = Color.white;
+
+                var iconGo = Rect("Icon", slot.transform, new Vector2(.15f, .15f), new Vector2(.85f, .85f));
+                var iconImage = iconGo.gameObject.AddComponent<Image>();
+                iconImage.sprite = itemDef?.icon;
+                iconImage.preserveAspect = true;
+                iconImage.enabled = iconImage.sprite != null;
+
+                // Highlight if equipped
+                if (equipped.EquippedWeaponId == weaponId)
+                {
+                    var highlight = AddImage(slot.transform, "Highlight", new Vector2(-.05f, -.05f), new Vector2(1.05f, 1.05f));
+                    highlight.color = new Color(0.95f, 0.78f, 0.28f, 0.5f);
+                    highlight.transform.SetAsFirstSibling();
+                }
+
+                slot.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    equipped.Equip(weaponId);
+                    weaponListPage.SetActive(false);
+                    RefreshWeaponUI();
+                    RefreshCharacter(); // refresh character stats like ATK
+                    GameManager.Instance?.SaveGame();
+                });
+            }
+        }
+
+        void RefineEquippedWeapon()
+        {
+            var equipped = EquippedWeaponState.Instance;
+            if (equipped == null) return;
+            equipped.EnhanceRefinement(1);
+            RefreshWeaponUI();
+            RefreshCharacter();
+            GameManager.Instance?.SaveGame();
+        }
+
+        void EnhanceEquippedWeapon()
+        {
+            var equipped = EquippedWeaponState.Instance;
+            if (equipped == null) return;
+            equipped.EnhanceLevel(5); // increase by 5 levels for testing
+            RefreshWeaponUI();
+            RefreshCharacter();
+            GameManager.Instance?.SaveGame();
         }
     }
 }

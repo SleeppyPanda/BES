@@ -6,6 +6,7 @@ using BES.Gameplay;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 namespace BES.UI.Menu
 {
@@ -86,6 +87,15 @@ namespace BES.UI.Menu
         [SerializeField] TMP_Text detailNameText;
         [SerializeField] TMP_Text detailDescriptionText;
         [SerializeField] TMP_Text detailRarityText;
+
+        [Header("Gacha Video Clips")]
+        [SerializeField] private VideoClip clip4Star;
+        [SerializeField] private VideoClip clip5Star;
+        [SerializeField] private VideoPlayer globalVideoPlayer;
+        [SerializeField] private RawImage videoOverlayImage;
+        [SerializeField] private Button continueButton;
+
+        private bool continuePressed;
 
         readonly List<MenuWishReward> currentResults = new();
         readonly System.Random random = new();
@@ -199,52 +209,148 @@ namespace BES.UI.Menu
             rollControls?.SetActive(false);
             claimButton?.gameObject.SetActive(false);
             detailPanel?.SetActive(false);
+            if (continueButton != null) continueButton.gameObject.SetActive(false);
             SetFeedback(string.Empty);
 
+            // Determine highest rarity in current roll
+            bool has5Star = false;
+            bool has4Star = false;
+            foreach (var reward in currentResults)
+            {
+                if (reward.rarity >= 5) has5Star = true;
+                else if (reward.rarity >= 4) has4Star = true;
+            }
+
+            // 1. Play pre-pull clip if configured
+            var chosenClip = has5Star ? clip5Star : (has4Star ? clip4Star : null);
+            if (chosenClip != null && globalVideoPlayer != null && videoOverlayImage != null)
+            {
+                videoOverlayImage.gameObject.SetActive(true);
+                globalVideoPlayer.clip = chosenClip;
+                globalVideoPlayer.Prepare();
+                while (!globalVideoPlayer.isPrepared)
+                {
+                    yield return null;
+                }
+                videoOverlayImage.texture = globalVideoPlayer.texture;
+                globalVideoPlayer.Play();
+
+                // Wait for clip to finish or double click to skip
+                float lastClickTime = 0f;
+                bool skipPrePull = false;
+                while (globalVideoPlayer.isPlaying)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        if (Time.unscaledTime - lastClickTime < 0.35f)
+                        {
+                            skipPrePull = true;
+                        }
+                        lastClickTime = Time.unscaledTime;
+                    }
+                    if (skipPrePull)
+                    {
+                        globalVideoPlayer.Stop();
+                        break;
+                    }
+                    yield return null;
+                }
+                videoOverlayImage.gameObject.SetActive(false);
+            }
+
+            // Hide all cards initially
             for (var i = 0; i < resultCards.Count; i++)
             {
-                var active = i < visibleCardCount;
-                resultCards[i].root?.gameObject.SetActive(active);
-                if (!active) continue;
+                resultCards[i].root?.gameObject.SetActive(false);
+            }
+
+            // 2. Fly in cards one by one
+            for (var i = 0; i < visibleCardCount; i++)
+            {
+                var cardView = resultCards[i];
+                cardView.root?.gameObject.SetActive(true);
                 SetupCard(i, currentResults[i]);
+
                 var target = TargetFor(i, visibleCardCount);
                 var fromTop = visibleCardCount == 1 || i < 5;
                 var start = target + Vector2.up * (fromTop ? cardSpawnDistance : -cardSpawnDistance);
-                resultCards[i].root.anchoredPosition = start;
-                if (resultCards[i].canvasGroup != null)
-                    resultCards[i].canvasGroup.alpha = 0f;
-            }
+                cardView.root.anchoredPosition = start;
 
-            var totalDuration =
-                cardFlyDuration + Mathf.Max(0, visibleCardCount - 1) * cardStaggerDelay;
-            var elapsed = 0f;
-            while (elapsed < totalDuration)
-            {
-                elapsed += Time.unscaledDeltaTime;
-                for (var i = 0; i < visibleCardCount; i++)
+                float elapsed = 0f;
+                while (elapsed < cardFlyDuration)
                 {
-                    var localTime = elapsed - i * cardStaggerDelay;
-                    var normalized = Mathf.Clamp01(localTime / cardFlyDuration);
+                    elapsed += Time.unscaledDeltaTime;
+                    var normalized = Mathf.Clamp01(elapsed / cardFlyDuration);
                     var t = cardEasing != null ? cardEasing.Evaluate(normalized) : normalized;
-                    var target = TargetFor(i, visibleCardCount);
-                    var fromTop = visibleCardCount == 1 || i < 5;
-                    var start = target + Vector2.up * (fromTop ? cardSpawnDistance : -cardSpawnDistance);
-                    if (resultCards[i].root != null)
-                        resultCards[i].root.anchoredPosition =
-                            Vector2.LerpUnclamped(start, target, t);
-                    if (resultCards[i].canvasGroup != null)
-                        resultCards[i].canvasGroup.alpha = normalized;
+                    if (cardView.root != null)
+                        cardView.root.anchoredPosition = Vector2.LerpUnclamped(start, target, t);
+                    if (cardView.canvasGroup != null)
+                        cardView.canvasGroup.alpha = normalized;
+                    yield return null;
                 }
-                yield return null;
+                if (cardView.root != null)
+                    cardView.root.anchoredPosition = target;
+                if (cardView.canvasGroup != null)
+                    cardView.canvasGroup.alpha = 1f;
+
+                // Check for 5-star character custom reveal clip
+                var reward = currentResults[i];
+                var charId = CharacterIdFor(reward);
+                var character = database != null ? database.FindCharacter(charId) : null;
+                bool is5StarChar = reward.unlockAsCharacter && character != null && character.rarity >= 5;
+
+                if (is5StarChar && character.revealVideoClip != null && globalVideoPlayer != null && videoOverlayImage != null)
+                {
+                    videoOverlayImage.gameObject.SetActive(true);
+                    globalVideoPlayer.clip = character.revealVideoClip;
+                    globalVideoPlayer.Prepare();
+                    while (!globalVideoPlayer.isPrepared)
+                    {
+                        yield return null;
+                    }
+                    videoOverlayImage.texture = globalVideoPlayer.texture;
+                    globalVideoPlayer.Play();
+
+                    // Wait for character clip to finish or double click to skip
+                    float lastClickTime = 0f;
+                    bool skipChar = false;
+                    while (globalVideoPlayer.isPlaying)
+                    {
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            if (Time.unscaledTime - lastClickTime < 0.35f)
+                            {
+                                skipChar = true;
+                            }
+                            lastClickTime = Time.unscaledTime;
+                        }
+                        if (skipChar)
+                        {
+                            globalVideoPlayer.Stop();
+                            break;
+                        }
+                        yield return null;
+                    }
+
+                    // Show continue button and wait for player click
+                    if (continueButton != null)
+                    {
+                        continueButton.gameObject.SetActive(true);
+                        continueButton.onClick.RemoveAllListeners();
+                        continuePressed = false;
+                        continueButton.onClick.AddListener(() => continuePressed = true);
+
+                        while (!continuePressed)
+                        {
+                            yield return null;
+                        }
+                        continueButton.gameObject.SetActive(false);
+                    }
+
+                    videoOverlayImage.gameObject.SetActive(false);
+                }
             }
 
-            for (var i = 0; i < visibleCardCount; i++)
-            {
-                if (resultCards[i].root != null)
-                    resultCards[i].root.anchoredPosition = TargetFor(i, visibleCardCount);
-                if (resultCards[i].canvasGroup != null)
-                    resultCards[i].canvasGroup.alpha = 1f;
-            }
             RefreshCurrency();
             claimButton?.gameObject.SetActive(true);
             SetFeedback(visibleCardCount == 1 ? "WISH ×1 COMPLETE" : "WISH ×10 COMPLETE");

@@ -50,6 +50,16 @@ namespace BES.UI.Editor
                     "Assets/Art Ui/Game Việt hóa mới/Màn hình hoàn chỉnh/Character/Trang bị di vật.png");
                 controllerSo.FindProperty("weaponReference").objectReferenceValue = LoadSprite(
                     "Assets/Art Ui/Game Việt hóa mới/Màn hình hoàn chỉnh/Character/Trang bị vũ khí.png");
+                controllerSo.FindProperty("weaponChangeSprite").objectReferenceValue = LoadSprite(
+                    "Assets/Art Ui/Game Việt hóa mới/Character information 2/Trang bị vũ khí/Group 427323240.png");
+                controllerSo.FindProperty("weaponEnhanceSprite").objectReferenceValue = LoadSprite(
+                    "Assets/Art Ui/Game Việt hóa mới/Character information 2/Trang bị vũ khí/Group 427323241.png");
+                controllerSo.FindProperty("weaponRefineSprite").objectReferenceValue = LoadSprite(
+                    "Assets/Art Ui/Game Việt hóa mới/Character information 2/Trang bị vũ khí/Group 427323297.png");
+                controllerSo.FindProperty("weaponDetailFrameSprite").objectReferenceValue = LoadSprite(
+                    "Assets/Art Ui/Game Việt hóa mới/Character information 2/Trang bị vũ khí/Khung chữ.png");
+                controllerSo.FindProperty("weaponSlotFrameSprite").objectReferenceValue = LoadSprite(
+                    "Assets/Art Ui/Game Việt hóa mới/Character information 2/Trang bị vũ khí/Group 427323293.png");
                 AssignAllCharacterSprites(controllerSo);
                 controllerSo.FindProperty("galleryPanelSprite").objectReferenceValue = LoadSprite(
                     "Assets/Art Ui/Game Việt hóa mới/Character information/Rectangle 40291.png");
@@ -79,6 +89,10 @@ namespace BES.UI.Editor
                     "Assets/Art Ui/Game Việt hóa mới/Character information 2/Group 427323165.png");
                 InitializeRarityMappings(controllerSo);
                 controllerSo.ApplyModifiedPropertiesWithoutUndo();
+
+                // Force rebuild of character collection runtime hierarchy to apply grid sizes and mapped backgrounds
+                controller.RebuildEditorHierarchy();
+
                 EnsurePreservingHierarchy(root.transform);
 
                 var homeSo = new SerializedObject(home);
@@ -113,10 +127,23 @@ namespace BES.UI.Editor
         static void InitializeRarityMappings(SerializedObject controllerSo)
         {
             var mappings = controllerSo.FindProperty("rarityBackgrounds");
-            if (mappings.arraySize > 0) return;
+            mappings.ClearArray();
             mappings.arraySize = 4;
-            for (var i = 0; i < mappings.arraySize; i++)
-                mappings.GetArrayElementAtIndex(i).FindPropertyRelative("rarity").intValue = i + 3;
+
+            var rarities = new int[] { 3, 4, 5, 6 };
+            var paths = new string[] {
+                "Assets/Art Ui/Mới/Wish/Union-1.png", // Rarity 3 -> use purple as fallback
+                "Assets/Art Ui/Mới/Wish/Union-1.png", // Rarity 4 -> purple card background
+                "Assets/Art Ui/Mới/Wish/Union.png",   // Rarity 5 -> orange/gold card background
+                "Assets/Art Ui/Mới/Wish/Union.png"    // Rarity 6 -> use orange/gold
+            };
+
+            for (var i = 0; i < 4; i++)
+            {
+                var element = mappings.GetArrayElementAtIndex(i);
+                element.FindPropertyRelative("rarity").intValue = rarities[i];
+                element.FindPropertyRelative("background").objectReferenceValue = LoadSprite(paths[i]);
+            }
         }
 
         static void CleanupBrokenTmpSubMeshes()

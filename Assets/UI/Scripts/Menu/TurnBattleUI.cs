@@ -26,6 +26,9 @@ namespace BES.UI.Menu
         public string displayName;
         public Sprite portrait;
         public Sprite battlefieldSprite;
+        public UIGifClip idleClip;
+        public UIGifClip attackClip;
+        public bool isRanged;
         [Min(1)] public int maxHealth = 100;
         [Min(1)] public int attack = 20;
         [Min(0)] public int defense = 5;
@@ -40,6 +43,7 @@ namespace BES.UI.Menu
         public GameObject root;
         public Button targetButton;
         public Image battlefieldImage;
+        public UIGifPlayer gifPlayer;
         public Image portrait;
         public Slider healthBar;
         [Tooltip("Optional free-layout HP fill. Uses Image.fillAmount and is not driven by Slider.")]
@@ -86,6 +90,14 @@ namespace BES.UI.Menu
         [SerializeField] GameObject pausePanel;
         [SerializeField] GameObject winPanel;
         [SerializeField] Button winReturnButton;
+        [SerializeField] GameObject losePanel;
+        [SerializeField] Button loseReturnButton;
+        [SerializeField] Button loseRetryButton;
+        [SerializeField] Button levelBtn;
+        [SerializeField] Button equipBtn;
+        [SerializeField] Button skillBtn;
+        [SerializeField] Button constellationBtn;
+        [SerializeField] Button recruitBtn;
         [SerializeField] MenuNavigator navigator;
         [SerializeField] StoryModePanelController storyModeController;
         [Header("Timing and animation")]
@@ -96,8 +108,11 @@ namespace BES.UI.Menu
         [SerializeField] UnityEvent onVictory;
         [SerializeField] UnityEvent onDefeat;
         [SerializeField] UnityEvent<int> onRoundStarted;
+        [SerializeField] MenuContentDatabase menuContentDatabase;
 
         public static string ActiveStageId;
+        public static List<string> SelectedPartyCharacterIds = new();
+        public static bool IsPlayModeBattle;
 
         readonly List<BattleUnitView> turnQueue = new();
         readonly List<BattleUnitView> turnOrderPreview = new();
@@ -134,16 +149,33 @@ namespace BES.UI.Menu
             if (autoButton != null) autoButton.onClick.AddListener(ToggleAuto);
             if (pauseButton != null) pauseButton.onClick.AddListener(TogglePause);
             if (winReturnButton != null) winReturnButton.onClick.AddListener(ReturnToStoryMode);
+
+            if (loseReturnButton != null) loseReturnButton.onClick.AddListener(ReturnToStoryMode);
+            if (loseRetryButton != null) loseRetryButton.onClick.AddListener(ResetBattle);
+            if (levelBtn != null) levelBtn.onClick.AddListener(() => OpenScreen(MenuScreenId.Management));
+            if (equipBtn != null) equipBtn.onClick.AddListener(() => OpenScreen(MenuScreenId.Management));
+            if (skillBtn != null) skillBtn.onClick.AddListener(() => OpenScreen(MenuScreenId.Management));
+            if (constellationBtn != null) constellationBtn.onClick.AddListener(() => OpenScreen(MenuScreenId.Management));
+            if (recruitBtn != null) recruitBtn.onClick.AddListener(() => OpenScreen(MenuScreenId.Home));
+        }
+
+        void OpenScreen(MenuScreenId screenId)
+        {
+            if (losePanel != null) losePanel.SetActive(false);
+            navigator?.Open(screenId);
         }
 
         public void ResetBattle()
         {
             StopAllCoroutines();
+            LoadPlayerParty();
+            LoadStageData();
             InitializeTeam(allies, true); InitializeTeam(enemies, false);
             round = 0; queueIndex = 0; selectedSkillIndex = -1; currentActor = null;
             resolving = false; paused = false; autoMode = false; playbackSpeed = 1f;
             if (pausePanel != null) pausePanel.SetActive(false);
             if (winPanel != null) winPanel.SetActive(false);
+            if (losePanel != null) losePanel.SetActive(false);
             ApplyPlaybackSpeed(); StartNextRound();
         }
 
@@ -154,8 +186,28 @@ namespace BES.UI.Menu
                 var unit = team[i]; if (unit == null || unit.definition == null) continue;
                 unit.isPlayer = isPlayer; unit.setupIndex = i; unit.health = unit.definition.maxHealth;
                 if (unit.root != null) unit.root.SetActive(true);
-                if (unit.battlefieldImage != null) unit.battlefieldImage.gameObject.SetActive(true);
-                if (unit.battlefieldImage != null) unit.battlefieldImage.sprite = unit.definition.battlefieldSprite;
+
+                if (unit.gifPlayer == null && unit.root != null)
+                {
+                    unit.gifPlayer = unit.root.GetComponentInChildren<UIGifPlayer>(true);
+                }
+
+                if (unit.gifPlayer != null && unit.definition.idleClip != null)
+                {
+                    unit.gifPlayer.gameObject.SetActive(true);
+                    unit.gifPlayer.SetClip(unit.definition.idleClip, true);
+                    if (unit.battlefieldImage != null) unit.battlefieldImage.gameObject.SetActive(false);
+                }
+                else
+                {
+                    if (unit.gifPlayer != null) unit.gifPlayer.gameObject.SetActive(false);
+                    if (unit.battlefieldImage != null)
+                    {
+                        unit.battlefieldImage.gameObject.SetActive(true);
+                        unit.battlefieldImage.sprite = unit.definition.battlefieldSprite;
+                    }
+                }
+
                 if (unit.portrait != null) unit.portrait.sprite = unit.definition.portrait;
                 RefreshUnit(unit);
             }
@@ -230,19 +282,126 @@ namespace BES.UI.Menu
         IEnumerator PerformAction(BattleUnitView actor, BattleUnitView target, int skillIndex)
         {
             var skill = GetSkill(actor, skillIndex);
-            if (actor.animator != null) actor.animator.SetTrigger(skillIndex == 0 ? "Attack" : "Skill");
-            yield return ScaledWait(actionWindup);
-            var raw = Mathf.RoundToInt(actor.definition.attack * (skill?.powerMultiplier ?? 1f));
-            target.health = Mathf.Max(0, target.health - Mathf.Max(1, raw - target.definition.defense));
-            if (target.animator != null) target.animator.SetTrigger(target.health == 0 ? "Defeat" : "Hit");
-            RefreshUnit(target);
-            if (target.health == 0)
+
+            System.Action onStrike = () =>
             {
-                if (target.targetButton != null) target.targetButton.interactable = false;
-                if (target.battlefieldImage != null) target.battlefieldImage.gameObject.SetActive(false);
-                if (target.root != null) target.root.SetActive(false);
+                var raw = Mathf.RoundToInt(actor.definition.attack * (skill?.powerMultiplier ?? 1f));
+                target.health = Mathf.Max(0, target.health - Mathf.Max(1, raw - target.definition.defense));
+                
+                if (target.gifPlayer != null && target.health == 0)
+                {
+                    target.gifPlayer.gameObject.SetActive(false);
+                }
+                else if (target.animator != null)
+                {
+                    target.animator.SetTrigger(target.health == 0 ? "Defeat" : "Hit");
+                }
+
+                RefreshUnit(target);
+
+                if (target.health == 0)
+                {
+                    if (target.targetButton != null) target.targetButton.interactable = false;
+                    if (target.battlefieldImage != null) target.battlefieldImage.gameObject.SetActive(false);
+                    if (target.gifPlayer != null) target.gifPlayer.gameObject.SetActive(false);
+                    if (target.root != null) target.root.SetActive(false);
+                }
+            };
+
+            if (actor.definition.isRanged)
+            {
+                // Ranged attack: play attack animation at spot
+                if (actor.gifPlayer != null && actor.definition.attackClip != null)
+                {
+                    actor.gifPlayer.SetClip(actor.definition.attackClip, true);
+                }
+                else if (actor.animator != null)
+                {
+                    actor.animator.SetTrigger(skillIndex == 0 ? "Attack" : "Skill");
+                }
+
+                yield return ScaledWait(actionWindup);
+                onStrike();
+                yield return ScaledWait(actionRecovery);
+
+                if (actor.gifPlayer != null && actor.definition.idleClip != null)
+                {
+                    actor.gifPlayer.SetClip(actor.definition.idleClip, true);
+                }
             }
-            yield return ScaledWait(actionRecovery);
+            else
+            {
+                // Melee attack: move quickly to target, strike, return
+                var actorRect = actor.root != null ? actor.root.GetComponent<RectTransform>() : null;
+                var targetRect = target.root != null ? target.root.GetComponent<RectTransform>() : null;
+
+                if (actorRect != null && targetRect != null)
+                {
+                    var startPos = actorRect.anchoredPosition;
+                    var offset = actor.isPlayer ? new Vector2(-150f, 0f) : new Vector2(150f, 0f);
+                    var targetPos = targetRect.anchoredPosition + offset;
+
+                    // Start attack GIF
+                    if (actor.gifPlayer != null && actor.definition.attackClip != null)
+                    {
+                        actor.gifPlayer.SetClip(actor.definition.attackClip, true);
+                    }
+                    else if (actor.animator != null)
+                    {
+                        actor.animator.SetTrigger(skillIndex == 0 ? "Attack" : "Skill");
+                    }
+
+                    // Dash forward (0.15s)
+                    float dashDuration = 0.15f;
+                    float elapsed = 0f;
+                    while (elapsed < dashDuration)
+                    {
+                        if (!paused)
+                        {
+                            elapsed += Time.unscaledDeltaTime * playbackSpeed;
+                            actorRect.anchoredPosition = Vector2.Lerp(startPos, targetPos, elapsed / dashDuration);
+                        }
+                        yield return null;
+                    }
+                    actorRect.anchoredPosition = targetPos;
+
+                    // Wait for actionWindup - dash duration
+                    float remainingWindup = Mathf.Max(0f, actionWindup - dashDuration);
+                    yield return ScaledWait(remainingWindup);
+
+                    onStrike();
+
+                    // Recovery wait before moving back
+                    yield return ScaledWait(actionRecovery);
+
+                    // Switch back to idle GIF
+                    if (actor.gifPlayer != null && actor.definition.idleClip != null)
+                    {
+                        actor.gifPlayer.SetClip(actor.definition.idleClip, true);
+                    }
+
+                    // Dash back (0.15s)
+                    elapsed = 0f;
+                    while (elapsed < dashDuration)
+                    {
+                        if (!paused)
+                        {
+                            elapsed += Time.unscaledDeltaTime * playbackSpeed;
+                            actorRect.anchoredPosition = Vector2.Lerp(targetPos, startPos, elapsed / dashDuration);
+                        }
+                        yield return null;
+                    }
+                    actorRect.anchoredPosition = startPos;
+                }
+                else
+                {
+                    // Fallback to standard
+                    if (actor.animator != null) actor.animator.SetTrigger(skillIndex == 0 ? "Attack" : "Skill");
+                    yield return ScaledWait(actionWindup);
+                    onStrike();
+                    yield return ScaledWait(actionRecovery);
+                }
+            }
         }
         static BattleSkillDefinition GetSkill(BattleUnitView actor, int index)
         {
@@ -317,7 +476,14 @@ namespace BES.UI.Menu
                 onVictory?.Invoke();
                 return;
             }
-            if (!AnyAlive(allies)) { HideSkills(); RefreshTurnOrder(true); onDefeat?.Invoke(); return; }
+            if (!AnyAlive(allies))
+            {
+                HideSkills();
+                RefreshTurnOrder(true);
+                if (losePanel != null) losePanel.SetActive(true);
+                onDefeat?.Invoke();
+                return;
+            }
             queueIndex++; BeginCurrentTurn();
         }
         IEnumerator ScaledWait(float duration)
@@ -338,8 +504,15 @@ namespace BES.UI.Menu
         void ReturnToStoryMode()
         {
             if (winPanel != null) winPanel.SetActive(false);
-            navigator?.Open(MenuScreenId.StoryParty);
-            storyModeController?.CompleteStoryBattle();
+            if (IsPlayModeBattle)
+            {
+                navigator?.Open(MenuScreenId.ResourceStages);
+            }
+            else
+            {
+                navigator?.Open(MenuScreenId.StoryParty);
+                storyModeController?.CompleteStoryBattle();
+            }
         }
         void RefreshTurnOrder(bool battleFinished = false)
         {
@@ -402,6 +575,129 @@ namespace BES.UI.Menu
             BattleUnitView result = null; var ratio = float.MaxValue;
             foreach (var unit in list) { if (unit == null || !unit.IsAlive || unit.definition == null) continue; var value = unit.health / (float)unit.definition.maxHealth; if (value < ratio) { ratio = value; result = unit; } }
             return result;
+        }
+
+        void LoadPlayerParty()
+        {
+            if (menuContentDatabase == null)
+            {
+                menuContentDatabase = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
+#if UNITY_EDITOR
+                if (menuContentDatabase == null)
+                    menuContentDatabase = UnityEditor.AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/_Project/Data/UI/MenuContentDatabase.asset");
+#endif
+            }
+
+            if (menuContentDatabase == null || SelectedPartyCharacterIds == null || SelectedPartyCharacterIds.Count == 0)
+                return;
+
+            for (var i = 0; i < allies.Count; i++)
+            {
+                if (allies[i] != null && allies[i].root != null)
+                    allies[i].root.SetActive(false);
+            }
+
+            for (var i = 0; i < Mathf.Min(SelectedPartyCharacterIds.Count, allies.Count); i++)
+            {
+                var characterId = SelectedPartyCharacterIds[i];
+                var character = menuContentDatabase.FindCharacter(characterId);
+                var view = allies[i];
+                if (character == null || view == null) continue;
+
+                var def = new BattleUnitDefinition();
+                def.id = character.id;
+                def.displayName = character.displayName;
+                
+                var level = CharacterProgressionState.GetLevel(character.id);
+                float scale = 1f + (level - 1) * 0.1f;
+                def.maxHealth = Mathf.RoundToInt(character.maxHealth * scale);
+                def.attack = Mathf.RoundToInt(character.attack * scale);
+                def.defense = 5;
+                def.speed = 10;
+                
+                def.portrait = character.portrait;
+                def.battlefieldSprite = character.chibi != null ? character.chibi : character.portrait;
+                def.isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa");
+
+                var skill = new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f };
+                def.skills = new List<BattleSkillDefinition> { skill };
+
+                view.definition = def;
+                if (view.root != null) view.root.SetActive(true);
+            }
+        }
+
+        void LoadStageData()
+        {
+            if (menuContentDatabase == null)
+            {
+                menuContentDatabase = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
+#if UNITY_EDITOR
+                if (menuContentDatabase == null)
+                    menuContentDatabase = UnityEditor.AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/_Project/Data/UI/MenuContentDatabase.asset");
+#endif
+            }
+
+            if (menuContentDatabase == null || string.IsNullOrEmpty(ActiveStageId))
+                return;
+
+            StageEntry stage = null;
+            foreach (var chapter in menuContentDatabase.storyChapters)
+            {
+                stage = chapter.stages.Find(x => x.id == ActiveStageId);
+                if (stage != null) break;
+            }
+            if (stage == null) stage = menuContentDatabase.resourceStages.Find(x => x.id == ActiveStageId);
+            if (stage == null) stage = menuContentDatabase.sanctumStages.Find(x => x.id == ActiveStageId);
+            if (stage == null) stage = menuContentDatabase.weaponStages.Find(x => x.id == ActiveStageId);
+
+            if (stage == null) return;
+
+            for (var i = 0; i < enemies.Count; i++)
+            {
+                if (enemies[i] != null && enemies[i].root != null)
+                    enemies[i].root.SetActive(false);
+            }
+
+            int enemyIndex = 0;
+            if (stage.enemies != null)
+            {
+                for (; enemyIndex < Mathf.Min(stage.enemies.Count, 4); enemyIndex++)
+                {
+                    var view = enemies[enemyIndex];
+                    if (view == null) continue;
+                    view.definition = CloneAndScaleDefinition(stage.enemies[enemyIndex], stage.enemyLevel);
+                    if (view.root != null) view.root.SetActive(true);
+                }
+            }
+
+            if (stage.boss != null && enemies.Count > 4 && enemies[4] != null)
+            {
+                var bossView = enemies[4];
+                bossView.definition = CloneAndScaleDefinition(stage.boss, stage.enemyLevel);
+                if (bossView.root != null) bossView.root.SetActive(true);
+            }
+        }
+
+        BattleUnitDefinition CloneAndScaleDefinition(BattleUnitDefinition template, int level)
+        {
+            if (template == null) return null;
+            var def = new BattleUnitDefinition();
+            def.id = template.id;
+            def.displayName = template.displayName;
+            def.portrait = template.portrait;
+            def.battlefieldSprite = template.battlefieldSprite;
+            def.idleClip = template.idleClip;
+            def.attackClip = template.attackClip;
+            def.isRanged = template.isRanged;
+            
+            float scale = 1f + (level - 1) * 0.1f;
+            def.maxHealth = Mathf.RoundToInt(template.maxHealth * scale);
+            def.attack = Mathf.RoundToInt(template.attack * scale);
+            def.defense = Mathf.RoundToInt(template.defense * scale);
+            def.speed = template.speed;
+            def.skills = new List<BattleSkillDefinition>(template.skills);
+            return def;
         }
     }
 }

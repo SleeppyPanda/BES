@@ -32,14 +32,14 @@ namespace BES.UI
         private string _lastStatusMessage = "";
         private string _lastEmailEntered = "";
 
-        // Programmatically cloned fields
-        private TMP_InputField displayNameInput;
-        private TMP_InputField resetCodeInput;
-        private TMP_InputField passwordInput;
-        private TMP_InputField confirmPasswordInput;
-        private Button forgotPasswordButton;
-        private Button toggleModeButton;
-        private TMP_Text errorText;
+        // Programmatically cloned fields (exposed to Inspector for Editor creation/tuning)
+        [SerializeField] private TMP_InputField displayNameInput;
+        [SerializeField] private TMP_InputField resetCodeInput;
+        [SerializeField] private TMP_InputField passwordInput;
+        [SerializeField] private TMP_InputField confirmPasswordInput;
+        [SerializeField] private Button forgotPasswordButton;
+        [SerializeField] private Button toggleModeButton;
+        [SerializeField] private TMP_Text errorText;
 
         void Awake()
         {
@@ -109,8 +109,8 @@ namespace BES.UI
         {
             if (usernameInput == null) return;
 
-            // Clone usernameText to create errorText right below the title area
-            if (usernameText != null)
+            // Clone usernameText to create errorText right below the title area if not already assigned
+            if (errorText == null && usernameText != null)
             {
                 var errorGo = Instantiate(usernameText.gameObject, usernameText.transform.parent);
                 errorGo.name = "ErrorText";
@@ -145,10 +145,10 @@ namespace BES.UI
             }
 
             // Duplicate and scale input fields
-            displayNameInput = CloneInputField(usernameInput, "DisplayNameInput", "Display Name (Username)");
-            resetCodeInput = CloneInputField(usernameInput, "ResetCodeInput", "Verification Code");
-            passwordInput = CloneInputField(usernameInput, "PasswordInput", "Password (Min 6 chars)");
-            confirmPasswordInput = CloneInputField(usernameInput, "ConfirmPasswordInput", "Confirm Password");
+            if (displayNameInput == null) displayNameInput = CloneInputField(usernameInput, "DisplayNameInput", "Display Name (Username)");
+            if (resetCodeInput == null) resetCodeInput = CloneInputField(usernameInput, "ResetCodeInput", "Verification Code");
+            if (passwordInput == null) passwordInput = CloneInputField(usernameInput, "PasswordInput", "Password (Min 6 chars)");
+            if (confirmPasswordInput == null) confirmPasswordInput = CloneInputField(usernameInput, "ConfirmPasswordInput", "Confirm Password");
 
             StyleInputField(usernameInput, "Email / Username (Blank for Guest)");
             StyleInputField(displayNameInput, "Display Name (Username)");
@@ -174,7 +174,7 @@ namespace BES.UI
             StyleSubmitButton();
 
             // Duplicate buttons for link toggles
-            forgotPasswordButton = CloneButton(createAccountButton, "ForgotPasswordBtn", "Forgot Password?", OnForgotPasswordClicked);
+            if (forgotPasswordButton == null) forgotPasswordButton = CloneButton(createAccountButton, "ForgotPasswordBtn", "Forgot Password?", OnForgotPasswordClicked);
             if (forgotPasswordButton != null)
             {
                 var img = forgotPasswordButton.GetComponent<Image>();
@@ -190,7 +190,7 @@ namespace BES.UI
                 if (rect != null) rect.sizeDelta = new Vector2(200f, 30f);
             }
 
-            toggleModeButton = CloneButton(createAccountButton, "ToggleModeBtn", "Don't have an account? Sign Up", OnToggleModeClicked);
+            if (toggleModeButton == null) toggleModeButton = CloneButton(createAccountButton, "ToggleModeBtn", "Don't have an account? Sign Up", OnToggleModeClicked);
             if (toggleModeButton != null)
             {
                 var img = toggleModeButton.GetComponent<Image>();
@@ -806,5 +806,211 @@ namespace BES.UI
             if (string.IsNullOrWhiteSpace(name)) return false;
             return System.Text.RegularExpressions.Regex.IsMatch(name, @"^[a-zA-Z0-9_]{3,20}$");
         }
+
+#if UNITY_EDITOR
+        [ContextMenu("Generate Editor UI Fields")]
+        public void GenerateEditorUIFields()
+        {
+            // Ensure we have a usernameInput to clone from
+            if (usernameInput == null)
+            {
+                Debug.LogError("usernameInput reference is required to clone fields!");
+                return;
+            }
+
+            var parent = usernameInput.transform.parent;
+
+            // 1. Create errorText
+            if (errorText == null && usernameText != null)
+            {
+                var errorGo = new GameObject("ErrorText", typeof(RectTransform), typeof(TextMeshProUGUI));
+                errorGo.transform.SetParent(parent, false);
+                errorText = errorGo.GetComponent<TextMeshProUGUI>();
+                errorText.fontSize = 15f;
+                errorText.fontStyle = FontStyles.Normal;
+                errorText.alignment = TextAlignmentOptions.Center;
+                errorText.text = "Error message here";
+                var rect = errorText.GetComponent<RectTransform>();
+                if (rect != null) rect.sizeDelta = new Vector2(460f, 35f);
+            }
+
+            // 2. Clone Input Fields
+            if (displayNameInput == null) displayNameInput = EditorCloneInputField("DisplayNameInput", "Display Name (Username)", parent);
+            if (resetCodeInput == null)
+            {
+                resetCodeInput = EditorCloneInputField("ResetCodeInput", "Verification Code", parent);
+                if (resetCodeInput != null)
+                {
+                    resetCodeInput.contentType = TMP_InputField.ContentType.IntegerNumber;
+                    resetCodeInput.characterLimit = 6;
+                }
+            }
+            if (passwordInput == null)
+            {
+                passwordInput = EditorCloneInputField("PasswordInput", "Password (Min 6 chars)", parent);
+                if (passwordInput != null) passwordInput.contentType = TMP_InputField.ContentType.Password;
+            }
+            if (confirmPasswordInput == null)
+            {
+                confirmPasswordInput = EditorCloneInputField("ConfirmPasswordInput", "Confirm Password", parent);
+                if (confirmPasswordInput != null) confirmPasswordInput.contentType = TMP_InputField.ContentType.Password;
+            }
+
+            // 3. Clone Buttons
+            if (forgotPasswordButton == null && createAccountButton != null)
+            {
+                forgotPasswordButton = EditorCloneButton("ForgotPasswordBtn", "Forgot Password?", parent);
+                if (forgotPasswordButton != null)
+                {
+                    var img = forgotPasswordButton.GetComponent<Image>();
+                    if (img != null) img.color = Color.clear;
+                    var txt = forgotPasswordButton.GetComponentInChildren<TMP_Text>();
+                    if (txt != null)
+                    {
+                        txt.color = new Color(0.4f, 0.7f, 1.0f, 0.8f);
+                        txt.fontSize = 14f;
+                        txt.fontStyle = FontStyles.Underline;
+                    }
+                    var rect = forgotPasswordButton.GetComponent<RectTransform>();
+                    if (rect != null) rect.sizeDelta = new Vector2(200f, 30f);
+                }
+            }
+
+            if (toggleModeButton == null && createAccountButton != null)
+            {
+                toggleModeButton = EditorCloneButton("ToggleModeBtn", "Don't have an account? Sign Up", parent);
+                if (toggleModeButton != null)
+                {
+                    var img = toggleModeButton.GetComponent<Image>();
+                    if (img != null) img.color = Color.clear;
+                    var txt = toggleModeButton.GetComponentInChildren<TMP_Text>();
+                    if (txt != null)
+                    {
+                        txt.color = new Color(0.8f, 0.8f, 0.8f, 0.9f);
+                        txt.fontSize = 14f;
+                    }
+                    var rect = toggleModeButton.GetComponent<RectTransform>();
+                    if (rect != null) rect.sizeDelta = new Vector2(320f, 35f);
+                }
+            }
+
+            // Style headers
+            if (usernameText != null)
+            {
+                usernameText.fontSize = 28f;
+                usernameText.fontStyle = FontStyles.Bold;
+                var rect = usernameText.GetComponent<RectTransform>();
+                if (rect != null) rect.sizeDelta = new Vector2(460f, 50f);
+            }
+
+            if (serverText != null)
+            {
+                serverText.fontSize = 16f;
+                serverText.color = new Color(0.7f, 0.8f, 0.9f, 0.8f);
+                var rect = serverText.GetComponent<RectTransform>();
+                if (rect != null) rect.sizeDelta = new Vector2(460f, 30f);
+            }
+
+            StyleInputField(usernameInput, "Email / Username (Blank for Guest)");
+            StyleInputField(displayNameInput, "Display Name (Username)");
+            StyleInputField(resetCodeInput, "Verification Code");
+            StyleInputField(passwordInput, "Password (Min 6 chars)");
+            StyleInputField(confirmPasswordInput, "Confirm Password");
+            StyleSubmitButton();
+
+            // Make the root and background panel visible so they can be edited
+            gameObject.SetActive(true);
+            var bgTransform = transform.Find("Background");
+            if (bgTransform != null)
+            {
+                var rect = bgTransform.GetComponent<RectTransform>();
+                if (rect != null) rect.sizeDelta = new Vector2(500f, 580f);
+                var rawImg = bgTransform.GetComponent<RawImage>();
+                if (rawImg != null)
+                {
+                    rawImg.texture = null;
+                    rawImg.color = new Color(0.06f, 0.08f, 0.14f, 0.96f);
+                }
+            }
+
+            // Position fields in Editor
+            float currentY = 70f;
+            float spacingInput = 62f;
+
+            if (usernameInput != null && usernameInput.gameObject.activeSelf)
+            {
+                SetPosition(usernameInput.GetComponent<RectTransform>(), currentY);
+                currentY -= spacingInput;
+            }
+            if (displayNameInput != null && displayNameInput.gameObject.activeSelf)
+            {
+                SetPosition(displayNameInput.GetComponent<RectTransform>(), currentY);
+                currentY -= spacingInput;
+            }
+            if (resetCodeInput != null && resetCodeInput.gameObject.activeSelf)
+            {
+                SetPosition(resetCodeInput.GetComponent<RectTransform>(), currentY);
+                currentY -= spacingInput;
+            }
+            if (passwordInput != null && passwordInput.gameObject.activeSelf)
+            {
+                SetPosition(passwordInput.GetComponent<RectTransform>(), currentY);
+                currentY -= spacingInput;
+            }
+            if (confirmPasswordInput != null && confirmPasswordInput.gameObject.activeSelf)
+            {
+                SetPosition(confirmPasswordInput.GetComponent<RectTransform>(), currentY);
+                currentY -= spacingInput;
+            }
+
+            currentY -= 5f;
+
+            if (forgotPasswordButton != null && forgotPasswordButton.gameObject.activeSelf)
+            {
+                SetPosition(forgotPasswordButton.GetComponent<RectTransform>(), currentY + 12f);
+                currentY -= 30f;
+            }
+
+            if (createAccountButton != null && createAccountButton.gameObject.activeSelf)
+            {
+                SetPosition(createAccountButton.GetComponent<RectTransform>(), currentY - 10f);
+                currentY -= 64f;
+            }
+
+            if (toggleModeButton != null && toggleModeButton.gameObject.activeSelf)
+            {
+                SetPosition(toggleModeButton.GetComponent<RectTransform>(), currentY - 10f);
+            }
+
+            UnityEditor.EditorUtility.SetDirty(this);
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
+            Debug.Log("Auth Editor UI fields generated successfully!");
+        }
+
+        private TMP_InputField EditorCloneInputField(string name, string placeholder, Transform parent)
+        {
+            var existing = parent.Find(name);
+            if (existing != null) return existing.GetComponent<TMP_InputField>();
+
+            var go = Instantiate(usernameInput.gameObject, parent);
+            go.name = name;
+            var input = go.GetComponent<TMP_InputField>();
+            StyleInputField(input, placeholder);
+            return input;
+        }
+
+        private Button EditorCloneButton(string name, string text, Transform parent)
+        {
+            var existing = parent.Find(name);
+            if (existing != null) return existing.GetComponent<Button>();
+
+            var go = Instantiate(createAccountButton.gameObject, parent);
+            go.name = name;
+            var btn = go.GetComponent<Button>();
+            var btnText = btn.GetComponentInChildren<TMP_Text>();
+            if (btnText != null) btnText.text = text;
+            return btn;
+        }
+#endif
     }
 }

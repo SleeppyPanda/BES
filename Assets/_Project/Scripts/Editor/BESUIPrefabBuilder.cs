@@ -1315,11 +1315,13 @@ namespace BES.Editor
             panelGo.transform.SetParent(go.transform, false);
             var pRect = panelGo.AddComponent<RectTransform>();
             UIAnchorPresets.ApplySettingsPanel(pRect);
-            var volRow = InstantiateAtom(panelGo.transform, "VolumeRow", UIAssetPaths.AtomPrefabs + "/UISettingsRow.prefab", new Vector2(0, 40), new Vector2(400, 40));
-            var fsRow = InstantiateAtom(panelGo.transform, "FullscreenRow", UIAssetPaths.AtomPrefabs + "/UISettingsRow.prefab", new Vector2(0, -20), new Vector2(400, 40));
+            var musicVolRow = InstantiateAtom(panelGo.transform, "MusicVolumeRow", UIAssetPaths.AtomPrefabs + "/UISettingsRow.prefab", new Vector2(0, 80), new Vector2(400, 40));
+            var sfxVolRow = InstantiateAtom(panelGo.transform, "SfxVolumeRow", UIAssetPaths.AtomPrefabs + "/UISettingsRow.prefab", new Vector2(0, 20), new Vector2(400, 40));
+            var fsRow = InstantiateAtom(panelGo.transform, "FullscreenRow", UIAssetPaths.AtomPrefabs + "/UISettingsRow.prefab", new Vector2(0, -40), new Vector2(400, 40));
             var close = BESUIEditorUtils.CreateButton(go.transform, "CloseBtn", "X", new Vector2(880, 460), new Vector2(48, 48));
             BESUIEditorUtils.SetPrivateField(ui, "root", go);
-            if (volRow != null) BESUIEditorUtils.SetPrivateField(ui, "volumeRow", volRow.GetComponent<UISettingsRow>());
+            if (musicVolRow != null) BESUIEditorUtils.SetPrivateField(ui, "musicVolumeRow", musicVolRow.GetComponent<UISettingsRow>());
+            if (sfxVolRow != null) BESUIEditorUtils.SetPrivateField(ui, "sfxVolumeRow", sfxVolRow.GetComponent<UISettingsRow>());
             if (fsRow != null) BESUIEditorUtils.SetPrivateField(ui, "fullscreenRow", fsRow.GetComponent<UISettingsRow>());
             BESUIEditorUtils.SetPrivateField(ui, "closeButton", close);
             go.SetActive(false);

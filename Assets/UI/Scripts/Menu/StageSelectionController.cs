@@ -81,7 +81,8 @@ namespace BES.UI.Menu
             if (selected == null) return;
             onStageEntered?.Invoke(selected.id);
             TurnBattleUI.ActiveStageId = selected.id;
-            navigator?.Open(MenuScreenId.Battle);
+            TurnBattleUI.IsPlayModeBattle = true;
+            navigator?.Open(MenuScreenId.StoryParty);
         }
     }
 }
