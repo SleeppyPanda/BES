@@ -94,6 +94,14 @@ namespace BES.UI.Menu
         [SerializeField] private VideoPlayer globalVideoPlayer;
         [SerializeField] private RawImage videoOverlayImage;
         [SerializeField] private Button continueButton;
+        [Header("Immersive Mode UI")]
+        [SerializeField] private GameObject appleCurrencyBar;
+        [SerializeField] private GameObject closeButton;
+        [Header("Global UI References (Auto-detected)")]
+        [SerializeField] private GameObject globalAppleBar;
+        [SerializeField] private GameObject globalGemsBar;
+        [SerializeField] private GameObject globalCoinsBar;
+        [SerializeField] private GameObject globalCloseButton;
 
         private bool continuePressed;
 
@@ -103,6 +111,7 @@ namespace BES.UI.Menu
         WishCurrency selectedCurrency;
         bool isAnimating;
         int visibleCardCount;
+        private RenderTexture videoRT;
 
         void Awake()
         {
@@ -114,6 +123,29 @@ namespace BES.UI.Menu
             rollOneButton?.onClick.AddListener(() => Roll(1));
             rollTenButton?.onClick.AddListener(() => Roll(10));
             claimButton?.onClick.AddListener(ClaimResults);
+
+            // Auto-detect Apple currency bar and Close button from WishContent children
+            if (coinsButton != null && (appleCurrencyBar == null || closeButton == null))
+            {
+                Transform parent = coinsButton.transform.parent;
+                if (parent != null)
+                {
+                    for (int i = 0; i < parent.childCount; i++)
+                    {
+                        Transform child = parent.GetChild(i);
+                        string childName = child.name.ToLower();
+                        if (appleCurrencyBar == null && (childName.Contains("apple") || childName.Contains("crystal")))
+                        {
+                            appleCurrencyBar = child.gameObject;
+                        }
+                        else if (closeButton == null && (childName.Contains("close") || childName.Contains("back") || childName == "x" || childName.Contains("btn_close")))
+                        {
+                            closeButton = child.gameObject;
+                        }
+                    }
+                }
+            }
+
             ResetPresentation();
         }
 
@@ -121,7 +153,20 @@ namespace BES.UI.Menu
         {
             ResolveInventory();
             RefreshCurrency();
-            if (!isAnimating) ResetPresentation();
+            if (homeController != null)
+            {
+                homeController.gameObject.SetActive(false);
+            }
+            ResetPresentation();
+        }
+
+        void OnDisable()
+        {
+            if (homeController != null)
+            {
+                homeController.gameObject.SetActive(true);
+            }
+            ResetPresentation();
         }
 
         public void SelectCurrency(WishCurrency currency)
@@ -212,6 +257,41 @@ namespace BES.UI.Menu
             if (continueButton != null) continueButton.gameObject.SetActive(false);
             SetFeedback(string.Empty);
 
+            // Hide top bar UI for immersive playback
+            if (coinsButton != null) coinsButton.gameObject.SetActive(false);
+            if (gemsButton != null) gemsButton.gameObject.SetActive(false);
+            if (appleCurrencyBar != null) appleCurrencyBar.SetActive(false);
+            if (closeButton != null) closeButton.SetActive(false);
+
+            // Find global currency bars and close button under topParent
+            Transform topParent = transform;
+            while (topParent.parent != null)
+            {
+                topParent = topParent.parent;
+            }
+            var allTransforms = topParent.GetComponentsInChildren<Transform>(true);
+            foreach (var t in allTransforms)
+            {
+                if (t.name == "Currency_crystal_apple") globalAppleBar = t.gameObject;
+                else if (t.name == "Currency_gems") globalGemsBar = t.gameObject;
+                else if (t.name == "Currency_coins") globalCoinsBar = t.gameObject;
+                else if (t.name == "Close" || t.name == "CloseButton")
+                {
+                    var p = t.parent;
+                    if (p != null && (p.name == "Background" || p.name == "WishPanel" || p.name == "MenuHub" || p.name == "WishContent"))
+                    {
+                        globalCloseButton = t.gameObject;
+                    }
+                }
+            }
+
+            Debug.Log($"[BES] Gacha UI Hide - globalAppleBar: {globalAppleBar != null}, globalGemsBar: {globalGemsBar != null}, globalCoinsBar: {globalCoinsBar != null}, globalCloseButton: {globalCloseButton != null}");
+
+            if (globalAppleBar != null) globalAppleBar.SetActive(false);
+            if (globalGemsBar != null) globalGemsBar.SetActive(false);
+            if (globalCoinsBar != null) globalCoinsBar.SetActive(false);
+            if (globalCloseButton != null) globalCloseButton.SetActive(false);
+
             // Determine highest rarity in current roll
             bool has5Star = false;
             bool has4Star = false;
@@ -221,26 +301,65 @@ namespace BES.UI.Menu
                 else if (reward.rarity >= 4) has4Star = true;
             }
 
-            // 1. Play pre-pull clip if configured
             var chosenClip = has5Star ? clip5Star : (has4Star ? clip4Star : null);
             if (chosenClip != null && globalVideoPlayer != null && videoOverlayImage != null)
             {
                 videoOverlayImage.gameObject.SetActive(true);
+                
+                int w = chosenClip.width > 0 ? (int)chosenClip.width : 1920;
+                int h = chosenClip.height > 0 ? (int)chosenClip.height : 1080;
+                if (videoRT != null) { videoRT.Release(); Destroy(videoRT); }
+                videoRT = new RenderTexture(w, h, 0, RenderTextureFormat.Default);
+                videoRT.Create();
+
+                globalVideoPlayer.Stop(); // Force stop before modifying
+                globalVideoPlayer.playOnAwake = false;
+                globalVideoPlayer.skipOnDrop = false;
+                globalVideoPlayer.waitForFirstFrame = false;
+
+                globalVideoPlayer.renderMode = UnityEngine.Video.VideoRenderMode.RenderTexture;
+                globalVideoPlayer.targetTexture = videoRT;
+                videoOverlayImage.texture = videoRT;
+
+                globalVideoPlayer.audioOutputMode = UnityEngine.Video.VideoAudioOutputMode.None; // Disable audio sync issues
                 globalVideoPlayer.clip = chosenClip;
                 globalVideoPlayer.Prepare();
                 while (!globalVideoPlayer.isPrepared)
                 {
                     yield return null;
                 }
-                videoOverlayImage.texture = globalVideoPlayer.texture;
                 globalVideoPlayer.Play();
+                Debug.Log($"[BES] Gacha Pre-pull Video started: {chosenClip.name} | Total Frames: {globalVideoPlayer.frameCount} | Duration: {globalVideoPlayer.length}s");
+
+                // Wait for it to start playing or timeout
+                float playStartTime = Time.unscaledTime;
+                while (!globalVideoPlayer.isPlaying && (Time.unscaledTime - playStartTime < 2f))
+                {
+                    yield return null;
+                }
 
                 // Wait for clip to finish or double click to skip
                 float lastClickTime = 0f;
                 bool skipPrePull = false;
-                while (globalVideoPlayer.isPlaying)
+                float videoDuration = (float)globalVideoPlayer.length;
+                if (videoDuration <= 0f) videoDuration = 10f;
+                float startLoopTime = Time.unscaledTime;
+
+                float lastLogTime = 0f;
+                while (globalVideoPlayer.isPlaying && (Time.unscaledTime - startLoopTime < videoDuration + 0.5f))
                 {
-                    if (Input.GetMouseButtonDown(0))
+                    if (Time.unscaledTime - lastLogTime > 1.0f)
+                    {
+                        Debug.Log($"[BES] Gacha Video Frame: {globalVideoPlayer.frame}/{globalVideoPlayer.frameCount} | Time: {globalVideoPlayer.time:F2}s");
+                        lastLogTime = Time.unscaledTime;
+                    }
+
+                    if (globalVideoPlayer.frameCount > 0 && globalVideoPlayer.frame >= (long)globalVideoPlayer.frameCount - 2)
+                    {
+                        break;
+                    }
+
+                    if (IsPointerClicked())
                     {
                         if (Time.unscaledTime - lastClickTime < 0.35f)
                         {
@@ -250,11 +369,15 @@ namespace BES.UI.Menu
                     }
                     if (skipPrePull)
                     {
-                        globalVideoPlayer.Stop();
                         break;
                     }
                     yield return null;
                 }
+                globalVideoPlayer.Stop();
+                globalVideoPlayer.clip = null; // Unload clip asset
+                globalVideoPlayer.targetTexture = null;
+                videoOverlayImage.texture = null;
+                if (videoRT != null) { videoRT.Release(); Destroy(videoRT); videoRT = null; }
                 videoOverlayImage.gameObject.SetActive(false);
             }
 
@@ -264,7 +387,174 @@ namespace BES.UI.Menu
                 resultCards[i].root?.gameObject.SetActive(false);
             }
 
-            // 2. Fly in cards one by one
+            // 1.5. Play reveal videos for all 5-star characters in the roll results BEFORE showing the cards screen
+            if (globalVideoPlayer != null && videoOverlayImage != null)
+            {
+                RawImage fadeImg = CreateTransitionOverlay();
+
+                foreach (var reward in currentResults)
+                {
+                    var charId = CharacterIdFor(reward);
+                    var character = database != null ? database.FindCharacter(charId) : null;
+                    bool is5StarChar = reward.unlockAsCharacter && character != null && character.rarity >= 5;
+
+                    if (is5StarChar && character.revealVideoClip != null)
+                    {
+                        // 1.5a. Fade screen to black (tối dần)
+                        if (fadeImg != null)
+                        {
+                            fadeImg.gameObject.SetActive(true);
+                            fadeImg.color = Color.black;
+                            yield return FadeOverlay(fadeImg, 0f, 1f, 0.6f);
+                        }
+
+                        // 1.5b. Prepare the reveal video while screen is black
+                        int w = character.revealVideoClip.width > 0 ? (int)character.revealVideoClip.width : 1920;
+                        int h = character.revealVideoClip.height > 0 ? (int)character.revealVideoClip.height : 1080;
+                        if (videoRT != null) { videoRT.Release(); Destroy(videoRT); }
+                        videoRT = new RenderTexture(w, h, 0, RenderTextureFormat.Default);
+                        videoRT.Create();
+
+                        globalVideoPlayer.Stop(); // Force stop before modifying
+                        globalVideoPlayer.playOnAwake = false;
+                        globalVideoPlayer.skipOnDrop = false;
+                        globalVideoPlayer.waitForFirstFrame = false;
+
+                        globalVideoPlayer.renderMode = UnityEngine.Video.VideoRenderMode.RenderTexture;
+                        globalVideoPlayer.targetTexture = videoRT;
+                        
+                        videoOverlayImage.gameObject.SetActive(true);
+                        videoOverlayImage.texture = videoRT;
+                        videoOverlayImage.color = Color.white; // Tint to white to show video properly
+
+                        globalVideoPlayer.audioOutputMode = UnityEngine.Video.VideoAudioOutputMode.None; // Disable audio sync issues
+                        globalVideoPlayer.clip = character.revealVideoClip;
+                        globalVideoPlayer.Prepare();
+                        while (!globalVideoPlayer.isPrepared)
+                        {
+                            yield return null;
+                        }
+
+                        // Start playing the video
+                        globalVideoPlayer.Play();
+                        Debug.Log($"[BES] 5-Star Character Reveal Video started: {character.revealVideoClip.name} | Total Frames: {globalVideoPlayer.frameCount} | Duration: {globalVideoPlayer.length}s");
+
+                        // Wait for character clip to start playing or timeout
+                        float charPlayStartTime = Time.unscaledTime;
+                        while (!globalVideoPlayer.isPlaying && (Time.unscaledTime - charPlayStartTime < 2f))
+                        {
+                            yield return null;
+                        }
+
+                        // 1.5c. Fade black screen to transparent (sáng dần ra video)
+                        if (fadeImg != null)
+                        {
+                            yield return FadeOverlay(fadeImg, 1f, 0f, 0.6f);
+                        }
+
+                        // 1.5d. Wait for character clip to finish or double click to skip
+                        float lastClickTime = 0f;
+                        bool skipChar = false;
+                        float charVideoDuration = (float)globalVideoPlayer.length;
+                        if (charVideoDuration <= 0f) charVideoDuration = 10f;
+                        float charStartLoopTime = Time.unscaledTime;
+
+                        float lastLogTime = 0f;
+                        while (globalVideoPlayer.isPlaying && (Time.unscaledTime - charStartLoopTime < charVideoDuration + 0.5f))
+                        {
+                            if (Time.unscaledTime - lastLogTime > 1.0f)
+                            {
+                                Debug.Log($"[BES] Reveal Video Frame: {globalVideoPlayer.frame}/{globalVideoPlayer.frameCount} | Time: {globalVideoPlayer.time:F2}s");
+                                lastLogTime = Time.unscaledTime;
+                            }
+
+                            if (globalVideoPlayer.frameCount > 0 && globalVideoPlayer.frame >= (long)globalVideoPlayer.frameCount - 2)
+                            {
+                                break;
+                            }
+
+                            if (IsPointerClicked())
+                            {
+                                if (Time.unscaledTime - lastClickTime < 0.35f)
+                                {
+                                    skipChar = true;
+                                }
+                                lastClickTime = Time.unscaledTime;
+                            }
+                            if (skipChar)
+                            {
+                                break;
+                            }
+                            yield return null;
+                        }
+
+                        // Pause video player at the final frame (do NOT stop or clear texture yet!)
+                        if (globalVideoPlayer.isPlaying)
+                        {
+                            globalVideoPlayer.Pause();
+                        }
+
+                        // 1.5e. Show continue button and wait for player click (or click anywhere on screen) with 0.2s cooldown
+                        if (continueButton != null)
+                        {
+                            continueButton.gameObject.SetActive(true);
+                            continueButton.onClick.RemoveAllListeners();
+                            continuePressed = false;
+                            continueButton.onClick.AddListener(() => {
+                                Debug.Log("[BES] continueButton onClick event fired!");
+                                continuePressed = true;
+                            });
+
+                            float waitStartTime = Time.unscaledTime;
+                            while (!continuePressed)
+                            {
+                                if (Time.unscaledTime - waitStartTime > 0.2f && IsPointerClicked())
+                                {
+                                    Debug.Log("[BES] Screen pointer click detected!");
+                                    continuePressed = true;
+                                }
+                                yield return null;
+                            }
+                            continueButton.gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            bool clickedAnywhere = false;
+                            float waitStartTime = Time.unscaledTime;
+                            while (!clickedAnywhere)
+                            {
+                                if (Time.unscaledTime - waitStartTime > 0.2f && IsPointerClicked())
+                                {
+                                    Debug.Log("[BES] Screen pointer click detected (no continueButton)!");
+                                    clickedAnywhere = true;
+                                }
+                                yield return null;
+                            }
+                        }
+                    }
+                }
+
+                // 1.5f. Flash white and fade out gradually at the very end of all videos
+                if (fadeImg != null)
+                {
+                    fadeImg.gameObject.SetActive(true);
+                    fadeImg.texture = null;
+                    fadeImg.color = Color.white;
+
+                    // Clean up video player now
+                    globalVideoPlayer.Stop();
+                    globalVideoPlayer.clip = null;
+                    globalVideoPlayer.targetTexture = null;
+                    videoOverlayImage.texture = null;
+                    if (videoRT != null) { videoRT.Release(); Destroy(videoRT); videoRT = null; }
+                    videoOverlayImage.gameObject.SetActive(false);
+
+                    yield return FadeOverlay(fadeImg, 1f, 0f, 0.8f);
+                    Destroy(fadeImg.gameObject);
+                }
+            }
+
+            // 2. Fly in all cards one by one (the 10-cards show screen)
             for (var i = 0; i < visibleCardCount; i++)
             {
                 var cardView = resultCards[i];
@@ -292,63 +582,6 @@ namespace BES.UI.Menu
                     cardView.root.anchoredPosition = target;
                 if (cardView.canvasGroup != null)
                     cardView.canvasGroup.alpha = 1f;
-
-                // Check for 5-star character custom reveal clip
-                var reward = currentResults[i];
-                var charId = CharacterIdFor(reward);
-                var character = database != null ? database.FindCharacter(charId) : null;
-                bool is5StarChar = reward.unlockAsCharacter && character != null && character.rarity >= 5;
-
-                if (is5StarChar && character.revealVideoClip != null && globalVideoPlayer != null && videoOverlayImage != null)
-                {
-                    videoOverlayImage.gameObject.SetActive(true);
-                    globalVideoPlayer.clip = character.revealVideoClip;
-                    globalVideoPlayer.Prepare();
-                    while (!globalVideoPlayer.isPrepared)
-                    {
-                        yield return null;
-                    }
-                    videoOverlayImage.texture = globalVideoPlayer.texture;
-                    globalVideoPlayer.Play();
-
-                    // Wait for character clip to finish or double click to skip
-                    float lastClickTime = 0f;
-                    bool skipChar = false;
-                    while (globalVideoPlayer.isPlaying)
-                    {
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            if (Time.unscaledTime - lastClickTime < 0.35f)
-                            {
-                                skipChar = true;
-                            }
-                            lastClickTime = Time.unscaledTime;
-                        }
-                        if (skipChar)
-                        {
-                            globalVideoPlayer.Stop();
-                            break;
-                        }
-                        yield return null;
-                    }
-
-                    // Show continue button and wait for player click
-                    if (continueButton != null)
-                    {
-                        continueButton.gameObject.SetActive(true);
-                        continueButton.onClick.RemoveAllListeners();
-                        continuePressed = false;
-                        continueButton.onClick.AddListener(() => continuePressed = true);
-
-                        while (!continuePressed)
-                        {
-                            yield return null;
-                        }
-                        continueButton.gameObject.SetActive(false);
-                    }
-
-                    videoOverlayImage.gameObject.SetActive(false);
-                }
             }
 
             RefreshCurrency();
@@ -447,6 +680,23 @@ namespace BES.UI.Menu
         void ResetPresentation()
         {
             StopAllCoroutines();
+            if (globalVideoPlayer != null)
+            {
+                globalVideoPlayer.Stop();
+                globalVideoPlayer.clip = null;
+                globalVideoPlayer.targetTexture = null;
+            }
+            if (videoOverlayImage != null)
+            {
+                videoOverlayImage.texture = null;
+                videoOverlayImage.gameObject.SetActive(false);
+            }
+            if (videoRT != null)
+            {
+                videoRT.Release();
+                Destroy(videoRT);
+                videoRT = null;
+            }
             isAnimating = false;
             visibleCardCount = 0;
             currentResults.Clear();
@@ -459,6 +709,18 @@ namespace BES.UI.Menu
             claimButton?.gameObject.SetActive(false);
             rollControls?.SetActive(true);
             SetFeedback(string.Empty);
+
+            // Restore top bar UI
+            if (coinsButton != null) coinsButton.gameObject.SetActive(true);
+            if (gemsButton != null) gemsButton.gameObject.SetActive(true);
+            if (appleCurrencyBar != null) appleCurrencyBar.SetActive(true);
+            if (closeButton != null) closeButton.SetActive(true);
+
+            if (globalAppleBar != null) globalAppleBar.SetActive(true);
+            if (globalGemsBar != null) globalGemsBar.SetActive(true);
+            if (globalCoinsBar != null) globalCoinsBar.SetActive(true);
+            if (globalCloseButton != null) globalCloseButton.SetActive(true);
+
             RefreshCurrency();
         }
 
@@ -483,6 +745,89 @@ namespace BES.UI.Menu
         void SetFeedback(string value)
         {
             if (feedbackText != null) feedbackText.text = value;
+        }
+
+        private RawImage CreateTransitionOverlay()
+        {
+            var videoParent = videoOverlayImage != null ? videoOverlayImage.transform.parent : null;
+            if (videoParent == null) return null;
+
+            GameObject fadeObj = new GameObject("GachaFadeOverlay", typeof(RectTransform), typeof(CanvasRenderer), typeof(RawImage));
+            fadeObj.transform.SetParent(videoParent, false);
+            
+            // Set as sibling just after videoOverlayImage so it renders on top of the video but below continueButton
+            if (videoOverlayImage != null)
+            {
+                fadeObj.transform.SetSiblingIndex(videoOverlayImage.transform.GetSiblingIndex() + 1);
+            }
+
+            RectTransform rt = fadeObj.GetComponent<RectTransform>();
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.sizeDelta = Vector2.zero;
+            rt.anchoredPosition = Vector2.zero;
+
+            RawImage fadeImg = fadeObj.GetComponent<RawImage>();
+            fadeImg.color = new Color(0f, 0f, 0f, 0f);
+            fadeImg.raycastTarget = false;
+            return fadeImg;
+        }
+
+        private IEnumerator FadeOverlay(RawImage fadeImg, float fromAlpha, float toAlpha, float duration)
+        {
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float alpha = Mathf.Lerp(fromAlpha, toAlpha, Mathf.Clamp01(elapsed / duration));
+                fadeImg.color = new Color(fadeImg.color.r, fadeImg.color.g, fadeImg.color.b, alpha);
+                yield return null;
+            }
+            fadeImg.color = new Color(fadeImg.color.r, fadeImg.color.g, fadeImg.color.b, toAlpha);
+        }
+
+        private bool IsPointerClicked()
+        {
+            try
+            {
+                // Check raw mouse click (never consumed by UI EventSystem)
+                if (UnityEngine.InputSystem.Mouse.current != null && UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame)
+                {
+                    Debug.Log("[BES] Raw mouse click detected!");
+                    return true;
+                }
+                
+                // Check raw touchscreen press (never consumed by UI EventSystem)
+                if (UnityEngine.InputSystem.Touchscreen.current != null && UnityEngine.InputSystem.Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
+                {
+                    Debug.Log("[BES] Raw touch press detected!");
+                    return true;
+                }
+
+                // Fallback to active pointer state
+                if (UnityEngine.InputSystem.Pointer.current != null && UnityEngine.InputSystem.Pointer.current.press.wasPressedThisFrame)
+                {
+                    Debug.Log("[BES] Active pointer press detected!");
+                    return true;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning($"[BES] Error reading new InputSystem: {ex.Message}");
+            }
+
+            // Fallback for legacy input API
+            try
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Debug.Log("[BES] Legacy mouse click detected!");
+                    return true;
+                }
+            }
+            catch { }
+
+            return false;
         }
     }
 }
