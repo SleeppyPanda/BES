@@ -64,6 +64,8 @@ namespace BES.UI.Menu
         public int enemyLevel = 1;
         public List<BattleUnitDefinition> enemies = new();
         public BattleUnitDefinition boss;
+        [Header("Optional Multi Phase Combat")]
+        public List<BattlePhaseEntry> battlePhases = new();
     }
 
     [Serializable]
@@ -83,7 +85,33 @@ namespace BES.UI.Menu
         RoundStart,
         BossHealthBelowPercent,
         EnemyDefeated,
-        BeforeVictory
+        BeforeVictory,
+        TotalEnemyHealthBelowPercent,
+        EnemyCountAtOrBelow,
+        PhaseStart,
+        PhaseVictory
+    }
+
+    public enum CombatTriggerActionType
+    {
+        None,
+        StartNextPhase,
+        ConvertUnitToAlly,
+        ConvertUnitToAllyAndStartNextPhase
+    }
+
+    [Serializable]
+    public class BattlePhaseEntry
+    {
+        public string id;
+        public string title;
+        [TextArea] public string description;
+        public int enemyLevel = 1;
+        [Tooltip("Optional fixed player-side units for this phase. If empty, the selected story/play party is used.")]
+        public List<BattleUnitDefinition> allies = new();
+        public List<BattleUnitDefinition> enemies = new();
+        public BattleUnitDefinition boss;
+        public List<CombatDialogueTrigger> combatDialogueTriggers = new();
     }
 
     [Serializable]
@@ -93,8 +121,12 @@ namespace BES.UI.Menu
         public CombatDialogueTriggerType triggerType;
         [Min(1)] public int round = 1;
         [Range(1, 100)] public int healthPercent = 50;
+        [Min(0)] public int enemyCount = 0;
         public string unitId;
         public bool pauseCombat = true;
+        public CombatTriggerActionType actionAfterDialogue = CombatTriggerActionType.None;
+        [Tooltip("Used by ConvertUnitToAlly actions. If empty, the unit passed to the trigger is used.")]
+        public string convertUnitId;
         public DialogueSequence dialogue;
         [NonSerialized] public bool played;
     }

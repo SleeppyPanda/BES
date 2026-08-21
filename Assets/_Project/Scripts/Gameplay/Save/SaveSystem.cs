@@ -4,7 +4,11 @@ using System.Threading.Tasks;
 using BES.Core;
 using BES.Narrative;
 using BES.UI;
+using BES.UI.Menu;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace BES.Gameplay
 {
@@ -140,6 +144,13 @@ namespace BES.Gameplay
                 GachaPityState.Instance.ExportToSave(Current);
 
             CharacterProgressionState.ExportToSave(Current);
+            ExportMenuContentToSave(Current);
+
+            if (!string.IsNullOrWhiteSpace(TurnBattleUI.ActiveStageId))
+                Current.activeBattleStageId = TurnBattleUI.ActiveStageId;
+            Current.activeBattleIsPlayMode = TurnBattleUI.IsPlayModeBattle;
+            if (TurnBattleUI.SelectedPartyCharacterIds != null && TurnBattleUI.SelectedPartyCharacterIds.Count > 0)
+                Current.storyPartyCharacterIds = new List<string>(TurnBattleUI.SelectedPartyCharacterIds);
 
             var json = JsonUtility.ToJson(Current, true);
             File.WriteAllText(SavePath, json);
@@ -176,9 +187,48 @@ namespace BES.Gameplay
             MetaProgressState.Instance?.ImportFromSave(Current);
             GachaPityState.Instance?.ImportFromSave(Current);
             CharacterProgressionState.ImportFromSave(Current);
+            ImportMenuContentFromSave(Current);
+
+            if (!string.IsNullOrWhiteSpace(Current.activeBattleStageId))
+                TurnBattleUI.ActiveStageId = Current.activeBattleStageId;
+            TurnBattleUI.IsPlayModeBattle = Current.activeBattleIsPlayMode;
+            if (Current.storyPartyCharacterIds != null && Current.storyPartyCharacterIds.Count > 0)
+                TurnBattleUI.SelectedPartyCharacterIds = new List<string>(Current.storyPartyCharacterIds);
 
             GameEvents.RaiseGameLoaded();
             return true;
+        }
+
+        void ExportMenuContentToSave(SaveData data)
+        {
+            var database = LoadMenuContentDatabase();
+            if (data == null || database?.currencies == null) return;
+            var values = new Dictionary<string, int>();
+            foreach (var entry in database.currencies)
+                if (entry != null && !string.IsNullOrWhiteSpace(entry.id))
+                    values[entry.id] = Mathf.Max(0, entry.amount);
+            if (values.Count > 0) data.menuCurrencies = SaveDataUtility.ToPairs(values);
+        }
+
+        void ImportMenuContentFromSave(SaveData data)
+        {
+            var database = LoadMenuContentDatabase();
+            if (data?.menuCurrencies == null || database?.currencies == null || data.menuCurrencies.Count == 0) return;
+            var values = SaveDataUtility.FromPairs(data.menuCurrencies);
+            foreach (var entry in database.currencies)
+                if (entry != null && !string.IsNullOrWhiteSpace(entry.id) && values.TryGetValue(entry.id, out var amount))
+                    entry.amount = Mathf.Max(0, amount);
+        }
+
+        static MenuContentDatabase LoadMenuContentDatabase()
+        {
+            var database = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
+            if (database != null) return database;
+#if UNITY_EDITOR
+            return AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/Scenes/MenuContentDatabase.asset");
+#else
+            return null;
+#endif
         }
 
         public void ApplyPlayerState(GameObject player)

@@ -140,6 +140,8 @@ namespace BES.UI.Menu
         bool paused;
         float playbackSpeed = 1f;
         StageEntry currentStage;
+        int currentPhaseIndex;
+        BattlePhaseEntry currentPhase;
 
         void Awake()
         {
@@ -198,6 +200,18 @@ namespace BES.UI.Menu
 
         void SaveBattleProgress()
         {
+            var save = GameManager.Instance?.Save?.Current;
+            if (save != null)
+            {
+                var stageId = currentStage != null ? currentStage.id : ActiveStageId;
+                if (!string.IsNullOrWhiteSpace(stageId))
+                    save.activeBattleStageId = stageId;
+                save.activeBattleIsPlayMode = IsPlayModeBattle;
+                if (!IsPlayModeBattle && !string.IsNullOrWhiteSpace(stageId))
+                    save.activeStoryStageId = stageId;
+                if (SelectedPartyCharacterIds != null && SelectedPartyCharacterIds.Count > 0)
+                    save.storyPartyCharacterIds = new List<string>(SelectedPartyCharacterIds);
+            }
             GameManager.Instance?.SaveGame();
         }
 
@@ -210,7 +224,7 @@ namespace BES.UI.Menu
             if (pausePanel != null) pausePanel.SetActive(false);
             paused = false;
             ApplyPlaybackSpeed();
-            navigator?.Open(MenuScreenId.Home);
+            navigator?.OpenAsRoot(MenuScreenId.Home);
             homeController?.Refresh();
         }
 
@@ -221,7 +235,7 @@ namespace BES.UI.Menu
             if (pausePanel != null) pausePanel.SetActive(false);
             paused = false;
             ApplyPlaybackSpeed();
-            navigator?.Open(MenuScreenId.Home);
+            navigator?.OpenAsRoot(MenuScreenId.Home);
             characterCollection?.OpenDestination(destination, homeController != null ? homeController.CurrentCharacterId : null);
         }
 
@@ -232,7 +246,7 @@ namespace BES.UI.Menu
             if (pausePanel != null) pausePanel.SetActive(false);
             paused = false;
             ApplyPlaybackSpeed();
-            navigator?.Open(MenuScreenId.Home);
+            navigator?.OpenAsRoot(MenuScreenId.Home);
             if (characterCollection != null)
                 characterCollection.OpenRateUp();
             wishPanel?.Open();
@@ -253,6 +267,10 @@ namespace BES.UI.Menu
 
         void AutoResolveResultButtons()
         {
+            pausePanel ??= FindPanel("PausePanel", "PauseOverlay", "Pause");
+            winPanel ??= FindPanel("WinPanel", "VictoryPanel", "ResultWinPanel");
+            losePanel ??= FindPanel("LosePanel", "DefeatPanel", "ResultLosePanel");
+
             pauseResumeButton ??= FindButton(pausePanel, "ResumeButton", "ContinueButton", "Continue", "Resume", "TiepTuc", "Tieptuc");
             if (pausePanel != null && pauseResumeButton == null)
                 pauseResumeButton = CreateRuntimePauseResumeButton();
@@ -267,6 +285,17 @@ namespace BES.UI.Menu
             skillBtn ??= FindButton(losePanel, "SkillButton", "KyNang", "Skill");
             constellationBtn ??= FindButton(losePanel, "ConstellationButton", "TinhMenh", "Constellation");
             recruitBtn ??= FindButton(losePanel, "RecruitButton", "WishButton", "ChieuMo", "Recruit", "Wish");
+        }
+
+        GameObject FindPanel(params string[] names)
+        {
+            if (names == null) return null;
+            foreach (var name in names)
+            {
+                var found = FindDeep(transform, name) ?? FindDeep(transform.root, name);
+                if (found != null) return found.gameObject;
+            }
+            return null;
         }
 
         Button FindButton(GameObject root, params string[] names)
@@ -346,6 +375,8 @@ namespace BES.UI.Menu
             EnsureDialogueUI();
             LoadPlayerParty();
             LoadStageData();
+            currentPhaseIndex = 0;
+            LoadCurrentBattlePhase();
             InitializeTeam(allies, true); InitializeTeam(enemies, false);
             round = 0; queueIndex = 0; selectedSkillIndex = -1; currentActor = null;
             resolving = false; paused = false; autoMode = false; playbackSpeed = 1f;
@@ -355,6 +386,7 @@ namespace BES.UI.Menu
             if (losePanel != null) losePanel.SetActive(false);
             ApplyPlaybackSpeed(); StartNextRound();
             TryPlayCombatDialogue(CombatDialogueTriggerType.BattleStart);
+            TryPlayCombatDialogue(CombatDialogueTriggerType.PhaseStart);
         }
 
         static void InitializeTeam(List<BattleUnitView> team, bool isPlayer)
@@ -592,7 +624,6 @@ namespace BES.UI.Menu
         void ProcessCombatDrops()
         {
             var stageId = ActiveStageId;
-            ActiveStageId = null;
 
             if (string.IsNullOrEmpty(stageId))
             {
@@ -648,12 +679,20 @@ namespace BES.UI.Menu
         void FinishTurn()
         {
             resolving = false; selectedSkillIndex = -1;
+            if (TryPlayAggregateCombatTriggers()) return;
             if (!AnyAlive(enemies))
             {
                 HideSkills();
                 RefreshTurnOrder(true);
-                if (!TryPlayCombatDialogue(CombatDialogueTriggerType.BeforeVictory, null, 0, CompleteVictory))
+                if (HasNextPhase())
+                {
+                    if (!TryPlayCombatDialogue(CombatDialogueTriggerType.PhaseVictory, null, 0, StartNextPhase))
+                        StartNextPhase();
+                }
+                else if (!TryPlayCombatDialogue(CombatDialogueTriggerType.BeforeVictory, null, 0, CompleteVictory))
+                {
                     CompleteVictory();
+                }
                 return;
             }
             if (!AnyAlive(allies))
@@ -698,11 +737,11 @@ namespace BES.UI.Menu
             SaveBattleProgress();
             if (IsPlayModeBattle)
             {
-                navigator?.Open(MenuScreenId.ResourceStages);
+                navigator?.OpenAsRoot(MenuScreenId.ResourceStages);
             }
             else
             {
-                navigator?.Open(MenuScreenId.StoryParty);
+                navigator?.OpenAsRoot(MenuScreenId.StoryParty);
                 storyModeController?.CompleteStoryBattle();
             }
         }
@@ -873,6 +912,34 @@ namespace BES.UI.Menu
 
             if (stage == null) return;
             currentStage = stage;
+        }
+
+        void LoadCurrentBattlePhase()
+        {
+            currentPhase = null;
+            if (currentStage?.battlePhases != null &&
+                currentStage.battlePhases.Count > 0 &&
+                currentPhaseIndex >= 0 &&
+                currentPhaseIndex < currentStage.battlePhases.Count)
+                currentPhase = currentStage.battlePhases[currentPhaseIndex];
+
+            if (currentPhase?.allies != null && currentPhase.allies.Count > 0)
+            {
+                for (var i = 0; i < allies.Count; i++)
+                {
+                    if (allies[i] != null && allies[i].root != null)
+                        allies[i].root.SetActive(false);
+                }
+
+                var allyPhaseLevel = currentPhase.enemyLevel > 0 ? currentPhase.enemyLevel : currentStage?.enemyLevel ?? 1;
+                for (var i = 0; i < Mathf.Min(currentPhase.allies.Count, allies.Count); i++)
+                {
+                    var view = allies[i];
+                    if (view == null) continue;
+                    view.definition = CloneAndScaleDefinition(currentPhase.allies[i], allyPhaseLevel);
+                    if (view.root != null) view.root.SetActive(true);
+                }
+            }
 
             for (var i = 0; i < enemies.Count; i++)
             {
@@ -880,43 +947,48 @@ namespace BES.UI.Menu
                     enemies[i].root.SetActive(false);
             }
 
-            int enemyIndex = 0;
-            if (stage.enemies != null)
+            var phaseEnemies = currentPhase != null ? currentPhase.enemies : currentStage?.enemies;
+            var phaseBoss = currentPhase != null ? currentPhase.boss : currentStage?.boss;
+            var level = currentPhase != null && currentPhase.enemyLevel > 0 ? currentPhase.enemyLevel : currentStage?.enemyLevel ?? 1;
+
+            var enemyIndex = 0;
+            if (phaseEnemies != null)
             {
-                for (; enemyIndex < Mathf.Min(stage.enemies.Count, 4); enemyIndex++)
+                for (; enemyIndex < Mathf.Min(phaseEnemies.Count, 4); enemyIndex++)
                 {
                     var view = enemies[enemyIndex];
                     if (view == null) continue;
-                    view.definition = CloneAndScaleDefinition(stage.enemies[enemyIndex], stage.enemyLevel);
+                    view.definition = CloneAndScaleDefinition(phaseEnemies[enemyIndex], level);
                     if (view.root != null) view.root.SetActive(true);
                 }
             }
 
-            if (stage.boss != null && enemies.Count > 4 && enemies[4] != null)
+            if (phaseBoss != null && enemies.Count > 4 && enemies[4] != null)
             {
                 var bossView = enemies[4];
-                bossView.definition = CloneAndScaleDefinition(stage.boss, stage.enemyLevel);
+                bossView.definition = CloneAndScaleDefinition(phaseBoss, level);
                 if (bossView.root != null) bossView.root.SetActive(true);
             }
         }
 
         void ResetCombatDialogueTriggers()
         {
-            if (currentStage?.combatDialogueTriggers == null) return;
-            foreach (var trigger in currentStage.combatDialogueTriggers)
+            foreach (var trigger in ActiveCombatTriggers())
                 if (trigger != null) trigger.played = false;
         }
 
         bool TryPlayCombatDialogue(CombatDialogueTriggerType triggerType, BattleUnitView unit = null, int roundValue = 0, Action completed = null)
         {
-            if (currentStage?.combatDialogueTriggers == null || combatDialogueUI == null) return false;
-            foreach (var trigger in currentStage.combatDialogueTriggers)
+            if (combatDialogueUI == null) return false;
+            foreach (var trigger in ActiveCombatTriggers())
             {
                 if (trigger == null || trigger.played || trigger.triggerType != triggerType) continue;
                 if (trigger.dialogue == null || trigger.dialogue.beats.Count == 0) continue;
                 if (triggerType == CombatDialogueTriggerType.RoundStart && trigger.round != roundValue) continue;
                 if (!string.IsNullOrWhiteSpace(trigger.unitId) && unit?.definition?.id != trigger.unitId) continue;
                 if (triggerType == CombatDialogueTriggerType.BossHealthBelowPercent && !HealthBelow(unit, trigger.healthPercent)) continue;
+                if (triggerType == CombatDialogueTriggerType.TotalEnemyHealthBelowPercent && !TotalEnemyHealthBelow(trigger.healthPercent)) continue;
+                if (triggerType == CombatDialogueTriggerType.EnemyCountAtOrBelow && AliveCount(enemies) > trigger.enemyCount) continue;
 
                 trigger.played = true;
                 var shouldPause = pauseBattleDuringDialogue && trigger.pauseCombat;
@@ -933,6 +1005,7 @@ namespace BES.UI.Menu
                         paused = false;
                         ApplyPlaybackSpeed();
                     }
+                    ApplyTriggerAction(trigger, unit);
                     completed?.Invoke();
                 });
                 return true;
@@ -941,10 +1014,133 @@ namespace BES.UI.Menu
             return false;
         }
 
+        IEnumerable<CombatDialogueTrigger> ActiveCombatTriggers()
+        {
+            if (currentPhase?.combatDialogueTriggers != null && currentPhase.combatDialogueTriggers.Count > 0)
+                return currentPhase.combatDialogueTriggers;
+            return currentStage?.combatDialogueTriggers ?? new List<CombatDialogueTrigger>();
+        }
+
+        bool TryPlayAggregateCombatTriggers()
+        {
+            if (TryPlayCombatDialogue(CombatDialogueTriggerType.TotalEnemyHealthBelowPercent)) return true;
+            if (TryPlayCombatDialogue(CombatDialogueTriggerType.EnemyCountAtOrBelow)) return true;
+            return false;
+        }
+
+        bool HasNextPhase() => currentStage?.battlePhases != null && currentPhaseIndex + 1 < currentStage.battlePhases.Count;
+
+        void StartNextPhase()
+        {
+            if (!HasNextPhase()) { CompleteVictory(); return; }
+            currentPhaseIndex++;
+            LoadCurrentBattlePhase();
+            InitializeTeam(enemies, false);
+            round = 0;
+            queueIndex = 0;
+            selectedSkillIndex = -1;
+            currentActor = null;
+            resolving = false;
+            ResetCombatDialogueTriggers();
+            ApplyPlaybackSpeed();
+            StartNextRound();
+            TryPlayCombatDialogue(CombatDialogueTriggerType.PhaseStart);
+        }
+
+        void ApplyTriggerAction(CombatDialogueTrigger trigger, BattleUnitView unit)
+        {
+            if (trigger == null) return;
+            switch (trigger.actionAfterDialogue)
+            {
+                case CombatTriggerActionType.StartNextPhase:
+                    StartNextPhase();
+                    break;
+                case CombatTriggerActionType.ConvertUnitToAlly:
+                    ConvertEnemyToAlly(ResolveUnit(trigger.convertUnitId, unit));
+                    break;
+                case CombatTriggerActionType.ConvertUnitToAllyAndStartNextPhase:
+                    ConvertEnemyToAlly(ResolveUnit(trigger.convertUnitId, unit));
+                    StartNextPhase();
+                    break;
+            }
+        }
+
+        BattleUnitView ResolveUnit(string unitId, BattleUnitView fallback)
+        {
+            if (string.IsNullOrWhiteSpace(unitId)) return fallback;
+            foreach (var enemy in enemies)
+                if (enemy?.definition != null && string.Equals(enemy.definition.id, unitId, StringComparison.OrdinalIgnoreCase))
+                    return enemy;
+            foreach (var ally in allies)
+                if (ally?.definition != null && string.Equals(ally.definition.id, unitId, StringComparison.OrdinalIgnoreCase))
+                    return ally;
+            return fallback;
+        }
+
+        void ConvertEnemyToAlly(BattleUnitView enemy)
+        {
+            if (enemy == null || enemy.definition == null) return;
+            var allySlot = allies.Find(x => x != null && (x.root == null || !x.root.activeSelf || !x.IsAlive));
+            if (allySlot == null) return;
+
+            var hp = Mathf.Clamp(enemy.health, 1, enemy.definition.maxHealth);
+            allySlot.definition = CloneDefinition(enemy.definition);
+            allySlot.health = hp;
+            allySlot.isPlayer = true;
+            if (allySlot.root != null) allySlot.root.SetActive(true);
+            RefreshUnit(allySlot);
+
+            enemy.health = 0;
+            if (enemy.root != null) enemy.root.SetActive(false);
+            RefreshTurnOrder();
+        }
+
+        BattleUnitDefinition CloneDefinition(BattleUnitDefinition template)
+        {
+            if (template == null) return null;
+            return new BattleUnitDefinition
+            {
+                id = template.id,
+                displayName = template.displayName,
+                portrait = template.portrait,
+                battlefieldSprite = template.battlefieldSprite,
+                idleClip = template.idleClip,
+                attackClip = template.attackClip,
+                isRanged = template.isRanged,
+                maxHealth = template.maxHealth,
+                attack = template.attack,
+                defense = template.defense,
+                speed = template.speed,
+                skills = template.skills != null ? new List<BattleSkillDefinition>(template.skills) : new List<BattleSkillDefinition>()
+            };
+        }
+
         static bool HealthBelow(BattleUnitView unit, int percent)
         {
             if (unit?.definition == null || unit.definition.maxHealth <= 0) return false;
             return unit.health <= Mathf.CeilToInt(unit.definition.maxHealth * Mathf.Clamp(percent, 1, 100) / 100f);
+        }
+
+        bool TotalEnemyHealthBelow(int percent)
+        {
+            var max = 0;
+            var current = 0;
+            foreach (var enemy in enemies)
+            {
+                if (enemy?.definition == null || enemy.root == null || !enemy.root.activeSelf) continue;
+                max += Mathf.Max(1, enemy.definition.maxHealth);
+                current += Mathf.Clamp(enemy.health, 0, enemy.definition.maxHealth);
+            }
+            if (max <= 0) return false;
+            return current <= Mathf.CeilToInt(max * Mathf.Clamp(percent, 1, 100) / 100f);
+        }
+
+        static int AliveCount(List<BattleUnitView> units)
+        {
+            var count = 0;
+            foreach (var unit in units)
+                if (unit != null && unit.IsAlive) count++;
+            return count;
         }
 
         BattleUnitDefinition CloneAndScaleDefinition(BattleUnitDefinition template, int level)

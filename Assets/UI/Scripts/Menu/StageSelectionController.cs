@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BES.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -82,6 +83,13 @@ namespace BES.UI.Menu
             onStageEntered?.Invoke(selected.id);
             TurnBattleUI.ActiveStageId = selected.id;
             TurnBattleUI.IsPlayModeBattle = true;
+            var save = GameManager.Instance?.Save?.Current;
+            if (save != null)
+            {
+                save.activeBattleStageId = selected.id;
+                save.activeBattleIsPlayMode = true;
+                GameManager.Instance.SaveGame();
+            }
             navigator?.Open(MenuScreenId.StoryParty);
         }
     }

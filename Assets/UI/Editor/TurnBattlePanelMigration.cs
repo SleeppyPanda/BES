@@ -8,11 +8,11 @@ using UnityEngine.UI;
 
 namespace BES.EditorTools
 {
-    [InitializeOnLoad]
     public static class TurnBattlePanelMigration
     {
         const string PrefabPath = "Assets/_Project/UI/Prefabs/Screens/MenuHub.prefab";
         const string SessionKey = "BES.TurnBattlePanel.v1";
+        const bool AutoRunMigration = false;
         static readonly Color Clear = new(1f, 1f, 1f, 0f);
         static readonly Color Cream = new(.96f, .92f, .82f, 1f);
         static readonly Color Brown = new(.35f, .16f, .13f, 1f);
@@ -21,7 +21,10 @@ namespace BES.EditorTools
         struct UnitParts { public GameObject root; public Button target; public Image body; public Image portrait; public Slider hp; public TMP_Text hpText; }
         struct OrderParts { public GameObject root; public Image portrait; public GameObject ally; public GameObject enemy; }
 
-        static TurnBattlePanelMigration() => EditorApplication.delayCall += RunOnce;
+        static TurnBattlePanelMigration()
+        {
+            if (AutoRunMigration) EditorApplication.delayCall += RunOnce;
+        }
         static void RunOnce()
         {
             if (SessionState.GetBool(SessionKey, false) || EditorApplication.isPlayingOrWillChangePlaymode) return;

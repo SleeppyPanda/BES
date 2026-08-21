@@ -56,6 +56,12 @@ namespace BES.Gameplay
         public string equippedArtifactId = string.Empty;
         public string storyBranch = "main";
         public int storyProgressIndex;
+        public int storyChapterIndex;
+        public int storyStageIndex;
+        public string activeStoryStageId = string.Empty;
+        public List<string> storyPartyCharacterIds = new();
+        public string activeBattleStageId = string.Empty;
+        public bool activeBattleIsPlayMode;
         public string endingId = string.Empty;
         public int gachaPullsSinceFiveStar;
         public int gachaPullsSinceFiveStarWeapon;

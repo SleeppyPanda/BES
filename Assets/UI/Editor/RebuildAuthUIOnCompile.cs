@@ -4,7 +4,7 @@ using BES.UI;
 
 namespace BES.UI.Editor
 {
-    [InitializeOnLoad]
+    // Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
     public static class RebuildAuthUIOnCompile
     {
         private const string PrefabPath = "Assets/_Project/UI/Prefabs/Screens/MainMenuScreen.prefab";

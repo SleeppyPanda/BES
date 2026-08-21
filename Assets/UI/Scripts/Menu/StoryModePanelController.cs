@@ -104,6 +104,7 @@ namespace BES.UI.Menu
         {
             EnsureDialogueUI();
             ChapterOneStoryRuntime.Apply(database);
+            LoadStoryState();
             SelectChapter(chapterIndex);
             LoadStoryProgress();
             TryPlayChapterIntro();
@@ -203,6 +204,7 @@ namespace BES.UI.Menu
             TurnBattleUI.IsPlayModeBattle = false;
             var stage = CurrentStage();
             TurnBattleUI.ActiveStageId = stage?.id;
+            SaveStoryState(stage);
             onPartyConfirmed?.Invoke(CurrentIds());
             ShowPhase(StoryPartyPhase.Main);
             if (stage?.preBattleDialogue != null && stage.preBattleDialogue.beats.Count > 0 && storyDialogueUI != null)
@@ -253,11 +255,58 @@ namespace BES.UI.Menu
             RefreshStoryProgress();
         }
 
+        void LoadStoryState()
+        {
+            var save = GameManager.Instance?.Save?.Current;
+            if (save == null || database == null || database.storyChapters.Count == 0) return;
+
+            chapterIndex = Mathf.Clamp(save.storyChapterIndex, 0, database.storyChapters.Count - 1);
+            var chapter = database.storyChapters[chapterIndex];
+            stageIndex = Mathf.Clamp(save.storyStageIndex, 0, Mathf.Max(0, chapter.stages.Count - 1));
+            if (!string.IsNullOrWhiteSpace(save.activeStoryStageId))
+            {
+                var found = chapter.stages.FindIndex(x => x != null && x.id == save.activeStoryStageId);
+                if (found >= 0) stageIndex = found;
+            }
+
+            RestoreSavedStoryParty(save.storyPartyCharacterIds);
+        }
+
+        void RestoreSavedStoryParty(List<string> ids)
+        {
+            if (ids == null || ids.Count == 0 || database == null) return;
+            EnsureFixedPartySlots();
+            for (var i = 0; i < selectedParty.Count; i++) selectedParty[i] = null;
+            for (var i = 0; i < ids.Count && i < selectedParty.Count; i++)
+            {
+                if (string.IsNullOrWhiteSpace(ids[i])) continue;
+                selectedParty[i] = database.FindCharacter(ids[i]);
+            }
+        }
+
         void SaveStoryProgress()
         {
             var save = GameManager.Instance?.Save?.Current;
             if (save != null)
+            {
                 save.storyProgressIndex = storyProgressIndex;
+                save.storyChapterIndex = chapterIndex;
+                save.storyStageIndex = stageIndex;
+                save.activeStoryStageId = CurrentStage()?.id ?? string.Empty;
+            }
+            GameManager.Instance?.SaveGame();
+        }
+
+        void SaveStoryState(StageEntry stage)
+        {
+            var save = GameManager.Instance?.Save?.Current;
+            if (save == null) return;
+            save.storyChapterIndex = chapterIndex;
+            save.storyStageIndex = stageIndex;
+            save.activeStoryStageId = stage?.id ?? string.Empty;
+            save.activeBattleStageId = stage?.id ?? string.Empty;
+            save.activeBattleIsPlayMode = false;
+            save.storyPartyCharacterIds = CurrentIds();
             GameManager.Instance?.SaveGame();
         }
 

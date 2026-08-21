@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace BES.EditorTools
 {
-    [InitializeOnLoad]
+    // Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
     public static class HomeModeSwitcherViewportMigration
     {
         const string PrefabPath = "Assets/_Project/UI/Prefabs/Screens/MenuHub.prefab";
