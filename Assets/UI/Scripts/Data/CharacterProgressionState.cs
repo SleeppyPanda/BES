@@ -92,6 +92,7 @@ namespace BES.UI
             levels[characterId] = level;
             experience[characterId] = level >= cap ? Mathf.Min(exp, Mathf.Max(0, GetExperienceToNextLevel(characterId) - 1)) : exp;
             GameEvents.RaisePartyChanged();
+            GameManager.Instance?.SaveGame();
             return level;
         }
 
@@ -165,6 +166,7 @@ namespace BES.UI
             var total = GetConstellationShards(characterId) + amount;
             constellationShards[characterId] = total;
             GameEvents.RaisePartyChanged();
+            GameManager.Instance?.SaveGame();
             return total;
         }
 

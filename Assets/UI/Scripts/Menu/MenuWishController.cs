@@ -93,7 +93,6 @@ namespace BES.UI.Menu
         [SerializeField] private VideoClip clip5Star;
         [SerializeField] private VideoPlayer globalVideoPlayer;
         [SerializeField] private RawImage videoOverlayImage;
-        [SerializeField] private Button continueButton;
         [Header("Immersive Mode UI")]
         [SerializeField] private GameObject appleCurrencyBar;
         [SerializeField] private GameObject closeButton;
@@ -102,8 +101,6 @@ namespace BES.UI.Menu
         [SerializeField] private GameObject globalGemsBar;
         [SerializeField] private GameObject globalCoinsBar;
         [SerializeField] private GameObject globalCloseButton;
-
-        private bool continuePressed;
 
         readonly List<MenuWishReward> currentResults = new();
         readonly System.Random random = new();
@@ -152,6 +149,7 @@ namespace BES.UI.Menu
         void OnEnable()
         {
             ResolveInventory();
+            ImportMenuCurrenciesFromSave();
             RefreshCurrency();
             if (homeController != null)
             {
@@ -232,8 +230,9 @@ namespace BES.UI.Menu
             if (detailPanel != null) detailPanel.SetActive(true);
             if (detailItemIcon != null)
             {
-                detailItemIcon.sprite = reward.icon;
-                detailItemIcon.enabled = reward.icon != null;
+                var rewardIcon = IconForReward(reward);
+                detailItemIcon.sprite = rewardIcon;
+                detailItemIcon.enabled = rewardIcon != null;
             }
             if (detailNameText != null) detailNameText.text = reward.displayName;
             if (detailDescriptionText != null) detailDescriptionText.text = reward.description;
@@ -254,14 +253,10 @@ namespace BES.UI.Menu
             rollControls?.SetActive(false);
             claimButton?.gameObject.SetActive(false);
             detailPanel?.SetActive(false);
-            if (continueButton != null) continueButton.gameObject.SetActive(false);
             SetFeedback(string.Empty);
 
             // Hide top bar UI for immersive playback
-            if (coinsButton != null) coinsButton.gameObject.SetActive(false);
-            if (gemsButton != null) gemsButton.gameObject.SetActive(false);
-            if (appleCurrencyBar != null) appleCurrencyBar.SetActive(false);
-            if (closeButton != null) closeButton.SetActive(false);
+            SetRollTopBarVisible(false);
 
             // Find global currency bars and close button under topParent
             Transform topParent = transform;
@@ -287,10 +282,7 @@ namespace BES.UI.Menu
 
             Debug.Log($"[BES] Gacha UI Hide - globalAppleBar: {globalAppleBar != null}, globalGemsBar: {globalGemsBar != null}, globalCoinsBar: {globalCoinsBar != null}, globalCloseButton: {globalCloseButton != null}");
 
-            if (globalAppleBar != null) globalAppleBar.SetActive(false);
-            if (globalGemsBar != null) globalGemsBar.SetActive(false);
-            if (globalCoinsBar != null) globalCoinsBar.SetActive(false);
-            if (globalCloseButton != null) globalCloseButton.SetActive(false);
+            SetRollTopBarVisible(false);
 
             // Determine highest rarity in current roll
             bool has5Star = false;
@@ -452,9 +444,7 @@ namespace BES.UI.Menu
                             yield return FadeOverlay(fadeImg, 1f, 0f, 0.6f);
                         }
 
-                        // 1.5d. Wait for character clip to finish or double click to skip
-                        float lastClickTime = 0f;
-                        bool skipChar = false;
+                        // 1.5d. Wait for character clip to finish, then continue automatically.
                         float charVideoDuration = (float)globalVideoPlayer.length;
                         if (charVideoDuration <= 0f) charVideoDuration = 10f;
                         float charStartLoopTime = Time.unscaledTime;
@@ -473,63 +463,7 @@ namespace BES.UI.Menu
                                 break;
                             }
 
-                            if (IsPointerClicked())
-                            {
-                                if (Time.unscaledTime - lastClickTime < 0.35f)
-                                {
-                                    skipChar = true;
-                                }
-                                lastClickTime = Time.unscaledTime;
-                            }
-                            if (skipChar)
-                            {
-                                break;
-                            }
                             yield return null;
-                        }
-
-                        // Pause video player at the final frame (do NOT stop or clear texture yet!)
-                        if (globalVideoPlayer.isPlaying)
-                        {
-                            globalVideoPlayer.Pause();
-                        }
-
-                        // 1.5e. Show continue button and wait for player click (or click anywhere on screen) with 0.2s cooldown
-                        if (continueButton != null)
-                        {
-                            continueButton.gameObject.SetActive(true);
-                            continueButton.onClick.RemoveAllListeners();
-                            continuePressed = false;
-                            continueButton.onClick.AddListener(() => {
-                                Debug.Log("[BES] continueButton onClick event fired!");
-                                continuePressed = true;
-                            });
-
-                            float waitStartTime = Time.unscaledTime;
-                            while (!continuePressed)
-                            {
-                                if (Time.unscaledTime - waitStartTime > 0.2f && IsPointerClicked())
-                                {
-                                    Debug.Log("[BES] Screen pointer click detected!");
-                                    continuePressed = true;
-                                }
-                                yield return null;
-                            }
-                            continueButton.gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            bool clickedAnywhere = false;
-                            float waitStartTime = Time.unscaledTime;
-                            while (!clickedAnywhere)
-                            {
-                                if (Time.unscaledTime - waitStartTime > 0.2f && IsPointerClicked())
-                                {
-                                    Debug.Log("[BES] Screen pointer click detected (no continueButton)!");
-                                    clickedAnywhere = true;
-                                }
-                                yield return null;
-                            }
                         }
                     }
                 }
@@ -553,6 +487,8 @@ namespace BES.UI.Menu
                     Destroy(fadeImg.gameObject);
                 }
             }
+
+            SetRollTopBarVisible(true);
 
             // 2. Fly in all cards one by one (the 10-cards show screen)
             for (var i = 0; i < visibleCardCount; i++)
@@ -584,10 +520,10 @@ namespace BES.UI.Menu
                     cardView.canvasGroup.alpha = 1f;
             }
 
-            RefreshCurrency();
             claimButton?.gameObject.SetActive(true);
             SetFeedback(visibleCardCount == 1 ? "WISH ×1 COMPLETE" : "WISH ×10 COMPLETE");
             isAnimating = false;
+            RefreshCurrency();
         }
 
         void SetupCard(int index, MenuWishReward reward)
@@ -601,8 +537,9 @@ namespace BES.UI.Menu
             }
             if (view.itemIcon != null)
             {
-                view.itemIcon.sprite = reward.icon;
-                view.itemIcon.enabled = reward.icon != null;
+                var rewardIcon = IconForReward(reward);
+                view.itemIcon.sprite = rewardIcon;
+                view.itemIcon.enabled = rewardIcon != null;
             }
             if (view.itemNameText != null) view.itemNameText.text = reward.displayName;
             if (view.rarityText != null) view.rarityText.text = $"{reward.rarity} ★";
@@ -636,6 +573,22 @@ namespace BES.UI.Menu
             return database != null && database.FindCharacter(id) != null ? id : reward.itemId;
         }
 
+        Sprite IconForReward(MenuWishReward reward)
+        {
+            if (reward != null && reward.unlockAsCharacter && database != null)
+            {
+                var character = database.FindCharacter(CharacterIdFor(reward));
+                if (character != null)
+                {
+                    if (character.portrait != null) return character.portrait;
+                    if (character.fullBody != null) return character.fullBody;
+                    if (character.chibi != null) return character.chibi;
+                }
+            }
+
+            return reward != null ? reward.icon : null;
+        }
+
         void ApplyCharacterReward(MenuWishReward reward)
         {
             var id = CharacterIdFor(reward);
@@ -661,8 +614,31 @@ namespace BES.UI.Menu
                 : count == 1 ? singleCoinCost : tenCoinCost;
             if (entry == null || entry.amount < cost) return false;
             entry.amount -= cost;
+            SaveMenuCurrencies();
             homeController?.Refresh();
             return true;
+        }
+
+        void ImportMenuCurrenciesFromSave()
+        {
+            var saved = GameManager.Instance?.Save?.Current?.menuCurrencies;
+            if (database == null || saved == null || saved.Count == 0) return;
+            var values = SaveDataUtility.FromPairs(saved);
+            foreach (var entry in database.currencies)
+                if (entry != null && !string.IsNullOrEmpty(entry.id) && values.TryGetValue(entry.id, out var amount))
+                    entry.amount = Mathf.Max(0, amount);
+        }
+
+        void SaveMenuCurrencies()
+        {
+            var save = GameManager.Instance?.Save?.Current;
+            if (save == null || database == null) return;
+            var values = new Dictionary<string, int>();
+            foreach (var entry in database.currencies)
+                if (entry != null && !string.IsNullOrEmpty(entry.id))
+                    values[entry.id] = Mathf.Max(0, entry.amount);
+            save.menuCurrencies = SaveDataUtility.ToPairs(values);
+            GameManager.Instance?.SaveGame();
         }
 
         void RefreshCurrency()
@@ -711,17 +687,27 @@ namespace BES.UI.Menu
             SetFeedback(string.Empty);
 
             // Restore top bar UI
-            if (coinsButton != null) coinsButton.gameObject.SetActive(true);
-            if (gemsButton != null) gemsButton.gameObject.SetActive(true);
-            if (appleCurrencyBar != null) appleCurrencyBar.SetActive(true);
-            if (closeButton != null) closeButton.SetActive(true);
-
-            if (globalAppleBar != null) globalAppleBar.SetActive(true);
-            if (globalGemsBar != null) globalGemsBar.SetActive(true);
-            if (globalCoinsBar != null) globalCoinsBar.SetActive(true);
-            if (globalCloseButton != null) globalCloseButton.SetActive(true);
+            SetRollTopBarVisible(true);
 
             RefreshCurrency();
+        }
+
+        void SetRollTopBarVisible(bool visible)
+        {
+            CurrencyVisibilityController.SuppressSharedCurrencies = !visible;
+
+            if (coinsButton != null) coinsButton.gameObject.SetActive(visible);
+            if (gemsButton != null) gemsButton.gameObject.SetActive(visible);
+            if (appleCurrencyBar != null) appleCurrencyBar.SetActive(visible);
+            if (closeButton != null) closeButton.SetActive(visible);
+
+            if (globalAppleBar != null) globalAppleBar.SetActive(visible);
+            if (globalGemsBar != null) globalGemsBar.SetActive(visible);
+            if (globalCoinsBar != null) globalCoinsBar.SetActive(visible);
+            if (globalCloseButton != null) globalCloseButton.SetActive(visible);
+
+            if (visible)
+                RefreshCurrency();
         }
 
         void ResolveInventory()
@@ -755,7 +741,7 @@ namespace BES.UI.Menu
             GameObject fadeObj = new GameObject("GachaFadeOverlay", typeof(RectTransform), typeof(CanvasRenderer), typeof(RawImage));
             fadeObj.transform.SetParent(videoParent, false);
             
-            // Set as sibling just after videoOverlayImage so it renders on top of the video but below continueButton
+            // Set as sibling just after videoOverlayImage so it renders on top of the video.
             if (videoOverlayImage != null)
             {
                 fadeObj.transform.SetSiblingIndex(videoOverlayImage.transform.GetSiblingIndex() + 1);

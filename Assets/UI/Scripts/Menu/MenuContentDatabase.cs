@@ -54,6 +54,10 @@ namespace BES.UI.Menu
         [TextArea] public string description;
         public Sprite preview;
         public int energyCost = 10;
+        [Header("Story Dialogue")]
+        public DialogueSequence preBattleDialogue;
+        public DialogueSequence victoryDialogue;
+        public List<CombatDialogueTrigger> combatDialogueTriggers = new();
         public List<RewardEntry> rewards = new();
         public List<PartyAttributeRequirement> partyRequirements = new();
         [Header("Stage Combat Setup")]
@@ -69,7 +73,30 @@ namespace BES.UI.Menu
         public string title;
         [TextArea] public string summary;
         public Sprite background;
+        public DialogueSequence introDialogue;
         public List<StageEntry> stages = new();
+    }
+
+    public enum CombatDialogueTriggerType
+    {
+        BattleStart,
+        RoundStart,
+        BossHealthBelowPercent,
+        EnemyDefeated,
+        BeforeVictory
+    }
+
+    [Serializable]
+    public class CombatDialogueTrigger
+    {
+        public string id;
+        public CombatDialogueTriggerType triggerType;
+        [Min(1)] public int round = 1;
+        [Range(1, 100)] public int healthPercent = 50;
+        public string unitId;
+        public bool pauseCombat = true;
+        public DialogueSequence dialogue;
+        [NonSerialized] public bool played;
     }
 
     [CreateAssetMenu(menuName = "BES/UI/Menu Content Database", fileName = "MenuContentDatabase")]

@@ -1,3 +1,4 @@
+using BES.Core;
 using BES.Gameplay;
 using UnityEngine;
 
@@ -47,6 +48,7 @@ namespace BES.UI
                 if (rarity >= 5)
                     pullsSinceLastFiveStar = 0;
             }
+            GameManager.Instance?.SaveGame();
         }
 
         public bool ShouldForceFiveStar(bool isWeapon)
@@ -56,10 +58,14 @@ namespace BES.UI
             return pullsSinceLastFiveStar >= CharacterPity - 1;
         }
 
-        public void IncrementOffRates() => consecutiveOffRates++;
-        public void ResetOffRates() => consecutiveOffRates = 0;
+        public void IncrementOffRates() { consecutiveOffRates++; GameManager.Instance?.SaveGame(); }
+        public void ResetOffRates() { consecutiveOffRates = 0; GameManager.Instance?.SaveGame(); }
 
-        public void AddStardust(int amount) => stardust = Mathf.Max(0, stardust + amount);
+        public void AddStardust(int amount)
+        {
+            stardust = Mathf.Max(0, stardust + amount);
+            GameManager.Instance?.SaveGame();
+        }
 
         public void ResetAll()
         {

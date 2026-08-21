@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BES.Core;
 using BES.UI;
 using UnityEngine;
 
@@ -25,6 +26,7 @@ namespace BES.Gameplay
                 return false;
 
             items[itemId] = newAmount;
+            GameManager.Instance?.SaveGame();
             return true;
         }
 
@@ -39,6 +41,7 @@ namespace BES.Gameplay
             else
                 items[itemId] = current;
 
+            GameManager.Instance?.SaveGame();
             return true;
         }
 
@@ -98,6 +101,7 @@ namespace BES.Gameplay
 
             EquippedWeaponState.Instance.UnlockWeapon(weaponId);
             EquippedWeaponState.Instance.Equip(weaponId);
+            GameManager.Instance?.SaveGame();
             return true;
         }
 

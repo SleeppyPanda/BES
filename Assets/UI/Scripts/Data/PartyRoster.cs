@@ -76,10 +76,12 @@ namespace BES.UI
                 members[i].displayName = ResolveDisplayName(characterId, displayName);
                 members[i].isUnlocked = true;
                 GameEvents.RaisePartyChanged();
+                GameManager.Instance?.SaveGame();
                 return;
             }
 
             GameEvents.RaisePartyChanged();
+            GameManager.Instance?.SaveGame();
         }
 
         public IEnumerable<PartyMemberSlot> GetUnlockedRosterMembers()
@@ -134,6 +136,7 @@ namespace BES.UI
             suppressHealthCapture = false;
             RestoreActiveHealth();
             GameEvents.RaisePartyChanged();
+            GameManager.Instance?.SaveGame();
         }
 
         public void SetSlot(int index, string characterId, string displayName)
@@ -156,6 +159,7 @@ namespace BES.UI
             }
 
             GameEvents.RaisePartyChanged();
+            GameManager.Instance?.SaveGame();
         }
 
         public void ResetToDefaults()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BES.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -51,6 +52,8 @@ namespace BES.UI.Menu
         [Header("Story panels")]
         [SerializeField] GameObject beforeSelectionPanel;
         [SerializeField] GameObject characterSelectionPanel;
+        [SerializeField] DialogueSequenceUI storyDialogueUI;
+        [SerializeField] bool playChapterIntroOnce = true;
 
         [Header("Chapter display")]
         [SerializeField] TMP_Text[] chapterTitles;
@@ -83,6 +86,7 @@ namespace BES.UI.Menu
         int targetSlotIndex;
         int storyProgressIndex;
         Coroutine storyProgressRoutine;
+        bool chapterIntroPlayed;
 
         public StoryPartyPhase Phase => phase;
         public IReadOnlyList<CharacterEntry> SelectedParty => selectedParty;
@@ -91,13 +95,18 @@ namespace BES.UI.Menu
         {
             EnsureFixedPartySlots();
             BindButtons();
+            ChapterOneStoryRuntime.Apply(database);
             SelectChapter(chapterIndex);
             ShowPhase(StoryPartyPhase.Main);
         }
 
         void OnEnable()
         {
+            EnsureDialogueUI();
+            ChapterOneStoryRuntime.Apply(database);
             SelectChapter(chapterIndex);
+            LoadStoryProgress();
+            TryPlayChapterIntro();
             RefreshAll();
         }
 
@@ -134,6 +143,7 @@ namespace BES.UI.Menu
         public void SelectChapter(int index)
         {
             if (database == null || database.storyChapters.Count == 0) return;
+            ChapterOneStoryRuntime.Apply(database);
             chapterIndex = Mathf.Clamp(index, 0, database.storyChapters.Count - 1);
             var chapter = database.storyChapters[chapterIndex];
             foreach (var title in chapterTitles) if (title != null) title.text = chapter.title;
@@ -191,9 +201,38 @@ namespace BES.UI.Menu
             if (!MeetsPartyRequirements()) return;
             TurnBattleUI.SelectedPartyCharacterIds = CurrentIds();
             TurnBattleUI.IsPlayModeBattle = false;
+            var stage = CurrentStage();
+            TurnBattleUI.ActiveStageId = stage?.id;
             onPartyConfirmed?.Invoke(CurrentIds());
             ShowPhase(StoryPartyPhase.Main);
-            navigator?.Open(MenuScreenId.Battle);
+            if (stage?.preBattleDialogue != null && stage.preBattleDialogue.beats.Count > 0 && storyDialogueUI != null)
+            {
+                storyDialogueUI.Play(stage.preBattleDialogue, OpenBattle);
+            }
+            else
+            {
+                OpenBattle();
+            }
+        }
+
+        void OpenBattle() => navigator?.Open(MenuScreenId.Battle);
+
+        void TryPlayChapterIntro()
+        {
+            if (playChapterIntroOnce && chapterIntroPlayed) return;
+            if (database == null || database.storyChapters.Count == 0 || storyDialogueUI == null) return;
+            var chapter = database.storyChapters[Mathf.Clamp(chapterIndex, 0, database.storyChapters.Count - 1)];
+            if (chapter?.introDialogue == null || chapter.introDialogue.beats.Count == 0) return;
+            chapterIntroPlayed = true;
+            storyDialogueUI.Play(chapter.introDialogue);
+        }
+
+        void EnsureDialogueUI()
+        {
+            if (storyDialogueUI != null) return;
+            storyDialogueUI = FindAnyObjectByType<DialogueSequenceUI>(FindObjectsInactive.Include);
+            if (storyDialogueUI == null)
+                storyDialogueUI = DialogueSequenceUI.CreateRuntimeOverlay("RuntimeStoryDialogueUI");
         }
 
         void BackToHome() => navigator?.Back();
@@ -203,6 +242,23 @@ namespace BES.UI.Menu
             if (storyProgressPositions.Count == 0) return;
             storyProgressIndex = Mathf.Min(storyProgressIndex + 1, storyProgressPositions.Count - 1);
             MoveStoryProgressMarker();
+            SaveStoryProgress();
+        }
+
+        void LoadStoryProgress()
+        {
+            var save = GameManager.Instance?.Save?.Current;
+            if (save == null) return;
+            storyProgressIndex = Mathf.Clamp(save.storyProgressIndex, 0, Mathf.Max(0, storyProgressPositions.Count - 1));
+            RefreshStoryProgress();
+        }
+
+        void SaveStoryProgress()
+        {
+            var save = GameManager.Instance?.Save?.Current;
+            if (save != null)
+                save.storyProgressIndex = storyProgressIndex;
+            GameManager.Instance?.SaveGame();
         }
 
         void RefreshStoryProgress()

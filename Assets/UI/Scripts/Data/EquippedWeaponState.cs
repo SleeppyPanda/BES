@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BES.Core;
 using BES.Gameplay;
 using UnityEngine;
 
@@ -46,7 +47,10 @@ namespace BES.UI
         public void UnlockWeapon(string weaponId)
         {
             if (!string.IsNullOrEmpty(weaponId))
+            {
                 ownedWeaponIds.Add(weaponId);
+                GameManager.Instance?.SaveGame();
+            }
         }
 
         public void Equip(string weaponId)
@@ -55,25 +59,29 @@ namespace BES.UI
                 return;
             equippedWeaponId = weaponId;
             RefreshPlayerBuild();
+            GameManager.Instance?.SaveGame();
         }
 
         public void Unequip()
         {
             equippedWeaponId = string.Empty;
+            GameManager.Instance?.SaveGame();
         }
 
-        public void SetLevel(int newLevel) => level = Mathf.Max(1, newLevel);
-        public void SetExperience(int newExp) => experience = Mathf.Max(0, newExp);
-        public void SetRefinement(int newRefine) => refinement = Mathf.Max(1, newRefine);
+        public void SetLevel(int newLevel) { level = Mathf.Max(1, newLevel); GameManager.Instance?.SaveGame(); }
+        public void SetExperience(int newExp) { experience = Mathf.Max(0, newExp); GameManager.Instance?.SaveGame(); }
+        public void SetRefinement(int newRefine) { refinement = Mathf.Max(1, newRefine); GameManager.Instance?.SaveGame(); }
         public void EnhanceLevel(int delta = 1)
         {
             level = Mathf.Min(80, level + delta);
             RefreshPlayerBuild();
+            GameManager.Instance?.SaveGame();
         }
         public void EnhanceRefinement(int delta = 1)
         {
             refinement = Mathf.Min(5, refinement + delta);
             RefreshPlayerBuild();
+            GameManager.Instance?.SaveGame();
         }
 
         public void AddExperience(int amount)
@@ -91,6 +99,7 @@ namespace BES.UI
             }
             experience = level >= cap ? 0 : exp;
             RefreshPlayerBuild();
+            GameManager.Instance?.SaveGame();
         }
 
         public int SimulateLevelAfterExp(int addedExp)

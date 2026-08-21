@@ -8,6 +8,8 @@ namespace BES.UI.Menu
     /// </summary>
     public class CurrencyVisibilityController : MonoBehaviour
     {
+        public static bool SuppressSharedCurrencies { get; set; }
+
         [SerializeField] GameObject coins;
         [SerializeField] GameObject gems;
         [SerializeField] GameObject crystalApple;
@@ -25,7 +27,7 @@ namespace BES.UI.Menu
         {
             var battleVisible = IsVisible(battlePanel);
             var shopVisible = IsVisible(cashShopPanel);
-            var showShared = !battleVisible && !shopVisible;
+            var showShared = !SuppressSharedCurrencies && !battleVisible && !shopVisible;
 
             SetIfChanged(coins, showShared);
             SetIfChanged(gems, showShared);

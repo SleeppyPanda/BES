@@ -32,6 +32,7 @@ namespace BES.Gameplay
         public List<string> completedQuestIds = new();
         public string trackedQuestId = string.Empty;
         public List<StringIntPair> inventory = new();
+        public List<StringIntPair> menuCurrencies = new();
         public List<StringIntPair> relationships = new();
         public List<StringListPair> npcMemories = new();
         public List<string> collectedItemIds = new();
@@ -54,6 +55,7 @@ namespace BES.Gameplay
         public List<string> collectedWorldObjectIds = new();
         public string equippedArtifactId = string.Empty;
         public string storyBranch = "main";
+        public int storyProgressIndex;
         public string endingId = string.Empty;
         public int gachaPullsSinceFiveStar;
         public int gachaPullsSinceFiveStarWeapon;

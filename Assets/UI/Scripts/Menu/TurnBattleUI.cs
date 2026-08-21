@@ -7,6 +7,9 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using BES.Gameplay;
 using BES.Core;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace BES.UI.Menu
 {
@@ -88,10 +91,12 @@ namespace BES.UI.Menu
         [SerializeField] TMP_Text autoText;
         [SerializeField] Button pauseButton;
         [SerializeField] GameObject pausePanel;
+        [SerializeField] Button pauseResumeButton;
         [SerializeField] GameObject winPanel;
         [SerializeField] Button winReturnButton;
         [SerializeField] GameObject losePanel;
         [SerializeField] Button loseReturnButton;
+        [SerializeField] Button loseExitButton;
         [SerializeField] Button loseRetryButton;
         [SerializeField] Button levelBtn;
         [SerializeField] Button equipBtn;
@@ -99,7 +104,13 @@ namespace BES.UI.Menu
         [SerializeField] Button constellationBtn;
         [SerializeField] Button recruitBtn;
         [SerializeField] MenuNavigator navigator;
+        [SerializeField] MenuHomeController homeController;
+        [SerializeField] CharacterCollectionPanel characterCollection;
+        [SerializeField] SimpleModalPanel wishPanel;
         [SerializeField] StoryModePanelController storyModeController;
+        [Header("Result UI Art")]
+        [SerializeField] Sprite winPanelArt;
+        [SerializeField] Sprite losePanelArt;
         [Header("Timing and animation")]
         [SerializeField, Min(0.05f)] float actionWindup = 0.45f;
         [SerializeField, Min(0.05f)] float actionRecovery = 0.35f;
@@ -109,6 +120,9 @@ namespace BES.UI.Menu
         [SerializeField] UnityEvent onDefeat;
         [SerializeField] UnityEvent<int> onRoundStarted;
         [SerializeField] MenuContentDatabase menuContentDatabase;
+        [Header("Story dialogue popups")]
+        [SerializeField] DialogueSequenceUI combatDialogueUI;
+        [SerializeField] bool pauseBattleDuringDialogue = true;
 
         public static string ActiveStageId;
         public static List<string> SelectedPartyCharacterIds = new();
@@ -125,8 +139,13 @@ namespace BES.UI.Menu
         bool autoMode;
         bool paused;
         float playbackSpeed = 1f;
+        StageEntry currentStage;
 
-        void Awake() { WireControls(); }
+        void Awake()
+        {
+            EnsureDialogueUI();
+            WireControls();
+        }
         void OnEnable() { ResetBattle(); }
         void OnDisable() { paused = false; ApplyPlaybackSpeed(); }
 
@@ -143,20 +162,25 @@ namespace BES.UI.Menu
 
         void WireControls()
         {
+            AutoResolveMenuReferences();
+            AutoResolveResultButtons();
+            ApplyResultPanelArt();
             for (var i = 0; i < skillButtons.Count; i++) { var index = i; if (skillButtons[i] != null) skillButtons[i].onClick.AddListener(() => SelectSkill(index)); }
             foreach (var enemy in enemies) { var captured = enemy; if (enemy?.targetButton != null) enemy.targetButton.onClick.AddListener(() => SelectTarget(captured)); }
             if (speedButton != null) speedButton.onClick.AddListener(ToggleSpeed);
             if (autoButton != null) autoButton.onClick.AddListener(ToggleAuto);
             if (pauseButton != null) pauseButton.onClick.AddListener(TogglePause);
+            if (pauseResumeButton != null) pauseResumeButton.onClick.AddListener(ResumeBattle);
             if (winReturnButton != null) winReturnButton.onClick.AddListener(ReturnToStoryMode);
 
-            if (loseReturnButton != null) loseReturnButton.onClick.AddListener(ReturnToStoryMode);
+            if (loseReturnButton != null) loseReturnButton.onClick.AddListener(ExitBattleToHome);
+            if (loseExitButton != null) loseExitButton.onClick.AddListener(ExitBattleToHome);
             if (loseRetryButton != null) loseRetryButton.onClick.AddListener(ResetBattle);
-            if (levelBtn != null) levelBtn.onClick.AddListener(() => OpenScreen(MenuScreenId.Management));
-            if (equipBtn != null) equipBtn.onClick.AddListener(() => OpenScreen(MenuScreenId.Management));
-            if (skillBtn != null) skillBtn.onClick.AddListener(() => OpenScreen(MenuScreenId.Management));
-            if (constellationBtn != null) constellationBtn.onClick.AddListener(() => OpenScreen(MenuScreenId.Management));
-            if (recruitBtn != null) recruitBtn.onClick.AddListener(() => OpenScreen(MenuScreenId.Home));
+            if (levelBtn != null) levelBtn.onClick.AddListener(() => OpenCharacterDestination(CharacterCollectionPanel.CharacterCollectionDestination.Level));
+            if (equipBtn != null) equipBtn.onClick.AddListener(() => OpenCharacterDestination(CharacterCollectionPanel.CharacterCollectionDestination.Equipment));
+            if (skillBtn != null) skillBtn.onClick.AddListener(() => OpenCharacterDestination(CharacterCollectionPanel.CharacterCollectionDestination.Skill));
+            if (constellationBtn != null) constellationBtn.onClick.AddListener(() => OpenCharacterDestination(CharacterCollectionPanel.CharacterCollectionDestination.Constellation));
+            if (recruitBtn != null) recruitBtn.onClick.AddListener(OpenRecruit);
         }
 
         void OpenScreen(MenuScreenId screenId)
@@ -165,18 +189,172 @@ namespace BES.UI.Menu
             navigator?.Open(screenId);
         }
 
+        void ResumeBattle()
+        {
+            paused = false;
+            if (pausePanel != null) pausePanel.SetActive(false);
+            ApplyPlaybackSpeed();
+        }
+
+        void SaveBattleProgress()
+        {
+            GameManager.Instance?.SaveGame();
+        }
+
+        void ExitBattleToHome()
+        {
+            SaveBattleProgress();
+            ActiveStageId = currentStage != null ? currentStage.id : ActiveStageId;
+            if (winPanel != null) winPanel.SetActive(false);
+            if (losePanel != null) losePanel.SetActive(false);
+            if (pausePanel != null) pausePanel.SetActive(false);
+            paused = false;
+            ApplyPlaybackSpeed();
+            navigator?.Open(MenuScreenId.Home);
+            homeController?.Refresh();
+        }
+
+        void OpenCharacterDestination(CharacterCollectionPanel.CharacterCollectionDestination destination)
+        {
+            SaveBattleProgress();
+            if (losePanel != null) losePanel.SetActive(false);
+            if (pausePanel != null) pausePanel.SetActive(false);
+            paused = false;
+            ApplyPlaybackSpeed();
+            navigator?.Open(MenuScreenId.Home);
+            characterCollection?.OpenDestination(destination, homeController != null ? homeController.CurrentCharacterId : null);
+        }
+
+        void OpenRecruit()
+        {
+            SaveBattleProgress();
+            if (losePanel != null) losePanel.SetActive(false);
+            if (pausePanel != null) pausePanel.SetActive(false);
+            paused = false;
+            ApplyPlaybackSpeed();
+            navigator?.Open(MenuScreenId.Home);
+            if (characterCollection != null)
+                characterCollection.OpenRateUp();
+            wishPanel?.Open();
+        }
+
+        void AutoResolveMenuReferences()
+        {
+            navigator ??= FindAnyObjectByType<MenuNavigator>(FindObjectsInactive.Include);
+            homeController ??= FindAnyObjectByType<MenuHomeController>(FindObjectsInactive.Include);
+            characterCollection ??= FindAnyObjectByType<CharacterCollectionPanel>(FindObjectsInactive.Include);
+            storyModeController ??= FindAnyObjectByType<StoryModePanelController>(FindObjectsInactive.Include);
+            if (wishPanel == null)
+            {
+                var wish = FindDeep(transform.root, "WishPanel") ?? FindDeep(transform.root, "WishContent");
+                wishPanel = wish != null ? wish.GetComponentInParent<SimpleModalPanel>(true) : null;
+            }
+        }
+
+        void AutoResolveResultButtons()
+        {
+            pauseResumeButton ??= FindButton(pausePanel, "ResumeButton", "ContinueButton", "Continue", "Resume", "TiepTuc", "Tieptuc");
+            if (pausePanel != null && pauseResumeButton == null)
+                pauseResumeButton = CreateRuntimePauseResumeButton();
+
+            winReturnButton ??= FindButton(winPanel, "ContinueButton", "Continue", "NextButton", "TiepTuc", "Tieptuc");
+
+            loseReturnButton ??= FindButton(losePanel, "ExitButton", "CloseButton", "ReturnButton", "Thoat", "Exit");
+            loseExitButton ??= FindButton(losePanel, "ExitButton", "CloseButton", "ReturnButton", "Thoat", "Exit");
+            loseRetryButton ??= FindButton(losePanel, "RetryButton", "AgainButton", "ReplayButton", "ChoiLai");
+            levelBtn ??= FindButton(losePanel, "LevelButton", "CharacterLevelButton", "CapNhanVat", "CharacterLevel");
+            equipBtn ??= FindButton(losePanel, "EquipmentButton", "EquipButton", "TrangBi", "Equipment");
+            skillBtn ??= FindButton(losePanel, "SkillButton", "KyNang", "Skill");
+            constellationBtn ??= FindButton(losePanel, "ConstellationButton", "TinhMenh", "Constellation");
+            recruitBtn ??= FindButton(losePanel, "RecruitButton", "WishButton", "ChieuMo", "Recruit", "Wish");
+        }
+
+        Button FindButton(GameObject root, params string[] names)
+        {
+            if (root == null || names == null) return null;
+            foreach (var name in names)
+            {
+                var found = FindDeep(root.transform, name);
+                var button = found != null ? found.GetComponent<Button>() : null;
+                if (button != null) return button;
+            }
+            return null;
+        }
+
+        static Transform FindDeep(Transform root, string objectName)
+        {
+            if (root == null || string.IsNullOrEmpty(objectName)) return null;
+            if (root.name.Equals(objectName, StringComparison.OrdinalIgnoreCase)) return root;
+            foreach (Transform child in root)
+            {
+                var result = FindDeep(child, objectName);
+                if (result != null) return result;
+            }
+            return null;
+        }
+
+        Button CreateRuntimePauseResumeButton()
+        {
+            var buttonObject = new GameObject("ResumeButton", typeof(RectTransform), typeof(Image), typeof(Button));
+            buttonObject.transform.SetParent(pausePanel.transform, false);
+            var rect = buttonObject.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(.42f, .42f);
+            rect.anchorMax = new Vector2(.58f, .50f);
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+            var image = buttonObject.GetComponent<Image>();
+            image.color = new Color(.92f, .78f, .48f, .95f);
+
+            var labelObject = new GameObject("Label", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+            labelObject.transform.SetParent(buttonObject.transform, false);
+            var labelRect = labelObject.GetComponent<RectTransform>();
+            labelRect.anchorMin = Vector2.zero;
+            labelRect.anchorMax = Vector2.one;
+            labelRect.offsetMin = Vector2.zero;
+            labelRect.offsetMax = Vector2.zero;
+            var label = labelObject.GetComponent<TextMeshProUGUI>();
+            label.text = "TIẾP TỤC";
+            label.alignment = TextAlignmentOptions.Center;
+            label.fontSize = 28f;
+            label.color = new Color(.24f, .12f, .07f, 1f);
+
+            return buttonObject.GetComponent<Button>();
+        }
+
+        void ApplyResultPanelArt()
+        {
+#if UNITY_EDITOR
+            winPanelArt ??= AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art Ui/Game Việt hóa mới/Thông báo/Group 427323086.png");
+            losePanelArt ??= AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art Ui/Game Việt hóa mới/Thông báo/Group 427323096.png");
+#endif
+            ApplyRootImage(winPanel, winPanelArt);
+            ApplyRootImage(losePanel, losePanelArt);
+        }
+
+        static void ApplyRootImage(GameObject panel, Sprite sprite)
+        {
+            if (panel == null || sprite == null) return;
+            var image = panel.GetComponent<Image>();
+            if (image == null) return;
+            image.sprite = sprite;
+            image.color = Color.white;
+        }
+
         public void ResetBattle()
         {
             StopAllCoroutines();
+            EnsureDialogueUI();
             LoadPlayerParty();
             LoadStageData();
             InitializeTeam(allies, true); InitializeTeam(enemies, false);
             round = 0; queueIndex = 0; selectedSkillIndex = -1; currentActor = null;
             resolving = false; paused = false; autoMode = false; playbackSpeed = 1f;
+            ResetCombatDialogueTriggers();
             if (pausePanel != null) pausePanel.SetActive(false);
             if (winPanel != null) winPanel.SetActive(false);
             if (losePanel != null) losePanel.SetActive(false);
             ApplyPlaybackSpeed(); StartNextRound();
+            TryPlayCombatDialogue(CombatDialogueTriggerType.BattleStart);
         }
 
         static void InitializeTeam(List<BattleUnitView> team, bool isPlayer)
@@ -219,6 +397,7 @@ namespace BES.UI.Menu
             turnQueue.Sort(CompareTurnOrder); queueIndex = 0;
             if (roundText != null) roundText.text = $"ROUND {round}";
             onRoundStarted?.Invoke(round); BeginCurrentTurn();
+            TryPlayCombatDialogue(CombatDialogueTriggerType.RoundStart, null, round);
         }
 
         static void AddAlive(List<BattleUnitView> destination, List<BattleUnitView> source) { foreach (var unit in source) if (unit != null && unit.IsAlive) destination.Add(unit); }
@@ -298,6 +477,7 @@ namespace BES.UI.Menu
                 }
 
                 RefreshUnit(target);
+                TryPlayCombatDialogue(CombatDialogueTriggerType.BossHealthBelowPercent, target);
 
                 if (target.health == 0)
                 {
@@ -305,6 +485,7 @@ namespace BES.UI.Menu
                     if (target.battlefieldImage != null) target.battlefieldImage.gameObject.SetActive(false);
                     if (target.gifPlayer != null) target.gifPlayer.gameObject.SetActive(false);
                     if (target.root != null) target.root.SetActive(false);
+                    TryPlayCombatDialogue(CombatDialogueTriggerType.EnemyDefeated, target);
                 }
             };
 
@@ -332,14 +513,14 @@ namespace BES.UI.Menu
             else
             {
                 // Melee attack: move quickly to target, strike, return
-                var actorRect = actor.root != null ? actor.root.GetComponent<RectTransform>() : null;
-                var targetRect = target.root != null ? target.root.GetComponent<RectTransform>() : null;
+                var actorRect = MovementRectFor(actor);
+                var targetRect = MovementRectFor(target);
 
                 if (actorRect != null && targetRect != null)
                 {
-                    var startPos = actorRect.anchoredPosition;
-                    var offset = actor.isPlayer ? new Vector2(-150f, 0f) : new Vector2(150f, 0f);
-                    var targetPos = targetRect.anchoredPosition + offset;
+                    var startPos = actorRect.position;
+                    var offset = actor.isPlayer ? new Vector3(-150f, 0f, 0f) : new Vector3(150f, 0f, 0f);
+                    var targetPos = targetRect.position + offset;
 
                     // Start attack GIF
                     if (actor.gifPlayer != null && actor.definition.attackClip != null)
@@ -359,11 +540,11 @@ namespace BES.UI.Menu
                         if (!paused)
                         {
                             elapsed += Time.unscaledDeltaTime * playbackSpeed;
-                            actorRect.anchoredPosition = Vector2.Lerp(startPos, targetPos, elapsed / dashDuration);
+                            actorRect.position = Vector3.Lerp(startPos, targetPos, elapsed / dashDuration);
                         }
                         yield return null;
                     }
-                    actorRect.anchoredPosition = targetPos;
+                    actorRect.position = targetPos;
 
                     // Wait for actionWindup - dash duration
                     float remainingWindup = Mathf.Max(0f, actionWindup - dashDuration);
@@ -387,11 +568,11 @@ namespace BES.UI.Menu
                         if (!paused)
                         {
                             elapsed += Time.unscaledDeltaTime * playbackSpeed;
-                            actorRect.anchoredPosition = Vector2.Lerp(targetPos, startPos, elapsed / dashDuration);
+                            actorRect.position = Vector3.Lerp(targetPos, startPos, elapsed / dashDuration);
                         }
                         yield return null;
                     }
-                    actorRect.anchoredPosition = startPos;
+                    actorRect.position = startPos;
                 }
                 else
                 {
@@ -471,9 +652,8 @@ namespace BES.UI.Menu
             {
                 HideSkills();
                 RefreshTurnOrder(true);
-                ProcessCombatDrops();
-                if (winPanel != null) winPanel.SetActive(true);
-                onVictory?.Invoke();
+                if (!TryPlayCombatDialogue(CombatDialogueTriggerType.BeforeVictory, null, 0, CompleteVictory))
+                    CompleteVictory();
                 return;
             }
             if (!AnyAlive(allies))
@@ -504,6 +684,18 @@ namespace BES.UI.Menu
         void ReturnToStoryMode()
         {
             if (winPanel != null) winPanel.SetActive(false);
+            if (!IsPlayModeBattle && currentStage?.victoryDialogue != null && currentStage.victoryDialogue.beats.Count > 0 && combatDialogueUI != null)
+            {
+                combatDialogueUI.Play(currentStage.victoryDialogue, ReturnToStoryModeAfterDialogue);
+                return;
+            }
+
+            ReturnToStoryModeAfterDialogue();
+        }
+
+        void ReturnToStoryModeAfterDialogue()
+        {
+            SaveBattleProgress();
             if (IsPlayModeBattle)
             {
                 navigator?.Open(MenuScreenId.ResourceStages);
@@ -513,6 +705,21 @@ namespace BES.UI.Menu
                 navigator?.Open(MenuScreenId.StoryParty);
                 storyModeController?.CompleteStoryBattle();
             }
+        }
+
+        void CompleteVictory()
+        {
+            ProcessCombatDrops();
+            if (winPanel != null) winPanel.SetActive(true);
+            onVictory?.Invoke();
+        }
+
+        void EnsureDialogueUI()
+        {
+            if (combatDialogueUI != null) return;
+            combatDialogueUI = FindAnyObjectByType<DialogueSequenceUI>(FindObjectsInactive.Include);
+            if (combatDialogueUI == null)
+                combatDialogueUI = DialogueSequenceUI.CreateRuntimeOverlay("RuntimeCombatDialogueUI");
         }
         void RefreshTurnOrder(bool battleFinished = false)
         {
@@ -567,6 +774,16 @@ namespace BES.UI.Menu
                 unit.healthFill.fillAmount = unit.health / (float)Mathf.Max(1, unit.definition.maxHealth);
             if (unit.healthText != null) unit.healthText.text = $"{unit.health}/{unit.definition.maxHealth}";
             if (unit.battlefieldImage != null) unit.battlefieldImage.color = Color.white;
+        }
+
+        static RectTransform MovementRectFor(BattleUnitView unit)
+        {
+            if (unit == null) return null;
+            if (unit.gifPlayer != null && unit.gifPlayer.gameObject.activeInHierarchy)
+                return unit.gifPlayer.GetComponent<RectTransform>();
+            if (unit.battlefieldImage != null)
+                return unit.battlefieldImage.rectTransform;
+            return unit.root != null ? unit.root.GetComponent<RectTransform>() : null;
         }
         static bool AnyAlive(List<BattleUnitView> list) => list.Exists(unit => unit != null && unit.IsAlive);
         static BattleUnitView FirstAlive(List<BattleUnitView> list) => list.Find(unit => unit != null && unit.IsAlive);
@@ -641,6 +858,9 @@ namespace BES.UI.Menu
             if (menuContentDatabase == null || string.IsNullOrEmpty(ActiveStageId))
                 return;
 
+            ChapterOneStoryRuntime.Apply(menuContentDatabase);
+
+            currentStage = null;
             StageEntry stage = null;
             foreach (var chapter in menuContentDatabase.storyChapters)
             {
@@ -652,6 +872,7 @@ namespace BES.UI.Menu
             if (stage == null) stage = menuContentDatabase.weaponStages.Find(x => x.id == ActiveStageId);
 
             if (stage == null) return;
+            currentStage = stage;
 
             for (var i = 0; i < enemies.Count; i++)
             {
@@ -677,6 +898,53 @@ namespace BES.UI.Menu
                 bossView.definition = CloneAndScaleDefinition(stage.boss, stage.enemyLevel);
                 if (bossView.root != null) bossView.root.SetActive(true);
             }
+        }
+
+        void ResetCombatDialogueTriggers()
+        {
+            if (currentStage?.combatDialogueTriggers == null) return;
+            foreach (var trigger in currentStage.combatDialogueTriggers)
+                if (trigger != null) trigger.played = false;
+        }
+
+        bool TryPlayCombatDialogue(CombatDialogueTriggerType triggerType, BattleUnitView unit = null, int roundValue = 0, Action completed = null)
+        {
+            if (currentStage?.combatDialogueTriggers == null || combatDialogueUI == null) return false;
+            foreach (var trigger in currentStage.combatDialogueTriggers)
+            {
+                if (trigger == null || trigger.played || trigger.triggerType != triggerType) continue;
+                if (trigger.dialogue == null || trigger.dialogue.beats.Count == 0) continue;
+                if (triggerType == CombatDialogueTriggerType.RoundStart && trigger.round != roundValue) continue;
+                if (!string.IsNullOrWhiteSpace(trigger.unitId) && unit?.definition?.id != trigger.unitId) continue;
+                if (triggerType == CombatDialogueTriggerType.BossHealthBelowPercent && !HealthBelow(unit, trigger.healthPercent)) continue;
+
+                trigger.played = true;
+                var shouldPause = pauseBattleDuringDialogue && trigger.pauseCombat;
+                if (shouldPause)
+                {
+                    paused = true;
+                    ApplyPlaybackSpeed();
+                }
+
+                combatDialogueUI.Play(trigger.dialogue, () =>
+                {
+                    if (shouldPause)
+                    {
+                        paused = false;
+                        ApplyPlaybackSpeed();
+                    }
+                    completed?.Invoke();
+                });
+                return true;
+            }
+
+            return false;
+        }
+
+        static bool HealthBelow(BattleUnitView unit, int percent)
+        {
+            if (unit?.definition == null || unit.definition.maxHealth <= 0) return false;
+            return unit.health <= Mathf.CeilToInt(unit.definition.maxHealth * Mathf.Clamp(percent, 1, 100) / 100f);
         }
 
         BattleUnitDefinition CloneAndScaleDefinition(BattleUnitDefinition template, int level)

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using BES.Core;
+using BES.Gameplay;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -139,7 +141,11 @@ namespace BES.UI.Menu
             Refresh();
         }
 
-        void OnEnable() => Refresh();
+        void OnEnable()
+        {
+            ImportMenuCurrenciesFromSave();
+            Refresh();
+        }
 
         static void Wire(Button button, UnityEngine.Events.UnityAction action)
         {
@@ -182,7 +188,30 @@ namespace BES.UI.Menu
             var entry = database?.currencies.Find(x => x.id == currencyId);
             if (entry == null) return;
             entry.amount = Mathf.Max(0, amount);
+            SaveMenuCurrencies();
             RefreshCurrencies();
+        }
+
+        void ImportMenuCurrenciesFromSave()
+        {
+            var saved = GameManager.Instance?.Save?.Current?.menuCurrencies;
+            if (database == null || saved == null || saved.Count == 0) return;
+            var values = SaveDataUtility.FromPairs(saved);
+            foreach (var entry in database.currencies)
+                if (entry != null && !string.IsNullOrEmpty(entry.id) && values.TryGetValue(entry.id, out var amount))
+                    entry.amount = Mathf.Max(0, amount);
+        }
+
+        void SaveMenuCurrencies()
+        {
+            var save = GameManager.Instance?.Save?.Current;
+            if (save == null || database == null) return;
+            var values = new Dictionary<string, int>();
+            foreach (var entry in database.currencies)
+                if (entry != null && !string.IsNullOrEmpty(entry.id))
+                    values[entry.id] = Mathf.Max(0, entry.amount);
+            save.menuCurrencies = SaveDataUtility.ToPairs(values);
+            GameManager.Instance?.SaveGame();
         }
 
         public void IncreaseRank()

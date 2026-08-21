@@ -51,6 +51,7 @@ namespace BES.UI.Menu
         public void SelectChapter(int index)
         {
             if (database == null || database.storyChapters.Count == 0) return;
+            ChapterOneStoryRuntime.Apply(database);
             chapterIndex = Mathf.Clamp(index, 0, database.storyChapters.Count - 1);
             var chapter = database.storyChapters[chapterIndex];
             if (chapterBackground != null) chapterBackground.sprite = chapter.background;

@@ -14,11 +14,13 @@ namespace BES.Core
             {
                 if (Object.FindAnyObjectByType<PartySwapController>() == null)
                     existingGameManager.gameObject.AddComponent<PartySwapController>();
+                if (existingGameManager.Save.HasSave && !existingGameManager.Save.LoadedFromContinue)
+                    existingGameManager.Save.Load();
                 return;
             }
 
             var root = new GameObject("[BES] GameSystems");
-            root.AddComponent<GameManager>();
+            var gameManager = root.AddComponent<GameManager>();
             root.AddComponent<SceneLoader>();
             root.AddComponent<PartySwapController>();
             root.AddComponent<PlayerWallet>();
@@ -26,6 +28,8 @@ namespace BES.Core
             root.AddComponent<PartyRoster>();
             root.AddComponent<MetaProgressState>();
             root.AddComponent<GachaPityState>();
+            if (gameManager.Save.HasSave && !gameManager.Save.LoadedFromContinue)
+                gameManager.Save.Load();
         }
     }
 }

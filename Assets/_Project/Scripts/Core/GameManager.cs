@@ -13,6 +13,7 @@ namespace BES.Core
         [SerializeField] QuestManager questManager;
         [SerializeField] InventorySystem inventorySystem;
         [SerializeField] RelationshipSystem relationshipSystem;
+        [SerializeField] bool autoLoadExistingSaveOnStart = true;
 
         public SaveSystem Save => saveSystem;
         public QuestManager Quests => questManager;
@@ -40,6 +41,12 @@ namespace BES.Core
                 gameObject.AddComponent<OpenWorldSliceValidator>();
         }
 
+        void Start()
+        {
+            if (autoLoadExistingSaveOnStart && saveSystem.HasSave && !saveSystem.LoadedFromContinue)
+                saveSystem.Load();
+        }
+
         void EnsureSystems()
         {
             saveSystem ??= GetComponentInChildren<SaveSystem>() ?? gameObject.AddComponent<SaveSystem>();
@@ -61,6 +68,7 @@ namespace BES.Core
             MetaProgressState.Instance?.ResetAll();
             GachaPityState.Instance?.ResetAll();
             CharacterProgressionState.ResetAll();
+            SaveGame();
             SceneLoader.Instance.LoadGameplay();
         }
 

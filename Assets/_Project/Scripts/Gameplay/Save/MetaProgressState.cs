@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BES.Core;
 using BES.UI;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace BES.Gameplay
         int eventStreakDay;
         string equippedArtifactId = string.Empty;
         ArtifactDatabase artifactDatabase;
+        bool suppressPersistence;
 
         public string EquippedArtifactId => equippedArtifactId;
         public int EventStreakDay => eventStreakDay;
@@ -46,6 +48,7 @@ namespace BES.Gameplay
             equippedArtifactId = string.Empty;
             ownedArtifactIds.Clear();
             UnlockArtifact("artifact_starter");
+            Persist();
         }
 
         public bool OwnsArtifact(string artifactId) =>
@@ -54,7 +57,10 @@ namespace BES.Gameplay
         public void UnlockArtifact(string artifactId)
         {
             if (!string.IsNullOrEmpty(artifactId))
+            {
                 ownedArtifactIds.Add(artifactId);
+                Persist();
+            }
         }
 
         public ArtifactDefinition GetEquippedArtifact()
@@ -70,7 +76,10 @@ namespace BES.Gameplay
         public void UnlockTeleport(string teleportId)
         {
             if (!string.IsNullOrEmpty(teleportId))
+            {
                 unlockedTeleports.Add(teleportId);
+                Persist();
+            }
         }
 
         public bool IsRegionDiscovered(string regionId) =>
@@ -79,7 +88,10 @@ namespace BES.Gameplay
         public void DiscoverRegion(string regionId)
         {
             if (!string.IsNullOrEmpty(regionId))
+            {
                 discoveredRegions.Add(regionId);
+                Persist();
+            }
         }
 
         public bool IsWorldObjectCollected(string instanceId) =>
@@ -88,7 +100,10 @@ namespace BES.Gameplay
         public void MarkWorldObjectCollected(string instanceId)
         {
             if (!string.IsNullOrEmpty(instanceId))
+            {
                 collectedWorldObjects.Add(instanceId);
+                Persist();
+            }
         }
 
         public bool IsEventDayClaimed(int day) => eventClaimedDays.Contains(day);
@@ -101,10 +116,14 @@ namespace BES.Gameplay
             eventClaimedDays.Add(day);
             if (day > eventStreakDay)
                 eventStreakDay = day;
+            Persist();
         }
 
-        public void SetEquippedArtifact(string artifactId) =>
+        public void SetEquippedArtifact(string artifactId)
+        {
             equippedArtifactId = OwnsArtifact(artifactId) ? artifactId : equippedArtifactId;
+            Persist();
+        }
 
         public void ExportToSave(SaveData data)
         {
@@ -122,7 +141,9 @@ namespace BES.Gameplay
 
         public void ImportFromSave(SaveData data)
         {
+            suppressPersistence = true;
             ResetAll();
+            suppressPersistence = false;
             if (data == null)
                 return;
 
@@ -154,6 +175,12 @@ namespace BES.Gameplay
             {
                 UnlockArtifact("artifact_starter");
             }
+        }
+
+        void Persist()
+        {
+            if (!suppressPersistence)
+                GameManager.Instance?.SaveGame();
         }
     }
 }

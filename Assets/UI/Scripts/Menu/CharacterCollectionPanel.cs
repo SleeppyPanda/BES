@@ -83,6 +83,15 @@ namespace BES.UI.Menu
         readonly Sprite[] informationEmptySlotSprites = new Sprite[4];
         string selectedCharacterId;
 
+        public enum CharacterCollectionDestination
+        {
+            Detail,
+            Level,
+            Equipment,
+            Skill,
+            Constellation
+        }
+
         [Header("Weapon UI sprites")]
         [SerializeField] Sprite weaponChangeSprite;
         [SerializeField] Sprite weaponEnhanceSprite;
@@ -153,6 +162,34 @@ namespace BES.UI.Menu
         {
             OpenCharacter(characterId);
             ShowPage(levelPage);
+        }
+
+        public void OpenDestination(CharacterCollectionDestination destination, string characterId = null)
+        {
+            BuildRuntimeUI();
+            selectedCharacterId = ResolveOwnedCharacter(string.IsNullOrWhiteSpace(characterId) ? selectedCharacterId : characterId);
+            RefreshCharacter();
+
+            switch (destination)
+            {
+                case CharacterCollectionDestination.Level:
+                    ShowPage(levelPage);
+                    break;
+                case CharacterCollectionDestination.Equipment:
+                    ShowPage(artifactPage);
+                    break;
+                case CharacterCollectionDestination.Skill:
+                    ShowPage(detailPage);
+                    break;
+                case CharacterCollectionDestination.Constellation:
+                    ShowPage(constellationPage);
+                    break;
+                default:
+                    ShowPage(detailPage);
+                    break;
+            }
+
+            modal?.Open();
         }
 
         public void OpenRateUp()

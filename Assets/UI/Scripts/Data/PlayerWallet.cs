@@ -1,4 +1,5 @@
 using System;
+using BES.Core;
 using BES.Gameplay;
 using UnityEngine;
 
@@ -35,6 +36,7 @@ namespace BES.UI
 
             gems -= amount;
             WalletChanged?.Invoke();
+            GameManager.Instance?.SaveGame();
             return true;
         }
 
@@ -45,6 +47,7 @@ namespace BES.UI
 
             coins -= amount;
             WalletChanged?.Invoke();
+            GameManager.Instance?.SaveGame();
             return true;
         }
 
@@ -52,12 +55,14 @@ namespace BES.UI
         {
             gems += amount;
             WalletChanged?.Invoke();
+            GameManager.Instance?.SaveGame();
         }
 
         public void AddCoins(int amount)
         {
             coins += amount;
             WalletChanged?.Invoke();
+            GameManager.Instance?.SaveGame();
         }
 
         public void LoadDefaults()
