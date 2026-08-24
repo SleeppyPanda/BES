@@ -9220,6 +9220,8 @@ MonoBehaviour:
   beforeSelectionPanel: {fileID: 60049832532378563}
   characterSelectionPanel: {fileID: 2790724300988900338}
   storyDialogueUI: {fileID: 0}
+  nextChapterButton: {fileID: 7404274767098403339}
+  prevChapterButton: {fileID: 7206452544491218560}
   playChapterIntroOnce: 1
   chapterTitles:
   - {fileID: 6912686241722076229}

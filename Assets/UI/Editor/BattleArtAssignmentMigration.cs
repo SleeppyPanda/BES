@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System;
 using BES.UI.Menu;
 using TMPro;
 using UnityEditor;
@@ -30,6 +31,7 @@ namespace BES.EditorTools
                 }
 
                 AssignUnitArtwork(battle);
+                AssignMenuContentDatabaseCharacters();
                 AssignButtonArtwork(panel, "SpeedButton", "Group 427322801.png");
                 AssignButtonArtwork(panel, "AutoButton", "Group 427322802.png");
                 AssignButtonArtwork(panel, "PauseButton", "Group 427322804.png");
@@ -110,31 +112,133 @@ namespace BES.EditorTools
 
         static void AssignUnitArtwork(TurnBattleUI battle)
         {
-            var allyBody = Sprite("Object.png");
-            var allyPortrait = Sprite("image 340.png");
             var enemyBody = Sprite("image 336.png");
             var skillIcon = Sprite("Star 68.png");
             var serialized = new SerializedObject(battle);
-            AssignTeam(serialized.FindProperty("allies"), allyBody, allyPortrait, skillIcon);
-            AssignTeam(serialized.FindProperty("enemies"), enemyBody, enemyBody, skillIcon);
+            AssignTeam(serialized.FindProperty("allies"), null, null, skillIcon, true);
+            AssignTeam(serialized.FindProperty("enemies"), enemyBody, enemyBody, skillIcon, false);
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
         static void AssignTeam(
             SerializedProperty team,
-            Sprite body,
-            Sprite portrait,
-            Sprite skillIcon)
+            Sprite defaultBody,
+            Sprite defaultPortrait,
+            Sprite skillIcon,
+            bool isAllies)
         {
             for (var i = 0; i < team.arraySize; i++)
             {
                 var definition = team.GetArrayElementAtIndex(i).FindPropertyRelative("definition");
+                Sprite body = defaultBody;
+                Sprite portrait = defaultPortrait;
+
+                if (isAllies)
+                {
+                    var id = definition.FindPropertyRelative("id").stringValue;
+                    if (string.Equals(id, "astra", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "blaze", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-1.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "Elio", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-2.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "Sahure", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-3.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "marina", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-4.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "volt", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-5.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "frost", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-6.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "luna", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-7.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "sol", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-8.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "lila", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-9.png");
+                        portrait = Sprite("image 340.png");
+                    } else {
+                        body = Sprite("Object.png");
+                        portrait = Sprite("image 340.png");
+                    }
+                }
+
                 definition.FindPropertyRelative("battlefieldSprite").objectReferenceValue = body;
                 definition.FindPropertyRelative("portrait").objectReferenceValue = portrait;
                 var skills = definition.FindPropertyRelative("skills");
                 for (var skillIndex = 0; skillIndex < skills.arraySize; skillIndex++)
                     skills.GetArrayElementAtIndex(skillIndex)
                         .FindPropertyRelative("icon").objectReferenceValue = skillIcon;
+            }
+        }
+
+        static void AssignMenuContentDatabaseCharacters()
+        {
+            const string DatabasePath = "Assets/Scenes/MenuContentDatabase.asset";
+            var db = AssetDatabase.LoadAssetAtPath<MenuContentDatabase>(DatabasePath);
+            if (db != null)
+            {
+                var serializedDb = new SerializedObject(db);
+                var charsProp = serializedDb.FindProperty("characters");
+                for (var i = 0; i < charsProp.arraySize; i++)
+                {
+                    var charProp = charsProp.GetArrayElementAtIndex(i);
+                    var id = charProp.FindPropertyRelative("id").stringValue;
+                    Sprite body = null;
+                    Sprite portrait = null;
+
+                    if (string.Equals(id, "astra", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "blaze", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-1.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "Elio", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-2.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "Sahure", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-3.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "marina", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-4.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "volt", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-5.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "frost", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-6.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "luna", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-7.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "sol", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-8.png");
+                        portrait = Sprite("image 340.png");
+                    } else if (string.Equals(id, "lila", StringComparison.OrdinalIgnoreCase)) {
+                        body = Sprite("Object-9.png");
+                        portrait = Sprite("image 340.png");
+                    }
+
+                    if (body != null)
+                    {
+                        charProp.FindPropertyRelative("fullBody").objectReferenceValue = body;
+                        charProp.FindPropertyRelative("portrait").objectReferenceValue = portrait != null ? portrait : body;
+                        charProp.FindPropertyRelative("chibi").objectReferenceValue = body;
+                    }
+                }
+                serializedDb.ApplyModifiedProperties();
+                EditorUtility.SetDirty(db);
+                AssetDatabase.SaveAssets();
+                Debug.Log("[BES] Assigned character sprites in MenuContentDatabase.");
             }
         }
 

@@ -1,0 +1,35 @@
+[Apply] Database chapters count: 2
+[Apply] ch1 found: True
+[Apply] ch1 introDialogue null: False
+[Apply] ch1 beats count: 0
+[Apply] leftFallback before fallback: 
+[Apply] rightFallback before fallback: 
+[Apply] leftFallback after fallback: 
+[Apply] rightFallback after fallback: 
+
+[Intro Beats]
+  Beat 0: speaker='', left='', right='', dimLeft=True, dimRight=True, text='Cảnh 1 — Manh mối tiếp theo'
+  Beat 1: speaker='', left='', right='', dimLeft=True, dimRight=True, text='Đã vài ngày kể từ khi Lunen rời Akherat. Trên con đường trải dài qua vùng hoang mạc, cậu dừng chân dưới bóng một vách đá, lại mở cuốn sổ Menkara trao cho mình trước lúc chia tay. Bên trong là những bản sao ký tự, ghi chú từ Đại Thư Khố và một số tư liệu mà cô cho rằng có thể liên quan tới chiếc vòng.'
+  Beat 2: speaker='Tinh Linh', left='', right='', dimLeft=True, dimRight=False, text='Cậu lại xem trang đó à? Tớ nhớ gần như thuộc lòng rồi đấy.'
+  Beat 3: speaker='Lunen', left='', right='', dimLeft=False, dimRight=True, text='Vậy đọc thử xem.'
+  Beat 4: speaker='Tinh Linh', left='', right='', dimLeft=True, dimRight=False, text='Thật á?'
+  Beat 5: speaker='Lunen', left='', right='', dimLeft=False, dimRight=True, text='Ừ.'
+  Beat 6: speaker='', left='', right='', dimLeft=True, dimRight=True, text='Tinh Linh ghé xuống, nghiêm túc nhìn những dòng chữ.'
+  Beat 7: speaker='Tinh Linh', left='', right='', dimLeft=True, dimRight=False, text='Để xem... ‘Một số hoa văn tương đồng từng xuất hiện trên những cổ vật được vận chuyển từ vùng đất nơi tiếng ca hòa cùng dòng nước...’'
+  Beat 8: speaker='', left='', right='', dimLeft=True, dimRight=True, text='Cô dừng lại, hơi nhăn mặt.'
+  Beat 9: speaker='Tinh Linh', left='', right='', dimLeft=True, dimRight=False, text='Tài liệu lịch sử mà viết cứ như thơ ấy.'
+  Beat 10: speaker='Lunen', left='', right='', dimLeft=False, dimRight=True, text='Phía dưới còn một dòng.'
+  Beat 11: speaker='Tinh Linh', left='', right='', dimLeft=True, dimRight=False, text='Naevira.'
+  Beat 12: speaker='', left='', right='', dimLeft=True, dimRight=True, text='Lunen gật đầu.'
+  Beat 13: speaker='Lunen', left='', right='', dimLeft=False, dimRight=True, text='Lãnh địa của Thủy thần.'
+  Beat 14: speaker='Tinh Linh', left='', right='', dimLeft=True, dimRight=False, text='Vậy cô Menkara nghĩ chiếc vòng đến từ Naevira?'
+  Beat 15: speaker='Lunen', left='', right='', dimLeft=False, dimRight=True, text='Không hẳn. Cô ấy chỉ tìm được bằng chứng rằng có những cổ vật mang hoa văn tương tự từng đi qua đó.'
+  Beat 16: speaker='', left='', right='', dimLeft=True, dimRight=True, text='Lunen lật lại vài trang trước.'
+  Beat 17: speaker='Lunen', left='', right='', dimLeft=False, dimRight=True, text='Ở Akherat, Aurelian nhận ra những ký tự trên chiếc vòng có nét tương đồng với ghi chép của các đời Hỏa thần về một vùng đất rất cổ. Menkara lại tìm được đầu mối này. Hai chuyện chưa đủ để kết luận... nhưng hiện tại đây là hướng rõ nhất.'
+  Beat 18: speaker='', left='', right='', dimLeft=True, dimRight=True, text='Tinh Linh nhìn chiếc vòng trên tay cậu.'
+  Beat 19: speaker='Tinh Linh', left='', right='', dimLeft=True, dimRight=False, text='Vậy thì đi Naevira thôi.'
+  Beat 20: speaker='', left='', right='', dimLeft=True, dimRight=True, text='Cô bay lên, nhìn ra khoảng sa mạc mênh mông phía trước.'
+  Beat 21: speaker='Tinh Linh', left='', right='', dimLeft=True, dimRight=False, text='Vùng đất nơi tiếng ca hòa cùng dòng nước... nghe đẹp thật đấy.'
+  Beat 22: speaker='Lunen', left='', right='', dimLeft=False, dimRight=True, text='Ừ.'
+  Beat 23: speaker='Tinh Linh', left='', right='', dimLeft=True, dimRight=False, text='Biết đâu lần này chúng ta thật sự tìm được gì đó về cậu.'
+  Beat 24: speaker='', left='', right='', dimLeft=True, dimRight=True, text='Lunen hơi khựng lại rồi đóng cuốn sổ.'

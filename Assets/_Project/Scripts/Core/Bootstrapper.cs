@@ -14,8 +14,6 @@ namespace BES.Core
             {
                 if (Object.FindAnyObjectByType<PartySwapController>() == null)
                     existingGameManager.gameObject.AddComponent<PartySwapController>();
-                if (existingGameManager.Save.HasSave && !existingGameManager.Save.LoadedFromContinue)
-                    existingGameManager.Save.Load();
                 return;
             }
 
@@ -28,8 +26,6 @@ namespace BES.Core
             root.AddComponent<PartyRoster>();
             root.AddComponent<MetaProgressState>();
             root.AddComponent<GachaPityState>();
-            if (gameManager.Save.HasSave && !gameManager.Save.LoadedFromContinue)
-                gameManager.Save.Load();
         }
     }
 }
