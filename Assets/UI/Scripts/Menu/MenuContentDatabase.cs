@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace BES.UI.Menu
 {
-    public enum MenuScreenId { Home, StoryParty, ResourceStages, SanctumRelics, WeaponBreakthrough, Battle, Dialogue, Management, CashShop, BattlePass }
+    public enum MenuScreenId { Home, StoryParty, ResourceStages, SanctumRelics, WeaponBreakthrough, Battle, Dialogue, Management, CashShop, BattlePass, PlayParty }
 
     [Serializable] public class CurrencyEntry { public string id; public Sprite icon; public int amount; }
 
@@ -46,6 +46,8 @@ namespace BES.UI.Menu
         [Range(0, 100)] public int affinity;
         public int maxHealth = 100;
         public int attack = 10;
+        public int defense = 5;
+        public int speed = 10;
     }
 
     [Serializable] public class RewardEntry { public string id; public Sprite icon; public int amount = 1; public int rarity = 1; }
@@ -63,6 +65,8 @@ namespace BES.UI.Menu
     {
         public string id;
         public string title;
+        [Tooltip("Mode/category used by Play Mode buttons, e.g. resources, sanctum, weapon, event.")]
+        public string playModeType;
         [TextArea] public string description;
         public Sprite preview;
         public int energyCost = 10;
@@ -157,6 +161,87 @@ namespace BES.UI.Menu
         public List<StageEntry> resourceStages = new();
         public List<StageEntry> sanctumStages = new();
         public List<StageEntry> weaponStages = new();
+
+        public void EnsureDefaultPlayModeStages()
+        {
+            if (resourceStages == null) resourceStages = new List<StageEntry>();
+            if (sanctumStages == null) sanctumStages = new List<StageEntry>();
+            if (weaponStages == null) weaponStages = new List<StageEntry>();
+
+            if (resourceStages.Count == 0)
+                resourceStages.Add(CreateDefaultStage("play_resource_01", "Đường Cát Tài Nguyên", "Ải luyện tài nguyên cơ bản, phù hợp để test đội hình.", 1,
+                    NewReward("coins", 1200, 3),
+                    NewReward("character_exp_green", 2, 3),
+                    NewEnemy("sand_wisp", "Cát Xoáy Sa Mạc", 520, 90, 34, 13),
+                    NewEnemy("fire_wisp", "Lửa Linh Hồn", 620, 12, 45, 9),
+                    NewEnemy("sand_wisp_2", "Cát Xoáy Sa Mạc", 520, 90, 34, 13)));
+
+            if (sanctumStages.Count == 0)
+                sanctumStages.Add(CreateDefaultStage("play_sanctum_01", "Thánh Tích Vang Vọng", "Ải thánh tích với quái hỗ trợ và khống chế.", 3,
+                    NewReward("artifact_shard", 3, 4),
+                    NewReward("relic_exp_blue", 1, 4),
+                    NewEnemy("sarcophagus_guard", "Quan Tài Hộ Vệ", 760, 10, 80, 8),
+                    NewEnemy("fire_wisp_elite", "Lửa Linh Hồn", 720, 14, 54, 9),
+                    NewEnemy("flame_beast", "Thú Lửa Nhỏ", 560, 96, 34, 14)));
+
+            if (weaponStages.Count == 0)
+                weaponStages.Add(CreateDefaultStage("play_weapon_01", "Lò Rèn Ảo Ảnh", "Ải nguyên liệu vũ khí, kẻ địch thiên về sát thương nhanh.", 5,
+                    NewReward("weapon_ore", 4, 4),
+                    NewReward("weapon_exp_blue", 1, 4),
+                    NewEnemy("flame_beast_a", "Thú Lửa Nhỏ", 620, 108, 38, 15),
+                    NewEnemy("flame_beast_b", "Thú Lửa Nhỏ", 620, 108, 38, 15),
+                    NewEnemy("sand_wisp_elite", "Cát Xoáy Sa Mạc", 680, 112, 44, 13),
+                    NewEnemy("sarcophagus_elite", "Quan Tài Hộ Vệ", 920, 18, 96, 8)));
+        }
+
+        static StageEntry CreateDefaultStage(string id, string title, string description, int level, RewardEntry rewardA, RewardEntry rewardB, params BattleUnitDefinition[] enemies)
+        {
+            return new StageEntry
+            {
+                id = id,
+                title = title,
+                playModeType = id.Contains("resource", StringComparison.OrdinalIgnoreCase) ? "resources" :
+                    id.Contains("sanctum", StringComparison.OrdinalIgnoreCase) ? "sanctum" :
+                    id.Contains("weapon", StringComparison.OrdinalIgnoreCase) ? "weapon" : "play",
+                description = description,
+                energyCost = 10 + level * 2,
+                enemyLevel = level,
+                rewards = new List<RewardEntry> { rewardA, rewardB },
+                enemies = new List<BattleUnitDefinition>(enemies)
+            };
+        }
+
+        static RewardEntry NewReward(string id, int amount, int rarity) =>
+            new RewardEntry { id = id, amount = Mathf.Max(1, amount), rarity = Mathf.Max(1, rarity) };
+
+        static BattleUnitDefinition NewEnemy(string id, string displayName, int hp, int atk, int def, int spd)
+        {
+            return new BattleUnitDefinition
+            {
+                id = id,
+                displayName = displayName,
+                element = InferEnemyElement(id),
+                maxHealth = hp,
+                attack = Mathf.Max(1, atk),
+                defense = Mathf.Max(0, def),
+                speed = Mathf.Max(1, spd),
+                skills = new List<BattleSkillDefinition>
+                {
+                    new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f }
+                }
+            };
+        }
+
+        static string InferEnemyElement(string id)
+        {
+            id = id?.ToLowerInvariant() ?? string.Empty;
+            if (id.Contains("flame") || id.Contains("fire")) return "Hỏa";
+            if (id.Contains("wisp")) return "Thủy";
+            if (id.Contains("sarcophagus") || id.Contains("coffin")) return "Thảo";
+            if (id.Contains("sand")) return "Phong";
+            return string.Empty;
+        }
+
         public CharacterEntry FindCharacter(string id)
         {
             if (string.IsNullOrWhiteSpace(id)) return null;
@@ -179,3 +264,4 @@ namespace BES.UI.Menu
         }
     }
 }
+

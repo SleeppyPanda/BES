@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -27,6 +27,7 @@ namespace BES.UI.Menu
     {
         public string id;
         public string displayName;
+        public string element;
         public Sprite portrait;
         public Sprite battlefieldSprite;
         public UIGifClip idleClip;
@@ -445,6 +446,7 @@ namespace BES.UI.Menu
             {
                 var unit = team[i]; if (unit == null || unit.definition == null) continue;
                 if (unit.root != null && !unit.root.activeSelf) continue;
+                SetUnitVisualsActive(unit, true);
                 unit.isPlayer = isPlayer; unit.setupIndex = i; unit.health = unit.definition.maxHealth; unit.shield = 0; unit.usedOneShotSkill = false; unit.attackEffectCursor = 0;
 
                 if (unit.gifPlayer == null && unit.root != null)
@@ -561,7 +563,7 @@ namespace BES.UI.Menu
             System.Action onStrike = () =>
             {
                 PlayAttackEffect(actor, target);
-                var raw = Mathf.RoundToInt(actor.definition.attack * (skill?.powerMultiplier ?? 1f));
+                var raw = Mathf.RoundToInt(actor.definition.attack * (skill?.powerMultiplier ?? 1f) * ElementMultiplier(actor.definition, target.definition));
                 DamageUnit(target, Mathf.Max(1, raw - target.definition.defense));
                 
                 if (target.gifPlayer != null && target.health == 0)
@@ -749,6 +751,44 @@ namespace BES.UI.Menu
             return Mathf.Max(1, Mathf.CeilToInt((target?.definition?.maxHealth ?? 1) * percent));
         }
 
+        static float ElementMultiplier(BattleUnitDefinition attacker, BattleUnitDefinition defender)
+        {
+            var attackElement = NormalizeElement(attacker?.element);
+            var defendElement = NormalizeElement(defender?.element);
+            if (string.IsNullOrEmpty(attackElement) || string.IsNullOrEmpty(defendElement) || attackElement == defendElement)
+                return 1f;
+
+            if (IsStrongAgainst(attackElement, defendElement)) return 1.5f;
+            if (IsStrongAgainst(defendElement, attackElement)) return 0.75f;
+            return 1f;
+        }
+
+        static bool IsStrongAgainst(string attackElement, string defendElement)
+        {
+            return (attackElement == "fire" && defendElement == "grass") ||
+                   (attackElement == "water" && defendElement == "fire") ||
+                   (attackElement == "grass" && defendElement == "water") ||
+                   (attackElement == "wind" && defendElement == "lightning") ||
+                   (attackElement == "lightning" && defendElement == "water") ||
+                   (attackElement == "void" && defendElement == "wind");
+        }
+
+        static string NormalizeElement(string element)
+        {
+            if (string.IsNullOrWhiteSpace(element)) return string.Empty;
+            element = element.Trim().ToLowerInvariant();
+            return element switch
+            {
+                "hỏa" or "hoa" or "fire" => "fire",
+                "thủy" or "thuy" or "water" => "water",
+                "thảo" or "thao" or "grass" or "wood" => "grass",
+                "phong" or "wind" => "wind",
+                "lôi" or "loi" or "lightning" or "thunder" => "lightning",
+                "lỗi" or "loix" or "void" or "dark" => "void",
+                _ => element
+            };
+        }
+
         void HealTeam(List<BattleUnitView> team, BattleUnitView actor, float percent)
         {
             foreach (var unit in team)
@@ -933,7 +973,7 @@ namespace BES.UI.Menu
             if (wallet != null)
             {
                 wallet.AddCoins(1000);
-                rewardsList.Add("+ 1000 Vàng");
+                rewardsList.Add("+ 1000 VÃ ng");
             }
 
             if (inventory != null)
@@ -1097,7 +1137,7 @@ namespace BES.UI.Menu
                 for (var i = queueIndex; i < turnQueue.Count && turnOrderPreview.Count < turnOrderEntries.Count; i++)
                 {
                     var unit = turnQueue[i];
-                    if (unit != null && unit.IsAlive) turnOrderPreview.Add(unit);
+                    if (IsBattleActive(unit)) turnOrderPreview.Add(unit);
                 }
             }
 
@@ -1128,6 +1168,19 @@ namespace BES.UI.Menu
             if (unit.battlefieldImage != null) unit.battlefieldImage.color = Color.white;
         }
 
+        static void SetUnitVisualsActive(BattleUnitView unit, bool active)
+        {
+            if (unit == null) return;
+            if (unit.root != null) unit.root.SetActive(active);
+            if (unit.targetButton != null) unit.targetButton.gameObject.SetActive(active);
+            if (unit.battlefieldImage != null) unit.battlefieldImage.gameObject.SetActive(active);
+            if (unit.gifPlayer != null) unit.gifPlayer.gameObject.SetActive(active);
+            if (unit.portrait != null) unit.portrait.gameObject.SetActive(active);
+            if (unit.healthBar != null) unit.healthBar.gameObject.SetActive(active);
+            if (unit.healthFill != null) unit.healthFill.gameObject.SetActive(active);
+            if (unit.healthText != null) unit.healthText.gameObject.SetActive(active);
+        }
+
         static RectTransform MovementRectFor(BattleUnitView unit)
         {
             if (unit == null) return null;
@@ -1143,7 +1196,7 @@ namespace BES.UI.Menu
         static BattleUnitView LowestHealthAlive(List<BattleUnitView> list)
         {
             BattleUnitView result = null; var ratio = float.MaxValue;
-            foreach (var unit in list) { if (unit == null || !unit.IsAlive || unit.definition == null) continue; var value = unit.health / (float)unit.definition.maxHealth; if (value < ratio) { ratio = value; result = unit; } }
+            foreach (var unit in list) { if (!IsBattleActive(unit) || unit.definition == null) continue; var value = unit.health / (float)unit.definition.maxHealth; if (value < ratio) { ratio = value; result = unit; } }
             return result;
         }
 
@@ -1158,14 +1211,13 @@ namespace BES.UI.Menu
 #endif
             }
 
-            if (menuContentDatabase == null || SelectedPartyCharacterIds == null || SelectedPartyCharacterIds.Count == 0)
-                return;
-
             for (var i = 0; i < allies.Count; i++)
             {
-                if (allies[i] != null && allies[i].root != null)
-                    allies[i].root.SetActive(false);
+                SetUnitVisualsActive(allies[i], false);
             }
+
+            if (menuContentDatabase == null || SelectedPartyCharacterIds == null || SelectedPartyCharacterIds.Count == 0)
+                return;
 
             for (var i = 0; i < Mathf.Min(SelectedPartyCharacterIds.Count, allies.Count); i++)
             {
@@ -1174,29 +1226,8 @@ namespace BES.UI.Menu
                 var view = allies[i];
                 if (character == null || view == null) continue;
 
-                var def = new BattleUnitDefinition();
-                def.id = character.id;
-                def.displayName = character.displayName;
-                
-                var level = CharacterProgressionState.GetLevel(character.id);
-                float scale = 1f + (level - 1) * 0.1f;
-                def.maxHealth = Mathf.RoundToInt(character.maxHealth * scale);
-                def.attack = Mathf.RoundToInt(character.attack * scale);
-                def.defense = 5;
-                def.speed = 10;
-                
-                def.portrait = character.portrait;
-                def.battlefieldSprite = character.chibi != null ? character.chibi : character.portrait;
-                def.attackEffectPrefabs = character.attackEffectPrefabs != null ? new List<GameObject>(character.attackEffectPrefabs) : new List<GameObject>();
-                def.attackEffectOffset = character.attackEffectOffset;
-                def.attackEffectScale = character.attackEffectScale == Vector3.zero ? Vector3.one : character.attackEffectScale;
-                def.isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa");
-
-                var skill = new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f };
-                def.skills = new List<BattleSkillDefinition> { skill };
-
-                view.definition = def;
-                if (view.root != null) view.root.SetActive(true);
+                view.definition = BuildBattleDefinitionFromCharacter(character);
+                SetUnitVisualsActive(view, true);
             }
         }
 
@@ -1214,6 +1245,7 @@ namespace BES.UI.Menu
             if (menuContentDatabase == null || string.IsNullOrEmpty(ActiveStageId))
                 return;
 
+            menuContentDatabase.EnsureDefaultPlayModeStages();
             menuContentDatabase = ChapterOneStoryRuntime.Apply(menuContentDatabase);
             if (ActiveStageId.StartsWith("chapter_2_", StringComparison.OrdinalIgnoreCase))
                 menuContentDatabase = ChapterTwoStoryRuntime.Apply(menuContentDatabase);
@@ -1284,7 +1316,7 @@ namespace BES.UI.Menu
                 }
             }
 
-            if (phaseBoss != null && enemies.Count > 4 && enemies[4] != null)
+            if (phaseBoss != null && !string.IsNullOrWhiteSpace(phaseBoss.id) && enemies.Count > 4 && enemies[4] != null)
             {
                 var bossView = enemies[4];
                 bossView.definition = CloneAndScaleDefinition(phaseBoss, level);
@@ -1327,26 +1359,50 @@ namespace BES.UI.Menu
                 var view = allies[startSlot + i];
                 if (character == null || view == null) continue;
 
-                var levelValue = CharacterProgressionState.GetLevel(character.id);
-                var scale = 1f + (levelValue - 1) * 0.1f;
-                view.definition = new BattleUnitDefinition
-                {
-                    id = character.id,
-                    displayName = character.displayName,
-                    maxHealth = Mathf.RoundToInt(character.maxHealth * scale),
-                    attack = Mathf.RoundToInt(character.attack * scale),
-                    defense = 5,
-                    speed = 10,
-                    portrait = character.portrait,
-                    battlefieldSprite = character.chibi != null ? character.chibi : character.portrait,
-                    attackEffectPrefabs = character.attackEffectPrefabs != null ? new List<GameObject>(character.attackEffectPrefabs) : new List<GameObject>(),
-                    attackEffectOffset = character.attackEffectOffset,
-                    attackEffectScale = character.attackEffectScale == Vector3.zero ? Vector3.one : character.attackEffectScale,
-                    isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa"),
-                    skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
-                };
-                if (view.root != null) view.root.SetActive(true);
+                view.definition = BuildBattleDefinitionFromCharacter(character);
+                SetUnitVisualsActive(view, true);
             }
+        }
+
+        BattleUnitDefinition BuildBattleDefinitionFromCharacter(CharacterEntry character)
+        {
+            if (character == null) return null;
+
+            var level = CharacterProgressionState.GetLevel(character.id);
+            var constellation = CharacterProgressionState.GetConstellation(character.id);
+            var levelScale = 1f + (Mathf.Max(1, level) - 1) * 0.065f;
+            var constellationScale = 1f + Mathf.Clamp(constellation, 0, CharacterProgressionState.ConstellationCount) * 0.04f;
+            var statScale = levelScale * constellationScale;
+
+            var weaponAttack = EquippedWeaponState.Instance?.GetDisplayAtk() ?? 0;
+            var artifactAttack = 0;
+            var artifactHealth = 0;
+            var artifact = MetaProgressState.Instance?.GetEquippedArtifact();
+            if (artifact != null)
+            {
+                artifactAttack = artifact.atkBonus + artifact.setBonusAtk;
+                artifactHealth = artifact.hpBonus;
+            }
+
+            var definition = new BattleUnitDefinition
+            {
+                id = character.id,
+                displayName = character.displayName,
+                maxHealth = Mathf.Max(1, Mathf.RoundToInt(character.maxHealth * statScale) + artifactHealth),
+                attack = Mathf.Max(1, Mathf.RoundToInt(character.attack * statScale) + weaponAttack + artifactAttack),
+                defense = Mathf.Max(0, Mathf.RoundToInt(character.defense * statScale) + Mathf.RoundToInt(artifactAttack * 0.08f)),
+                speed = Mathf.Max(1, character.speed + Mathf.FloorToInt((level - 1) / 20f)),
+                element = character.element,
+                portrait = character.portrait,
+                battlefieldSprite = character.chibi != null ? character.chibi : character.portrait,
+                attackEffectPrefabs = character.attackEffectPrefabs != null ? new List<GameObject>(character.attackEffectPrefabs) : new List<GameObject>(),
+                attackEffectOffset = character.attackEffectOffset,
+                attackEffectScale = character.attackEffectScale == Vector3.zero ? Vector3.one : character.attackEffectScale,
+                isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa"),
+                skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
+            };
+
+            return definition;
         }
 
         void ResetCombatDialogueTriggers()
@@ -1520,24 +1576,7 @@ namespace BES.UI.Menu
             var view = allies[slotIndex];
             if (character == null || view == null) return;
 
-            var levelValue = CharacterProgressionState.GetLevel(character.id);
-            var scale = 1f + (levelValue - 1) * 0.1f;
-            view.definition = new BattleUnitDefinition
-            {
-                id = character.id,
-                displayName = character.displayName,
-                maxHealth = Mathf.RoundToInt(character.maxHealth * scale),
-                attack = Mathf.RoundToInt(character.attack * scale),
-                defense = 5,
-                speed = 10,
-                portrait = character.portrait,
-                battlefieldSprite = character.chibi != null ? character.chibi : character.portrait,
-                attackEffectPrefabs = character.attackEffectPrefabs != null ? new List<GameObject>(character.attackEffectPrefabs) : new List<GameObject>(),
-                attackEffectOffset = character.attackEffectOffset,
-                attackEffectScale = character.attackEffectScale == Vector3.zero ? Vector3.one : character.attackEffectScale,
-                isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa"),
-                skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
-            };
+            view.definition = BuildBattleDefinitionFromCharacter(character);
             view.isPlayer = true;
             view.health = Mathf.Clamp(Mathf.CeilToInt(view.definition.maxHealth * Mathf.Clamp(healthPercent, 1, 100) / 100f), 1, view.definition.maxHealth);
             if (view.root != null) view.root.SetActive(true);
@@ -1596,6 +1635,7 @@ namespace BES.UI.Menu
             {
                 id = template.id,
                 displayName = template.displayName,
+                element = template.element,
                 portrait = template.portrait,
                 battlefieldSprite = template.battlefieldSprite,
                 idleClip = template.idleClip,
@@ -1642,10 +1682,11 @@ namespace BES.UI.Menu
 
         BattleUnitDefinition CloneAndScaleDefinition(BattleUnitDefinition template, int level)
         {
-            if (template == null) return null;
+            if (template == null || string.IsNullOrWhiteSpace(template.id)) return null;
             var def = new BattleUnitDefinition();
             def.id = template.id;
             def.displayName = template.displayName;
+            def.element = template.element;
             def.portrait = template.portrait;
             def.battlefieldSprite = template.battlefieldSprite;
             def.idleClip = template.idleClip;
@@ -1665,3 +1706,4 @@ namespace BES.UI.Menu
         }
     }
 }
+

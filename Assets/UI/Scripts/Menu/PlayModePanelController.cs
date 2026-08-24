@@ -24,12 +24,24 @@ namespace BES.UI.Menu
         public UnityEvent onSelected;
     }
 
+    [Serializable]
+    public class PlayModeBattleButtonBinding
+    {
+        public Button button;
+        public MenuScreenId stageSelectionScreen = MenuScreenId.ResourceStages;
+        [Tooltip("Optional direct stage id. If filled, this skips stage selection and opens the Play Mode party screen.")]
+        public string directStageId;
+    }
+
     public class PlayModePanelController : MonoBehaviour
     {
         [SerializeField] GameObject panelRoot;
+        [SerializeField] MenuNavigator navigator;
         [SerializeField] Button closeButton;
         [SerializeField] PlayModeTab initialTab;
         [SerializeField] List<PlayModeTabBinding> tabs = new();
+        [Header("Mode battle buttons")]
+        [SerializeField] List<PlayModeBattleButtonBinding> battleButtons = new();
         [SerializeField] UnityEvent<PlayModeTab> onTabChanged;
         [SerializeField] UnityEvent onOpened;
         [SerializeField] UnityEvent onClosed;
@@ -53,6 +65,12 @@ namespace BES.UI.Menu
                 if (binding.tabButton == null) continue;
                 var captured = binding.tab;
                 binding.tabButton.onClick.AddListener(() => SelectTab(captured));
+            }
+            foreach (var binding in battleButtons)
+            {
+                if (binding?.button == null) continue;
+                var captured = binding;
+                binding.button.onClick.AddListener(() => OpenBattleFlow(captured));
             }
         }
 
@@ -89,6 +107,21 @@ namespace BES.UI.Menu
             if (!IsOpen) return;
             panelRoot.SetActive(false);
             onClosed?.Invoke();
+        }
+
+        void OpenBattleFlow(PlayModeBattleButtonBinding binding)
+        {
+            if (binding == null) return;
+            TurnBattleUI.IsPlayModeBattle = true;
+
+            if (!string.IsNullOrWhiteSpace(binding.directStageId))
+            {
+                TurnBattleUI.ActiveStageId = binding.directStageId.Trim();
+                navigator?.Open(MenuScreenId.PlayParty);
+                return;
+            }
+
+            navigator?.Open(binding.stageSelectionScreen);
         }
 
         void OnDestroy()

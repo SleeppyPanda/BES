@@ -37,7 +37,9 @@ namespace BES.UI.Menu
 
         public void Rebuild()
         {
+            ResolveDatabase();
             if (database == null) return;
+            database.EnsureDefaultPlayModeStages();
             stages = collection switch
             {
                 StageCollection.SanctumRelics => database.sanctumStages,
@@ -90,7 +92,18 @@ namespace BES.UI.Menu
                 save.activeBattleIsPlayMode = true;
                 GameManager.Instance.SaveGame();
             }
-            navigator?.Open(MenuScreenId.StoryParty);
+            navigator?.Open(MenuScreenId.PlayParty);
+        }
+
+        void ResolveDatabase()
+        {
+            if (database != null) return;
+
+            database = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
+#if UNITY_EDITOR
+            if (database == null)
+                database = UnityEditor.AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/Scenes/MenuContentDatabase.asset");
+#endif
         }
     }
 }

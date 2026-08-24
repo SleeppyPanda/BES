@@ -110,6 +110,7 @@ namespace BES.UI.Menu
 
         void Awake()
         {
+            ResolveDatabase();
             modal ??= GetComponent<SimpleModalPanel>();
             if (!CacheExistingUI()) BuildRuntimeUI();
             WireRuntimeButtons();
@@ -128,6 +129,7 @@ namespace BES.UI.Menu
 
         void OnEnable()
         {
+            ResolveDatabase();
             GameEvents.OnPartyChanged += RefreshGallery;
             if (runtimeRoot != null) RefreshGallery();
         }
@@ -136,6 +138,7 @@ namespace BES.UI.Menu
 
         public void OpenGallery()
         {
+            ResolveDatabase();
             BuildRuntimeUI();
             ShowPage(galleryPage);
             RefreshGallery();
@@ -144,6 +147,7 @@ namespace BES.UI.Menu
 
         public void OpenCharacter(string characterId)
         {
+            ResolveDatabase();
             BuildRuntimeUI();
             selectedCharacterId = ResolveOwnedCharacter(characterId);
             RefreshCharacter();
@@ -166,6 +170,7 @@ namespace BES.UI.Menu
 
         public void OpenDestination(CharacterCollectionDestination destination, string characterId = null)
         {
+            ResolveDatabase();
             BuildRuntimeUI();
             selectedCharacterId = ResolveOwnedCharacter(string.IsNullOrWhiteSpace(characterId) ? selectedCharacterId : characterId);
             RefreshCharacter();
@@ -521,6 +526,7 @@ namespace BES.UI.Menu
 
         void RefreshGallery()
         {
+            ResolveDatabase();
             if (galleryContent == null) return;
             foreach (var card in generatedCards) if (card != null) Destroy(card);
             generatedCards.Clear();
@@ -553,6 +559,7 @@ namespace BES.UI.Menu
 
         void RefreshCharacterSelectors()
         {
+            ResolveDatabase();
             if (characterSelectorContent == null) return;
             foreach (var selector in generatedSelectors) if (selector != null) Destroy(selector);
             generatedSelectors.Clear();
@@ -579,6 +586,7 @@ namespace BES.UI.Menu
 
         void SelectCharacter(string characterId)
         {
+            ResolveDatabase();
             if (database?.FindCharacter(characterId) == null) return;
             selectedCharacterId = characterId;
             RefreshCharacter();
@@ -619,6 +627,16 @@ namespace BES.UI.Menu
             foreach (var mapping in rarityBackgrounds)
                 if (mapping != null && mapping.rarity == rarity) return mapping.background;
             return null;
+        }
+
+        void ResolveDatabase()
+        {
+            if (database != null) return;
+            database = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
+#if UNITY_EDITOR
+            if (database == null)
+                database = UnityEditor.AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/Scenes/MenuContentDatabase.asset");
+#endif
         }
 
         void RefreshCharacter()

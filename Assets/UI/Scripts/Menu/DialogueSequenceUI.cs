@@ -567,7 +567,7 @@ namespace BES.UI.Menu
             if (!slot.present) return;
             if (slot.root != null) slot.root.SetActive(slot.image == null || slot.image.sprite != null);
             if (slot.group == null && slot.image != null)
-                slot.group = slot.image.GetComponent<CanvasGroup>() ?? slot.image.gameObject.AddComponent<CanvasGroup>();
+                slot.group = EnsureCanvasGroup(slot.image.gameObject);
             if (slot.group != null) slot.group.alpha = alpha;
             if (slot.image != null) slot.image.transform.localScale = scale;
         }
@@ -577,7 +577,7 @@ namespace BES.UI.Menu
             if (slot == null) return;
             if (slot.root != null) slot.root.SetActive(true);
             if (slot.group == null && slot.image != null)
-                slot.group = slot.image.GetComponent<CanvasGroup>() ?? slot.image.gameObject.AddComponent<CanvasGroup>();
+                slot.group = EnsureCanvasGroup(slot.image.gameObject);
 
             var targetAlpha = visible ? slot.inactiveAlpha : 0f;
             slot.present = visible;
@@ -785,6 +785,13 @@ namespace BES.UI.Menu
             image.sprite = sprite;
         }
 
+        static CanvasGroup EnsureCanvasGroup(GameObject target)
+        {
+            if (target == null) return null;
+            var group = target.GetComponent<CanvasGroup>();
+            return group != null ? group : target.AddComponent<CanvasGroup>();
+        }
+
         IEnumerator TypeText(string value)
         {
             fullyShown = false;
@@ -844,7 +851,7 @@ namespace BES.UI.Menu
             if (checkpointFadeGroup == null)
             {
                 var fade = CreateImage(transform, "CheckpointFade", Color.black, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
-                checkpointFadeGroup = fade.GetComponent<CanvasGroup>() ?? fade.gameObject.AddComponent<CanvasGroup>();
+                checkpointFadeGroup = EnsureCanvasGroup(fade.gameObject);
                 checkpointFadeGroup.alpha = 0f;
                 checkpointFadeGroup.blocksRaycasts = false;
                 checkpointFadeGroup.gameObject.SetActive(false);
@@ -859,8 +866,8 @@ namespace BES.UI.Menu
                 rightCharacter = CreateImage(transform, "RightCharacter", Color.white, new Vector2(0.55f, 0f), new Vector2(1f, 1f), new Vector2(80f, 0f), new Vector2(-80f, 0f));
                 rightCharacter.enabled = false;
             }
-            leftGroup ??= leftCharacter.GetComponent<CanvasGroup>() ?? leftCharacter.gameObject.AddComponent<CanvasGroup>();
-            rightGroup ??= rightCharacter.GetComponent<CanvasGroup>() ?? rightCharacter.gameObject.AddComponent<CanvasGroup>();
+            leftGroup ??= EnsureCanvasGroup(leftCharacter.gameObject);
+            rightGroup ??= EnsureCanvasGroup(rightCharacter.gameObject);
             if (characterSlots.Count == 0) CreateDefaultCharacterSlots();
 
             // if (characterSlots.Count > 0)

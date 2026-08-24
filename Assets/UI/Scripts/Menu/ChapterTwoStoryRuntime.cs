@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,7 +11,7 @@ namespace BES.UI.Menu
     public static class ChapterTwoStoryRuntime
     {
         const string ChapterId = "chapter_2";
-        const string StoryResourcePath = "Main Story/chương 2";
+        const string StoryResourcePath = "Main Story/Chương 2";
         static readonly string[] SceneStoryResourcePaths =
         {
             "Main Story/Chương 2 cảnh 1",
@@ -22,7 +23,7 @@ namespace BES.UI.Menu
         };
         const string GenericCastConfigResourcePath = "Data/StoryCastConfig";
 
-        static readonly Regex SpeakerLine = new(@"^\s*(?<speaker>[A-Za-zÀ-ỹ0-9?&\s]+)\s*:\s*(?<speech>.*)$", RegexOptions.Compiled);
+        static readonly Regex SpeakerLine = new(@"^\s*(?<speaker>[^:\[]+)\s*:\s*(?<speech>.*)$", RegexOptions.Compiled);
         static readonly HashSet<string> KnownSpeakers = new(StringComparer.OrdinalIgnoreCase)
         {
             "???", "Lunen", "Tinh Linh", "Tinh linh", "Lila", "Farzan", "Zareen", "Temir",
@@ -78,7 +79,7 @@ namespace BES.UI.Menu
             if (parsedScenes.Count == 0) return database;
 
             chapter.title = "Chương 2 — Khúc Ca Của Bão Tố";
-            chapter.summary = "Lunen rời Akherat đi qua vùng hoang mạc Tây, chạm trán đoàn thương nhân Rihara và đến thung lũng gió Talvera. Tại đây họ bị cuốn vào mâu thuẫn bão tố của Tộc Bão Gió và đối diện linh thú Vorash.";
+            chapter.summary = "Lunen rời Akherat, gặp đoàn thương nhân Rihara và bước vào biến cố bão tố tại Talvera.";
 
             chapter.introDialogue = new DialogueSequence
             {
@@ -189,7 +190,7 @@ namespace BES.UI.Menu
             for (var i = 0; i < parsed.CombatBlocks.Count; i++)
             {
                 var block = parsed.CombatBlocks[i];
-                var hasSummonBoss = ContainsAny(block.note, "vorash", "linh thú");
+                var hasSummonBoss = ContainsAny(block.note, "vorash", "linh thu");
                 var phase = new BattlePhaseEntry
                 {
                     id = $"{stage.id}_phase_{i + 1}",
@@ -259,10 +260,13 @@ namespace BES.UI.Menu
             {
                 id = !string.IsNullOrWhiteSpace(character?.id) ? character.id : fallbackId,
                 displayName = !string.IsNullOrWhiteSpace(character?.displayName) ? character.displayName : fallbackName,
+                element = !string.IsNullOrWhiteSpace(character?.element) ? character.element : "Phong",
                 portrait = character?.portrait,
                 battlefieldSprite = character?.chibi != null ? character.chibi : character?.portrait,
-                maxHealth = Mathf.Max(1, character?.maxHealth ?? 150),
-                attack = Mathf.Max(1, character?.attack ?? 20),
+                maxHealth = Mathf.Max(1, character?.maxHealth ?? 620),
+                attack = Mathf.Max(1, character?.attack ?? 90),
+                defense = Mathf.Max(0, character?.defense ?? 42),
+                speed = Mathf.Max(1, character?.speed ?? 11),
                 isRanged = character?.attributes != null && (character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa")),
                 skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
             };
@@ -277,8 +281,11 @@ namespace BES.UI.Menu
                 {
                     id = $"chapter_2_ma_vat_{i + 1}",
                     displayName = "Phiến Quân Bão Gió",
-                    maxHealth = 95,
-                    attack = 13,
+                    element = "Phong",
+                    maxHealth = 680,
+                    attack = 104,
+                    defense = 46,
+                    speed = 12,
                     isRanged = false,
                     skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
                 });
@@ -292,8 +299,11 @@ namespace BES.UI.Menu
             {
                 id = "vorash_boss",
                 displayName = "Linh Thú Vorash",
-                maxHealth = 480,
-                attack = 26,
+                element = "Phong",
+                maxHealth = 2600,
+                attack = 138,
+                defense = 96,
+                speed = 13,
                 isRanged = true,
                 skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "storm", displayName = "Cơn Bão Cuồng Nộ", powerMultiplier = 1.5f } }
             };
@@ -302,10 +312,28 @@ namespace BES.UI.Menu
         static bool ContainsAny(string text, params string[] keywords)
         {
             if (string.IsNullOrWhiteSpace(text)) return false;
+            var haystack = NormalizeSearchText(text);
             foreach (var keyword in keywords)
-                if (text.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                var candidate = NormalizeSearchText(keyword);
+                if (!string.IsNullOrWhiteSpace(candidate) && haystack.IndexOf(candidate, StringComparison.OrdinalIgnoreCase) >= 0)
                     return true;
+            }
             return false;
+        }
+
+        static string NormalizeSearchText(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return string.Empty;
+            value = value.Replace('đ', 'd').Replace('Đ', 'D');
+            var normalized = value.Normalize(NormalizationForm.FormD);
+            var builder = new StringBuilder(normalized.Length);
+            foreach (var ch in normalized)
+            {
+                if (CharUnicodeInfo.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark)
+                    builder.Append(ch);
+            }
+            return builder.ToString().Normalize(NormalizationForm.FormC).ToLowerInvariant();
         }
 
         static CombatDialogueTrigger BuildCombatTrigger(string phaseId, int index, TriggerBlock block, int phaseIndex, int phaseCount)
@@ -333,33 +361,33 @@ namespace BES.UI.Menu
 
         static CombatDialogueTriggerType InferTriggerType(string condition)
         {
-            if (ContainsAny(condition, "combat kết thúc", "kết thúc combat", "win", "thắng", "hết enemy", "hết quái"))
+            if (ContainsAny(condition, "combat ket thuc", "ket thuc combat", "win", "thang", "het enemy", "het quai"))
                 return CombatDialogueTriggerType.PhaseVictory;
-            if (ContainsAny(condition, "ngay khi kết thúc hoạt ảnh", "kết thúc hoạt ảnh"))
+            if (ContainsAny(condition, "ngay khi ket thuc hoat anh", "ket thuc hoat anh"))
                 return CombatDialogueTriggerType.PhaseVictory;
-            if (ContainsAny(condition, "đòn đầu tiên", "đánh xong đòn đầu", "toàn bộ đánh xong"))
+            if (ContainsAny(condition, "don dau tien", "danh xong don dau", "toan bo danh xong"))
                 return CombatDialogueTriggerType.RoundStart;
-            if (ContainsAny(condition, "quái con chết", "quái con được triệu hồi bị tiêu diệt", "quái được triệu hồi đã tiêu diệt"))
+            if (ContainsAny(condition, "quai con chet", "quai con duoc trieu hoi bi tieu diet", "quai duoc trieu hoi da tieu diet"))
                 return CombatDialogueTriggerType.EnemyCountAtOrBelow;
-            if (ContainsAny(condition, "còn") && ContainsAny(condition, "enemy", "quái", "ma vật"))
+            if (ContainsAny(condition, "con") && ContainsAny(condition, "enemy", "quai", "ma vat"))
                 return CombatDialogueTriggerType.EnemyCountAtOrBelow;
-            if (ContainsAny(condition, "%", "phần trăm", "nửa máu", "nửa hp", "half hp"))
-                return ContainsAny(condition, "tổng", "toàn bộ", "enemy", "quái", "ma vật")
+            if (ContainsAny(condition, "%", "phan tram", "nua mau", "nua hp", "half hp"))
+                return ContainsAny(condition, "tong", "toan bo", "enemy", "quai", "ma vat")
                     ? CombatDialogueTriggerType.TotalEnemyHealthBelowPercent
                     : CombatDialogueTriggerType.BossHealthBelowPercent;
-            if (ContainsAny(condition, "round", "lượt"))
+            if (ContainsAny(condition, "round", "luot"))
                 return CombatDialogueTriggerType.RoundStart;
             return CombatDialogueTriggerType.PhaseStart;
         }
 
         static CombatTriggerActionType InferTriggerAction(string action, int phaseIndex, int phaseCount)
         {
-            if (ContainsAny(action, "giết tất cả enemy", "giết toàn bộ enemy", "giết tất cả quái", "giết toàn bộ quái", "không hiện win/lose", "thực hiện trigger tiếp theo"))
+            if (ContainsAny(action, "giet tat ca enemy", "giet toan bo enemy", "giet tat ca quai", "giet toan bo quai", "khong hien win/lose", "thuc hien trigger tiep theo"))
                 return CombatTriggerActionType.KillAllEnemiesAndPlayPhaseVictory;
-            if (ContainsAny(action, "không cần hiển thị win/lose", "không hiện win/lose", "quay trở về story panel"))
+            if (ContainsAny(action, "khong can hien thi win/lose", "khong hien win/lose", "quay tro ve story panel"))
                 return CombatTriggerActionType.ReturnToStoryWithoutResult;
-            var convert = ContainsAny(action, "về đội", "vào đội", "đồng hành", "chuyển phe");
-            var nextPhase = ContainsAny(action, "combat tiếp", "combat lần", "phase", "trận tiếp", "tiếp tục combat mới");
+            var convert = ContainsAny(action, "ve doi", "vao doi", "dong hanh", "chuyen phe");
+            var nextPhase = ContainsAny(action, "combat tiep", "combat lan", "phase", "tran tiep", "tiep tuc combat moi");
             if (!nextPhase && phaseIndex + 1 < phaseCount && convert) nextPhase = true;
             if (convert && nextPhase) return CombatTriggerActionType.ConvertUnitToAllyAndStartNextPhase;
             if (convert) return CombatTriggerActionType.ConvertUnitToAlly;
@@ -369,23 +397,23 @@ namespace BES.UI.Menu
 
         static int InferRound(string text)
         {
-            if (ContainsAny(text, "đòn đầu tiên", "đánh xong đòn đầu", "toàn bộ đánh xong"))
+            if (ContainsAny(text, "don dau tien", "danh xong don dau", "toan bo danh xong"))
                 return 2;
-            var match = Regex.Match(text ?? string.Empty, @"(?:round|lượt)\s*(\d+)", RegexOptions.IgnoreCase);
+            var match = Regex.Match(NormalizeSearchText(text), @"(?:round|luot)\s*(\d+)", RegexOptions.IgnoreCase);
             return match.Success && int.TryParse(match.Groups[1].Value, out var value) ? Mathf.Max(1, value) : 1;
         }
 
         static int InferEnemyCount(string text, int fallback)
         {
             if (string.IsNullOrWhiteSpace(text)) return fallback;
-            var match = Regex.Match(text, @"(?:còn|có)\s*(\d+)\s*(?:con\s*)?(?:enemy|quái|ma vật)", RegexOptions.IgnoreCase);
+            var match = Regex.Match(NormalizeSearchText(text), @"(?:con|co)\s*(\d+)\s*(?:con\s*)?(?:enemy|quai|ma vat)", RegexOptions.IgnoreCase);
             if (!match.Success) match = Regex.Match(text, @"\d+\s*v\s*(\d+)", RegexOptions.IgnoreCase);
             return match.Success && int.TryParse(match.Groups[1].Value, out var value) ? Mathf.Max(0, value) : fallback;
         }
 
         static int InferPercent(string text)
         {
-            if (ContainsAny(text, "nửa máu", "nửa hp", "half hp")) return 50;
+            if (ContainsAny(text, "nua mau", "nua hp", "half hp")) return 50;
             var match = Regex.Match(text ?? string.Empty, @"(\d+)\s*%");
             return match.Success && int.TryParse(match.Groups[1].Value, out var value) ? Mathf.Clamp(value, 1, 100) : 50;
         }
@@ -716,7 +744,7 @@ namespace BES.UI.Menu
         static bool ShouldEndTriggerAtCheckpoint(TriggerBlock trigger)
         {
             if (trigger == null || string.IsNullOrWhiteSpace(trigger.condition)) return false;
-            return trigger.condition.Contains("combat kết thúc");
+            return ContainsAny(trigger.condition, "combat ket thuc", "tran dau ket thuc");
         }
 
         static ParsedStory ParseStory(
@@ -926,7 +954,7 @@ namespace BES.UI.Menu
         }
 
         static bool IsKnownSpeaker(string speaker) => KnownSpeakers.Contains(NormalizeSpeaker(speaker));
-        static bool IsDivider(string line) => line.StartsWith("___", StringComparison.Ordinal) || line == " ";
+        static bool IsDivider(string line) => line.StartsWith("___", StringComparison.Ordinal) || line == "\u2003";
         static bool IsLeftSpeaker(string speaker) => string.Equals(speaker, "Lunen", StringComparison.OrdinalIgnoreCase);
 
         static string NormalizeSpeaker(string speaker)
@@ -944,7 +972,22 @@ namespace BES.UI.Menu
 
         static string CleanLine(string line)
         {
-            return line.Trim().Trim('“', '”', '"').Trim();
+            return TrimDialogueQuotes(line);
+        }
+
+        static string TrimDialogueQuotes(string line)
+        {
+            line = (line ?? string.Empty).Trim();
+            if (line.Length >= 2)
+            {
+                if ((line.StartsWith("\"", StringComparison.Ordinal) && line.EndsWith("\"", StringComparison.Ordinal)) ||
+                    (line.StartsWith("“", StringComparison.Ordinal) && line.EndsWith("”", StringComparison.Ordinal)))
+                {
+                    line = line.Substring(1, line.Length - 2).Trim();
+                }
+            }
+
+            return line;
         }
 
         static void AppendLine(StringBuilder builder, string line)
@@ -966,3 +1009,5 @@ namespace BES.UI.Menu
         }
     }
 }
+
+

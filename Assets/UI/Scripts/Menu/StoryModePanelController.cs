@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using BES.Core;
 using TMPro;
@@ -157,10 +157,21 @@ namespace BES.UI.Menu
 
         void AutoResolveStorySelectionButtons()
         {
+            var sortFilterUi = characterSelectionPanel != null
+                ? characterSelectionPanel.GetComponentInChildren<StorySelectionSortFilterUI>(true)
+                : GetComponentInChildren<StorySelectionSortFilterUI>(true);
+            if (sortFilterUi != null)
+            {
+                sortFilterUi.EnsureButtons();
+                sortCombatPowerButton = sortFilterUi.SortCombatPowerButton;
+                sortConstellationButton = sortFilterUi.SortConstellationButton;
+                sortQualityButton = sortFilterUi.SortQualityButton;
+            }
+
             sortCombatPowerButton ??= FindButton("SortCombatPower", "CombatPower", "Chiến Lực", "ChienLuc");
             sortConstellationButton ??= FindButton("SortConstellation", "Constellation", "Tinh Hồn", "TinhHon");
             sortQualityButton ??= FindButton("SortQuality", "Quality", "Phẩm Chất", "PhamChat");
-            sortRequiredCharacterButton ??= FindButton("Filter", "RequiredCharacter", "Required", "Yêu Cầu", "YeuCau");
+            sortRequiredCharacterButton ??= FindButton("RequiredCharacter", "Required", "Yêu Cầu", "YeuCau");
         }
 
         Button FindButton(params string[] names)
@@ -174,6 +185,18 @@ namespace BES.UI.Menu
                     if (button.name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
                         return button;
                 }
+            }
+            return null;
+        }
+
+        static Transform FindDeep(Transform root, string name)
+        {
+            if (root == null || string.IsNullOrWhiteSpace(name)) return null;
+            if (root.name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) return root;
+            for (var i = 0; i < root.childCount; i++)
+            {
+                var result = FindDeep(root.GetChild(i), name);
+                if (result != null) return result;
             }
             return null;
         }
@@ -707,7 +730,7 @@ namespace BES.UI.Menu
             if (character == null) return int.MinValue;
             return rosterSortMode switch
             {
-                StoryRosterSortMode.Constellation => character.constellation,
+                StoryRosterSortMode.Constellation => CharacterProgressionState.GetConstellation(character.id),
                 StoryRosterSortMode.Quality => character.quality,
                 StoryRosterSortMode.RequiredCharacter => IsRequiredCharacter(character, RequiredCharacterIdForSlot(targetSlotIndex)) ? 1 : 0,
                 _ => character.combatPower
@@ -907,5 +930,6 @@ namespace BES.UI.Menu
         }
     }
 }
+
 
 

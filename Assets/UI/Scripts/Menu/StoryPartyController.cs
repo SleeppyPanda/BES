@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using BES.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -35,16 +36,21 @@ namespace BES.UI.Menu
         [SerializeField] int maxPartySize = 4;
         [SerializeField] UnityEvent<List<string>> onPartyConfirmed;
         readonly List<CharacterEntry> party = new();
+        readonly List<CharacterEntry> rosterCharacters = new();
         int activeSlot;
         int chapterIndex;
 
         void Start()
         {
+            ResolveDatabase();
             if (rosterToggleButton != null) rosterToggleButton.onClick.AddListener(ToggleRoster);
             if (startButton != null) startButton.onClick.AddListener(StartStory);
             if (backButton != null) backButton.onClick.AddListener(() => navigator?.Back());
-            database = ChapterOneStoryRuntime.Apply(database);
-            database = ChapterTwoStoryRuntime.Apply(database);
+            if (database != null)
+            {
+                database = ChapterOneStoryRuntime.Apply(database);
+                database = ChapterTwoStoryRuntime.Apply(database);
+            }
             BuildRoster();
             SelectChapter(0);
             RefreshParty();
@@ -61,6 +67,12 @@ namespace BES.UI.Menu
         public void SelectChapter(int index)
         {
             if (database == null || database.storyChapters.Count == 0) return;
+            if (TurnBattleUI.IsPlayModeBattle)
+            {
+                ApplyPlayModeHeader();
+                return;
+            }
+
             database = ChapterOneStoryRuntime.Apply(database);
             chapterIndex = Mathf.Clamp(index, 0, database.storyChapters.Count - 1);
             ApplyStoryRuntime(chapterIndex);
@@ -72,9 +84,11 @@ namespace BES.UI.Menu
 
         void BuildRoster()
         {
+            ResolveDatabase();
             if (database == null || rosterRoot == null || characterButtonPrefab == null) return;
             foreach (Transform child in rosterRoot) Destroy(child.gameObject);
-            foreach (var character in database.characters)
+            RebuildRosterCharacters();
+            foreach (var character in rosterCharacters)
             {
                 var captured = character;
                 var button = Instantiate(characterButtonPrefab, rosterRoot);
@@ -128,15 +142,61 @@ namespace BES.UI.Menu
 
         void OnEnable()
         {
+            ResolveDatabase();
+            BuildRoster();
             if (TurnBattleUI.IsPlayModeBattle)
             {
-                if (chapterTitle != null) chapterTitle.text = "CHỌN ĐỘI HÌNH BÍ CẢNH";
-                if (chapterSummary != null) chapterSummary.text = "Hãy chọn những nhân vật mạnh nhất để chinh phục bí cảnh.";
+                ApplyPlayModeHeader();
             }
             else
             {
                 SelectChapter(chapterIndex);
             }
+        }
+
+        void ResolveDatabase()
+        {
+            if (database == null)
+            {
+                database = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
+#if UNITY_EDITOR
+                if (database == null)
+                    database = UnityEditor.AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/Scenes/MenuContentDatabase.asset");
+#endif
+            }
+
+            database?.EnsureDefaultPlayModeStages();
+        }
+
+        void RebuildRosterCharacters()
+        {
+            rosterCharacters.Clear();
+            if (database == null) return;
+
+            var roster = PartyRoster.Instance ?? FindAnyObjectByType<PartyRoster>();
+            if (roster != null)
+            {
+                foreach (var member in roster.GetUnlockedRosterMembers())
+                {
+                    var character = database.FindCharacter(member.characterId);
+                    if (character != null && character.playable && !rosterCharacters.Contains(character))
+                        rosterCharacters.Add(character);
+                }
+            }
+
+            if (rosterCharacters.Count > 0) return;
+
+            foreach (var character in database.characters)
+            {
+                if (character != null && character.playable && !rosterCharacters.Contains(character))
+                    rosterCharacters.Add(character);
+            }
+        }
+
+        void ApplyPlayModeHeader()
+        {
+            if (chapterTitle != null) chapterTitle.text = "CHỌN ĐỘI PLAY MODE";
+            if (chapterSummary != null) chapterSummary.text = "Chọn tối thiểu 1 nhân vật đã sở hữu để vào trận.";
         }
     }
 }

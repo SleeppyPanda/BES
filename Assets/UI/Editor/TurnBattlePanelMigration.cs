@@ -12,7 +12,7 @@ namespace BES.EditorTools
     {
         const string PrefabPath = "Assets/_Project/UI/Prefabs/Screens/MenuHub.prefab";
         const string SessionKey = "BES.TurnBattlePanel.v1";
-        const bool AutoRunMigration = false;
+        static readonly bool AutoRunMigration = false;
         static readonly Color Clear = new(1f, 1f, 1f, 0f);
         static readonly Color Cream = new(.96f, .92f, .82f, 1f);
         static readonly Color Brown = new(.35f, .16f, .13f, 1f);

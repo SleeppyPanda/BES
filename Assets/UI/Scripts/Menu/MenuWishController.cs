@@ -69,6 +69,14 @@ namespace BES.UI.Menu
         [SerializeField] Button claimButton;
         [SerializeField] TMP_Text feedbackText;
 
+        [Header("Stable Background")]
+        [Tooltip("Background chính của WishPanel. Gán object Background trong WishContent để ảnh nền bật ngay khi mở Wish.")]
+        [SerializeField] Image wishBackground;
+        [Tooltip("Nếu để trống thì giữ nguyên sprite đang gán trên Image. Nếu gán sprite ở đây, script sẽ khóa lại sprite này khi mở/roll/reset.")]
+        [SerializeField] Sprite lockedWishBackgroundSprite;
+        [Tooltip("Bật để đảm bảo background luôn active, alpha = 255 và không bị overlay/video/reward thay thế trước khi hiện thẻ.")]
+        [SerializeField] bool lockWishBackground = true;
+
         [Header("Cards")]
         [SerializeField] List<WishResultCardView> resultCards = new();
         [SerializeField] Sprite fourStarGlow;
@@ -117,6 +125,7 @@ namespace BES.UI.Menu
             SyncCharacterRewardsFromDatabase();
             selectedCurrency = initialCurrency;
             CacheTargetPositions();
+            EnsureWishBackgroundVisible();
             coinsButton?.onClick.AddListener(() => SelectCurrency(WishCurrency.Coins));
             gemsButton?.onClick.AddListener(() => SelectCurrency(WishCurrency.Gems));
             rollOneButton?.onClick.AddListener(() => Roll(1));
@@ -158,6 +167,7 @@ namespace BES.UI.Menu
             {
                 homeController.gameObject.SetActive(false);
             }
+            EnsureWishBackgroundVisible();
             ResetPresentation();
         }
 
@@ -234,6 +244,7 @@ namespace BES.UI.Menu
         public void Roll(int count)
         {
             if (isAnimating || (count != 1 && count != 10)) return;
+            EnsureWishBackgroundVisible();
             if (rewards.Count == 0)
             {
                 SetFeedback("WISH POOL IS EMPTY");
@@ -297,6 +308,7 @@ namespace BES.UI.Menu
         {
             isAnimating = true;
             visibleCardCount = currentResults.Count;
+            EnsureWishBackgroundVisible();
             rollControls?.SetActive(false);
             claimButton?.gameObject.SetActive(false);
             detailPanel?.SetActive(false);
@@ -343,7 +355,7 @@ namespace BES.UI.Menu
             var chosenClip = has5Star ? clip5Star : (has4Star ? clip4Star : null);
             if (chosenClip != null && globalVideoPlayer != null && videoOverlayImage != null)
             {
-                videoOverlayImage.gameObject.SetActive(true);
+                SetVideoOverlayVisible(true, 0f);
                 
                 int w = chosenClip.width > 0 ? (int)chosenClip.width : 1920;
                 int h = chosenClip.height > 0 ? (int)chosenClip.height : 1080;
@@ -365,9 +377,11 @@ namespace BES.UI.Menu
                 globalVideoPlayer.Prepare();
                 while (!globalVideoPlayer.isPrepared)
                 {
+                    EnsureWishBackgroundVisible();
                     yield return null;
                 }
                 globalVideoPlayer.Play();
+                SetVideoOverlayVisible(true, 1f);
                 Debug.Log($"[BES] Gacha Pre-pull Video started: {chosenClip.name} | Total Frames: {globalVideoPlayer.frameCount} | Duration: {globalVideoPlayer.length}s");
 
                 // Wait for it to start playing or timeout
@@ -417,7 +431,8 @@ namespace BES.UI.Menu
                 globalVideoPlayer.targetTexture = null;
                 videoOverlayImage.texture = null;
                 if (videoRT != null) { videoRT.Release(); Destroy(videoRT); videoRT = null; }
-                videoOverlayImage.gameObject.SetActive(false);
+                SetVideoOverlayVisible(false, 0f);
+                EnsureWishBackgroundVisible();
             }
 
             // Hide all cards initially
@@ -462,20 +477,21 @@ namespace BES.UI.Menu
                         globalVideoPlayer.renderMode = UnityEngine.Video.VideoRenderMode.RenderTexture;
                         globalVideoPlayer.targetTexture = videoRT;
                         
-                        videoOverlayImage.gameObject.SetActive(true);
+                        SetVideoOverlayVisible(true, 0f);
                         videoOverlayImage.texture = videoRT;
-                        videoOverlayImage.color = Color.white; // Tint to white to show video properly
 
                         globalVideoPlayer.audioOutputMode = UnityEngine.Video.VideoAudioOutputMode.None; // Disable audio sync issues
                         globalVideoPlayer.clip = character.revealVideoClip;
                         globalVideoPlayer.Prepare();
                         while (!globalVideoPlayer.isPrepared)
                         {
+                            EnsureWishBackgroundVisible();
                             yield return null;
                         }
 
                         // Start playing the video
                         globalVideoPlayer.Play();
+                        SetVideoOverlayVisible(true, 1f);
                         Debug.Log($"[BES] 5-Star Character Reveal Video started: {character.revealVideoClip.name} | Total Frames: {globalVideoPlayer.frameCount} | Duration: {globalVideoPlayer.length}s");
 
                         // Wait for character clip to start playing or timeout
@@ -528,7 +544,8 @@ namespace BES.UI.Menu
                     globalVideoPlayer.targetTexture = null;
                     videoOverlayImage.texture = null;
                     if (videoRT != null) { videoRT.Release(); Destroy(videoRT); videoRT = null; }
-                    videoOverlayImage.gameObject.SetActive(false);
+                    SetVideoOverlayVisible(false, 0f);
+                    EnsureWishBackgroundVisible();
 
                     yield return FadeOverlay(fadeImg, 1f, 0f, 0.8f);
                     Destroy(fadeImg.gameObject);
@@ -565,6 +582,9 @@ namespace BES.UI.Menu
                     cardView.root.anchoredPosition = target;
                 if (cardView.canvasGroup != null)
                     cardView.canvasGroup.alpha = 1f;
+
+                if (i < visibleCardCount - 1 && cardStaggerDelay > 0f)
+                    yield return new WaitForSecondsRealtime(cardStaggerDelay);
             }
 
             claimButton?.gameObject.SetActive(true);
@@ -639,7 +659,7 @@ namespace BES.UI.Menu
         void ApplyCharacterReward(MenuWishReward reward)
         {
             var id = CharacterIdFor(reward);
-            var roster = PartyRoster.Instance;
+            var roster = ResolveRoster();
             var wasOwned = roster != null && roster.IsCharacterUnlocked(id);
             roster?.UnlockCharacter(id, reward.displayName);
             if (wasOwned)
@@ -650,6 +670,19 @@ namespace BES.UI.Menu
                 SetFeedback($"DUPLICATE: +{amount} CONSTELLATION SHARD");
             }
             GameEvents.RaisePartyChanged();
+        }
+
+        static PartyRoster ResolveRoster()
+        {
+            if (PartyRoster.Instance != null)
+                return PartyRoster.Instance;
+
+            var existing = UnityEngine.Object.FindAnyObjectByType<PartyRoster>(FindObjectsInactive.Include);
+            if (existing != null)
+                return existing;
+
+            var root = new GameObject("PartyRoster");
+            return root.AddComponent<PartyRoster>();
         }
 
         bool TrySpend(int count)
@@ -703,6 +736,7 @@ namespace BES.UI.Menu
         void ResetPresentation()
         {
             StopAllCoroutines();
+            EnsureWishBackgroundVisible();
             if (globalVideoPlayer != null)
             {
                 globalVideoPlayer.Stop();
@@ -712,7 +746,7 @@ namespace BES.UI.Menu
             if (videoOverlayImage != null)
             {
                 videoOverlayImage.texture = null;
-                videoOverlayImage.gameObject.SetActive(false);
+                SetVideoOverlayVisible(false, 0f);
             }
             if (videoRT != null)
             {
@@ -737,6 +771,54 @@ namespace BES.UI.Menu
             SetRollTopBarVisible(true);
 
             RefreshCurrency();
+            EnsureWishBackgroundVisible();
+        }
+
+        void EnsureWishBackgroundVisible()
+        {
+            if (!lockWishBackground) return;
+            ResolveWishBackground();
+            if (wishBackground == null) return;
+
+            wishBackground.gameObject.SetActive(true);
+            if (lockedWishBackgroundSprite != null)
+                wishBackground.sprite = lockedWishBackgroundSprite;
+
+            var color = wishBackground.color;
+            color.a = 1f;
+            wishBackground.color = color;
+            wishBackground.enabled = true;
+        }
+
+        void ResolveWishBackground()
+        {
+            if (wishBackground != null) return;
+
+            var images = GetComponentsInChildren<Image>(true);
+            foreach (var image in images)
+            {
+                if (image == null || image.name != "Background")
+                    continue;
+
+                var parent = image.transform.parent;
+                if (parent != null && (parent.name == "WishContent" || parent == transform))
+                {
+                    wishBackground = image;
+                    lockedWishBackgroundSprite = lockedWishBackgroundSprite != null
+                        ? lockedWishBackgroundSprite
+                        : image.sprite;
+                    return;
+                }
+            }
+        }
+
+        void SetVideoOverlayVisible(bool visible, float alpha)
+        {
+            if (videoOverlayImage == null) return;
+            videoOverlayImage.gameObject.SetActive(visible);
+            var color = videoOverlayImage.color;
+            color.a = Mathf.Clamp01(alpha);
+            videoOverlayImage.color = color;
         }
 
         void SetRollTopBarVisible(bool visible)

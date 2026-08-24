@@ -274,16 +274,16 @@ namespace BES.UI
             return await SendOTPEmailAsync(email, _mockResetCode);
         }
 
-        public async Task<string> ResetPasswordWithCodeAsync(string email, string code, string newPassword)
+        public Task<string> ResetPasswordWithCodeAsync(string email, string code, string newPassword)
         {
             if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
             {
-                return "Invalid email address format.";
+                return Task.FromResult("Invalid email address format.");
             }
 
             if (string.IsNullOrWhiteSpace(newPassword) || newPassword.Length < 6)
             {
-                return "Password must be at least 6 characters long.";
+                return Task.FromResult("Password must be at least 6 characters long.");
             }
 
             var emailKey = email.ToLower();
@@ -295,10 +295,10 @@ namespace BES.UI
 
                 _mockResetCode = null;
                 _mockResetEmail = null;
-                return null; // Return null to indicate reset success
+                return Task.FromResult<string>(null); // Return null to indicate reset success
             }
 
-            return "Invalid verification code. Please check your email.";
+            return Task.FromResult("Invalid verification code. Please check your email.");
         }
 
         private async Task<string> SendOTPEmailAsync(string recipientEmail, string otpCode)
