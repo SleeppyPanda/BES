@@ -9,6 +9,12 @@ namespace BES.Gameplay
         [SerializeField] string subRegionId = "subregion_01";
         [SerializeField] GameObject[] enemyPrefabs;
         [SerializeField] Transform[] spawnPoints;
+        [Tooltip("Optional box used to pick a random position inside the region. When assigned, it is preferred over Spawn Points.")]
+        [SerializeField] BoxCollider spawnArea;
+        [SerializeField] LayerMask groundMask = ~0;
+        [SerializeField] float groundProbeHeight = 80f;
+        [SerializeField] float groundProbeDistance = 200f;
+        [SerializeField] int positionAttempts = 12;
         [SerializeField] Transform spawnedParent;
         [SerializeField] int minSpawnCount = 1;
         [SerializeField] int maxSpawnCount = 3;
@@ -44,7 +50,8 @@ namespace BES.Gameplay
             respawnTimer = 0f;
             RemoveNullEntries();
 
-            if (enemyPrefabs == null || enemyPrefabs.Length == 0 || spawnPoints == null || spawnPoints.Length == 0)
+            var hasPoints = spawnPoints != null && spawnPoints.Length > 0;
+            if (enemyPrefabs == null || enemyPrefabs.Length == 0 || (spawnArea == null && !hasPoints))
                 return;
 
             var min = Mathf.Max(0, minSpawnCount);
@@ -53,13 +60,53 @@ namespace BES.Gameplay
             for (var i = 0; i < count; i++)
             {
                 var prefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-                var point = spawnPoints[Random.Range(0, spawnPoints.Length)];
-                if (prefab == null || point == null)
+                if (prefab == null || !TryGetSpawnPose(out var position, out var rotation))
                     continue;
 
-                var enemy = Instantiate(prefab, point.position, point.rotation, spawnedParent != null ? spawnedParent : transform);
+                var enemy = Instantiate(prefab, position, rotation, spawnedParent != null ? spawnedParent : transform);
                 spawnedEnemies.Add(enemy);
             }
+        }
+
+        bool TryGetSpawnPose(out Vector3 position, out Quaternion rotation)
+        {
+            if (spawnArea != null)
+            {
+                var attempts = Mathf.Max(1, positionAttempts);
+                for (var i = 0; i < attempts; i++)
+                {
+                    var half = spawnArea.size * 0.5f;
+                    var local = spawnArea.center + new Vector3(
+                        Random.Range(-half.x, half.x),
+                        half.y,
+                        Random.Range(-half.z, half.z));
+                    var origin = spawnArea.transform.TransformPoint(local) + Vector3.up * groundProbeHeight;
+                    if (!Physics.Raycast(origin, Vector3.down, out var hit, groundProbeDistance, groundMask, QueryTriggerInteraction.Ignore))
+                        continue;
+
+                    position = hit.point;
+                    rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+                    return true;
+                }
+            }
+
+            if (spawnPoints != null && spawnPoints.Length > 0)
+            {
+                for (var i = 0; i < spawnPoints.Length; i++)
+                {
+                    var point = spawnPoints[Random.Range(0, spawnPoints.Length)];
+                    if (point == null)
+                        continue;
+
+                    position = point.position;
+                    rotation = point.rotation;
+                    return true;
+                }
+            }
+
+            position = default;
+            rotation = default;
+            return false;
         }
 
         [ContextMenu("Clear Spawned Enemies")]

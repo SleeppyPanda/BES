@@ -1,0 +1,992 @@
+CHARACTER_INFO_FORMAT_VERSION=2
+
+QUY ƯỚC ĐỘ HIẾM
+Vàng: 5 sao
+Hồng: 4 sao
+Trắng: 3 sao
+X / Non-Playable: nhân vật không dùng để roll/chiến đấu nếu chưa có thông tin kỹ năng.
+
+MỖI NHÂN VẬT DÙNG FORMAT
+============================================================
+NHÂN VẬT:
+============================================================
+Id:
+Tên hiển thị:
+Nhóm / Quốc gia:
+Độ hiếm:
+Có thể chơi:
+Hệ:
+Vũ khí:
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật:
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÓM: HỆ THỐNG NHÂN VẬT CHÍNH
+============================================================
+
+============================================================
+NHÂN VẬT: Lunen
+============================================================
+Id: lunen
+Tên hiển thị: Lunen
+Nhóm / Quốc gia: Hệ thống nhân vật chính
+Độ hiếm:
+Có thể chơi: Không
+Hệ: X
+Vũ khí:
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật:
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Tinh Linh
+============================================================
+Id: tinh_linh
+Tên hiển thị: Tinh Linh
+Nhóm / Quốc gia: Hệ thống nhân vật chính
+Độ hiếm:
+Có thể chơi: Không
+Hệ: X
+Vũ khí:
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật:
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÓM: Akherat
+============================================================
+
+============================================================
+NHÂN VẬT: Elio
+============================================================
+Id: elio
+Tên hiển thị: Elio
+Nhóm / Quốc gia: Akherat
+Độ hiếm: 5
+Có thể chơi: Có
+Hệ: Hỏa
+Vũ khí: Đại Kiếm
+Loại kỹ năng: Tấn công AOE
+Tấn công thường: Gây sát thương hỏa bằng 100% tấn công.
+Kỹ năng: Gây tấn công AOE toàn diện bằng 300% công.
+Nội tại: Khi có 2 nhân vật hỏa trong đội sẽ tăng 50% ATK cho nhân vật này.
+Mô tả nhân vật: Hoàng tử
+Ảnh chibi idle: Assets/Art Ui/Game Việt hóa mới/Character/Elio/Idle Chibi (2).png
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait: Assets/Art Ui/Game Việt hóa mới/Character information/Mask group-1.png
+Video summon: Assets/Art Ui/animation/Elio.mov
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Aurelian
+============================================================
+Id: aurelian
+Tên hiển thị: Aurelian
+Nhóm / Quốc gia: Akherat
+Độ hiếm: 5
+Có thể chơi: Có
+Hệ: Hỏa
+Vũ khí: Kiếm Đơn
+Loại kỹ năng: Bạo kích
+Tấn công thường: Gây sát thương hỏa bằng 100% tấn công.
+Kỹ năng: Tấn công một mục tiêu chỉ định bằng 450% công + 10% HP.
+Nội tại: Cả team mình giảm 20% dame nhận vào, team địch thì sau khi sử dụng kỹ năng có 40% tỷ lệ bị giảm ATK 2 lượt.
+Mô tả nhân vật: Hỏa thần đương nhiệm
+Ảnh chibi idle: Assets/Art Ui/Game Việt hóa mới/Character/Auerlian/Idle.png
+Ảnh chibi attack: Assets/Art Ui/Game Việt hóa mới/Character/Auerlian/Attack.png
+Ảnh full body: Assets/Art Ui/Game Việt hóa mới/Character/Auerlian/Hình trong cốt truyện_.png
+Ảnh portrait: Assets/Art Ui/Game Việt hóa mới/Character information/Mask group.png
+Video summon: Assets/Art Ui/animation/Animation summon.mp4
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Khepraen
+============================================================
+Id: khepraen
+Tên hiển thị: Khepraen
+Nhóm / Quốc gia: Akherat
+Độ hiếm: 4
+Có thể chơi: Có
+Hệ: Lôi
+Vũ khí: Đại Kiếm
+Loại kỹ năng: Khống chế
+Tấn công thường: Gây sát thương lôi bằng 100% tấn công.
+Kỹ năng: Xác suất 50% + tỷ lệ chính xác gây cho địch bị giảm tốc độ mỗi lượt 10 tốc. Cộng dồn 5 lần, khi đạt tối đa sẽ làm lại bộ đếm.
+Nội tại:
+Mô tả nhân vật: Thầy giáo hoàng tộc
+Ảnh chibi idle: Assets/Art Ui/Game Việt hóa mới/Character/Khepraen/Idle Chibi (3).png
+Ảnh chibi attack: Assets/Art Ui/Game Việt hóa mới/Character/Khepraen/Attack Chibi (2).png
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Rashad
+============================================================
+Id: rashad
+Tên hiển thị: Rashad
+Nhóm / Quốc gia: Akherat
+Độ hiếm: 4
+Có thể chơi: Có
+Hệ: Phong
+Vũ khí: Kiếm Đơn
+Loại kỹ năng: Tấn công AOE
+Tấn công thường: Gây sát thương phong bằng 100% tấn công.
+Kỹ năng: Tấn công AOE dựa trên nguyên tố được gán, gây sát thương bằng 200% tấn công, đồng thời xác suất 50% cố định làm giảm 500 điểm phòng thủ kẻ địch.
+Nội tại: Nếu ra trận cùng lúc cả Elio và Rashad thì khi nhận tấn công, Rashad sẽ có tỷ lệ 50% đỡ hộ Elio 100% sát thương.
+Mô tả nhân vật: Hầu cận kiêm bạn thân của Elio
+Ảnh chibi idle: Assets/Art Ui/Game Việt hóa mới/Character/Rashad/Idle Chibi (5).png
+Ảnh chibi attack: Assets/Art Ui/Game Việt hóa mới/Character/Rashad/Attack Chibi (12).png
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Nabir
+============================================================
+Id: nabir
+Tên hiển thị: Nabir
+Nhóm / Quốc gia: Akherat
+Độ hiếm: 4
+Có thể chơi: Có
+Hệ: Thảo
+Vũ khí: Pháp Khí
+Loại kỹ năng: Tạo Khiên
+Tấn công thường: Gây sát thương thảo bằng 100% tấn công.
+Kỹ năng: Dựa trên 200% DEF để tạo khiên chống đỡ sát thương.
+Nội tại: Trong đội có tối thiểu 3 nguyên tố cùng hệ thì sẽ tăng 5% khiên bằng 10% DEF + 10% máu.
+Mô tả nhân vật: Thương nhân trong thành phố
+Ảnh chibi idle: Assets/Art Ui/Game Việt hóa mới/Character/Nabir/Idle Chibi (4).png
+Ảnh chibi attack: Assets/Art Ui/Game Việt hóa mới/Character/Nabir/Attack Chibi (4).png
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Sahure
+============================================================
+Id: sahure
+Tên hiển thị: Sahure
+Nhóm / Quốc gia: Akherat
+Độ hiếm: 5
+Có thể chơi: Có
+Hệ: Thủy
+Vũ khí: Pháp Khí
+Loại kỹ năng: Hồi máu
+Tấn công thường: Gây sát thương thủy bằng 100% tấn công.
+Kỹ năng: Dựa vào 100% HP + 100% DEF để hồi máu cho đồng đội chỉ định.
+Nội tại: Có đồng đội hệ hỏa thì giảm 100% tấn công. Có đồng đội hệ thủy thì tăng 20% HP.
+Mô tả nhân vật: Tư tế hoàng gia đương nhiệm
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon: Assets/Art Ui/animation/Sahure.mov
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Menkara
+============================================================
+Id: menkara
+Tên hiển thị: Menkara
+Nhóm / Quốc gia: Akherat
+Độ hiếm: 4
+Có thể chơi: Có
+Hệ: Thủy
+Vũ khí: Kiếm Đơn
+Loại kỹ năng: Bạo kích
+Tấn công thường: Gây sát thương thủy bằng 100% tấn công.
+Kỹ năng: Tấn công mục tiêu chỉ định bằng 200% công + 50% (+ tỷ lệ bạo kích) tỷ lệ gây bạo kích gây 100% ATK.
+Nội tại:
+Mô tả nhân vật: Người quản lý kho sách hoàng gia
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Ramesses
+============================================================
+Id: ramesses
+Tên hiển thị: Ramesses
+Nhóm / Quốc gia: Akherat
+Độ hiếm: 5
+Có thể chơi: Có
+Hệ: Hỏa
+Vũ khí: Thương Giáo
+Loại kỹ năng: Bạo kích
+Tấn công thường: Gây sát thương hỏa bằng 100% tấn công.
+Kỹ năng: Tấn công mục tiêu chỉ định bằng 200% công + 50% (+ tỷ lệ bạo kích) tỷ lệ gây bạo kích gây 100% ATK.
+Nội tại:
+Mô tả nhân vật: Đội trưởng hộ vệ hoàng gia
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Qasim
+============================================================
+Id: qasim
+Tên hiển thị: Qasim
+Nhóm / Quốc gia: Akherat
+Độ hiếm: 4
+Có thể chơi: Có
+Hệ: Lôi
+Vũ khí: Cung Giáo
+Loại kỹ năng: Tấn công AOE
+Tấn công thường: Gây sát thương lôi bằng 100% tấn công.
+Kỹ năng: Gây cho 3 kẻ địch ngẫu nhiên sát thương lôi bằng 150% ATK và xác suất 50% bạo kích.
+Nội tại:
+Mô tả nhân vật: Đội phó hộ vệ hoàng gia
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Bekhet
+============================================================
+Id: bekhet
+Tên hiển thị: Bekhet
+Nhóm / Quốc gia: Akherat
+Độ hiếm: 4
+Có thể chơi: Có
+Hệ: Hỏa
+Vũ khí: Đại Kiếm
+Loại kỹ năng: Tạo Khiên
+Tấn công thường: Gây sát thương hỏa bằng 100% tấn công.
+Kỹ năng: Dựa trên 200% DEF + 100% máu để tạo khiên chống đỡ sát thương.
+Nội tại:
+Mô tả nhân vật: Thợ rèn
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Nefru
+============================================================
+Id: nefru
+Tên hiển thị: Nefru
+Nhóm / Quốc gia: Akherat
+Độ hiếm: 4
+Có thể chơi: Có
+Hệ: Thủy
+Vũ khí: Pháp Khí
+Loại kỹ năng: Hồi máu
+Tấn công thường: Gây sát thương thủy bằng 100% tấn công.
+Kỹ năng: Dựa vào 100% ATK để hồi máu cho toàn đội trong 1 lượt.
+Nội tại: Nếu ra trận cùng Sahure thì cả hai được giảm 30% sát thương nhận vào.
+Mô tả nhân vật: Học trò của Sahure
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÓM: Talvera
+============================================================
+
+============================================================
+NHÂN VẬT: Mireya
+============================================================
+Id: mireya
+Tên hiển thị: Mireya
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Phong
+Vũ khí: Pháp Khí
+Loại kỹ năng: Tấn công AOE
+Tấn công thường: Gây sát thương phong bằng 100% tấn công.
+Kỹ năng: Tấn công AOE dựa trên nguyên tố được gán, gây sát thương bằng 200% tấn công, đồng thời xác suất 50% cố định làm giảm 500 điểm phòng thủ kẻ địch.
+Nội tại: Ra trận cùng Naeyl thì cả hai sẽ được nhận khiên bằng 30% DEF của Mireya. Duy trì 1 lượt khi mới vào trận, không cộng dồn.
+Mô tả nhân vật: Phong thần hiện tại – em gái Nayel
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Soraya
+============================================================
+Id: soraya
+Tên hiển thị: Soraya
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: X
+Vũ khí:
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Vợ Nayel – mẹ Seyran
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Lila
+============================================================
+Id: lila
+Tên hiển thị: Lila
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Phong
+Vũ khí: Kiếm Đơn
+Loại kỹ năng: Bạo kích
+Tấn công thường: Gây sát thương phong bằng 100% tấn công.
+Kỹ năng: Tấn công mục tiêu chỉ định bằng 200% công + 50% (+ tỷ lệ bạo kích) tỷ lệ gây bạo kích gây 100% ATK.
+Nội tại:
+Mô tả nhân vật: Con gái trưởng đoàn Rihara, hoạt bát, giỏi chiến đấu và sử dụng sức mạnh Gió.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Seyran
+============================================================
+Id: seyran
+Tên hiển thị: Seyran
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Phong
+Vũ khí: Pháp Khí
+Loại kỹ năng: Tạo Khiên
+Tấn công thường: Gây sát thương phong bằng 100% tấn công.
+Kỹ năng: Dựa trên 200% DEF + 100% máu để tạo khiên chống đỡ sát thương.
+Nội tại:
+Mô tả nhân vật: Tập sự tư tế Talvera, con gái Nayel, mang lõi Ngọc Phong Ấn trong tim.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Kaivan
+============================================================
+Id: kaivan
+Tên hiển thị: Kaivan
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Hỏa
+Vũ khí: Cung Giáo
+Loại kỹ năng: Bạo kích
+Tấn công thường: Gây sát thương hỏa bằng 100% tấn công.
+Kỹ năng: Tấn công mục tiêu chỉ định bằng 200% công + 50% (+ tỷ lệ bạo kích) tỷ lệ gây bạo kích gây 100% ATK.
+Nội tại:
+Mô tả nhân vật: Chiến binh, cung thủ xuất sắc của Talvera
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Nayel
+============================================================
+Id: nayel
+Tên hiển thị: Nayel
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Phong
+Vũ khí: Đại Kiếm
+Loại kỹ năng: Tấn công AOE
+Tấn công thường: Gây sát thương phong bằng 100% tấn công.
+Kỹ năng: Tấn công AOE dựa trên nguyên tố được gán, gây sát thương bằng 200% tấn công cho toàn kẻ địch, lựa chọn 1 kẻ địch cao máu nhất gây 400% sát thương.
+Nội tại: Mireya khi vào đội sẽ làm Nayel giảm 10% sát thương nhận vào nhưng giảm tốc độ 2 điểm.
+Mô tả nhân vật: Thủ lĩnh Tộc Bão Gió, một nửa Thần vị Gió, cha của Seyran.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Zareen
+============================================================
+Id: zareen
+Tên hiển thị: Zareen
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Phong
+Vũ khí: Kiếm Đơn
+Loại kỹ năng: Tạo Khiên
+Tấn công thường: Gây sát thương phong bằng 100% tấn công.
+Kỹ năng: Dựa trên 200% DEF + 20% máu (+ 5% tỷ lệ bạo kích) để hồi sinh một đồng đội đã gục.
+Nội tại:
+Mô tả nhân vật: Mẹ Lila – Thần nữ
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Farzan
+============================================================
+Id: farzan
+Tên hiển thị: Farzan
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: Thủy
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Cha Lila – trưởng đoàn thương nhân Rihara
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Temir
+============================================================
+Id: temir
+Tên hiển thị: Temir
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: Thủy
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Chú của Lila
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Ilyen
+============================================================
+Id: ilyen
+Tên hiển thị: Ilyen
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Phong
+Vũ khí: Kiếm Đơn
+Loại kỹ năng: Bạo kích
+Tấn công thường: Gây sát thương phong bằng 100% tấn công.
+Kỹ năng: Tấn công mục tiêu chỉ định bằng 200% công + 50% (+ tỷ lệ bạo kích) tỷ lệ gây bạo kích gây 100% ATK.
+Nội tại:
+Mô tả nhân vật: Thiếu niên tộc có cánh
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Eiren
+============================================================
+Id: eiren
+Tên hiển thị: Eiren
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: X
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Tinh linh song sinh thứ nhất
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Neris
+============================================================
+Id: neris
+Tên hiển thị: Neris
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: X
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Tinh linh song sinh thứ hai
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Veyrun
+============================================================
+Id: veyrun
+Tên hiển thị: Veyrun
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: Phong
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Phong thần tiền nhiệm
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Kharzek
+============================================================
+Id: kharzek
+Tên hiển thị: Kharzek
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: X
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Cận vệ Quỷ Vương
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Vorash
+============================================================
+Id: vorash
+Tên hiển thị: Vorash
+Nhóm / Quốc gia: Talvera
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: Phong
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Linh thú Bão Tố
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÓM: Neravelle & Sylmeria
+============================================================
+
+============================================================
+NHÂN VẬT: Lyrienne
+============================================================
+Id: lyrienne
+Tên hiển thị: Lyrienne
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Thủy
+Vũ khí: Pháp Khí
+Loại kỹ năng: Tạo Khiên
+Tấn công thường: Gây sát thương thủy bằng 100% tấn công.
+Kỹ năng: Tạo khiên bằng 300% máu của bản thân đồng thời khi bị tấn công sẽ gây phản sát thương thủy bằng 100% ATK + 100% DEF.
+Nội tại: Khi ra trận cả Lyrienne và Caelith thì cả hai khi nhận sát thương chí tử sẽ được hồi sinh 1 lần duy nhất trong trận.
+Mô tả nhân vật: Thủy thần của Sylmeria
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Caelith
+============================================================
+Id: caelith
+Tên hiển thị: Caelith
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Thảo
+Vũ khí: Kiếm Đơn
+Loại kỹ năng: Khống chế
+Tấn công thường: Gây sát thương thảo bằng 100% tấn công.
+Kỹ năng: Gắn nguyên tố thảo vào toàn đội địch, khống thể xóa bỏ được trong 2 lượt. Mỗi lượt hành động của kẻ địch sẽ tự rút máu bằng 5% máu tối đa của kẻ địch.
+Nội tại: Khi ra trận cả Lyrienne và Caelith thì cả hai khi nhận sát thương chí tử sẽ được hồi sinh 1 lần duy nhất trong trận.
+Mô tả nhân vật: Mộc thần của Neravelle
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Asterion
+============================================================
+Id: asterion
+Tên hiển thị: Asterion
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: X
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Tể tướng; đứng đầu Hội đồng Mười Hai Đại Nghị Quan; phụ trách luật pháp, trật tự, thiện tướng và bộ máy hành chính.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Elymara
+============================================================
+Id: elymara
+Tên hiển thị: Elymara
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: X
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Đại Nghị Quan phụ trách gia đình, huyết thống và quyền kế vị.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Thalerys
+============================================================
+Id: thalerys
+Tên hiển thị: Thalerys
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Thủy
+Vũ khí: Thương Giáo
+Loại kỹ năng: Tấn công AOE
+Tấn công thường: Gây sát thương thủy bằng 100% tấn công.
+Kỹ năng: Gây tấn công AOE toàn diện bằng 300% công.
+Nội tại: Ra trận cùng Nythera thì cả hai được tăng 10% máu + xác suất 50% khi nhận sát thương sẽ đỡ hộ Nythera 50% sát thương.
+Mô tả nhân vật: Đại Nghị Quan cai quản biển cả, sôi ngòi và hàng hải.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Chloriane
+============================================================
+Id: chloriane
+Tên hiển thị: Chloriane
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: X
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Đại Nghị Quan phụ trách mùa màng, lương thực và sinh thái.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Sophyra
+============================================================
+Id: sophyra
+Tên hiển thị: Sophyra
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: X
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Đại Nghị Quan phụ trách giáo dục, nghiên cứu và chiến lược.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Elythios
+============================================================
+Id: elythios
+Tên hiển thị: Elythios
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Phong
+Vũ khí: Pháp Khí
+Loại kỹ năng: Hồi máu
+Tấn công thường: Gây sát thương phong bằng 100% tấn công.
+Kỹ năng: Tạo một kết giới trong 3 lượt, mỗi lượt khi tới lượt hành động của phe ta thì hồi 1000 máu + 20% DEF của nhân vật.
+Nội tại: Không thể hồi máu cho bản thân.
+Mô tả nhân vật: Đại Nghị Quan phụ trách y học, âm nhạc và thi ca.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Nythera
+============================================================
+Id: nythera
+Tên hiển thị: Nythera
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Thảo
+Vũ khí: Thương Giáo
+Loại kỹ năng: Hồi máu
+Tấn công thường: Gây sát thương thảo bằng 100% tấn công.
+Kỹ năng: Hồi sinh một đồng đội và dựa 100% ATK + 20% tốc độ để hồi máu. Tốc độ hồi đẩy. Tuy nhiên đồng đội đẩy không thể hành động trong 1 lượt, trong thời gian không thể hoạt động nếu chịu sát thương chí tử thì sẽ hồi lại 2% máu.
+Nội tại: Khi hồi sinh được Elythios nhưng chỉ hồi sinh được 30% máu của cậu. Hồi sinh nhân vật cùng hệ sẽ thêm 1 khiên bằng 2% máu của Nythera.
+Mô tả nhân vật: Đại Nghị Quan bảo vệ thiên nhiên và sinh mệnh.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Dravion
+============================================================
+Id: dravion
+Tên hiển thị: Dravion
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: X
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Đại Nghị Quan: chỉ huy quân đội và phòng thủ.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Kallistra
+============================================================
+Id: kallistra
+Tên hiển thị: Kallistra
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Lôi
+Vũ khí: Pháp Khí
+Loại kỹ năng: Khống chế
+Tấn công thường: Gây sát thương lôi bằng 100% tấn công.
+Kỹ năng: Gây nhiễu loạn cho toàn kẻ địch khiến chúng không thể tấn công trong 2 lượt, xác suất 20% + (% tỷ lệ chính xác).
+Nội tại: Nếu không khiến cho kẻ địch nào vào trạng thái bị khống chế thì sẽ lựa chọn kẻ địch có máu ít nhất kết liễu luôn.
+Mô tả nhân vật: Đại Nghị Quan phụ trách nghệ thuật, lễ nghi và văn hóa.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Tekharos
+============================================================
+Id: tekharos
+Tên hiển thị: Tekharos
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Lôi
+Vũ khí: Kiếm Đơn
+Loại kỹ năng: Bạo kích
+Tấn công thường: Gây sát thương lôi bằng 100% tấn công.
+Kỹ năng: Gây tấn công AOE toàn diện bằng 300% công.
+Nội tại: Nếu sát thương AOE khiến trên 2 kẻ địch giảm tới mức 50% máu thì sẽ tăng ATK toàn đội dựa trên 10% ATK bản thân.
+Mô tả nhân vật: Đại Nghị Quan quản lý kiến trúc, phát minh và các công trình cổ.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Dromerys
+============================================================
+Id: dromerys
+Tên hiển thị: Dromerys
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: X
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Đại Nghị Quan phụ trách thương mại, truyền tin và lữ hành.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Oikestia
+============================================================
+Id: oikestia
+Tên hiển thị: Oikestia
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Có
+Hệ: Lôi
+Vũ khí: Kiếm Đơn
+Loại kỹ năng: Tấn công AOE
+Tấn công thường: Gây sát thương lôi bằng 100% tấn công.
+Kỹ năng: Gây tấn công AOE toàn diện bằng 300% công.
+Nội tại: Không thể nhận khiên từ đồng đội.
+Mô tả nhân vật: Đại Nghị Quan phụ trách dân sinh, cộng đồng và phúc lợi.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:
+
+============================================================
+NHÂN VẬT: Thalor
+============================================================
+Id: thalor
+Tên hiển thị: Thalor
+Nhóm / Quốc gia: Neravelle & Sylmeria
+Độ hiếm: 3
+Có thể chơi: Không
+Hệ: X
+Vũ khí: Non-Playable
+Loại kỹ năng:
+Tấn công thường:
+Kỹ năng:
+Nội tại:
+Mô tả nhân vật: Cận vệ của Quỷ Vương; kẻ đứng sau hỗ trợ Asterion thao túng Alaric.
+Ảnh chibi idle:
+Ảnh chibi attack:
+Ảnh full body:
+Ảnh portrait:
+Video summon:
+Ghi chú:

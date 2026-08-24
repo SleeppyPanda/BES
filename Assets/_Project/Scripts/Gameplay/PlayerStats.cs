@@ -12,6 +12,7 @@ namespace BES.Gameplay
         [SerializeField] float critRate = 0.1f;
         [SerializeField] float critDamage = 1.5f;
         [SerializeField] float manaRegenPerSecond = 8f;
+        [SerializeField] Color damagePopupColor = new(1f, 0.2f, 0.12f, 1f);
 
         float currentHealth;
         float currentMana;
@@ -72,6 +73,7 @@ namespace BES.Gameplay
 
             var reduced = Mathf.Max(1f, amount - defense * 0.5f);
             currentHealth = Mathf.Max(0f, currentHealth - reduced);
+            WorldDamagePopup.Show(transform.position + Vector3.up * 1.6f, reduced, damagePopupColor);
             GameEvents.RaisePlayerHealthChanged(currentHealth, maxHealth);
         }
 

@@ -1,0 +1,646 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ac288821dca35b40881d2430d65a144, type: 3}
+  m_Name: CharacterDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::BES.UI.CharacterDatabase
+  characters:
+  - characterId: elio
+    displayName: Elio
+    rarity: 5
+    level: 1
+    maxLevel: 80
+    baseAttack: 34
+    baseHealth: 140
+    baseDefense: 8
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA5n_c\xF4ng_aoe"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 5
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: aurelian
+    displayName: Aurelian
+    rarity: 5
+    level: 1
+    maxLevel: 80
+    baseAttack: 32
+    baseHealth: 140
+    baseDefense: 8
+    baseMana: 100
+    critRate: 0.2
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "b\u1EA1o_k\xEDch"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 5
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: khepraen
+    displayName: Khepraen
+    rarity: 4
+    level: 1
+    maxLevel: 80
+    baseAttack: 20
+    baseHealth: 120
+    baseDefense: 7
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "kh\u1ED1ng_ch\u1EBF"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 3
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: rashad
+    displayName: Rashad
+    rarity: 4
+    level: 1
+    maxLevel: 80
+    baseAttack: 28
+    baseHealth: 120
+    baseDefense: 7
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA5n_c\xF4ng_aoe"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 3
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: nabir
+    displayName: Nabir
+    rarity: 4
+    level: 1
+    maxLevel: 80
+    baseAttack: 20
+    baseHealth: 150
+    baseDefense: 11
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA1o_khi\xEAn"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 3
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: sahure
+    displayName: Sahure
+    rarity: 5
+    level: 1
+    maxLevel: 80
+    baseAttack: 24
+    baseHealth: 125
+    baseDefense: 8
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 21300000, guid: af113dc2e52074146ab6caf3002a6122, type: 3}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "h\u1ED3i_m\xE1u"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 5
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: menkara
+    displayName: Menkara
+    rarity: 4
+    level: 1
+    maxLevel: 80
+    baseAttack: 27
+    baseHealth: 120
+    baseDefense: 7
+    baseMana: 100
+    critRate: 0.2
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "b\u1EA1o_k\xEDch"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 3
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: ramesses
+    displayName: Ramesses
+    rarity: 5
+    level: 1
+    maxLevel: 80
+    baseAttack: 32
+    baseHealth: 140
+    baseDefense: 8
+    baseMana: 100
+    critRate: 0.2
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "b\u1EA1o_k\xEDch"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 5
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: qasim
+    displayName: Qasim
+    rarity: 4
+    level: 1
+    maxLevel: 80
+    baseAttack: 28
+    baseHealth: 120
+    baseDefense: 7
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA5n_c\xF4ng_aoe"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 3
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: bekhet
+    displayName: Bekhet
+    rarity: 4
+    level: 1
+    maxLevel: 80
+    baseAttack: 20
+    baseHealth: 150
+    baseDefense: 11
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA1o_khi\xEAn"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 3
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: nefru
+    displayName: Nefru
+    rarity: 4
+    level: 1
+    maxLevel: 80
+    baseAttack: 20
+    baseHealth: 125
+    baseDefense: 7
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "h\u1ED3i_m\xE1u"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 3
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: mireya
+    displayName: Mireya
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 28
+    baseHealth: 100
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA5n_c\xF4ng_aoe"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: lila
+    displayName: Lila
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 27
+    baseHealth: 100
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.2
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "b\u1EA1o_k\xEDch"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: seyran
+    displayName: Seyran
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 20
+    baseHealth: 150
+    baseDefense: 11
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA1o_khi\xEAn"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: kaivan
+    displayName: Kaivan
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 27
+    baseHealth: 100
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.2
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "b\u1EA1o_k\xEDch"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: nayel
+    displayName: Nayel
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 28
+    baseHealth: 100
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA5n_c\xF4ng_aoe"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: zareen
+    displayName: Zareen
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 20
+    baseHealth: 150
+    baseDefense: 11
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA1o_khi\xEAn"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: ilyen
+    displayName: Ilyen
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 27
+    baseHealth: 100
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.2
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "b\u1EA1o_k\xEDch"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: lyrienne
+    displayName: Lyrienne
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 20
+    baseHealth: 150
+    baseDefense: 11
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA1o_khi\xEAn"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: caelith
+    displayName: Caelith
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 20
+    baseHealth: 100
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "kh\u1ED1ng_ch\u1EBF"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: thalerys
+    displayName: Thalerys
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 28
+    baseHealth: 100
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA5n_c\xF4ng_aoe"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: elythios
+    displayName: Elythios
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 20
+    baseHealth: 125
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "h\u1ED3i_m\xE1u"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: nythera
+    displayName: Nythera
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 20
+    baseHealth: 125
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "h\u1ED3i_m\xE1u"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: kallistra
+    displayName: Kallistra
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 20
+    baseHealth: 100
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "kh\u1ED1ng_ch\u1EBF"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: tekharos
+    displayName: Tekharos
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 27
+    baseHealth: 100
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.2
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "b\u1EA1o_k\xEDch"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  - characterId: oikestia
+    displayName: Oikestia
+    rarity: 3
+    level: 1
+    maxLevel: 80
+    baseAttack: 28
+    baseHealth: 100
+    baseDefense: 5
+    baseMana: 100
+    critRate: 0.1
+    critDamage: 1.5
+    portrait: {fileID: 0}
+    gameplayPrefab: {fileID: 0}
+    testVisualColor: {r: 1, g: 1, b: 1, a: 1}
+    testVisualScale: {x: 1, y: 1, z: 1}
+    leftClickAttackId: 
+    rightClickAttackId: 
+    skill1Id: "t\u1EA5n_c\xF4ng_aoe"
+    skill2Id: 
+    skill1Icon: {fileID: 0}
+    skill2Icon: {fileID: 0}
+    duplicateShardReward: 1
+    constellationShardCosts: 010000000100000001000000010000000100000001000000
+    skillUnlocks: []
+  defaultPartyIds:
+  - elio
+  - aurelian
+  - sahure
+  - rashad
+  sharedExperienceToNextLevel: 
+  breakthroughTiers: []

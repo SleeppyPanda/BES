@@ -30,6 +30,7 @@ namespace BES.Gameplay
 
             feedbackRoutine = StartCoroutine(Feedback(isCritical));
             CombatVfx.SpawnPulse(transform.position + Vector3.up * 1f, isCritical ? critColor : hitColor, isCritical ? 0.7f : 0.45f, 0.18f);
+            WorldDamagePopup.Show(transform.position + Vector3.up * 1.6f, damage, isCritical ? critColor : hitColor, isCritical);
         }
 
         IEnumerator Feedback(bool isCritical)

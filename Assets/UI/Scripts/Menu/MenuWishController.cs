@@ -48,6 +48,7 @@ namespace BES.UI.Menu
         [SerializeField] MenuContentDatabase database;
         [SerializeField] InventorySystem inventory;
         [SerializeField] MenuHomeController homeController;
+        [SerializeField] bool autoSyncCharacterRewardsFromDatabase = true;
         [SerializeField] List<MenuWishReward> rewards = new();
 
         [Header("Currency")]
@@ -113,6 +114,7 @@ namespace BES.UI.Menu
         void Awake()
         {
             ResolveInventory();
+            SyncCharacterRewardsFromDatabase();
             selectedCurrency = initialCurrency;
             CacheTargetPositions();
             coinsButton?.onClick.AddListener(() => SelectCurrency(WishCurrency.Coins));
@@ -149,6 +151,7 @@ namespace BES.UI.Menu
         void OnEnable()
         {
             ResolveInventory();
+            SyncCharacterRewardsFromDatabase();
             ImportMenuCurrenciesFromSave();
             RefreshCurrency();
             if (homeController != null)
@@ -165,6 +168,50 @@ namespace BES.UI.Menu
                 homeController.gameObject.SetActive(true);
             }
             ResetPresentation();
+        }
+
+        void SyncCharacterRewardsFromDatabase()
+        {
+            if (!autoSyncCharacterRewardsFromDatabase || database?.characters == null || database.characters.Count == 0)
+                return;
+
+            var synced = new List<MenuWishReward>();
+            foreach (var character in database.characters)
+            {
+                if (character == null || string.IsNullOrWhiteSpace(character.id) || !character.playable)
+                    continue;
+
+                var rarity = Mathf.Clamp(character.rarity, 3, 5);
+                synced.Add(new MenuWishReward
+                {
+                    itemId = "wish_" + character.id,
+                    displayName = string.IsNullOrWhiteSpace(character.displayName) ? character.id : character.displayName,
+                    description = BuildWishDescription(character),
+                    icon = character.portrait != null ? character.portrait :
+                           character.fullBody != null ? character.fullBody :
+                           character.chibi,
+                    rarity = rarity,
+                    weight = rarity >= 5 ? 4 : rarity == 4 ? 14 : 30,
+                    amount = 1,
+                    unlockAsCharacter = true
+                });
+            }
+
+            if (synced.Count > 0)
+                rewards = synced;
+        }
+
+        static string BuildWishDescription(CharacterEntry character)
+        {
+            if (character == null) return string.Empty;
+            var parts = new List<string>();
+            if (!string.IsNullOrWhiteSpace(character.description)) parts.Add(character.description);
+            if (!string.IsNullOrWhiteSpace(character.faction)) parts.Add(character.faction);
+            if (!string.IsNullOrWhiteSpace(character.element)) parts.Add("Hệ: " + character.element);
+            if (!string.IsNullOrWhiteSpace(character.weaponType)) parts.Add("Vũ khí: " + character.weaponType);
+            if (!string.IsNullOrWhiteSpace(character.skillType)) parts.Add("Loại: " + character.skillType);
+            if (!string.IsNullOrWhiteSpace(character.skillDescription)) parts.Add(character.skillDescription);
+            return string.Join("\n", parts);
         }
 
         public void SelectCurrency(WishCurrency currency)

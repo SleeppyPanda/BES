@@ -31,6 +31,9 @@ namespace BES.UI.Menu
         public Sprite battlefieldSprite;
         public UIGifClip idleClip;
         public UIGifClip attackClip;
+        public List<GameObject> attackEffectPrefabs = new();
+        public Vector3 attackEffectOffset = Vector3.zero;
+        public Vector3 attackEffectScale = Vector3.one;
         public bool isRanged;
         [Min(1)] public int maxHealth = 100;
         [Min(1)] public int attack = 20;
@@ -54,6 +57,9 @@ namespace BES.UI.Menu
         public TMP_Text healthText;
         public Animator animator;
         [NonSerialized] public int health;
+        [NonSerialized] public int shield;
+        [NonSerialized] public bool usedOneShotSkill;
+        [NonSerialized] public int attackEffectCursor;
         [NonSerialized] public bool isPlayer;
         [NonSerialized] public int setupIndex;
         public bool IsAlive => health > 0;
@@ -115,6 +121,17 @@ namespace BES.UI.Menu
         [SerializeField, Min(0.05f)] float actionWindup = 0.45f;
         [SerializeField, Min(0.05f)] float actionRecovery = 0.35f;
         [SerializeField] List<Animator> panelAnimators = new();
+        [Header("Damage popup")]
+        [SerializeField] RectTransform damagePopupParent;
+        [SerializeField] TMP_Text damagePopupPrefab;
+        [SerializeField] TMP_FontAsset damagePopupFont;
+        [SerializeField] Color damagePopupColor = new(1f, 0.2f, 0.12f, 1f);
+        [SerializeField] Color shieldDamagePopupColor = new(0.45f, 0.85f, 1f, 1f);
+        [SerializeField] Color healPopupColor = new(0.35f, 1f, 0.35f, 1f);
+        [SerializeField, Min(8f)] float damagePopupFontSize = 42f;
+        [SerializeField, Min(0.1f)] float damagePopupDuration = 0.8f;
+        [SerializeField] Vector2 damagePopupOffset = new(0f, 85f);
+        [SerializeField] Vector2 damagePopupTravel = new(0f, 80f);
         [Header("Battle events")]
         [SerializeField] UnityEvent onVictory;
         [SerializeField] UnityEvent onDefeat;
@@ -211,11 +228,41 @@ namespace BES.UI.Menu
                     save.activeBattleStageId = stageId;
                 save.activeBattleIsPlayMode = IsPlayModeBattle;
                 if (!IsPlayModeBattle && !string.IsNullOrWhiteSpace(stageId))
+                {
                     save.activeStoryStageId = stageId;
+                    SaveStoryStageIndexes(save, stageId);
+                }
                 if (SelectedPartyCharacterIds != null && SelectedPartyCharacterIds.Count > 0)
                     save.storyPartyCharacterIds = new List<string>(SelectedPartyCharacterIds);
             }
             GameManager.Instance?.SaveGame();
+        }
+
+        void SaveStoryStageIndexes(SaveData save, string stageId)
+        {
+            if (save == null || string.IsNullOrWhiteSpace(stageId)) return;
+            if (menuContentDatabase == null)
+            {
+                menuContentDatabase = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
+#if UNITY_EDITOR
+                if (menuContentDatabase == null)
+                    menuContentDatabase = UnityEditor.AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/Scenes/MenuContentDatabase.asset");
+#endif
+            }
+            if (menuContentDatabase == null) return;
+            menuContentDatabase = ChapterOneStoryRuntime.Apply(menuContentDatabase);
+
+            for (var chapterIndex = 0; chapterIndex < menuContentDatabase.storyChapters.Count; chapterIndex++)
+            {
+                var chapter = menuContentDatabase.storyChapters[chapterIndex];
+                if (chapter?.stages == null) continue;
+                var stageIndex = chapter.stages.FindIndex(stage => stage != null && string.Equals(stage.id, stageId, StringComparison.OrdinalIgnoreCase));
+                if (stageIndex < 0) continue;
+                save.storyChapterIndex = chapterIndex;
+                save.storyStageIndex = stageIndex;
+                save.activeStoryStageId = stageId;
+                return;
+            }
         }
 
         void ExitBattleToHome()
@@ -397,8 +444,8 @@ namespace BES.UI.Menu
             for (var i = 0; i < team.Count; i++)
             {
                 var unit = team[i]; if (unit == null || unit.definition == null) continue;
-                unit.isPlayer = isPlayer; unit.setupIndex = i; unit.health = unit.definition.maxHealth;
-                if (unit.root != null) unit.root.SetActive(true);
+                if (unit.root != null && !unit.root.activeSelf) continue;
+                unit.isPlayer = isPlayer; unit.setupIndex = i; unit.health = unit.definition.maxHealth; unit.shield = 0; unit.usedOneShotSkill = false; unit.attackEffectCursor = 0;
 
                 if (unit.gifPlayer == null && unit.root != null)
                 {
@@ -436,7 +483,7 @@ namespace BES.UI.Menu
             BeginCurrentTurn();
         }
 
-        static void AddAlive(List<BattleUnitView> destination, List<BattleUnitView> source) { foreach (var unit in source) if (unit != null && unit.IsAlive) destination.Add(unit); }
+        static void AddAlive(List<BattleUnitView> destination, List<BattleUnitView> source) { foreach (var unit in source) if (IsBattleActive(unit)) destination.Add(unit); }
         static int CompareTurnOrder(BattleUnitView left, BattleUnitView right)
         {
             var speed = right.Speed.CompareTo(left.Speed); if (speed != 0) return speed;
@@ -504,11 +551,18 @@ namespace BES.UI.Menu
                 yield return ScaledWait(actionRecovery);
                 yield break;
             }
+            if (skill != null && TryResolveSpecialEnemySkill(actor, skill))
+            {
+                yield return ScaledWait(actionWindup);
+                yield return ScaledWait(actionRecovery);
+                yield break;
+            }
 
             System.Action onStrike = () =>
             {
+                PlayAttackEffect(actor, target);
                 var raw = Mathf.RoundToInt(actor.definition.attack * (skill?.powerMultiplier ?? 1f));
-                target.health = Mathf.Max(0, target.health - Mathf.Max(1, raw - target.definition.defense));
+                DamageUnit(target, Mathf.Max(1, raw - target.definition.defense));
                 
                 if (target.gifPlayer != null && target.health == 0)
                 {
@@ -519,17 +573,6 @@ namespace BES.UI.Menu
                     target.animator.SetTrigger(target.health == 0 ? "Defeat" : "Hit");
                 }
 
-                RefreshUnit(target);
-                TryPlayCombatDialogue(CombatDialogueTriggerType.BossHealthBelowPercent, target);
-
-                if (target.health == 0)
-                {
-                    if (target.targetButton != null) target.targetButton.interactable = false;
-                    if (target.battlefieldImage != null) target.battlefieldImage.gameObject.SetActive(false);
-                    if (target.gifPlayer != null) target.gifPlayer.gameObject.SetActive(false);
-                    if (target.root != null) target.root.SetActive(false);
-                    TryPlayCombatDialogue(CombatDialogueTriggerType.EnemyDefeated, target);
-                }
             };
 
             if (actor.definition.isRanged)
@@ -627,6 +670,244 @@ namespace BES.UI.Menu
                 }
             }
         }
+
+        void PlayAttackEffect(BattleUnitView actor, BattleUnitView target)
+        {
+            var effects = actor?.definition?.attackEffectPrefabs;
+            if (effects == null || effects.Count == 0) return;
+
+            GameObject prefab = null;
+            for (var i = 0; i < effects.Count; i++)
+            {
+                var index = Mathf.Abs(actor.attackEffectCursor + i) % effects.Count;
+                if (effects[index] == null) continue;
+                prefab = effects[index];
+                actor.attackEffectCursor = index + 1;
+                break;
+            }
+            if (prefab == null) return;
+
+            var targetRect = MovementRectFor(target);
+            var actorRect = MovementRectFor(actor);
+            var basePosition = targetRect != null
+                ? targetRect.position
+                : actorRect != null ? actorRect.position : transform.position;
+            var instance = Instantiate(prefab, basePosition + actor.definition.attackEffectOffset, Quaternion.identity);
+            instance.transform.localScale = actor.definition.attackEffectScale == Vector3.zero
+                ? Vector3.one
+                : actor.definition.attackEffectScale;
+            Destroy(instance, 4f);
+        }
+
+        bool TryResolveSpecialEnemySkill(BattleUnitView actor, BattleSkillDefinition skill)
+        {
+            if (actor == null || actor.isPlayer || skill == null || string.IsNullOrWhiteSpace(skill.id)) return false;
+
+            switch (skill.id)
+            {
+                case "enemy_sand_random_5_percent":
+                    var randomTarget = RandomAlive(allies);
+                    if (randomTarget != null)
+                    {
+                        PlayAttackEffect(actor, randomTarget);
+                        DamageUnit(randomTarget, PercentOfMaxHealth(randomTarget, 0.05f));
+                    }
+                    return true;
+                case "enemy_blue_heal_20_percent":
+                    HealTeam(enemies, actor, 0.2f);
+                    return true;
+                case "enemy_coffin_shield_2000_once":
+                    if (actor.usedOneShotSkill) return true;
+                    actor.usedOneShotSkill = true;
+                    GrantShieldToTeam(enemies, actor, 2000);
+                    RemoveUnitFromBattle(actor);
+                    return true;
+                case "enemy_fire_aoe_5_percent":
+                    foreach (var ally in allies)
+                        if (ally != null && ally.IsAlive)
+                        {
+                            PlayAttackEffect(actor, ally);
+                            DamageUnit(ally, PercentOfMaxHealth(ally, 0.05f));
+                        }
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        BattleUnitView RandomAlive(List<BattleUnitView> team)
+        {
+            var alive = new List<BattleUnitView>();
+            foreach (var unit in team)
+                if (unit != null && unit.IsAlive)
+                    alive.Add(unit);
+            return alive.Count == 0 ? null : alive[UnityEngine.Random.Range(0, alive.Count)];
+        }
+
+        static int PercentOfMaxHealth(BattleUnitView target, float percent)
+        {
+            return Mathf.Max(1, Mathf.CeilToInt((target?.definition?.maxHealth ?? 1) * percent));
+        }
+
+        void HealTeam(List<BattleUnitView> team, BattleUnitView actor, float percent)
+        {
+            foreach (var unit in team)
+            {
+                if (unit == null || unit == actor || !unit.IsAlive) continue;
+                unit.health = Mathf.Min(unit.definition.maxHealth, unit.health + PercentOfMaxHealth(unit, percent));
+                RefreshUnit(unit);
+            }
+        }
+
+        void GrantShieldToTeam(List<BattleUnitView> team, BattleUnitView actor, int shieldAmount)
+        {
+            foreach (var unit in team)
+            {
+                if (unit == null || unit == actor || !unit.IsAlive) continue;
+                unit.shield += Mathf.Max(0, shieldAmount);
+                RefreshUnit(unit);
+            }
+        }
+
+        void DamageUnit(BattleUnitView target, int damage)
+        {
+            if (target == null || !target.IsAlive) return;
+            var remaining = Mathf.Max(0, damage);
+            var requestedDamage = remaining;
+            var blockedTotal = 0;
+            if (target.shield > 0)
+            {
+                var blocked = Mathf.Min(target.shield, remaining);
+                target.shield -= blocked;
+                remaining -= blocked;
+                blockedTotal += blocked;
+            }
+
+            if (remaining > 0)
+                target.health = Mathf.Max(0, target.health - remaining);
+
+            if (requestedDamage > 0)
+            {
+                if (remaining > 0) ShowDamagePopup(target, remaining, damagePopupColor, "-");
+                if (blockedTotal > 0) ShowDamagePopup(target, blockedTotal, shieldDamagePopupColor, "-");
+            }
+
+            RefreshUnit(target);
+            TryPlayCombatDialogue(CombatDialogueTriggerType.BossHealthBelowPercent, target);
+
+            if (target.health == 0)
+            {
+                if (!target.isPlayer && HasSkill(target, "enemy_blue_heal_20_percent"))
+                    DamageEnemyTeamExcept(target, 0.1f);
+                RemoveUnitFromBattle(target);
+                if (!target.isPlayer)
+                    TryPlayCombatDialogue(CombatDialogueTriggerType.EnemyDefeated, target);
+            }
+        }
+
+        static bool HasSkill(BattleUnitView unit, string skillId)
+        {
+            if (unit?.definition?.skills == null) return false;
+            foreach (var skill in unit.definition.skills)
+                if (skill != null && string.Equals(skill.id, skillId, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            return false;
+        }
+
+        void DamageEnemyTeamExcept(BattleUnitView source, float percent)
+        {
+            foreach (var enemy in enemies)
+                if (enemy != null && enemy != source && enemy.IsAlive)
+                    DamageUnit(enemy, PercentOfMaxHealth(enemy, percent));
+        }
+
+        void ShowDamagePopup(BattleUnitView target, int amount, Color color, string prefix = "")
+        {
+            if (amount <= 0) return;
+            var parent = ResolveDamagePopupParent(target);
+            if (parent == null) return;
+
+            TMP_Text popup;
+            if (damagePopupPrefab != null)
+            {
+                popup = Instantiate(damagePopupPrefab, parent);
+                popup.gameObject.SetActive(true);
+            }
+            else
+            {
+                var go = new GameObject("DamagePopup", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+                go.transform.SetParent(parent, false);
+                popup = go.GetComponent<TMP_Text>();
+            }
+
+            popup.text = $"{prefix}{amount}";
+            popup.color = color;
+            popup.fontSize = damagePopupFontSize;
+            popup.alignment = TextAlignmentOptions.Center;
+            popup.raycastTarget = false;
+            if (damagePopupFont != null) popup.font = damagePopupFont;
+
+            var rect = popup.rectTransform;
+            rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.sizeDelta = new Vector2(240f, 80f);
+            rect.anchoredPosition = ResolveDamagePopupPosition(target, parent) + damagePopupOffset;
+            rect.SetAsLastSibling();
+
+            StartCoroutine(AnimateDamagePopup(popup, rect.anchoredPosition));
+        }
+
+        RectTransform ResolveDamagePopupParent(BattleUnitView target)
+        {
+            if (damagePopupParent != null) return damagePopupParent;
+            var canvas = target?.root != null ? target.root.GetComponentInParent<Canvas>() : GetComponentInParent<Canvas>();
+            return canvas != null ? canvas.transform as RectTransform : transform as RectTransform;
+        }
+
+        Vector2 ResolveDamagePopupPosition(BattleUnitView target, RectTransform parent)
+        {
+            if (target == null || parent == null) return Vector2.zero;
+            var source = target.battlefieldImage != null ? target.battlefieldImage.rectTransform : target.root != null ? target.root.transform as RectTransform : null;
+            if (source == null) return Vector2.zero;
+
+            var canvas = parent.GetComponentInParent<Canvas>();
+            var camera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay ? canvas.worldCamera : null;
+            var world = source.TransformPoint(new Vector3(source.rect.center.x, source.rect.yMax, 0f));
+            var screen = RectTransformUtility.WorldToScreenPoint(camera, world);
+            return RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, screen, camera, out var local) ? local : Vector2.zero;
+        }
+
+        IEnumerator AnimateDamagePopup(TMP_Text popup, Vector2 start)
+        {
+            if (popup == null) yield break;
+            var rect = popup.rectTransform;
+            var duration = Mathf.Max(0.1f, damagePopupDuration);
+            var elapsed = 0f;
+            var startColor = popup.color;
+            while (elapsed < duration && popup != null)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                var t = Mathf.Clamp01(elapsed / duration);
+                var eased = 1f - Mathf.Pow(1f - t, 2f);
+                rect.anchoredPosition = start + damagePopupTravel * eased;
+                var color = startColor;
+                color.a = Mathf.Lerp(startColor.a, 0f, t);
+                popup.color = color;
+                yield return null;
+            }
+            if (popup != null) Destroy(popup.gameObject);
+        }
+
+        void RemoveUnitFromBattle(BattleUnitView unit)
+        {
+            if (unit == null) return;
+            unit.health = 0;
+            RefreshUnit(unit);
+            if (unit.targetButton != null) unit.targetButton.interactable = false;
+            if (unit.battlefieldImage != null) unit.battlefieldImage.gameObject.SetActive(false);
+            if (unit.gifPlayer != null) unit.gifPlayer.gameObject.SetActive(false);
+            if (unit.root != null) unit.root.SetActive(false);
+        }
         static BattleSkillDefinition GetSkill(BattleUnitView actor, int index)
         {
             if (actor?.definition?.skills == null || actor.definition.skills.Count == 0) return new BattleSkillDefinition();
@@ -711,12 +992,31 @@ namespace BES.UI.Menu
             {
                 HideSkills();
                 RefreshTurnOrder(true);
-                if (losePanel != null) losePanel.SetActive(true);
-                onDefeat?.Invoke();
+                CompleteDefeat();
                 return;
             }
             queueIndex++; BeginCurrentTurn();
         }
+
+        void CompleteDefeat()
+        {
+            resolving = false;
+            paused = true;
+            ApplyPlaybackSpeed();
+            SaveBattleProgress();
+
+            if (!IsPlayModeBattle)
+            {
+                storyModeController ??= FindAnyObjectByType<StoryModePanelController>(FindObjectsInactive.Include);
+                storyModeController?.FailStoryBattle(currentStage?.id ?? ActiveStageId);
+            }
+
+            if (winPanel != null) winPanel.SetActive(false);
+            if (pausePanel != null) pausePanel.SetActive(false);
+            if (losePanel != null) losePanel.SetActive(true);
+            onDefeat?.Invoke();
+        }
+
         IEnumerator ScaledWait(float duration)
         {
             var elapsed = 0f; while (elapsed < duration) { if (!paused) elapsed += Time.unscaledDeltaTime * playbackSpeed; yield return null; }
@@ -823,7 +1123,8 @@ namespace BES.UI.Menu
             if (unit.healthBar != null) { unit.healthBar.maxValue = unit.definition.maxHealth; unit.healthBar.value = unit.health; }
             if (unit.healthFill != null)
                 unit.healthFill.fillAmount = unit.health / (float)Mathf.Max(1, unit.definition.maxHealth);
-            if (unit.healthText != null) unit.healthText.text = $"{unit.health}/{unit.definition.maxHealth}";
+            if (unit.healthText != null)
+                unit.healthText.text = unit.shield > 0 ? $"{unit.health}/{unit.definition.maxHealth} +{unit.shield}" : $"{unit.health}/{unit.definition.maxHealth}";
             if (unit.battlefieldImage != null) unit.battlefieldImage.color = Color.white;
         }
 
@@ -836,8 +1137,9 @@ namespace BES.UI.Menu
                 return unit.battlefieldImage.rectTransform;
             return unit.root != null ? unit.root.GetComponent<RectTransform>() : null;
         }
-        static bool AnyAlive(List<BattleUnitView> list) => list.Exists(unit => unit != null && unit.IsAlive);
-        static BattleUnitView FirstAlive(List<BattleUnitView> list) => list.Find(unit => unit != null && unit.IsAlive);
+        static bool AnyAlive(List<BattleUnitView> list) => list.Exists(IsBattleActive);
+        static BattleUnitView FirstAlive(List<BattleUnitView> list) => list.Find(IsBattleActive);
+        static bool IsBattleActive(BattleUnitView unit) => unit != null && unit.IsAlive && (unit.root == null || unit.root.activeInHierarchy);
         static BattleUnitView LowestHealthAlive(List<BattleUnitView> list)
         {
             BattleUnitView result = null; var ratio = float.MaxValue;
@@ -885,6 +1187,9 @@ namespace BES.UI.Menu
                 
                 def.portrait = character.portrait;
                 def.battlefieldSprite = character.chibi != null ? character.chibi : character.portrait;
+                def.attackEffectPrefabs = character.attackEffectPrefabs != null ? new List<GameObject>(character.attackEffectPrefabs) : new List<GameObject>();
+                def.attackEffectOffset = character.attackEffectOffset;
+                def.attackEffectScale = character.attackEffectScale == Vector3.zero ? Vector3.one : character.attackEffectScale;
                 def.isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa");
 
                 var skill = new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f };
@@ -1032,6 +1337,9 @@ namespace BES.UI.Menu
                     speed = 10,
                     portrait = character.portrait,
                     battlefieldSprite = character.chibi != null ? character.chibi : character.portrait,
+                    attackEffectPrefabs = character.attackEffectPrefabs != null ? new List<GameObject>(character.attackEffectPrefabs) : new List<GameObject>(),
+                    attackEffectOffset = character.attackEffectOffset,
+                    attackEffectScale = character.attackEffectScale == Vector3.zero ? Vector3.one : character.attackEffectScale,
                     isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa"),
                     skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
                 };
@@ -1222,6 +1530,9 @@ namespace BES.UI.Menu
                 speed = 10,
                 portrait = character.portrait,
                 battlefieldSprite = character.chibi != null ? character.chibi : character.portrait,
+                attackEffectPrefabs = character.attackEffectPrefabs != null ? new List<GameObject>(character.attackEffectPrefabs) : new List<GameObject>(),
+                attackEffectOffset = character.attackEffectOffset,
+                attackEffectScale = character.attackEffectScale == Vector3.zero ? Vector3.one : character.attackEffectScale,
                 isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa"),
                 skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
             };
@@ -1287,6 +1598,9 @@ namespace BES.UI.Menu
                 battlefieldSprite = template.battlefieldSprite,
                 idleClip = template.idleClip,
                 attackClip = template.attackClip,
+                attackEffectPrefabs = template.attackEffectPrefabs != null ? new List<GameObject>(template.attackEffectPrefabs) : new List<GameObject>(),
+                attackEffectOffset = template.attackEffectOffset,
+                attackEffectScale = template.attackEffectScale == Vector3.zero ? Vector3.one : template.attackEffectScale,
                 isRanged = template.isRanged,
                 maxHealth = template.maxHealth,
                 attack = template.attack,
@@ -1334,6 +1648,9 @@ namespace BES.UI.Menu
             def.battlefieldSprite = template.battlefieldSprite;
             def.idleClip = template.idleClip;
             def.attackClip = template.attackClip;
+            def.attackEffectPrefabs = template.attackEffectPrefabs != null ? new List<GameObject>(template.attackEffectPrefabs) : new List<GameObject>();
+            def.attackEffectOffset = template.attackEffectOffset;
+            def.attackEffectScale = template.attackEffectScale == Vector3.zero ? Vector3.one : template.attackEffectScale;
             def.isRanged = template.isRanged;
             
             float scale = 1f + (level - 1) * 0.1f;

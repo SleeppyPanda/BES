@@ -88,6 +88,8 @@ namespace BES.UI.Menu
         public Sprite rightCharacter;
         public bool dimLeft;
         public bool dimRight;
+        public bool hideAllCharacters;
+        public bool fadeToBlackCheckpoint;
         [Header("Character layout and movement")]
         public DialogueLayoutMode layoutMode = DialogueLayoutMode.Auto;
         public bool instantLayout;
@@ -138,6 +140,8 @@ namespace BES.UI.Menu
         }
 
         [SerializeField] Image background;
+        [SerializeField] CanvasGroup checkpointFadeGroup;
+        [SerializeField, Min(0f)] float checkpointFadeDuration = 0.2f;
         [Header("Character slots")]
         [SerializeField] List<DialogueCharacterSlot> characterSlots = new();
         [SerializeField] DialogueCharacterPose singleCenterPose = new()
@@ -262,6 +266,8 @@ namespace BES.UI.Menu
 
         IEnumerator ShowBeatRoutine(DialogueBeat beat)
         {
+            if (beat.fadeToBlackCheckpoint)
+                yield return PlayCheckpointFadeOut();
             if (background != null && beat.background != null) background.sprite = beat.background;
             StopCharacterRoutines();
             ApplyCharacters(beat);
@@ -271,6 +277,8 @@ namespace BES.UI.Menu
             waitingForBeatMovement = true;
             yield return PlayBeatMovements(beat);
             waitingForBeatMovement = false;
+            if (beat.fadeToBlackCheckpoint)
+                yield return PlayCheckpointFadeIn();
             StartBeatTyping(beat);
             beatRoutine = null;
         }
@@ -294,6 +302,12 @@ namespace BES.UI.Menu
 
         void ApplyCharacterSlots(DialogueBeat beat)
         {
+            if (beat != null && beat.hideAllCharacters)
+            {
+                HideAllCharacterSlots(true);
+                return;
+            }
+
             ApplyCastActions(beat);
             if (beat.characterPlacements == null || beat.characterPlacements.Count == 0)
                 ApplyLegacySpritesToSlots(beat);
@@ -335,6 +349,12 @@ namespace BES.UI.Menu
                     return visual;
             }
             return null;
+        }
+
+        void HideAllCharacterSlots(bool instant)
+        {
+            for (var i = 0; i < characterSlots.Count; i++)
+                SetSlotVisible(characterSlots[i], false, instant);
         }
 
         int ResolveActiveSlot(DialogueBeat beat)
@@ -717,10 +737,51 @@ namespace BES.UI.Menu
 
         void ApplyLegacyCharacters(DialogueBeat beat)
         {
+            if (beat != null && beat.hideAllCharacters)
+            {
+                ApplyCharacter(leftCharacter, null);
+                ApplyCharacter(rightCharacter, null);
+                return;
+            }
+
             ApplyCharacter(leftCharacter, beat.leftCharacter);
             ApplyCharacter(rightCharacter, beat.rightCharacter);
             if (leftGroup != null) leftGroup.alpha = beat.dimLeft ? legacyInactiveAlpha : 1f;
             if (rightGroup != null) rightGroup.alpha = beat.dimRight ? legacyInactiveAlpha : 1f;
+        }
+
+        IEnumerator PlayCheckpointFadeOut()
+        {
+            yield return FadeCheckpoint(1f);
+        }
+
+        IEnumerator PlayCheckpointFadeIn()
+        {
+            yield return FadeCheckpoint(0f);
+        }
+
+        IEnumerator FadeCheckpoint(float targetAlpha)
+        {
+            if (checkpointFadeGroup == null || checkpointFadeDuration <= 0f)
+            {
+                if (checkpointFadeGroup != null) checkpointFadeGroup.alpha = targetAlpha;
+                yield break;
+            }
+
+            checkpointFadeGroup.gameObject.SetActive(true);
+            checkpointFadeGroup.blocksRaycasts = targetAlpha > 0f;
+            var start = checkpointFadeGroup.alpha;
+            var elapsed = 0f;
+            while (elapsed < checkpointFadeDuration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                checkpointFadeGroup.alpha = Mathf.Lerp(start, targetAlpha, Mathf.Clamp01(elapsed / checkpointFadeDuration));
+                yield return null;
+            }
+            checkpointFadeGroup.alpha = targetAlpha;
+            checkpointFadeGroup.blocksRaycasts = targetAlpha > 0f;
+            if (Mathf.Approximately(targetAlpha, 0f))
+                checkpointFadeGroup.gameObject.SetActive(false);
         }
 
         static void ApplyCharacter(Image image, Sprite sprite)
@@ -786,6 +847,14 @@ namespace BES.UI.Menu
             rect.offsetMax = Vector2.zero;
 
             background ??= CreateImage(transform, "Background", new Color(0f, 0f, 0f, 0.55f), Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            if (checkpointFadeGroup == null)
+            {
+                var fade = CreateImage(transform, "CheckpointFade", Color.black, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+                checkpointFadeGroup = fade.GetComponent<CanvasGroup>() ?? fade.gameObject.AddComponent<CanvasGroup>();
+                checkpointFadeGroup.alpha = 0f;
+                checkpointFadeGroup.blocksRaycasts = false;
+                checkpointFadeGroup.gameObject.SetActive(false);
+            }
             leftCharacter ??= CreateImage(transform, "LeftCharacter", Color.white, new Vector2(0f, 0f), new Vector2(0.45f, 1f), new Vector2(80f, 0f), new Vector2(-80f, 0f));
             rightCharacter ??= CreateImage(transform, "RightCharacter", Color.white, new Vector2(0.55f, 0f), new Vector2(1f, 1f), new Vector2(80f, 0f), new Vector2(-80f, 0f));
             leftGroup ??= leftCharacter.GetComponent<CanvasGroup>() ?? leftCharacter.gameObject.AddComponent<CanvasGroup>();

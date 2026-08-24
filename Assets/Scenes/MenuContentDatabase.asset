@@ -32,64 +32,107 @@ MonoBehaviour:
     icon: {fileID: 0}
     amount: 250
   characters:
-  - id: astra
-    displayName: Astra
-    description: Balanced story character.
-    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
-    cardBackground: {fileID: 21300000, guid: 3d707bdf5891e1f4e9556430f0c1bc10, type: 3}
-    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+  - id: lunen
+    displayName: Lunen
+    description: 
+    faction: "H\u1EC7 th\u1ED1ng nh\xE2n v\u1EADt ch\xEDnh"
+    playable: 0
+    element: X
+    weaponType: 
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
     equippedArtifacts: []
     attributes:
-    - StoryReady
-    - Light
+    - NonPlayable
+    - "H\u1EC7 th\u1ED1ng nh\xE2n v\u1EADt ch\xEDnh"
     revealVideoClip: {fileID: 0}
-    rarity: 5
+    rarity: 3
     starLevel: 0
-    level: 20
+    level: 1
     combatPower: 0
     constellation: 0
     quality: 1
     affinity: 0
-    maxHealth: 130
-    attack: 25
-  - id: blaze
-    displayName: Blaze
-    description: Fast fire attacker.
-    portrait: {fileID: 21300000, guid: e7107c206531b52488c9375afb66654a, type: 3}
-    cardBackground: {fileID: 21300000, guid: 6c874c71bb004e643adea315f5b86086, type: 3}
-    fullBody: {fileID: 21300000, guid: e7107c206531b52488c9375afb66654a, type: 3}
-    chibi: {fileID: 21300000, guid: e7107c206531b52488c9375afb66654a, type: 3}
-    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    maxHealth: 1
+    attack: 1
+  - id: tinh_linh
+    displayName: Tinh Linh
+    description: 
+    faction: "H\u1EC7 th\u1ED1ng nh\xE2n v\u1EADt ch\xEDnh"
+    playable: 0
+    element: X
+    weaponType: 
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
     equippedArtifacts: []
     attributes:
-    - StoryReady
-    - Fire
-    revealVideoClip: {fileID: 32900000, guid: 4865198b598023343b43f225e6f42911, type: 3}
-    rarity: 5
+    - NonPlayable
+    - "H\u1EC7 th\u1ED1ng nh\xE2n v\u1EADt ch\xEDnh"
+    revealVideoClip: {fileID: 0}
+    rarity: 3
     starLevel: 0
-    level: 20
+    level: 1
     combatPower: 0
     constellation: 0
     quality: 1
     affinity: 0
-    maxHealth: 110
-    attack: 32
-  - id: Elio
+    maxHealth: 1
+    attack: 1
+  - id: elio
     displayName: Elio
-    description: Durable earth defender.
+    description: "Ho\xE0ng t\u1EED"
+    faction: Akherat
+    playable: 1
+    element: "H\u1ECFa"
+    weaponType: "\u0110\u1EA1i Ki\u1EBFm"
+    skillType: "T\u1EA5n c\xF4ng AOE"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng h\u1ECFa b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "G\xE2y t\u1EA5n c\xF4ng AOE to\xE0n di\u1EC7n b\u1EB1ng 300%
+      c\xF4ng."
+    passiveDescription: "Khi c\xF3 2 nh\xE2n v\u1EADt h\u1ECFa trong \u0111\u1ED9i
+      s\u1EBD t\u0103ng 50% ATK cho nh\xE2n v\u1EADt n\xE0y."
     portrait: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
     cardBackground: {fileID: 21300000, guid: 19fdd0dafe327db44b3191516969590e, type: 3}
     fullBody: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
     chibi: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
+    attackEffectPrefabs:
+    - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+    - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
     equippedArtifacts: []
     attributes:
-    - StoryReady
-    - Earth
+    - Playable
+    - Akherat
+    - "H\u1ECFa"
+    - Fire
+    - "\u0110\u1EA1i Ki\u1EBFm"
+    - "T\u1EA5n c\xF4ng AOE"
+    - AOE
     revealVideoClip: {fileID: 32900000, guid: 6415574c4cc21cc41a10ed607fdff2f3, type: 3}
-    rarity: 4
+    rarity: 5
     starLevel: 0
     level: 20
     combatPower: 0
@@ -98,18 +141,212 @@ MonoBehaviour:
     affinity: 0
     maxHealth: 180
     attack: 20
-  - id: Sahure
+  - id: aurelian
+    displayName: Aurelian
+    description: "H\u1ECFa th\u1EA7n \u0111\u01B0\u01A1ng nhi\u1EC7m"
+    faction: Akherat
+    playable: 1
+    element: "H\u1ECFa"
+    weaponType: "Ki\u1EBFm \u0110\u01A1n"
+    skillType: "B\u1EA1o k\xEDch"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng h\u1ECFa b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "T\u1EA5n c\xF4ng m\u1ED9t m\u1EE5c ti\xEAu ch\u1EC9 \u0111\u1ECBnh
+      b\u1EB1ng 450% c\xF4ng + 10% HP."
+    passiveDescription: "C\u1EA3 team m\xECnh gi\u1EA3m 20% dame nh\u1EADn v\xE0o,
+      team \u0111\u1ECBch th\xEC sau khi s\u1EED d\u1EE5ng k\u1EF9 n\u0103ng c\xF3
+      40% t\u1EF7 l\u1EC7 b\u1ECB gi\u1EA3m ATK 2 l\u01B0\u1EE3t."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 6263782476919498309, guid: 1fd2749f2a4056446881dce86ed70c39, type: 3}
+    - {fileID: 8367907410985086596, guid: 0b493b97a8e419d46903c1b023460740, type: 3}
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Akherat
+    - "H\u1ECFa"
+    - Fire
+    - "Ki\u1EBFm \u0110\u01A1n"
+    - "B\u1EA1o k\xEDch"
+    revealVideoClip: {fileID: 0}
+    rarity: 5
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 140
+    attack: 32
+  - id: khepraen
+    displayName: Khepraen
+    description: "Th\u1EA7y gi\xE1o ho\xE0ng t\u1ED9c"
+    faction: Akherat
+    playable: 1
+    element: "L\xF4i"
+    weaponType: "\u0110\u1EA1i Ki\u1EBFm"
+    skillType: "Kh\u1ED1ng ch\u1EBF"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng l\xF4i b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "X\xE1c su\u1EA5t 50% + t\u1EF7 l\u1EC7 ch\xEDnh x\xE1c g\xE2y
+      cho \u0111\u1ECBch b\u1ECB gi\u1EA3m t\u1ED1c \u0111\u1ED9 m\u1ED7i l\u01B0\u1EE3t
+      10 t\u1ED1c. C\u1ED9ng d\u1ED3n 5 l\u1EA7n, khi \u0111\u1EA1t t\u1ED1i \u0111a
+      s\u1EBD l\xE0m l\u1EA1i b\u1ED9 \u0111\u1EBFm."
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
+    - {fileID: 6520436353736122353, guid: 117624082503aad42847c41c2da7e8da, type: 3}
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Akherat
+    - "L\xF4i"
+    - Lightning
+    - "\u0110\u1EA1i Ki\u1EBFm"
+    - "Kh\u1ED1ng ch\u1EBF"
+    - Controller
+    revealVideoClip: {fileID: 0}
+    rarity: 4
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 120
+    attack: 20
+  - id: rashad
+    displayName: Rashad
+    description: "H\u1EA7u c\u1EADn ki\xEAm b\u1EA1n th\xE2n c\u1EE7a Elio"
+    faction: Akherat
+    playable: 1
+    element: Phong
+    weaponType: "Ki\u1EBFm \u0110\u01A1n"
+    skillType: "T\u1EA5n c\xF4ng AOE"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng phong b\u1EB1ng 100% t\u1EA5n c\xF4ng."
+    skillDescription: "T\u1EA5n c\xF4ng AOE d\u1EF1a tr\xEAn nguy\xEAn t\u1ED1 \u0111\u01B0\u1EE3c
+      g\xE1n, g\xE2y s\xE1t th\u01B0\u01A1ng b\u1EB1ng 200% t\u1EA5n c\xF4ng, \u0111\u1ED3ng
+      th\u1EDDi x\xE1c su\u1EA5t 50% c\u1ED1 \u0111\u1ECBnh l\xE0m gi\u1EA3m 500
+      \u0111i\u1EC3m ph\xF2ng th\u1EE7 k\u1EBB \u0111\u1ECBch."
+    passiveDescription: "N\u1EBFu ra tr\u1EADn c\xF9ng l\xFAc c\u1EA3 Elio v\xE0
+      Rashad th\xEC khi nh\u1EADn t\u1EA5n c\xF4ng, Rashad s\u1EBD c\xF3 t\u1EF7
+      l\u1EC7 50% \u0111\u1EE1 h\u1ED9 Elio 100% s\xE1t th\u01B0\u01A1ng."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Akherat
+    - Phong
+    - Wind
+    - "Ki\u1EBFm \u0110\u01A1n"
+    - "T\u1EA5n c\xF4ng AOE"
+    - AOE
+    revealVideoClip: {fileID: 0}
+    rarity: 4
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 120
+    attack: 28
+  - id: nabir
+    displayName: Nabir
+    description: "Th\u01B0\u01A1ng nh\xE2n trong th\xE0nh ph\u1ED1"
+    faction: Akherat
+    playable: 1
+    element: "Th\u1EA3o"
+    weaponType: "Ph\xE1p Kh\xED"
+    skillType: "T\u1EA1o Khi\xEAn"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng th\u1EA3o b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "D\u1EF1a tr\xEAn 200% DEF \u0111\u1EC3 t\u1EA1o khi\xEAn ch\u1ED1ng
+      \u0111\u1EE1 s\xE1t th\u01B0\u01A1ng."
+    passiveDescription: "Trong \u0111\u1ED9i c\xF3 t\u1ED1i thi\u1EC3u 3 nguy\xEAn
+      t\u1ED1 c\xF9ng h\u1EC7 th\xEC s\u1EBD t\u0103ng 5% khi\xEAn b\u1EB1ng 10%
+      DEF + 10% m\xE1u."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Akherat
+    - "Th\u1EA3o"
+    - Grass
+    - "Ph\xE1p Kh\xED"
+    - "T\u1EA1o Khi\xEAn"
+    - Shielder
+    - Ranged
+    revealVideoClip: {fileID: 0}
+    rarity: 4
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 150
+    attack: 20
+  - id: sahure
     displayName: Sahure
-    description: High-speed wind attacker.
+    description: "T\u01B0 t\u1EBF ho\xE0ng gia \u0111\u01B0\u01A1ng nhi\u1EC7m"
+    faction: Akherat
+    playable: 1
+    element: "Th\u1EE7y"
+    weaponType: "Ph\xE1p Kh\xED"
+    skillType: "H\u1ED3i m\xE1u"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng th\u1EE7y b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "D\u1EF1a v\xE0o 100% HP + 100% DEF \u0111\u1EC3 h\u1ED3i m\xE1u
+      cho \u0111\u1ED3ng \u0111\u1ED9i ch\u1EC9 \u0111\u1ECBnh."
+    passiveDescription: "C\xF3 \u0111\u1ED3ng \u0111\u1ED9i h\u1EC7 h\u1ECFa th\xEC
+      gi\u1EA3m 100% t\u1EA5n c\xF4ng. C\xF3 \u0111\u1ED3ng \u0111\u1ED9i h\u1EC7
+      th\u1EE7y th\xEC t\u0103ng 20% HP."
     portrait: {fileID: 21300000, guid: af113dc2e52074146ab6caf3002a6122, type: 3}
     cardBackground: {fileID: 21300000, guid: 049dfd20644f4be40a2a1c954e1dcd9a, type: 3}
     fullBody: {fileID: 21300000, guid: af113dc2e52074146ab6caf3002a6122, type: 3}
     chibi: {fileID: 21300000, guid: af113dc2e52074146ab6caf3002a6122, type: 3}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
     equippedArtifacts: []
     attributes:
-    - StoryReady
-    - Wind
+    - Playable
+    - Akherat
+    - "Th\u1EE7y"
+    - Water
+    - "Ph\xE1p Kh\xED"
+    - "H\u1ED3i m\xE1u"
+    - Healer
+    - Ranged
     revealVideoClip: {fileID: 32900000, guid: e8178689e2a3a63409b2fa724c288c31, type: 3}
     rarity: 5
     starLevel: 0
@@ -120,119 +357,1369 @@ MonoBehaviour:
     affinity: 0
     maxHealth: 95
     attack: 40
-  - id: marina
-    displayName: Marina
-    description: Water support character.
-    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
-    cardBackground: {fileID: 21300000, guid: f3699ebb8204037418c061523d5d01d5, type: 3}
-    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+  - id: menkara
+    displayName: Menkara
+    description: "Ng\u01B0\u1EDDi qu\u1EA3n l\xFD kho s\xE1ch ho\xE0ng gia"
+    faction: Akherat
+    playable: 1
+    element: "Th\u1EE7y"
+    weaponType: "Ki\u1EBFm \u0110\u01A1n"
+    skillType: "B\u1EA1o k\xEDch"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng th\u1EE7y b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "T\u1EA5n c\xF4ng m\u1EE5c ti\xEAu ch\u1EC9 \u0111\u1ECBnh
+      b\u1EB1ng 200% c\xF4ng + 50% (+ t\u1EF7 l\u1EC7 b\u1EA1o k\xEDch) t\u1EF7 l\u1EC7
+      g\xE2y b\u1EA1o k\xEDch g\xE2y 100% ATK."
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
     equippedArtifacts: []
     attributes:
-    - StoryReady
+    - Playable
+    - Akherat
+    - "Th\u1EE7y"
     - Water
-    - Healer
+    - "Ki\u1EBFm \u0110\u01A1n"
+    - "B\u1EA1o k\xEDch"
     revealVideoClip: {fileID: 0}
     rarity: 4
     starLevel: 0
-    level: 18
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 120
+    attack: 27
+  - id: ramesses
+    displayName: Ramesses
+    description: "\u0110\u1ED9i tr\u01B0\u1EDFng h\u1ED9 v\u1EC7 ho\xE0ng gia"
+    faction: Akherat
+    playable: 1
+    element: "H\u1ECFa"
+    weaponType: "Th\u01B0\u01A1ng Gi\xE1o"
+    skillType: "B\u1EA1o k\xEDch"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng h\u1ECFa b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "T\u1EA5n c\xF4ng m\u1EE5c ti\xEAu ch\u1EC9 \u0111\u1ECBnh
+      b\u1EB1ng 200% c\xF4ng + 50% (+ t\u1EF7 l\u1EC7 b\u1EA1o k\xEDch) t\u1EF7 l\u1EC7
+      g\xE2y b\u1EA1o k\xEDch g\xE2y 100% ATK."
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Akherat
+    - "H\u1ECFa"
+    - Fire
+    - "Th\u01B0\u01A1ng Gi\xE1o"
+    - "B\u1EA1o k\xEDch"
+    - Ranged
+    revealVideoClip: {fileID: 0}
+    rarity: 5
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 140
+    attack: 32
+  - id: qasim
+    displayName: Qasim
+    description: "\u0110\u1ED9i ph\xF3 h\u1ED9 v\u1EC7 ho\xE0ng gia"
+    faction: Akherat
+    playable: 1
+    element: "L\xF4i"
+    weaponType: "Cung Gi\xE1o"
+    skillType: "T\u1EA5n c\xF4ng AOE"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng l\xF4i b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "G\xE2y cho 3 k\u1EBB \u0111\u1ECBch ng\u1EABu nhi\xEAn s\xE1t
+      th\u01B0\u01A1ng l\xF4i b\u1EB1ng 150% ATK v\xE0 x\xE1c su\u1EA5t 50% b\u1EA1o
+      k\xEDch."
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Akherat
+    - "L\xF4i"
+    - Lightning
+    - "Cung Gi\xE1o"
+    - "T\u1EA5n c\xF4ng AOE"
+    - AOE
+    - Ranged
+    revealVideoClip: {fileID: 0}
+    rarity: 4
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 120
+    attack: 28
+  - id: bekhet
+    displayName: Bekhet
+    description: "Th\u1EE3 r\xE8n"
+    faction: Akherat
+    playable: 1
+    element: "H\u1ECFa"
+    weaponType: "\u0110\u1EA1i Ki\u1EBFm"
+    skillType: "T\u1EA1o Khi\xEAn"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng h\u1ECFa b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "D\u1EF1a tr\xEAn 200% DEF + 100% m\xE1u \u0111\u1EC3 t\u1EA1o
+      khi\xEAn ch\u1ED1ng \u0111\u1EE1 s\xE1t th\u01B0\u01A1ng."
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Akherat
+    - "H\u1ECFa"
+    - Fire
+    - "\u0110\u1EA1i Ki\u1EBFm"
+    - "T\u1EA1o Khi\xEAn"
+    - Shielder
+    revealVideoClip: {fileID: 0}
+    rarity: 4
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 150
+    attack: 20
+  - id: nefru
+    displayName: Nefru
+    description: "H\u1ECDc tr\xF2 c\u1EE7a Sahure"
+    faction: Akherat
+    playable: 1
+    element: "Th\u1EE7y"
+    weaponType: "Ph\xE1p Kh\xED"
+    skillType: "H\u1ED3i m\xE1u"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng th\u1EE7y b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "D\u1EF1a v\xE0o 100% ATK \u0111\u1EC3 h\u1ED3i m\xE1u cho
+      to\xE0n \u0111\u1ED9i trong 1 l\u01B0\u1EE3t."
+    passiveDescription: "N\u1EBFu ra tr\u1EADn c\xF9ng Sahure th\xEC c\u1EA3 hai
+      \u0111\u01B0\u1EE3c gi\u1EA3m 30% s\xE1t th\u01B0\u01A1ng nh\u1EADn v\xE0o."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Akherat
+    - "Th\u1EE7y"
+    - Water
+    - "Ph\xE1p Kh\xED"
+    - "H\u1ED3i m\xE1u"
+    - Healer
+    - Ranged
+    revealVideoClip: {fileID: 0}
+    rarity: 4
+    starLevel: 0
+    level: 1
     combatPower: 0
     constellation: 0
     quality: 1
     affinity: 0
     maxHealth: 125
-    attack: 18
-  - id: volt
-    displayName: Volt
-    description: Lightning damage character.
-    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
-    cardBackground: {fileID: 21300000, guid: 40a6a7b7cc9d85649aeac44d4a22635a, type: 3}
-    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    attack: 20
+  - id: mireya
+    displayName: Mireya
+    description: "Phong th\u1EA7n hi\u1EC7n t\u1EA1i \u2013 em g\xE1i Nayel"
+    faction: Talvera
+    playable: 1
+    element: Phong
+    weaponType: "Ph\xE1p Kh\xED"
+    skillType: "T\u1EA5n c\xF4ng AOE"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng phong b\u1EB1ng 100% t\u1EA5n c\xF4ng."
+    skillDescription: "T\u1EA5n c\xF4ng AOE d\u1EF1a tr\xEAn nguy\xEAn t\u1ED1 \u0111\u01B0\u1EE3c
+      g\xE1n, g\xE2y s\xE1t th\u01B0\u01A1ng b\u1EB1ng 200% t\u1EA5n c\xF4ng, \u0111\u1ED3ng
+      th\u1EDDi x\xE1c su\u1EA5t 50% c\u1ED1 \u0111\u1ECBnh l\xE0m gi\u1EA3m 500
+      \u0111i\u1EC3m ph\xF2ng th\u1EE7 k\u1EBB \u0111\u1ECBch."
+    passiveDescription: "Ra tr\u1EADn c\xF9ng Naeyl th\xEC c\u1EA3 hai s\u1EBD \u0111\u01B0\u1EE3c
+      nh\u1EADn khi\xEAn b\u1EB1ng 30% DEF c\u1EE7a Mireya. Duy tr\xEC 1 l\u01B0\u1EE3t
+      khi m\u1EDBi v\xE0o tr\u1EADn, kh\xF4ng c\u1ED9ng d\u1ED3n."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
     equippedArtifacts: []
     attributes:
-    - StoryReady
-    - Lightning
-    revealVideoClip: {fileID: 0}
-    rarity: 4
-    starLevel: 0
-    level: 18
-    combatPower: 0
-    constellation: 0
-    quality: 1
-    affinity: 0
-    maxHealth: 105
-    attack: 34
-  - id: frost
-    displayName: Frost
-    description: Ice control character.
-    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
-    cardBackground: {fileID: 21300000, guid: 8b1b86fac8779264d937c43dac699299, type: 3}
-    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
-    equippedArtifacts: []
-    attributes:
-    - StoryReady
-    - Ice
-    revealVideoClip: {fileID: 0}
-    rarity: 4
-    starLevel: 0
-    level: 18
-    combatPower: 0
-    constellation: 0
-    quality: 1
-    affinity: 0
-    maxHealth: 115
-    attack: 29
-  - id: luna
-    displayName: Luna
-    description: Dark ranged character.
-    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
-    cardBackground: {fileID: 21300000, guid: 81049c21fef12c445a6a1cd9b1eaac6d, type: 3}
-    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
-    equippedArtifacts: []
-    attributes:
-    - StoryReady
-    - Dark
+    - Playable
+    - Talvera
+    - Phong
+    - Wind
+    - "Ph\xE1p Kh\xED"
+    - "T\u1EA5n c\xF4ng AOE"
+    - AOE
     - Ranged
     revealVideoClip: {fileID: 0}
-    rarity: 5
+    rarity: 3
     starLevel: 0
-    level: 20
+    level: 1
     combatPower: 0
     constellation: 0
     quality: 1
     affinity: 0
     maxHealth: 100
-    attack: 38
-  - id: sol
-    displayName: Sol
-    description: Light support character.
-    portrait: {fileID: 21300000, guid: de290bf52f131bb45ae31a6a5344fef9, type: 3}
-    cardBackground: {fileID: 21300000, guid: 3b23043352afa2b48b1b63e4f3577156, type: 3}
-    fullBody: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    chibi: {fileID: 21300000, guid: 2d8a338affb48c443b0057e7ab300869, type: 3}
-    elementIcon: {fileID: 21300000, guid: a91888e49573f96479d2d3ccd5b0e132, type: 3}
+    attack: 28
+  - id: soraya
+    displayName: Soraya
+    description: "V\u1EE3 Nayel \u2013 m\u1EB9 Seyran"
+    faction: Talvera
+    playable: 0
+    element: X
+    weaponType: 
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
     equippedArtifacts: []
     attributes:
-    - StoryReady
-    - Light
-    - Healer
+    - NonPlayable
+    - Talvera
     revealVideoClip: {fileID: 0}
-    rarity: 5
+    rarity: 3
     starLevel: 0
-    level: 20
+    level: 1
     combatPower: 0
     constellation: 0
     quality: 1
     affinity: 0
-    maxHealth: 135
-    attack: 22
+    maxHealth: 1
+    attack: 1
+  - id: lila
+    displayName: Lila
+    description: "Con g\xE1i tr\u01B0\u1EDFng \u0111o\xE0n Rihara, ho\u1EA1t b\xE1t,
+      gi\u1ECFi chi\u1EBFn \u0111\u1EA5u v\xE0 s\u1EED d\u1EE5ng s\u1EE9c m\u1EA1nh
+      Gi\xF3."
+    faction: Talvera
+    playable: 1
+    element: Phong
+    weaponType: "Ki\u1EBFm \u0110\u01A1n"
+    skillType: "B\u1EA1o k\xEDch"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng phong b\u1EB1ng 100% t\u1EA5n c\xF4ng."
+    skillDescription: "T\u1EA5n c\xF4ng m\u1EE5c ti\xEAu ch\u1EC9 \u0111\u1ECBnh
+      b\u1EB1ng 200% c\xF4ng + 50% (+ t\u1EF7 l\u1EC7 b\u1EA1o k\xEDch) t\u1EF7 l\u1EC7
+      g\xE2y b\u1EA1o k\xEDch g\xE2y 100% ATK."
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Talvera
+    - Phong
+    - Wind
+    - "Ki\u1EBFm \u0110\u01A1n"
+    - "B\u1EA1o k\xEDch"
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 100
+    attack: 27
+  - id: seyran
+    displayName: Seyran
+    description: "T\u1EADp s\u1EF1 t\u01B0 t\u1EBF Talvera, con g\xE1i Nayel, mang
+      l\xF5i Ng\u1ECDc Phong \u1EA4n trong tim."
+    faction: Talvera
+    playable: 1
+    element: Phong
+    weaponType: "Ph\xE1p Kh\xED"
+    skillType: "T\u1EA1o Khi\xEAn"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng phong b\u1EB1ng 100% t\u1EA5n c\xF4ng."
+    skillDescription: "D\u1EF1a tr\xEAn 200% DEF + 100% m\xE1u \u0111\u1EC3 t\u1EA1o
+      khi\xEAn ch\u1ED1ng \u0111\u1EE1 s\xE1t th\u01B0\u01A1ng."
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Talvera
+    - Phong
+    - Wind
+    - "Ph\xE1p Kh\xED"
+    - "T\u1EA1o Khi\xEAn"
+    - Shielder
+    - Ranged
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 150
+    attack: 20
+  - id: kaivan
+    displayName: Kaivan
+    description: "Chi\u1EBFn binh, cung th\u1EE7 xu\u1EA5t s\u1EAFc c\u1EE7a Talvera"
+    faction: Talvera
+    playable: 1
+    element: "H\u1ECFa"
+    weaponType: "Cung Gi\xE1o"
+    skillType: "B\u1EA1o k\xEDch"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng h\u1ECFa b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "T\u1EA5n c\xF4ng m\u1EE5c ti\xEAu ch\u1EC9 \u0111\u1ECBnh
+      b\u1EB1ng 200% c\xF4ng + 50% (+ t\u1EF7 l\u1EC7 b\u1EA1o k\xEDch) t\u1EF7 l\u1EC7
+      g\xE2y b\u1EA1o k\xEDch g\xE2y 100% ATK."
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Talvera
+    - "H\u1ECFa"
+    - Fire
+    - "Cung Gi\xE1o"
+    - "B\u1EA1o k\xEDch"
+    - Ranged
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 100
+    attack: 27
+  - id: nayel
+    displayName: Nayel
+    description: "Th\u1EE7 l\u0129nh T\u1ED9c B\xE3o Gi\xF3, m\u1ED9t n\u1EEDa Th\u1EA7n
+      v\u1ECB Gi\xF3, cha c\u1EE7a Seyran."
+    faction: Talvera
+    playable: 1
+    element: Phong
+    weaponType: "\u0110\u1EA1i Ki\u1EBFm"
+    skillType: "T\u1EA5n c\xF4ng AOE"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng phong b\u1EB1ng 100% t\u1EA5n c\xF4ng."
+    skillDescription: "T\u1EA5n c\xF4ng AOE d\u1EF1a tr\xEAn nguy\xEAn t\u1ED1 \u0111\u01B0\u1EE3c
+      g\xE1n, g\xE2y s\xE1t th\u01B0\u01A1ng b\u1EB1ng 200% t\u1EA5n c\xF4ng cho
+      to\xE0n k\u1EBB \u0111\u1ECBch, l\u1EF1a ch\u1ECDn 1 k\u1EBB \u0111\u1ECBch
+      cao m\xE1u nh\u1EA5t g\xE2y 400% s\xE1t th\u01B0\u01A1ng."
+    passiveDescription: "Mireya khi v\xE0o \u0111\u1ED9i s\u1EBD l\xE0m Nayel gi\u1EA3m
+      10% s\xE1t th\u01B0\u01A1ng nh\u1EADn v\xE0o nh\u01B0ng gi\u1EA3m t\u1ED1c
+      \u0111\u1ED9 2 \u0111i\u1EC3m."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Talvera
+    - Phong
+    - Wind
+    - "\u0110\u1EA1i Ki\u1EBFm"
+    - "T\u1EA5n c\xF4ng AOE"
+    - AOE
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 100
+    attack: 28
+  - id: zareen
+    displayName: Zareen
+    description: "M\u1EB9 Lila \u2013 Th\u1EA7n n\u1EEF"
+    faction: Talvera
+    playable: 1
+    element: Phong
+    weaponType: "Ki\u1EBFm \u0110\u01A1n"
+    skillType: "T\u1EA1o Khi\xEAn"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng phong b\u1EB1ng 100% t\u1EA5n c\xF4ng."
+    skillDescription: "D\u1EF1a tr\xEAn 200% DEF + 20% m\xE1u (+ 5% t\u1EF7 l\u1EC7
+      b\u1EA1o k\xEDch) \u0111\u1EC3 h\u1ED3i sinh m\u1ED9t \u0111\u1ED3ng \u0111\u1ED9i
+      \u0111\xE3 g\u1EE5c."
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Talvera
+    - Phong
+    - Wind
+    - "Ki\u1EBFm \u0110\u01A1n"
+    - "T\u1EA1o Khi\xEAn"
+    - Shielder
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 150
+    attack: 20
+  - id: farzan
+    displayName: Farzan
+    description: "Cha Lila \u2013 tr\u01B0\u1EDFng \u0111o\xE0n th\u01B0\u01A1ng
+      nh\xE2n Rihara"
+    faction: Talvera
+    playable: 0
+    element: "Th\u1EE7y"
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Talvera
+    - "Th\u1EE7y"
+    - Water
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: temir
+    displayName: Temir
+    description: "Ch\xFA c\u1EE7a Lila"
+    faction: Talvera
+    playable: 0
+    element: "Th\u1EE7y"
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Talvera
+    - "Th\u1EE7y"
+    - Water
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: ilyen
+    displayName: Ilyen
+    description: "Thi\u1EBFu ni\xEAn t\u1ED9c c\xF3 c\xE1nh"
+    faction: Talvera
+    playable: 1
+    element: Phong
+    weaponType: "Ki\u1EBFm \u0110\u01A1n"
+    skillType: "B\u1EA1o k\xEDch"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng phong b\u1EB1ng 100% t\u1EA5n c\xF4ng."
+    skillDescription: "T\u1EA5n c\xF4ng m\u1EE5c ti\xEAu ch\u1EC9 \u0111\u1ECBnh
+      b\u1EB1ng 200% c\xF4ng + 50% (+ t\u1EF7 l\u1EC7 b\u1EA1o k\xEDch) t\u1EF7 l\u1EC7
+      g\xE2y b\u1EA1o k\xEDch g\xE2y 100% ATK."
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Talvera
+    - Phong
+    - Wind
+    - "Ki\u1EBFm \u0110\u01A1n"
+    - "B\u1EA1o k\xEDch"
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 100
+    attack: 27
+  - id: eiren
+    displayName: Eiren
+    description: "Tinh linh song sinh th\u1EE9 nh\u1EA5t"
+    faction: Talvera
+    playable: 0
+    element: X
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Talvera
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: neris
+    displayName: Neris
+    description: "Tinh linh song sinh th\u1EE9 hai"
+    faction: Talvera
+    playable: 0
+    element: X
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Talvera
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: veyrun
+    displayName: Veyrun
+    description: "Phong th\u1EA7n ti\u1EC1n nhi\u1EC7m"
+    faction: Talvera
+    playable: 0
+    element: Phong
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Talvera
+    - Phong
+    - Wind
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: kharzek
+    displayName: Kharzek
+    description: "C\u1EADn v\u1EC7 Qu\u1EF7 V\u01B0\u01A1ng"
+    faction: Talvera
+    playable: 0
+    element: X
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Talvera
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: vorash
+    displayName: Vorash
+    description: "Linh th\xFA B\xE3o T\u1ED1"
+    faction: Talvera
+    playable: 0
+    element: Phong
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Talvera
+    - Phong
+    - Wind
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: lyrienne
+    displayName: Lyrienne
+    description: "Th\u1EE7y th\u1EA7n c\u1EE7a Sylmeria"
+    faction: Neravelle & Sylmeria
+    playable: 1
+    element: "Th\u1EE7y"
+    weaponType: "Ph\xE1p Kh\xED"
+    skillType: "T\u1EA1o Khi\xEAn"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng th\u1EE7y b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "T\u1EA1o khi\xEAn b\u1EB1ng 300% m\xE1u c\u1EE7a b\u1EA3n
+      th\xE2n \u0111\u1ED3ng th\u1EDDi khi b\u1ECB t\u1EA5n c\xF4ng s\u1EBD g\xE2y
+      ph\u1EA3n s\xE1t th\u01B0\u01A1ng th\u1EE7y b\u1EB1ng 100% ATK + 100% DEF."
+    passiveDescription: "Khi ra tr\u1EADn c\u1EA3 Lyrienne v\xE0 Caelith th\xEC c\u1EA3
+      hai khi nh\u1EADn s\xE1t th\u01B0\u01A1ng ch\xED t\u1EED s\u1EBD \u0111\u01B0\u1EE3c
+      h\u1ED3i sinh 1 l\u1EA7n duy nh\u1EA5t trong tr\u1EADn."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Neravelle & Sylmeria
+    - "Th\u1EE7y"
+    - Water
+    - "Ph\xE1p Kh\xED"
+    - "T\u1EA1o Khi\xEAn"
+    - Shielder
+    - Ranged
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 150
+    attack: 20
+  - id: caelith
+    displayName: Caelith
+    description: "M\u1ED9c th\u1EA7n c\u1EE7a Neravelle"
+    faction: Neravelle & Sylmeria
+    playable: 1
+    element: "Th\u1EA3o"
+    weaponType: "Ki\u1EBFm \u0110\u01A1n"
+    skillType: "Kh\u1ED1ng ch\u1EBF"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng th\u1EA3o b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "G\u1EAFn nguy\xEAn t\u1ED1 th\u1EA3o v\xE0o to\xE0n \u0111\u1ED9i
+      \u0111\u1ECBch, kh\u1ED1ng th\u1EC3 x\xF3a b\u1ECF \u0111\u01B0\u1EE3c trong
+      2 l\u01B0\u1EE3t. M\u1ED7i l\u01B0\u1EE3t h\xE0nh \u0111\u1ED9ng c\u1EE7a k\u1EBB
+      \u0111\u1ECBch s\u1EBD t\u1EF1 r\xFAt m\xE1u b\u1EB1ng 5% m\xE1u t\u1ED1i \u0111a
+      c\u1EE7a k\u1EBB \u0111\u1ECBch."
+    passiveDescription: "Khi ra tr\u1EADn c\u1EA3 Lyrienne v\xE0 Caelith th\xEC c\u1EA3
+      hai khi nh\u1EADn s\xE1t th\u01B0\u01A1ng ch\xED t\u1EED s\u1EBD \u0111\u01B0\u1EE3c
+      h\u1ED3i sinh 1 l\u1EA7n duy nh\u1EA5t trong tr\u1EADn."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Neravelle & Sylmeria
+    - "Th\u1EA3o"
+    - Grass
+    - "Ki\u1EBFm \u0110\u01A1n"
+    - "Kh\u1ED1ng ch\u1EBF"
+    - Controller
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 100
+    attack: 20
+  - id: asterion
+    displayName: Asterion
+    description: "T\u1EC3 t\u01B0\u1EDBng; \u0111\u1EE9ng \u0111\u1EA7u H\u1ED9i
+      \u0111\u1ED3ng M\u01B0\u1EDDi Hai \u0110\u1EA1i Ngh\u1ECB Quan; ph\u1EE5 tr\xE1ch
+      lu\u1EADt ph\xE1p, tr\u1EADt t\u1EF1, thi\u1EC7n t\u01B0\u1EDBng v\xE0 b\u1ED9
+      m\xE1y h\xE0nh ch\xEDnh."
+    faction: Neravelle & Sylmeria
+    playable: 0
+    element: X
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Neravelle & Sylmeria
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: elymara
+    displayName: Elymara
+    description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch gia \u0111\xECnh,
+      huy\u1EBFt th\u1ED1ng v\xE0 quy\u1EC1n k\u1EBF v\u1ECB."
+    faction: Neravelle & Sylmeria
+    playable: 0
+    element: X
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Neravelle & Sylmeria
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: thalerys
+    displayName: Thalerys
+    description: "\u0110\u1EA1i Ngh\u1ECB Quan cai qu\u1EA3n bi\u1EC3n c\u1EA3, s\xF4i
+      ng\xF2i v\xE0 h\xE0ng h\u1EA3i."
+    faction: Neravelle & Sylmeria
+    playable: 1
+    element: "Th\u1EE7y"
+    weaponType: "Th\u01B0\u01A1ng Gi\xE1o"
+    skillType: "T\u1EA5n c\xF4ng AOE"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng th\u1EE7y b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "G\xE2y t\u1EA5n c\xF4ng AOE to\xE0n di\u1EC7n b\u1EB1ng 300%
+      c\xF4ng."
+    passiveDescription: "Ra tr\u1EADn c\xF9ng Nythera th\xEC c\u1EA3 hai \u0111\u01B0\u1EE3c
+      t\u0103ng 10% m\xE1u + x\xE1c su\u1EA5t 50% khi nh\u1EADn s\xE1t th\u01B0\u01A1ng
+      s\u1EBD \u0111\u1EE1 h\u1ED9 Nythera 50% s\xE1t th\u01B0\u01A1ng."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Neravelle & Sylmeria
+    - "Th\u1EE7y"
+    - Water
+    - "Th\u01B0\u01A1ng Gi\xE1o"
+    - "T\u1EA5n c\xF4ng AOE"
+    - AOE
+    - Ranged
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 100
+    attack: 28
+  - id: chloriane
+    displayName: Chloriane
+    description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch m\xF9a m\xE0ng,
+      l\u01B0\u01A1ng th\u1EF1c v\xE0 sinh th\xE1i."
+    faction: Neravelle & Sylmeria
+    playable: 0
+    element: X
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Neravelle & Sylmeria
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: sophyra
+    displayName: Sophyra
+    description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch gi\xE1o d\u1EE5c,
+      nghi\xEAn c\u1EE9u v\xE0 chi\u1EBFn l\u01B0\u1EE3c."
+    faction: Neravelle & Sylmeria
+    playable: 0
+    element: X
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Neravelle & Sylmeria
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: elythios
+    displayName: Elythios
+    description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch y h\u1ECDc, \xE2m
+      nh\u1EA1c v\xE0 thi ca."
+    faction: Neravelle & Sylmeria
+    playable: 1
+    element: Phong
+    weaponType: "Ph\xE1p Kh\xED"
+    skillType: "H\u1ED3i m\xE1u"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng phong b\u1EB1ng 100% t\u1EA5n c\xF4ng."
+    skillDescription: "T\u1EA1o m\u1ED9t k\u1EBFt gi\u1EDBi trong 3 l\u01B0\u1EE3t,
+      m\u1ED7i l\u01B0\u1EE3t khi t\u1EDBi l\u01B0\u1EE3t h\xE0nh \u0111\u1ED9ng
+      c\u1EE7a phe ta th\xEC h\u1ED3i 1000 m\xE1u + 20% DEF c\u1EE7a nh\xE2n v\u1EADt."
+    passiveDescription: "Kh\xF4ng th\u1EC3 h\u1ED3i m\xE1u cho b\u1EA3n th\xE2n."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Neravelle & Sylmeria
+    - Phong
+    - Wind
+    - "Ph\xE1p Kh\xED"
+    - "H\u1ED3i m\xE1u"
+    - Healer
+    - Ranged
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 125
+    attack: 20
+  - id: nythera
+    displayName: Nythera
+    description: "\u0110\u1EA1i Ngh\u1ECB Quan b\u1EA3o v\u1EC7 thi\xEAn nhi\xEAn
+      v\xE0 sinh m\u1EC7nh."
+    faction: Neravelle & Sylmeria
+    playable: 1
+    element: "Th\u1EA3o"
+    weaponType: "Th\u01B0\u01A1ng Gi\xE1o"
+    skillType: "H\u1ED3i m\xE1u"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng th\u1EA3o b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "H\u1ED3i sinh m\u1ED9t \u0111\u1ED3ng \u0111\u1ED9i v\xE0
+      d\u1EF1a 100% ATK + 20% t\u1ED1c \u0111\u1ED9 \u0111\u1EC3 h\u1ED3i m\xE1u.
+      T\u1ED1c \u0111\u1ED9 h\u1ED3i \u0111\u1EA9y. Tuy nhi\xEAn \u0111\u1ED3ng \u0111\u1ED9i
+      \u0111\u1EA9y kh\xF4ng th\u1EC3 h\xE0nh \u0111\u1ED9ng trong 1 l\u01B0\u1EE3t,
+      trong th\u1EDDi gian kh\xF4ng th\u1EC3 ho\u1EA1t \u0111\u1ED9ng n\u1EBFu ch\u1ECBu
+      s\xE1t th\u01B0\u01A1ng ch\xED t\u1EED th\xEC s\u1EBD h\u1ED3i l\u1EA1i 2%
+      m\xE1u."
+    passiveDescription: "Khi h\u1ED3i sinh \u0111\u01B0\u1EE3c Elythios nh\u01B0ng
+      ch\u1EC9 h\u1ED3i sinh \u0111\u01B0\u1EE3c 30% m\xE1u c\u1EE7a c\u1EADu. H\u1ED3i
+      sinh nh\xE2n v\u1EADt c\xF9ng h\u1EC7 s\u1EBD th\xEAm 1 khi\xEAn b\u1EB1ng
+      2% m\xE1u c\u1EE7a Nythera."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Neravelle & Sylmeria
+    - "Th\u1EA3o"
+    - Grass
+    - "Th\u01B0\u01A1ng Gi\xE1o"
+    - "H\u1ED3i m\xE1u"
+    - Healer
+    - Ranged
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 125
+    attack: 20
+  - id: dravion
+    displayName: Dravion
+    description: "\u0110\u1EA1i Ngh\u1ECB Quan: ch\u1EC9 huy qu\xE2n \u0111\u1ED9i
+      v\xE0 ph\xF2ng th\u1EE7."
+    faction: Neravelle & Sylmeria
+    playable: 0
+    element: X
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Neravelle & Sylmeria
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: kallistra
+    displayName: Kallistra
+    description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch ngh\u1EC7 thu\u1EADt,
+      l\u1EC5 nghi v\xE0 v\u0103n h\xF3a."
+    faction: Neravelle & Sylmeria
+    playable: 1
+    element: "L\xF4i"
+    weaponType: "Ph\xE1p Kh\xED"
+    skillType: "Kh\u1ED1ng ch\u1EBF"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng l\xF4i b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "G\xE2y nhi\u1EC5u lo\u1EA1n cho to\xE0n k\u1EBB \u0111\u1ECBch
+      khi\u1EBFn ch\xFAng kh\xF4ng th\u1EC3 t\u1EA5n c\xF4ng trong 2 l\u01B0\u1EE3t,
+      x\xE1c su\u1EA5t 20% + (% t\u1EF7 l\u1EC7 ch\xEDnh x\xE1c)."
+    passiveDescription: "N\u1EBFu kh\xF4ng khi\u1EBFn cho k\u1EBB \u0111\u1ECBch
+      n\xE0o v\xE0o tr\u1EA1ng th\xE1i b\u1ECB kh\u1ED1ng ch\u1EBF th\xEC s\u1EBD
+      l\u1EF1a ch\u1ECDn k\u1EBB \u0111\u1ECBch c\xF3 m\xE1u \xEDt nh\u1EA5t k\u1EBFt
+      li\u1EC5u lu\xF4n."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Neravelle & Sylmeria
+    - "L\xF4i"
+    - Lightning
+    - "Ph\xE1p Kh\xED"
+    - "Kh\u1ED1ng ch\u1EBF"
+    - Controller
+    - Ranged
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 100
+    attack: 20
+  - id: tekharos
+    displayName: Tekharos
+    description: "\u0110\u1EA1i Ngh\u1ECB Quan qu\u1EA3n l\xFD ki\u1EBFn tr\xFAc,
+      ph\xE1t minh v\xE0 c\xE1c c\xF4ng tr\xECnh c\u1ED5."
+    faction: Neravelle & Sylmeria
+    playable: 1
+    element: "L\xF4i"
+    weaponType: "Ki\u1EBFm \u0110\u01A1n"
+    skillType: "B\u1EA1o k\xEDch"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng l\xF4i b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "G\xE2y t\u1EA5n c\xF4ng AOE to\xE0n di\u1EC7n b\u1EB1ng 300%
+      c\xF4ng."
+    passiveDescription: "N\u1EBFu s\xE1t th\u01B0\u01A1ng AOE khi\u1EBFn tr\xEAn
+      2 k\u1EBB \u0111\u1ECBch gi\u1EA3m t\u1EDBi m\u1EE9c 50% m\xE1u th\xEC s\u1EBD
+      t\u0103ng ATK to\xE0n \u0111\u1ED9i d\u1EF1a tr\xEAn 10% ATK b\u1EA3n th\xE2n."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Neravelle & Sylmeria
+    - "L\xF4i"
+    - Lightning
+    - "Ki\u1EBFm \u0110\u01A1n"
+    - "B\u1EA1o k\xEDch"
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 100
+    attack: 27
+  - id: dromerys
+    displayName: Dromerys
+    description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch th\u01B0\u01A1ng
+      m\u1EA1i, truy\u1EC1n tin v\xE0 l\u1EEF h\xE0nh."
+    faction: Neravelle & Sylmeria
+    playable: 0
+    element: X
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Neravelle & Sylmeria
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
+  - id: oikestia
+    displayName: Oikestia
+    description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch d\xE2n sinh, c\u1ED9ng
+      \u0111\u1ED3ng v\xE0 ph\xFAc l\u1EE3i."
+    faction: Neravelle & Sylmeria
+    playable: 1
+    element: "L\xF4i"
+    weaponType: "Ki\u1EBFm \u0110\u01A1n"
+    skillType: "T\u1EA5n c\xF4ng AOE"
+    normalAttack: "G\xE2y s\xE1t th\u01B0\u01A1ng l\xF4i b\u1EB1ng 100% t\u1EA5n
+      c\xF4ng."
+    skillDescription: "G\xE2y t\u1EA5n c\xF4ng AOE to\xE0n di\u1EC7n b\u1EB1ng 300%
+      c\xF4ng."
+    passiveDescription: "Kh\xF4ng th\u1EC3 nh\u1EADn khi\xEAn t\u1EEB \u0111\u1ED3ng
+      \u0111\u1ED9i."
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - Playable
+    - Neravelle & Sylmeria
+    - "L\xF4i"
+    - Lightning
+    - "Ki\u1EBFm \u0110\u01A1n"
+    - "T\u1EA5n c\xF4ng AOE"
+    - AOE
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 100
+    attack: 28
+  - id: thalor
+    displayName: Thalor
+    description: "C\u1EADn v\u1EC7 c\u1EE7a Qu\u1EF7 V\u01B0\u01A1ng; k\u1EBB \u0111\u1EE9ng
+      sau h\u1ED7 tr\u1EE3 Asterion thao t\xFAng Alaric."
+    faction: Neravelle & Sylmeria
+    playable: 0
+    element: X
+    weaponType: Non-Playable
+    skillType: 
+    normalAttack: 
+    skillDescription: 
+    passiveDescription: 
+    portrait: {fileID: 0}
+    cardBackground: {fileID: 0}
+    fullBody: {fileID: 0}
+    chibi: {fileID: 0}
+    attackEffectPrefabs: []
+    attackEffectOffset: {x: 0, y: 0, z: 0}
+    attackEffectScale: {x: 1, y: 1, z: 1}
+    elementIcon: {fileID: 0}
+    equippedArtifacts: []
+    attributes:
+    - NonPlayable
+    - Neravelle & Sylmeria
+    revealVideoClip: {fileID: 0}
+    rarity: 3
+    starLevel: 0
+    level: 1
+    combatPower: 0
+    constellation: 0
+    quality: 1
+    affinity: 0
+    maxHealth: 1
+    attack: 1
   storyChapters:
   - id: chapter_1
     title: "Ch\u01B0\u01A1ng 1 - Ng\u1ECDn L\u1EEDa D\u01B0\u1EDBi M\u1EB7t Tr\u1EDDi
@@ -249,7 +1736,1622 @@ MonoBehaviour:
       summary: "Lunen v\xE0 Tinh Linh l\u1EA7n theo chi\u1EBFc v\xF2ng ng\u1ECDc,
         b\u1ECB m\u1ED9t con m\xE8o \u0111en c\u01B0\u1EDBp v\xF2ng v\xE0 ch\u1EA1m
         m\u1EB7t thi\u1EBFu ni\xEAn b\xED \u1EA9n."
-      beats: []
+      beats:
+      - speaker: 
+        text: "Ch\u01B0\u01A1ng 1: Quest: Ng\u1ECDn L\u1EEDa D\u01B0\u1EDBi M\u1EB7t
+          Tr\u1EDDi Sa M\u1EA1c\nC\u1EA3nh 1: R\u1EEBng bi\xEAn gi\u1EDBi Akherat"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "\xC1nh m\u1EB7t tr\u1EDDi xuy\xEAn qua nh\u1EEFng t\xE1n c\xE2y cao,
+          v\u1EE1 th\xE0nh t\u1EEBng m\u1EA3ng s\xE1ng v\xE0ng nh\u1EA1t tr\xEAn
+          n\u1EC1n \u0111\u1EA5t.\nNh\u1EEFng th\xE2n c\xE2y c\u1ED5 th\u1EE5 ph\u1EE7
+          \u0111\u1EA7y r\xEAu kh\xF4 \u0111\u1EE9ng im l\xECm gi\u1EEFa m\xE0n b\u1EE5i
+          m\u1ECFng, thi tho\u1EA3ng ch\u1EC9 rung l\xEAn khi m\u1ED9t c\u01A1n gi\xF3
+          n\xF3ng l\u01B0\u1EDBt qua."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Xa h\u01A1n n\u1EEFa, th\u1EA5p tho\xE1ng sau nh\u1EEFng ng\u1ECDn
+          c\xE2y l\xE0 nh\u1EEFng d\xE3y n\xFAi \u0111\xE1 \u0111\u1ECF\nLunen ch\u1EADm
+          r\xE3i b\u01B0\u1EDBc tr\xEAn con \u0111\u01B0\u1EDDng m\xF2n.\nChi\u1EBFc
+          v\xF2ng ng\u1ECDc n\u1EB1m y\xEAn tr\xEAn c\u1ED5 tay c\u1EADu, ph\u1EA3n
+          chi\u1EBFu \xE1nh n\u1EAFng th\xE0nh m\u1ED9t v\u1EC7t s\xE1ng xanh nh\u1EA1t.\nTinh
+          linh nh\u1ECF bay b\xEAn c\u1EA1nh, hai tay ch\u1ED1ng sau \u0111\u1EA7u."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Ch\xFAng ta \u0111\xE3 \u0111i theo ph\u1EA3n \u1EE9ng c\u1EE7a chi\u1EBFc
+          v\xF2ng ng\u1ECDc su\u1ED1t ba ng\xE0y r\u1ED3i.\nC\u1EADu c\xF3 ch\u1EAFc
+          t\xEDn hi\u1EC7u ph\xE1t ra t\u1EEB h\u01B0\u1EDBng n\xE0y kh\xF4ng?"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Lunen kh\xF4ng tr\u1EA3 l\u1EDDi ngay.\nC\u1EADu \u0111\u01B0a tay
+          l\xEAn, kh\u1EBD ch\u1EA1m v\xE0o chi\u1EBFc v\xF2ng.\nM\u1EB7t ng\u1ECDc
+          l\u1EA1nh ng\u1EAFt.\nNh\u01B0ng \u1EDF s\xE2u b\xEAn trong n\xF3, m\u1ED9t
+          tia s\xE1ng m\u1EDD \u0111ang ch\u1EDBp t\u1EAFt."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Lunen
+        text: "Tin t\u1EDB \u0111i , t\u1EDB c\u1EA3m nh\u1EADn c\xF3 g\xEC \u0111\xF3
+          t\u1EEB vi\xEAn ng\u1ECDc n\xE0y d\u1EABn d\u1EAFt t\u1EDB theo h\u01B0\u1EDBng
+          n\xE0y m\xE0"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "Th\u1EADt k\u1EF3 l\u1EA1, n\u01A1i n\xE0y c\u1EE9 nh\u01B0 m\xEA
+          cung v\u1EADy, ch\xFAng ta \u0111i m\xE3i r\u1ED3i kh\xF4ng th\u1EA5y l\u1ED1i
+          ra \u1EDF \u0111\xE2u c\u1EA3, khu r\u1EEBng n\xE0y th\u1EADt k\u1EF3 l\u1EA1
+          \u2026."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Lunen
+        text: "( Th\u1EA7m ngh\u0129 ) th\u1EE9 n\xE0y th\u1EADt k\u1EF3 l\u1EA1
+          ,n\xF3 c\u1EE9 nh\u01B0 c\xF3 ma l\u1EF1c th\xF4i th\xFAc m\xECnh ph\u1EA3i
+          \u0111i v\u1EC1 h\u01B0\u1EDBng tr\u01B0\u1EDBc"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "M\u1ED9t ti\u1EBFng \u0111\u1ED9ng r\u1EA5t kh\u1EBD vang l\xEAn t\u1EEB
+          b\u1EE5i c\xE2y b\xEAn tr\xE1i.\nX\xE0o x\u1EA1c.\nC\u1EA3 hai c\xF9ng
+          d\u1EEBng l\u1EA1i.\nTinh linh nghi\xEAng \u0111\u1EA7u."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "...C\u1EADu c\xF3 nghe th\u1EA5y kh\xF4ng?"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Lunen nh\xECn v\u1EC1 ph\xEDa b\u1EE5i c\xE2y."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Kh\xF4ng c\xF3 g\xEC.\nC\u1EADu v\u1EEBa \u0111\u1ECBnh b\u01B0\u1EDBc
+          ti\u1EBFp\u2014\nM\u1ED9t b\xF3ng \u0111en b\u1EA5t ng\u1EDD lao v\u1EE5t
+          ra kh\u1ECFi b\u1EE5i r\u1EADm."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "\xC1 !"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "M\u1ED9t th\u1EE9 g\xEC \u0111\xF3 s\u01B0\u1EE3t qua ng\u01B0\u1EDDi
+          Lunen.\nC\u1EADu ch\u1EC9 k\u1ECBp c\u1EA3m nh\u1EADn m\u1ED9t lu\u1ED3ng
+          gi\xF3 nh\u1ECF tr\xEAn c\u1ED5 tay.\nR\u1ED3i \u2014 - - Chi\u1EBFc v\xF2ng
+          bi\u1EBFn m\u1EA5t.\nLunen c\xFAi xu\u1ED1ng nh\xECn c\u1ED5 tay tr\u1ED1ng
+          kh\xF4ng."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh & Lunen
+        text: "CHI\u1EBEC V\xD2NG !!!!!!!"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "B\xF3ng \u0111en \u0111\xE3 ch\u1EA1y xa.\nM\u1ED9t c\xE1i \u0111u\xF4i
+          \u0111en tho\xE1ng bi\u1EBFn m\u1EA5t sau nh\u1EEFng th\xE2n c\xE2y.\nLunen
+          l\u1EADp t\u1EE9c quay ng\u01B0\u1EDDi."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Lunen
+        text: "\u0110u\u1ED5i theo!"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Cu\u1ED9c truy \u0111u\u1ED5i k\xE9o d\xE0i \u0111\u1EBFn t\u1EADn
+          m\u1ED9t kho\u1EA3ng r\u1EEBng th\u01B0a. B\xF3ng \u0111en \u0111\u1ED9t
+          nhi\xEAn bi\u1EBFn m\u1EA5t sau m\u1ED9t t\xE1n c\xE2y l\u1EDBn.\nLunen
+          d\u1EEBng l\u1EA1i.\nTinh linh bay t\u1EDBi b\xEAn c\u1EA1nh, th\u1EDF
+          h\u1ED5n h\u1EC3n."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "\u0110\u1EEBng n\xF3i v\u1EDBi t\u1EDB l\xE0 m\u1EA5t d\u1EA5u r\u1ED3i
+          nh\xE9..."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Lunen kh\xF4ng tr\u1EA3 l\u1EDDi. C\u1EADu nh\xECn nh\u1EEFng chi\u1EBFc
+          l\xE1 ph\xEDa tr\u01B0\u1EDBc. M\u1ED9t c\u01A1n gi\xF3 nh\u1EB9 th\u1ED5i
+          qua. T\xE1n c\xE2y l\u1EDBn rung l\xEAn. Lunen v\xE0 tinh linh cu\u1ED1i
+          c\xF9ng c\u0169ng \u0111u\u1ED5i \u0111\u1EBFn m\u1ED9t kho\u1EA3ng r\u1EEBng
+          t\u01B0\u01A1ng \u0111\u1ED1i y\xEAn t\u0129nh. B\xF3ng \u0111en v\u1EEBa
+          r\u1ED3i \u0111\xE3 bi\u1EBFn m\u1EA5t sau m\u1ED9t t\xE1n c\xE2y l\u1EDBn.
+          C\u1EA3 hai gi\u1EA3m t\u1ED1c \u0111\u1ED9, c\u1EA9n th\u1EADn ti\u1EBFn
+          l\u1EA1i g\u1EA7n."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Lunen v\xE0 tinh linh t\u1EEB t\u1EEB ti\u1EBFn \u0111\u1EBFn sau
+          t\xE1n c\xE2y. Con m\xE8o \u0111en \u0111ang n\u1EB1m tr\xEAn vai ch\xE0ng
+          trai tr\u1EBB, chi\u1EBFc v\xF2ng ng\u1ECDc v\u1EABn m\u1EAFc tr\xEAn c\u1ED5
+          n\xF3."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Tinh linh v\u1EEBa \u0111\u1ECBnh \u0111\u01B0a tay ra hi\u1EC7u cho
+          Lunen ti\u1EBFn th\xEAm m\u1ED9t b\u01B0\u1EDBc th\xEC m\u0169i gi\xE0y
+          c\u1EE7a c\u1EADu v\xF4 t\xECnh ch\u1EA1m ph\u1EA3i m\u1ED9t c\xE0nh c\xE2y
+          kh\xF4."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "R\u1EAFc."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "\xC2m thanh nh\u1ECF \u0111\u1EBFn m\u1EE9c g\u1EA7n nh\u01B0 b\u1ECB
+          nu\u1ED1t ch\u1EEDng b\u1EDFi ti\u1EBFng gi\xF3, nh\u01B0ng ng\u01B0\u1EDDi
+          thi\u1EBFu ni\xEAn d\u01B0\u1EDBi g\u1ED1c c\xE2y l\u1EADp t\u1EE9c m\u1EDF
+          m\u1EAFt.\nCh\u1EC9 trong kho\u1EA3nh kh\u1EAFc, v\u1EBB l\u01A1 \u0111\xE3ng
+          tr\xEAn khu\xF4n m\u1EB7t bi\u1EBFn m\u1EA5t ho\xE0n to\xE0n."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "C\u1EADu b\u1EADt d\u1EADy, con m\xE8o tr\xEAn vai gi\u1EADt m\xECnh
+          nh\u1EA3y xu\u1ED1ng \u0111\u1EA5t. B\xE0n tay c\u1EADu \u0111\u1ED3ng
+          th\u1EDDi ch\u1ED9p l\u1EA5y v\u0169 kh\xED \u0111\u1EB7t b\xEAn c\u1EA1nh.
+          M\u1ED9t lu\u1ED3ng l\u1EEDa \u0111\u1ECF s\u1EABm l\u1EADp t\u1EE9c b\xF9ng
+          l\xEAn d\u1ECDc theo l\u01B0\u1EE1i v\u0169 kh\xED, \xE1nh s\xE1ng n\xF3ng
+          r\u1EF1c ph\u1EA3n chi\u1EBFu tr\xEAn g\u01B0\u01A1ng m\u1EB7t v\u1ED1n
+          c\xF2n mang n\xE9t tr\u1EBB tu\u1ED5i. C\u1EADu xoay ng\u01B0\u1EDDi v\u1EC1
+          ph\xEDa t\xE1n c\xE2y, \xE1nh m\u1EAFt s\u1EAFc l\u1EA1nh kh\xF3a ch\u1EB7t
+          v\u1ECB tr\xED c\u1EE7a Lunen v\xE0 tinh linh."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "Ra \u0111\xE2y"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Kh\xF4ng c\xF3 ti\u1EBFng tr\u1EA3 l\u1EDDi.\nC\u1EADu b\u01B0\u1EDBc
+          l\xEAn m\u1ED9t b\u01B0\u1EDBc, kh\xED th\u1EBF \u0111\u1ED9t nhi\xEAn
+          thay \u0111\u1ED5i. Ng\u1ECDn l\u1EEDa quanh l\u01B0\u1EE1i ki\u1EBFm cu\u1ED9n
+          l\xEAn d\u1EEF d\u1ED9i, h\u01A1i n\xF3ng lan ra khi\u1EBFn nh\u1EEFng
+          chi\u1EBFc l\xE1 kh\xF4 d\u01B0\u1EDBi ch\xE2n rung nh\u1EB9."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "Ta kh\xF4ng th\xEDch ph\u1EA3i n\xF3i l\u1EA7n th\u1EE9 hai."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Lunen nh\xECn tinh linh. C\u1EA3 hai \u0111\u1EC1u hi\u1EC3u r\u1EB1ng
+          h\u1ECD \u0111\xE3 b\u1ECB ph\xE1t hi\u1EC7n. C\u1EADu ch\u1EADm r\xE3i
+          b\u01B0\u1EDBc ra kh\u1ECFi t\xE1n c\xE2y, hai tay \u0111\u1EC3 nguy\xEAn
+          b\xEAn ng\u01B0\u1EDDi nh\u1EB1m cho th\u1EA5y m\xECnh kh\xF4ng c\xF3 \xFD
+          \u0111\u1ECBnh t\u1EA5n c\xF4ng. C\u1EADu v\u1EEBa b\u01B0\u1EDBc ra kh\u1ECFi
+          t\xE1n c\xE2y th\xEC ng\u01B0\u1EDDi thi\u1EBFu ni\xEAn tr\u01B0\u1EDBc
+          m\u1EB7t \u0111\xE3 lao t\u1EDBi."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "L\u01B0\u1EE1i ki\u1EBFm mang theo ng\u1ECDn l\u1EEDa \u0111\u1ECF
+          r\u1EF1c x\xE9 th\u1EB3ng qua kho\u1EA3ng kh\xF4ng.\nLunen l\u1EADp t\u1EE9c
+          nghi\xEAng ng\u01B0\u1EDDi tr\xE1nh \u0111\xF2n. M\u1ED9t ti\u1EBFng \u1EA7m
+          vang l\xEAn khi l\u01B0\u1EE1i ki\u1EBFm ch\xE9m xu\u1ED1ng n\u1EC1n \u0111\u1EA5t,
+          ng\u1ECDn l\u1EEDa b\u1EAFn tung nh\u1EEFng m\u1EA3nh \u0111\u1EA5t kh\xF4
+          v\xE0 l\xE1 v\u1EE5n xung quanh."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "Khoan \u0111\xE3\u2014?! C\u1EADu ta kh\xF4ng \u0111\u1ECBnh h\u1ECFi
+          g\xEC lu\xF4n \xE0?!"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Lunen kh\xF4ng k\u1ECBp tr\u1EA3 l\u1EDDi. Thi\u1EBFu ni\xEAn \u0111\xE3
+          xoay ng\u01B0\u1EDDi, \u0111\xF2n t\u1EA5n c\xF4ng th\u1EE9 hai l\u1EADp
+          t\u1EE9c n\u1ED1i ti\u1EBFp. Nh\u1EEFng \u0111\u01B0\u1EDDng ki\u1EBFm
+          nhanh v\xE0 d\u1EE9t kho\xE1t, kh\xF4ng h\u1EC1 c\xF3 ch\xFAt th\u0103m
+          d\xF2. M\u1ED7i \u0111\xF2n \u0111\u1EC1u mang theo s\u1EE9c n\xF3ng d\u1EEF
+          d\u1ED9i, \xE9p Lunen li\xEAn t\u1EE5c l\xF9i l\u1EA1i gi\u1EEFa nh\u1EEFng
+          th\xE2n c\xE2y."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "R\xF5 r\xE0ng ng\u01B0\u1EDDi tr\u01B0\u1EDBc m\u1EB7t kh\xF4ng ph\u1EA3i
+          m\u1ED9t k\u1EBB ch\u1EC9 bi\u1EBFt d\u1EF1a v\xE0o th\xE2n ph\u1EADn cao
+          qu\xFD. C\xE1ch c\u1EADu di chuy\u1EC3n cho th\u1EA5y m\u1ED9t qu\xE1 tr\xECnh
+          r\xE8n luy\u1EC7n nghi\xEAm kh\u1EAFc; t\u1EEBng b\u01B0\u1EDBc ch\xE2n
+          \u0111\u1EC1u ch\u1EAFc ch\u1EAFn, t\u1EEBng \u0111\xF2n \u0111\xE1nh \u0111\u1EC1u
+          nh\u1EAFm v\xE0o nh\u1EEFng kho\u1EA3ng tr\u1ED1ng trong ph\xF2ng th\u1EE7
+          c\u1EE7a \u0111\u1ED1i ph\u01B0\u01A1ng."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Lunen \u0111\u1EE1 m\u1ED9t nh\xE1t ch\xE9m r\u1ED3i l\u1EADp t\u1EE9c
+          ph\u1EA3n c\xF4ng. Hai l\u01B0\u1EE1i v\u0169 kh\xED va v\xE0o nhau, \xE2m
+          thanh kim lo\u1EA1i vang v\u1ECDng gi\u1EEFa r\u1EEBng. Thi\u1EBFu ni\xEAn
+          tr\u01B0\u1EE3t v\u1EC1 ph\xEDa sau v\xE0i b\u01B0\u1EDBc nh\u01B0ng nhanh
+          ch\xF3ng l\u1EA5y l\u1EA1i th\u0103ng b\u1EB1ng v\xE0 ti\u1EBFp t\u1EE5c
+          \xE1p s\xE1t.\nCu\u1ED9c giao tranh ch\u1EC9 k\xE9o d\xE0i trong m\u1ED9t
+          kho\u1EA3ng th\u1EDDi gian ng\u1EAFn."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Thi\u1EBFu ni\xEAn r\u1EA5t m\u1EA1nh, nh\u01B0ng Lunen nhanh ch\xF3ng
+          b\u1EAFt \u0111\u01B0\u1EE3c nh\u1ECBp t\u1EA5n c\xF4ng c\u1EE7a c\u1EADu.
+          M\u1ED9t l\u1EA7n n\xE9 tr\xE1nh \u0111\xFAng th\u1EDDi \u0111i\u1EC3m
+          gi\xFAp Lunen \xE1p s\xE1t, r\u1ED3i ch\u1EC9 trong v\xE0i \u0111\u1ED9ng
+          t\xE1c, c\u1EADu \u0111\xE1nh b\u1EADt v\u0169 kh\xED c\u1EE7a \u0111\u1ED1i
+          ph\u01B0\u01A1ng sang m\u1ED9t b\xEAn v\xE0 bu\u1ED9c thi\u1EBFu ni\xEAn
+          ph\u1EA3i l\xF9i l\u1EA1i."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Kho\u1EA3ng c\xE1ch gi\u1EEFa hai ng\u01B0\u1EDDi \u0111\u01B0\u1EE3c
+          k\xE9o ra.\nThi\u1EBFu ni\xEAn ch\u1ED1ng m\u0169i ki\u1EBFm xu\u1ED1ng
+          \u0111\u1EA5t, h\u01A1i th\u1EDF n\u1EB7ng h\u01A1n \u0111\xF4i ch\xFAt.
+          C\u1EADu nh\xECn Lunen ch\u0103m ch\xFA, nh\u01B0ng thay v\xEC t\u1EE9c
+          gi\u1EADn v\xEC b\u1ECB \xE1p \u0111\u1EA3o, \xE1nh m\u1EAFt \u1EA5y l\u1EA1i
+          mang theo s\u1EF1 \u0111\xE1nh gi\xE1 r\xF5 r\u1EC7t."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "Th\u1EF1c l\u1EF1c kh\xE1 \u0111\u1EA5y."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "C\xE1c c\u1EADu b\u1ECB l\xE0m sao v\u1EADy?! Ng\u01B0\u1EDDi ta g\u1EB7p
+          nhau l\xE0 ph\u1EA3i n\xF3i chuy\u1EC7n tr\u01B0\u1EDBc ch\u1EE9! Sao v\u1EEBa
+          th\u1EA5y b\u1ECDn t\xF4i \u0111\xE3 lao v\xE0o \u0111\xE1nh r\u1ED3i?!"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Thi\u1EBFu ni\xEAn quay sang nh\xECn c\xF4."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "C\xE1c ng\u01B0\u01A1i xu\u1EA5t hi\u1EC7n trong l\xE3nh th\u1ED5
+          c\u1EE7a ta m\xE0 kh\xF4ng b\xE1o tr\u01B0\u1EDBc."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "Th\xEC b\u1ECDn t\xF4i \u0111\xE2u bi\u1EBFt \u0111\xE2y l\xE0 l\xE3nh
+          th\u1ED5 c\u1EE7a c\u1EADu!"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Thi\u1EBFu ni\xEAn kh\xF4ng tr\u1EA3 l\u1EDDi ngay. C\u1EADu ch\u1EC9
+          nh\xECn hai ng\u01B0\u1EDDi tr\u01B0\u1EDBc m\u1EB7t, \xE1nh m\u1EAFt v\u1EABn
+          gi\u1EEF nguy\xEAn s\u1EF1 c\u1EA3nh gi\xE1c.\n\u0110\xFAng l\xFAc \u0111\xF3,
+          tinh linh \u0111\u1ED9t nhi\xEAn nh\xECn th\u1EA5y m\u1ED9t chuy\u1EC3n
+          \u0111\u1ED9ng \u1EDF ph\xEDa sau c\u1EADu."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: Khoan!
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "Lunen! Chi\u1EBFc v\xF2ng!"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Con m\xE8o \u0111en \u0111\xE3 xu\u1EA5t hi\u1EC7n tr\u1EDF l\u1EA1i.\nN\xF3
+          l\u1EB7ng l\u1EBD b\u01B0\u1EDBc ra kh\u1ECFi b\u1EE5i c\xE2y, chi\u1EBFc
+          v\xF2ng ng\u1ECDc v\u1EABn m\u1EAFc tr\xEAn c\u1ED5. C\xF3 l\u1EBD trong
+          l\xFAc hai ng\u01B0\u1EDDi giao tranh, n\xF3 \u0111\xE3 tr\u1ED1n \u1EDF
+          m\u1ED9t n\u01A1i g\u1EA7n \u0111\xF3 v\xE0 gi\u1EDD m\u1EDBi ch\u1ECBu
+          l\xF3 ra."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "\u0110\u1EE9ng l\u1EA1i!"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Con m\xE8o gi\u1EADt m\xECnh b\u1ECF ch\u1EA1y.\nN\xF3 ph\xF3ng qua
+          n\u1EC1n \u0111\u1EA5t, l\xE1ch gi\u1EEFa hai th\xE2n c\xE2y r\u1ED3i b\u1EA5t
+          ng\u1EDD \u0111\u1ED5i h\u01B0\u1EDBng, ch\u1EA1y th\u1EB3ng v\u1EC1 ph\xEDa
+          thi\u1EBFu ni\xEAn. Ch\u1EC9 trong ch\u1EDBp m\u1EAFt, n\xF3 \u0111\xE3
+          nh\u1EA3y l\xEAn ch\xE2n c\u1EADu, b\xE1m v\xE0o v\u1EA1t \xE1o r\u1ED3i
+          leo m\u1ED9t m\u1EA1ch l\xEAn vai."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Thi\u1EBFu ni\xEAn theo ph\u1EA3n x\u1EA1 \u0111\u01B0a tay \u0111\u1EE1
+          l\u1EA5y n\xF3.\nCon m\xE8o cu\u1ED9n tr\xF2n b\xEAn c\u1ED5 c\u1EADu,
+          chi\u1EBFc \u0111u\xF4i qu\u1EA5n nh\u1EB9 quanh c\xE1nh tay nh\u01B0 th\u1EC3
+          v\u1EEBa t\xECm \u0111\u01B0\u1EE3c n\u01A1i an to\xE0n nh\u1EA5t.\nTinh
+          linh ch\u1EA1y t\u1EDBi n\u01A1i, t\u1EE9c \u0111\u1EBFn m\u1EE9c d\u1EADm
+          ch\xE2n."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "L\u1EA1i c\xF2n ch\u1EA1y v\u1EC1 ch\u1ED7 c\u1EADu n\u1EEFa!"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Thi\u1EBFu ni\xEAn h\u01A1i nh\u01B0\u1EDBng m\xE0y."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "...N\xF3?"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "C\u1EADu nh\xECn con m\xE8o tr\xEAn vai m\xECnh r\u1ED3i nh\xECn tinh
+          linh. C\xF4 b\xE9 ch\u1EC9 th\u1EB3ng v\xE0o chi\u1EBFc v\xF2ng."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "Con m\xE8o n\xE0y c\u01B0\u1EDBp \u0111\u1ED3 c\u1EE7a ch\xFAng t\xF4i
+          tr\u01B0\u1EDBc! Chi\u1EBFc v\xF2ng tr\xEAn c\u1ED5 n\xF3 l\xE0 c\u1EE7a
+          Lunen!"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Thi\u1EBFu ni\xEAn kh\u1EF1ng l\u1EA1i. \xC1nh m\u1EAFt c\u1EADu chuy\u1EC3n
+          xu\u1ED1ng chi\u1EBFc v\xF2ng. R\u1ED3i sang Lunen.\nSau c\xF9ng, c\u1EADu
+          nh\xECn con m\xE8o \u0111ang v\xF4 t\u01B0 li\u1EBFm ch\xE2n tr\xEAn vai
+          m\xECnh.\nM\u1ED9t kho\u1EA3ng l\u1EB7ng k\xE9o d\xE0i."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "...Chi\u1EBFc v\xF2ng \u0111\xF3 l\xE0 c\u1EE7a c\xE1c ng\u01B0\u01A1i?"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "\u0110\xFAng."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Lunen
+        text: "Ch\xFAng t\xF4i \u0111\xE3 \u0111u\u1ED5i theo n\xF3 t\u1EEB l\xFAc
+          n\xF3 l\u1EA5y chi\u1EBFc v\xF2ng."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Thi\u1EBFu ni\xEAn nh\xECn con m\xE8o \u0111ang n\u1EB1m tr\xEAn vai
+          m\xECnh, r\u1ED3i l\u1EA1i nh\xECn chi\u1EBFc v\xF2ng trong tay Lunen.
+          Sau v\xE0i gi\xE2y im l\u1EB7ng, d\u01B0\u1EDDng nh\u01B0 c\u1EADu cu\u1ED1i
+          c\xF9ng c\u0169ng hi\u1EC3u \u0111\u01B0\u1EE3c to\xE0n b\u1ED9 s\u1EF1
+          vi\u1EC7c. Hai ng\u01B0\u1EDDi tr\u01B0\u1EDBc m\u1EB7t kh\xF4ng h\u1EC1
+          ch\u1EE7 \u0111\u1ED9ng x\xE2m nh\u1EADp hay t\xECm c\xE1ch ti\u1EBFp c\u1EADn
+          m\xECnh; h\u1ECD ch\u1EC9 \u0111\u01A1n gi\u1EA3n l\xE0 \u0111u\u1ED5i
+          theo con m\xE8o \u0111\xE3 l\u1EA5y m\u1EA5t \u0111\u1ED3 c\u1EE7a h\u1ECD.\nCu\u1ED1i
+          c\xF9ng, thi\u1EBFu ni\xEAn kh\u1EBD th\u1EDF ra."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "V\u1EADy ra l\xE0 th\u1EBF."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "C\u1EADu c\xFAi xu\u1ED1ng nh\xECn s\u1EE7ng v\u1EADt \u0111ang n\xE9p
+          b\xEAn c\u1ED5 m\xECnh. \xC1nh m\u1EAFt ban n\xE3y c\xF2n l\u1EA1nh l\xF9ng
+          gi\u1EDD chuy\u1EC3n th\xE0nh v\u1EBB b\u1EA5t l\u1EF1c r\xF5 r\u1EC7t."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "Ng\u01B0\u01A1i l\u1EA1i g\xE2y chuy\u1EC7n n\u1EEFa r\u1ED3i."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Con m\xE8o ng\u1EA9ng \u0111\u1EA7u nh\xECn ch\u1EE7 nh\xE2n."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: "Con m\xE8o"
+        text: Meo.
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "\u0110\u1EEBng gi\u1EA3 v\u1EDD v\xF4 t\u1ED9i."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Hai tai n\xF3 l\u1EADp t\u1EE9c c\u1EE5p xu\u1ED1ng.\nThi\u1EBFu ni\xEAn
+          ch\u1EC9 v\u1EC1 ph\xEDa Lunen."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "Chi\u1EBFc v\xF2ng kh\xF4ng ph\u1EA3i c\u1EE7a ng\u01B0\u01A1i. Tr\u1EA3
+          l\u1EA1i \u0111i."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Con m\xE8o nh\xECn c\u1EADu, r\u1ED3i quay sang nh\xECn Lunen. Chi\u1EBFc
+          \u0111u\xF4i \u0111ang phe ph\u1EA9y c\u0169ng t\u1EEB t\u1EEB h\u1EA1
+          xu\u1ED1ng. Sau m\u1ED9t l\xE1t do d\u1EF1, n\xF3 nh\u1EA3y kh\u1ECFi vai
+          ch\u1EE7 nh\xE2n, ng\u1EADm chi\u1EBFc v\xF2ng trong mi\u1EC7ng r\u1ED3i
+          ch\u1EADm r\xE3i b\u01B0\u1EDBc t\u1EDBi tr\u01B0\u1EDBc m\u1EB7t Lunen."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "D\xE1ng v\u1EBB ngh\u1ECBch ng\u1EE3m ban n\xE3y ho\xE0n to\xE0n bi\u1EBFn
+          m\u1EA5t. N\xF3 c\xFAi th\u1EA5p \u0111\u1EA7u, nh\u1EB9 nh\xE0ng \u0111\u1EB7t
+          chi\u1EBFc v\xF2ng xu\u1ED1ng \u0111\u1EA5t r\u1ED3i ph\xE1t ra m\u1ED9t
+          ti\u1EBFng k\xEAu nh\u1ECF."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: "Con m\xE8o"
+        text: Meo...
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Lunen nh\xECn n\xF3 m\u1ED9t l\xFAc r\u1ED3i b\u1EADt c\u01B0\u1EDDi.
+          C\u1EADu c\xFAi xu\u1ED1ng nh\u1EB7t chi\u1EBFc v\xF2ng l\xEAn, ki\u1EC3m
+          tra qua m\u1ED9t l\u01B0\u1EE3t r\u1ED3i \u0111eo l\u1EA1i v\xE0o tay."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Lunen
+        text: "\u0110\u01B0\u1EE3c r\u1ED3i. T\xF4i nh\u1EADn l\u1EA1i."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Thay v\xEC \u0111\u1EE9ng l\xEAn ngay, Lunen \u0111\u01B0a tay xoa
+          nh\u1EB9 l\xEAn \u0111\u1EA7u con m\xE8o."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Lunen
+        text: "L\u1EA7n sau \u0111\u1EEBng l\u1EA5y \u0111\u1ED3 c\u1EE7a ng\u01B0\u1EDDi
+          kh\xE1c n\u1EEFa nh\xE9."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Con m\xE8o ng\u1EA9ng \u0111\u1EA7u nh\xECn c\u1EADu. M\u1ED9t tho\xE1ng
+          sau, n\xF3 ch\u1EE7 \u0111\u1ED9ng b\u01B0\u1EDBc l\u1EA1i g\u1EA7n r\u1ED3i
+          d\u1EE5i \u0111\u1EA7u v\xE0o l\xF2ng b\xE0n tay Lunen, th\u1EADm ch\xED
+          c\xF2n nheo m\u1EAFt \u0111\u1EA7y th\xEDch th\xFA khi \u0111\u01B0\u1EE3c
+          vu\u1ED1t ve.\nThi\u1EBFu ni\xEAn h\u01A1i kh\u1EF1ng l\u1EA1i."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "...L\u1EA1 th\u1EADt."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Lunen
+        text: "C\xF3 chuy\u1EC7n g\xEC sao?"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Thi\u1EBFu ni\xEAn nh\xECn con m\xE8o \u0111ang qu\u1EA5n l\u1EA5y
+          ch\xE2n Lunen."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "N\xF3 kh\xF4ng g\u1EA7n ng\u01B0\u1EDDi l\u1EA1."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "N\xF3 v\u1EEBa c\u01B0\u1EDBp \u0111\u1ED3 c\u1EE7a ng\u01B0\u1EDDi
+          l\u1EA1 m\xE0."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "Ta n\xF3i l\xE0 kh\xF4ng th\xE2n v\u1EDBi ng\u01B0\u1EDDi l\u1EA1,
+          kh\xF4ng ph\u1EA3i kh\xF4ng g\xE2y r\u1EAFc r\u1ED1i cho ng\u01B0\u1EDDi
+          l\u1EA1."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Tinh linh ngh\u1EB9n l\u1EDDi, c\xF2n Lunen kh\xF4ng nh\u1ECBn \u0111\u01B0\u1EE3c
+          b\u1EADt c\u01B0\u1EDDi. Thi\u1EBFu ni\xEAn c\u0169ng kh\u1EBD cong kh\xF3e
+          m\xF4i. S\u1EF1 c\u0103ng th\u1EB3ng gi\u1EEFa h\u1ECD cu\u1ED1i c\xF9ng
+          \u0111\xE3 th\u1EF1c s\u1EF1 tan \u0111i.\nC\u1EADu nh\xECn Lunen th\xEAm
+          m\u1ED9t l\xFAc, r\u1ED3i \xE1nh m\u1EAFt chuy\u1EC3n sang thanh v\u0169
+          kh\xED c\u1EE7a m\xECnh.\nNh\u01B0ng ngay l\xFAc \u0111\xF3, m\u1ED9t ti\u1EBFng
+          g\u1EA7m tr\u1EA7m \u0111\u1EE5c b\u1EA5t ng\u1EDD vang l\xEAn t\u1EEB
+          s\xE2u trong khu r\u1EEBng."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "N\u1EE5 c\u01B0\u1EDDi tr\xEAn khu\xF4n m\u1EB7t thi\u1EBFu ni\xEAn
+          l\u1EADp t\u1EE9c bi\u1EBFn m\u1EA5t.\nKh\xF4ng kh\xED xung quanh b\u1ED7ng
+          tr\u1EDF n\xEAn n\u1EB7ng n\u1EC1. Nh\u1EEFng b\u1EE5i c\xE2y ph\xEDa xa
+          rung l\xEAn d\u1EEF d\u1ED9i, t\u1EEBng \u0111\xE0n chim ho\u1EA3ng lo\u1EA1n
+          bay kh\u1ECFi t\xE1n l\xE1. Ch\u1EC9 trong v\xE0i gi\xE2y, h\xE0ng lo\u1EA1t
+          b\xF3ng \u0111en b\u1EAFt \u0111\u1EA7u xu\u1EA5t hi\u1EC7n gi\u1EEFa nh\u1EEFng
+          th\xE2n c\xE2y."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: Lunen...
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Lunen \u0111\u01B0a tay l\xEAn v\u0169 kh\xED."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Nh\u1EEFng sinh v\u1EADt d\u1ECB d\u1EA1ng l\u1EA7n l\u01B0\u1EE3t
+          b\u01B0\u1EDBc ra kh\u1ECFi b\xF3ng t\u1ED1i. C\u01A1 th\u1EC3 ch\xFAng
+          \u0111\u01B0\u1EE3c bao ph\u1EE7 b\u1EDFi l\u1EDBp gi\xE1p \u0111en ch\xE1y
+          s\xE9m, nh\u1EEFng khe n\u1EE9t \u0111\u1ECF r\u1EF1c ch\u1EA1y d\u1ECDc
+          th\xE2n nh\u01B0 dung nham \u0111ang ch\u1EA3y b\xEAn d\u01B0\u1EDBi l\u1EDBp
+          da. Trong tay ch\xFAng l\xE0 nh\u1EEFng l\u01B0\u1EE1i v\u0169 kh\xED th\xF4
+          r\xE1p, d\xEDnh \u0111\u1EA7y th\u1EE9 d\u1ECBch \u0111en s\u1EABm."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "Thi\u1EBFu ni\xEAn l\u1EADp t\u1EE9c b\u01B0\u1EDBc l\xEAn tr\u01B0\u1EDBc."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: ???
+        text: "L\xF9i l\u1EA1i."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 0
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: Tinh Linh
+        text: "L\u1EA1i n\u1EEFa \xE0?"
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 0
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
+      - speaker: 
+        text: "L\u1EA7n n\xE0y thi\u1EBFu ni\xEAn kh\xF4ng tr\u1EA3 l\u1EDDi. Ng\u1ECDn
+          l\u1EEDa \u0111\xE3 b\xF9ng l\xEAn quanh v\u0169 kh\xED c\u1EE7a c\u1EADu.\n\u0110\xE1m
+          ma v\u1EADt \u0111\u1ED3ng lo\u1EA1t lao t\u1EDBi.\nLunen c\u0169ng l\u1EADp
+          t\u1EE9c nh\u1EADp tr\u1EADn."
+        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        leftCharacter: {fileID: 0}
+        rightCharacter: {fileID: 0}
+        dimLeft: 1
+        dimRight: 1
+        layoutMode: 0
+        instantLayout: 0
+        castActions: []
+        characterPlacements: []
+        characterMovements: []
+        characterVisuals: []
+        onBeatStarted:
+          m_PersistentCalls:
+            m_Calls: []
     stages:
     - id: chapter_1_stage_1
       title: "R\u1EEBng bi\xEAn gi\u1EDBi Akherat"
@@ -520,22 +3622,6 @@ MonoBehaviour:
           onBeatStarted:
             m_PersistentCalls:
               m_Calls: []
-        - speaker: Lunen
-          text: "\u2026."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
-          leftCharacter: {fileID: 0}
-          rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
-          layoutMode: 0
-          instantLayout: 0
-          castActions: []
-          characterPlacements: []
-          characterMovements: []
-          characterVisuals: []
-          onBeatStarted:
-            m_PersistentCalls:
-              m_Calls: []
         - speaker: Tinh Linh & Lunen
           text: "CHI\u1EBEC V\xD2NG !!!!!!!"
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
@@ -650,10 +3736,26 @@ MonoBehaviour:
           text: "Lunen v\xE0 tinh linh t\u1EEB t\u1EEB ti\u1EBFn \u0111\u1EBFn sau
             t\xE1n c\xE2y. Con m\xE8o \u0111en \u0111ang n\u1EB1m tr\xEAn vai ch\xE0ng
             trai tr\u1EBB, chi\u1EBFc v\xF2ng ng\u1ECDc v\u1EABn m\u1EAFc tr\xEAn
-            c\u1ED5 n\xF3. Tinh linh v\u1EEBa \u0111\u1ECBnh \u0111\u01B0a tay ra
-            hi\u1EC7u cho Lunen ti\u1EBFn th\xEAm m\u1ED9t b\u01B0\u1EDBc th\xEC
-            m\u0169i gi\xE0y c\u1EE7a c\u1EADu v\xF4 t\xECnh ch\u1EA1m ph\u1EA3i
-            m\u1ED9t c\xE0nh c\xE2y kh\xF4."
+            c\u1ED5 n\xF3."
+          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          leftCharacter: {fileID: 0}
+          rightCharacter: {fileID: 0}
+          dimLeft: 1
+          dimRight: 1
+          layoutMode: 0
+          instantLayout: 0
+          castActions: []
+          characterPlacements: []
+          characterMovements: []
+          characterVisuals: []
+          onBeatStarted:
+            m_PersistentCalls:
+              m_Calls: []
+        - speaker: 
+          text: "Tinh linh v\u1EEBa \u0111\u1ECBnh \u0111\u01B0a tay ra hi\u1EC7u
+            cho Lunen ti\u1EBFn th\xEAm m\u1ED9t b\u01B0\u1EDBc th\xEC m\u0169i gi\xE0y
+            c\u1EE7a c\u1EADu v\xF4 t\xECnh ch\u1EA1m ph\u1EA3i m\u1ED9t c\xE0nh
+            c\xE2y kh\xF4."
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
@@ -1897,68 +4999,86 @@ MonoBehaviour:
         minimumCount: 1
       enemyLevel: 2
       enemies:
-      - id: chapter_1_ma_vat_1
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_cat_xoay_cat_1
+        displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs:
+        - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+        - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
-        maxHealth: 90
-        attack: 12
+        maxHealth: 95
+        attack: 10
         defense: 5
-        speed: 10
+        speed: 13
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_sand_random_5_percent
+          displayName: "Lao T\u1EDBi"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_ma_vat_2
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_lua_linh_hon_2
+        displayName: "L\u1EEDa Linh H\u1ED3n"
+        portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs:
+        - {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
+        - {fileID: 4883173911316470918, guid: cc0fba80a1616124b980b448027b68c9, type: 3}
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
-        maxHealth: 90
-        attack: 12
-        defense: 5
-        speed: 10
+        maxHealth: 80
+        attack: 1
+        defense: 3
+        speed: 9
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_blue_heal_20_percent
+          displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_ma_vat_3
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_quan_tai_khien_3
+        displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
+        portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs: []
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
-        maxHealth: 90
-        attack: 12
-        defense: 5
-        speed: 10
+        maxHealth: 110
+        attack: 1
+        defense: 8
+        speed: 8
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_coffin_shield_2000_once
+          displayName: "T\u1EA1o Khi\xEAn"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_ma_vat_4
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_thu_lua_nho_4
+        displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
+        portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs:
+        - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+        - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
         maxHealth: 90
-        attack: 12
-        defense: 5
-        speed: 10
+        attack: 8
+        defense: 4
+        speed: 11
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_fire_aoe_5_percent
+          displayName: "L\u1EEDa Lan"
           icon: {fileID: 0}
           powerMultiplier: 1
       boss:
@@ -1968,6 +5088,9 @@ MonoBehaviour:
         battlefieldSprite: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs: []
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
         maxHealth: 100
         attack: 20
@@ -1983,12 +5106,17 @@ MonoBehaviour:
           n\xE0y."
         enemyLevel: 2
         allies:
-        - id: Elio
+        - id: elio
           displayName: Elio
           portrait: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+          - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
           maxHealth: 180
           attack: 20
@@ -2000,68 +5128,86 @@ MonoBehaviour:
             icon: {fileID: 0}
             powerMultiplier: 1
         enemies:
-        - id: chapter_1_ma_vat_1
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_cat_xoay_cat_1
+          displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+          - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 90
-          attack: 12
+          maxHealth: 95
+          attack: 10
           defense: 5
-          speed: 10
+          speed: 13
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_sand_random_5_percent
+            displayName: "Lao T\u1EDBi"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_ma_vat_2
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_lua_linh_hon_2
+          displayName: "L\u1EEDa Linh H\u1ED3n"
+          portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
+          - {fileID: 4883173911316470918, guid: cc0fba80a1616124b980b448027b68c9, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 90
-          attack: 12
-          defense: 5
-          speed: 10
+          maxHealth: 80
+          attack: 1
+          defense: 3
+          speed: 9
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_blue_heal_20_percent
+            displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_ma_vat_3
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_quan_tai_khien_3
+          displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
+          portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs: []
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 90
-          attack: 12
-          defense: 5
-          speed: 10
+          maxHealth: 110
+          attack: 1
+          defense: 8
+          speed: 8
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_coffin_shield_2000_once
+            displayName: "T\u1EA1o Khi\xEAn"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_ma_vat_4
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_thu_lua_nho_4
+          displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
+          portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+          - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
           maxHealth: 90
-          attack: 12
-          defense: 5
-          speed: 10
+          attack: 8
+          defense: 4
+          speed: 11
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_fire_aoe_5_percent
+            displayName: "L\u1EEDa Lan"
             icon: {fileID: 0}
             powerMultiplier: 1
         boss:
@@ -2071,6 +5217,9 @@ MonoBehaviour:
           battlefieldSprite: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs: []
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
           maxHealth: 100
           attack: 20
@@ -6896,6 +10045,9 @@ MonoBehaviour:
         battlefieldSprite: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs: []
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
         maxHealth: 100
         attack: 20
@@ -11850,6 +15002,9 @@ MonoBehaviour:
         battlefieldSprite: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs: []
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
         maxHealth: 100
         attack: 20
@@ -18900,6 +22055,9 @@ MonoBehaviour:
         battlefieldSprite: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs: []
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
         maxHealth: 100
         attack: 20
@@ -20006,68 +23164,86 @@ MonoBehaviour:
       partyRequirements: []
       enemyLevel: 1
       enemies:
-      - id: chapter_1_ma_vat_1
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_cat_xoay_cat_1
+        displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs:
+        - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+        - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
-        maxHealth: 90
-        attack: 12
+        maxHealth: 95
+        attack: 10
         defense: 5
-        speed: 10
+        speed: 13
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_sand_random_5_percent
+          displayName: "Lao T\u1EDBi"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_ma_vat_2
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_lua_linh_hon_2
+        displayName: "L\u1EEDa Linh H\u1ED3n"
+        portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs:
+        - {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
+        - {fileID: 4883173911316470918, guid: cc0fba80a1616124b980b448027b68c9, type: 3}
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
-        maxHealth: 90
-        attack: 12
-        defense: 5
-        speed: 10
+        maxHealth: 80
+        attack: 1
+        defense: 3
+        speed: 9
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_blue_heal_20_percent
+          displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_ma_vat_3
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_quan_tai_khien_3
+        displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
+        portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs: []
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
-        maxHealth: 90
-        attack: 12
-        defense: 5
-        speed: 10
+        maxHealth: 110
+        attack: 1
+        defense: 8
+        speed: 8
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_coffin_shield_2000_once
+          displayName: "T\u1EA1o Khi\xEAn"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_ma_vat_4
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_thu_lua_nho_4
+        displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
+        portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs:
+        - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+        - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
         maxHealth: 90
-        attack: 12
-        defense: 5
-        speed: 10
+        attack: 8
+        defense: 4
+        speed: 11
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_fire_aoe_5_percent
+          displayName: "L\u1EEDa Lan"
           icon: {fileID: 0}
           powerMultiplier: 1
       boss:
@@ -20077,6 +23253,9 @@ MonoBehaviour:
         battlefieldSprite: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs: []
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
         maxHealth: 100
         attack: 20
@@ -20090,12 +23269,17 @@ MonoBehaviour:
           c\u1ED1 \u0111\u1ECBnh l\xE0 elio. c\xF3 4 enemy"
         enemyLevel: 1
         allies:
-        - id: Elio
+        - id: elio
           displayName: Elio
           portrait: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+          - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
           maxHealth: 180
           attack: 20
@@ -20107,68 +23291,86 @@ MonoBehaviour:
             icon: {fileID: 0}
             powerMultiplier: 1
         enemies:
-        - id: chapter_1_ma_vat_1
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_cat_xoay_cat_1
+          displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+          - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 90
-          attack: 12
+          maxHealth: 95
+          attack: 10
           defense: 5
-          speed: 10
+          speed: 13
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_sand_random_5_percent
+            displayName: "Lao T\u1EDBi"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_ma_vat_2
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_lua_linh_hon_2
+          displayName: "L\u1EEDa Linh H\u1ED3n"
+          portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
+          - {fileID: 4883173911316470918, guid: cc0fba80a1616124b980b448027b68c9, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 90
-          attack: 12
-          defense: 5
-          speed: 10
+          maxHealth: 80
+          attack: 1
+          defense: 3
+          speed: 9
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_blue_heal_20_percent
+            displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_ma_vat_3
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_quan_tai_khien_3
+          displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
+          portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs: []
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 90
-          attack: 12
-          defense: 5
-          speed: 10
+          maxHealth: 110
+          attack: 1
+          defense: 8
+          speed: 8
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_coffin_shield_2000_once
+            displayName: "T\u1EA1o Khi\xEAn"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_ma_vat_4
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_thu_lua_nho_4
+          displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
+          portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+          - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
           maxHealth: 90
-          attack: 12
-          defense: 5
-          speed: 10
+          attack: 8
+          defense: 4
+          speed: 11
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_fire_aoe_5_percent
+            displayName: "L\u1EEDa Lan"
             icon: {fileID: 0}
             powerMultiplier: 1
         boss:
@@ -20178,6 +23380,9 @@ MonoBehaviour:
           battlefieldSprite: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs: []
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
           maxHealth: 100
           attack: 20
@@ -33675,68 +36880,86 @@ MonoBehaviour:
       partyRequirements: []
       enemyLevel: 1
       enemies:
-      - id: chapter_1_ma_vat_1
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_cat_xoay_cat_1
+        displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs:
+        - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+        - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
-        maxHealth: 90
-        attack: 12
+        maxHealth: 95
+        attack: 10
         defense: 5
-        speed: 10
+        speed: 13
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_sand_random_5_percent
+          displayName: "Lao T\u1EDBi"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_ma_vat_2
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_lua_linh_hon_2
+        displayName: "L\u1EEDa Linh H\u1ED3n"
+        portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs:
+        - {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
+        - {fileID: 4883173911316470918, guid: cc0fba80a1616124b980b448027b68c9, type: 3}
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
-        maxHealth: 90
-        attack: 12
-        defense: 5
-        speed: 10
+        maxHealth: 80
+        attack: 1
+        defense: 3
+        speed: 9
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_blue_heal_20_percent
+          displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_ma_vat_3
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_quan_tai_khien_3
+        displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
+        portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs: []
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
-        maxHealth: 90
-        attack: 12
-        defense: 5
-        speed: 10
+        maxHealth: 110
+        attack: 1
+        defense: 8
+        speed: 8
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_coffin_shield_2000_once
+          displayName: "T\u1EA1o Khi\xEAn"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_ma_vat_4
-        displayName: "Ma V\u1EADt Truy S\xE1t"
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
+      - id: chapter_1_thu_lua_nho_4
+        displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
+        portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs:
+        - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+        - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
         maxHealth: 90
-        attack: 12
-        defense: 5
-        speed: 10
+        attack: 8
+        defense: 4
+        speed: 11
         skills:
-        - id: attack
-          displayName: "T\u1EA5n C\xF4ng"
+        - id: enemy_fire_aoe_5_percent
+          displayName: "L\u1EEDa Lan"
           icon: {fileID: 0}
           powerMultiplier: 1
       boss:
@@ -33746,6 +36969,9 @@ MonoBehaviour:
         battlefieldSprite: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs: []
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
         maxHealth: 100
         attack: 20
@@ -33759,15 +36985,18 @@ MonoBehaviour:
           ti\xEAn lu\xF4n l\xE0 lunen. c\xF3 4 enemy."
         enemyLevel: 1
         allies:
-        - id: lunen_story_guest
+        - id: lunen
           displayName: Lunen
           portrait: {fileID: 0}
           battlefieldSprite: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs: []
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 140
-          attack: 18
+          maxHealth: 1
+          attack: 1
           defense: 5
           speed: 10
           skills:
@@ -33776,68 +37005,86 @@ MonoBehaviour:
             icon: {fileID: 0}
             powerMultiplier: 1
         enemies:
-        - id: chapter_1_ma_vat_1
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_cat_xoay_cat_1
+          displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+          - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 90
-          attack: 12
+          maxHealth: 95
+          attack: 10
           defense: 5
-          speed: 10
+          speed: 13
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_sand_random_5_percent
+            displayName: "Lao T\u1EDBi"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_ma_vat_2
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_lua_linh_hon_2
+          displayName: "L\u1EEDa Linh H\u1ED3n"
+          portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
+          - {fileID: 4883173911316470918, guid: cc0fba80a1616124b980b448027b68c9, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 90
-          attack: 12
-          defense: 5
-          speed: 10
+          maxHealth: 80
+          attack: 1
+          defense: 3
+          speed: 9
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_blue_heal_20_percent
+            displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_ma_vat_3
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_quan_tai_khien_3
+          displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
+          portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs: []
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 90
-          attack: 12
-          defense: 5
-          speed: 10
+          maxHealth: 110
+          attack: 1
+          defense: 8
+          speed: 8
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_coffin_shield_2000_once
+            displayName: "T\u1EA1o Khi\xEAn"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_ma_vat_4
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_thu_lua_nho_4
+          displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
+          portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+          - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
           maxHealth: 90
-          attack: 12
-          defense: 5
-          speed: 10
+          attack: 8
+          defense: 4
+          speed: 11
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_fire_aoe_5_percent
+            displayName: "L\u1EEDa Lan"
             icon: {fileID: 0}
             powerMultiplier: 1
         boss:
@@ -33847,6 +37094,9 @@ MonoBehaviour:
           battlefieldSprite: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs: []
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
           maxHealth: 100
           attack: 20
@@ -35679,12 +38929,17 @@ MonoBehaviour:
           h\u1ED3i."
         enemyLevel: 1
         allies:
-        - id: Elio
+        - id: elio
           displayName: Elio
           portrait: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+          - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
           maxHealth: 180
           attack: 20
@@ -35695,15 +38950,20 @@ MonoBehaviour:
             displayName: "T\u1EA5n C\xF4ng"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: khepraen_story_guest
+        - id: khepraen
           displayName: Khepraen
           portrait: {fileID: 0}
           battlefieldSprite: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
+          - {fileID: 6520436353736122353, guid: 117624082503aad42847c41c2da7e8da, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 140
-          attack: 18
+          maxHealth: 120
+          attack: 20
           defense: 5
           speed: 10
           skills:
@@ -35712,36 +38972,46 @@ MonoBehaviour:
             icon: {fileID: 0}
             powerMultiplier: 1
         enemies:
-        - id: chapter_1_ma_vat_1
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_cat_xoay_cat_1
+          displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+          - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 90
-          attack: 12
+          maxHealth: 95
+          attack: 10
           defense: 5
-          speed: 10
+          speed: 13
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_sand_random_5_percent
+            displayName: "Lao T\u1EDBi"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_ma_vat_2
-          displayName: "Ma V\u1EADt Truy S\xE1t"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
+        - id: chapter_1_lua_linh_hon_2
+          displayName: "L\u1EEDa Linh H\u1ED3n"
+          portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd, type: 3}
+          - {fileID: 4883173911316470918, guid: cc0fba80a1616124b980b448027b68c9, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
-          maxHealth: 90
-          attack: 12
-          defense: 5
-          speed: 10
+          maxHealth: 80
+          attack: 1
+          defense: 3
+          speed: 9
           skills:
-          - id: attack
-            displayName: "T\u1EA5n C\xF4ng"
+          - id: enemy_blue_heal_20_percent
+            displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
             icon: {fileID: 0}
             powerMultiplier: 1
         boss:
@@ -35751,6 +39021,9 @@ MonoBehaviour:
           battlefieldSprite: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
+          attackEffectPrefabs: []
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
           maxHealth: 260
           attack: 1
@@ -45060,6 +48333,9 @@ MonoBehaviour:
         battlefieldSprite: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
+        attackEffectPrefabs: []
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
         maxHealth: 100
         attack: 20

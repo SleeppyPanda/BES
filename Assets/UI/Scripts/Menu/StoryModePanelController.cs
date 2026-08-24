@@ -9,6 +9,7 @@ using UnityEngine.UI;
 namespace BES.UI.Menu
 {
     public enum StoryPartyPhase { Main, Selecting }
+    public enum StoryRosterSortMode { CombatPower, Constellation, Quality, RequiredCharacter }
 
     [Serializable]
     public class StoryPartySlotBinding
@@ -66,6 +67,13 @@ namespace BES.UI.Menu
         [Header("Character selection")]
         [SerializeField] Button selectionBackButton;
         [SerializeField] Button confirmPartyButton;
+        [SerializeField] Button sortCombatPowerButton;
+        [SerializeField] Button sortConstellationButton;
+        [SerializeField] Button sortQualityButton;
+        [SerializeField] Button sortRequiredCharacterButton;
+        [SerializeField] StoryRosterSortMode rosterSortMode = StoryRosterSortMode.CombatPower;
+        [Tooltip("Optional per-party-slot required character IDs. Used by RequiredCharacter sorting/filter mode. Empty slot = no forced character.")]
+        [SerializeField] List<string> requiredCharacterIdsBySlot = new();
         [SerializeField] TMP_Text selectionRequirementText;
         [SerializeField] List<StoryRosterCardBinding> rosterCards = new();
         [SerializeField] List<StoryPartySlotBinding> selectionSlots = new();
@@ -86,6 +94,7 @@ namespace BES.UI.Menu
         void Awake()
         {
             EnsureFixedPartySlots();
+            EnsureSelectionSlotBindings();
             HideLegacyStoryProgressUi();
             BindButtons();
             database = ChapterOneStoryRuntime.Apply(database);
@@ -96,6 +105,7 @@ namespace BES.UI.Menu
         void OnEnable()
         {
             EnsureDialogueUI();
+            EnsureSelectionSlotBindings();
             HideLegacyStoryProgressUi();
             database = ChapterOneStoryRuntime.Apply(database);
             LoadStoryState();
@@ -106,10 +116,15 @@ namespace BES.UI.Menu
 
         void BindButtons()
         {
+            AutoResolveStorySelectionButtons();
             Add(openSelectionButton, OpenFirstAvailableSlot);
             Add(beforeBackButton, BackToHome);
             Add(selectionBackButton, CloseCharacterSelection);
             Add(confirmPartyButton, ConfirmParty);
+            Add(sortCombatPowerButton, () => SetRosterSortMode(StoryRosterSortMode.CombatPower));
+            Add(sortConstellationButton, () => SetRosterSortMode(StoryRosterSortMode.Constellation));
+            Add(sortQualityButton, () => SetRosterSortMode(StoryRosterSortMode.Quality));
+            Add(sortRequiredCharacterButton, () => SetRosterSortMode(StoryRosterSortMode.RequiredCharacter));
 
             for (var i = 0; i < rosterCards.Count; i++)
             {
@@ -118,6 +133,29 @@ namespace BES.UI.Menu
             }
             BindSlotSelection(beforeSlots);
             BindSlotSelection(selectionSlots);
+        }
+
+        void AutoResolveStorySelectionButtons()
+        {
+            sortCombatPowerButton ??= FindButton("SortCombatPower", "CombatPower", "Chiến Lực", "ChienLuc");
+            sortConstellationButton ??= FindButton("SortConstellation", "Constellation", "Tinh Hồn", "TinhHon");
+            sortQualityButton ??= FindButton("SortQuality", "Quality", "Phẩm Chất", "PhamChat");
+            sortRequiredCharacterButton ??= FindButton("Filter", "RequiredCharacter", "Required", "Yêu Cầu", "YeuCau");
+        }
+
+        Button FindButton(params string[] names)
+        {
+            foreach (var button in GetComponentsInChildren<Button>(true))
+            {
+                if (button == null) continue;
+                foreach (var name in names)
+                {
+                    if (string.IsNullOrWhiteSpace(name)) continue;
+                    if (button.name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
+                        return button;
+                }
+            }
+            return null;
         }
 
         static void Add(Button button, UnityAction action)
@@ -157,8 +195,16 @@ namespace BES.UI.Menu
         {
             EnsureFixedPartySlots();
             targetSlotIndex = Mathf.Clamp(slotIndex, 0, requiredPartySize - 1);
+            if (!string.IsNullOrWhiteSpace(RequiredCharacterIdForSlot(targetSlotIndex)))
+                rosterSortMode = StoryRosterSortMode.RequiredCharacter;
             ShowPhase(StoryPartyPhase.Selecting);
             if (characterSelectionPanel != null) characterSelectionPanel.transform.SetAsLastSibling();
+        }
+
+        void SetRosterSortMode(StoryRosterSortMode mode)
+        {
+            rosterSortMode = mode;
+            RefreshRoster();
         }
 
         void OpenFirstAvailableSlot()
@@ -173,11 +219,20 @@ namespace BES.UI.Menu
         void SelectCharacterForTargetSlot(int rosterIndex)
         {
             RebuildOwnedRoster();
+            ApplyRosterSortAndFilter();
             if (rosterIndex < 0 || rosterIndex >= ownedRoster.Count) return;
             EnsureFixedPartySlots();
             var character = ownedRoster[rosterIndex];
             var existing = selectedParty.FindIndex(x => x != null && (x == character || x.id == character.id));
-            if (existing >= 0 && existing != targetSlotIndex) selectedParty[existing] = null;
+
+            if (existing == targetSlotIndex)
+            {
+                selectedParty[targetSlotIndex] = null;
+                RefreshAll();
+                return;
+            }
+
+            if (existing >= 0) selectedParty[existing] = null;
             selectedParty[targetSlotIndex] = character;
             RefreshAll();
             CloseCharacterSelection();
@@ -239,7 +294,7 @@ namespace BES.UI.Menu
             if (storyDialogueUI != null) return;
             storyDialogueUI = FindAnyObjectByType<DialogueSequenceUI>(FindObjectsInactive.Include);
             if (storyDialogueUI == null)
-                storyDialogueUI = DialogueSequenceUI.CreateRuntimeOverlay("RuntimeStoryDialogueUI");
+                Debug.LogWarning("[BES] StoryModePanelController is missing storyDialogueUI. Assign DialogueSequenceUI in Unity; runtime UI creation is disabled.");
         }
 
         void BackToHome() => navigator?.Back();
@@ -248,6 +303,20 @@ namespace BES.UI.Menu
         {
             AdvanceCurrentStageId();
             SaveStoryProgress();
+        }
+
+        public void FailStoryBattle(string failedStageId = null)
+        {
+            var chapter = CurrentChapter();
+            if (!string.IsNullOrWhiteSpace(failedStageId) &&
+                chapter?.stages != null &&
+                chapter.stages.Exists(x => x != null && string.Equals(x.id, failedStageId, StringComparison.OrdinalIgnoreCase)))
+            {
+                currentStageId = failedStageId;
+            }
+
+            SaveStoryState(CurrentStage());
+            RefreshAll();
         }
 
         void LoadStoryState()
@@ -359,64 +428,25 @@ namespace BES.UI.Menu
 
         void RefreshStoryRequirementImages()
         {
-            var stage = CurrentStage();
-            var requirements = stage?.partyRequirements;
             for (var i = 0; i < storyRequirements.Count; i++)
             {
                 var binding = storyRequirements[i];
-                var hasRequirement = requirements != null && i < requirements.Count &&
-                                     requirements[i] != null &&
-                                     !string.IsNullOrWhiteSpace(requirements[i].attributeId);
-                binding.root?.SetActive(hasRequirement);
-                if (!hasRequirement) continue;
-
-                var requirement = requirements[i];
-                if (binding.requirementImage != null)
-                    binding.requirementImage.sprite = requirement.icon;
-                if (binding.satisfiedState != null)
-                {
-                    var count = 0;
-                    foreach (var character in selectedParty)
-                        if (HasAttribute(character, requirement.attributeId)) count++;
-                    binding.satisfiedState.SetActive(count >= Mathf.Max(1, requirement.minimumCount));
-                }
+                binding.root?.SetActive(false);
             }
         }
 
         public bool MeetsPartyRequirements()
         {
-            var stage = CurrentStage();
-            if (!StageHasCombat(stage)) return true;
-            if (AssignedCharacterCount() != RequiredSelectablePartySize(stage)) return false;
-            if (stage == null) return true;
-            foreach (var requirement in stage.partyRequirements)
-            {
-                if (requirement == null || string.IsNullOrWhiteSpace(requirement.attributeId)) continue;
-                var count = 0;
-                foreach (var character in selectedParty)
-                    if (HasAttribute(character, requirement.attributeId)) count++;
-                if (count < Mathf.Max(1, requirement.minimumCount)) return false;
-            }
-            return true;
+            if (!StageHasCombat(CurrentStage())) return true;
+            return AssignedCharacterCount() >= 1;
         }
 
         string BuildRequirementStatus()
         {
-            var stage = CurrentStage();
-            var lines = new List<string> { $"Party: {AssignedCharacterCount()}/{RequiredSelectablePartySize(stage)}" };
-            if (stage != null)
-            {
-                foreach (var requirement in stage.partyRequirements)
-                {
-                    if (requirement == null || string.IsNullOrWhiteSpace(requirement.attributeId)) continue;
-                    var count = 0;
-                    foreach (var character in selectedParty)
-                        if (HasAttribute(character, requirement.attributeId)) count++;
-                    var needed = Mathf.Max(1, requirement.minimumCount);
-                    lines.Add($"{requirement.attributeId}: {count}/{needed}");
-                }
-            }
-            return string.Join("   |   ", lines);
+            var requiredId = RequiredCharacterIdForSlot(targetSlotIndex);
+            if (!string.IsNullOrWhiteSpace(requiredId))
+                return $"Yêu cầu ô này: {requiredId}";
+            return $"Cần tối thiểu 1 nhân vật để tiếp tục. Đã chọn: {AssignedCharacterCount()}";
         }
 
         StageEntry CurrentStage()
@@ -484,20 +514,31 @@ namespace BES.UI.Menu
         void RefreshRoster()
         {
             RebuildOwnedRoster();
+            ApplyRosterSortAndFilter();
             for (var i = 0; i < rosterCards.Count; i++)
             {
                 var card = rosterCards[i];
                 var character = i < ownedRoster.Count ? ownedRoster[i] : null;
                 if (card.button != null) card.button.gameObject.SetActive(character != null);
                 if (character == null) continue;
+                ForceVisible(card.button?.image);
                 if (card.button != null && card.button.image != null)
                     card.button.image.sprite = character.cardBackground;
-                if (card.portrait != null) card.portrait.sprite = character.portrait;
-                if (card.elementIcon != null) card.elementIcon.sprite = character.elementIcon;
+                if (card.portrait != null)
+                {
+                    card.portrait.sprite = character.portrait;
+                    ForceVisible(card.portrait);
+                }
+                if (card.elementIcon != null)
+                {
+                    card.elementIcon.sprite = character.elementIcon;
+                    card.elementIcon.enabled = character.elementIcon != null;
+                    if (character.elementIcon != null) ForceVisible(card.elementIcon);
+                }
                 if (card.nameText != null) card.nameText.text = character.displayName;
                 if (card.levelText != null) card.levelText.text = $"Lv. {CharacterProgressionState.GetLevel(character.id)}";
                 if (card.selectedState != null)
-                    card.selectedState.SetActive(selectedParty.Exists(x => x != null && (x == character || x.id == character.id)));
+                    ApplyRosterSelectedState(card, selectedParty.Exists(x => x != null && (x == character || x.id == character.id)));
             }
         }
 
@@ -513,11 +554,85 @@ namespace BES.UI.Menu
             }
         }
 
+        void ApplyRosterSortAndFilter()
+        {
+            if (rosterSortMode == StoryRosterSortMode.RequiredCharacter)
+            {
+                var requiredId = RequiredCharacterIdForSlot(targetSlotIndex);
+                if (!string.IsNullOrWhiteSpace(requiredId))
+                {
+                    ownedRoster.RemoveAll(character => !IsRequiredCharacter(character, requiredId));
+                    return;
+                }
+            }
+
+            ownedRoster.Sort((left, right) => SortValue(right).CompareTo(SortValue(left)));
+        }
+
+        int SortValue(CharacterEntry character)
+        {
+            if (character == null) return int.MinValue;
+            return rosterSortMode switch
+            {
+                StoryRosterSortMode.Constellation => character.constellation,
+                StoryRosterSortMode.Quality => character.quality,
+                StoryRosterSortMode.RequiredCharacter => IsRequiredCharacter(character, RequiredCharacterIdForSlot(targetSlotIndex)) ? 1 : 0,
+                _ => character.combatPower
+            };
+        }
+
+        string RequiredCharacterIdForSlot(int slotIndex)
+        {
+            if (slotIndex >= 0 && slotIndex < requiredCharacterIdsBySlot.Count)
+                return requiredCharacterIdsBySlot[slotIndex]?.Trim() ?? string.Empty;
+
+            var stage = CurrentStage();
+            var requirements = stage?.partyRequirements;
+            if (requirements != null && slotIndex >= 0 && slotIndex < requirements.Count)
+            {
+                var value = requirements[slotIndex]?.attributeId;
+                if (!string.IsNullOrWhiteSpace(value) && IsCharacterIdOrName(value))
+                    return value.Trim();
+            }
+            return string.Empty;
+        }
+
+        bool IsCharacterIdOrName(string value)
+        {
+            if (database?.characters == null || string.IsNullOrWhiteSpace(value)) return false;
+            foreach (var character in database.characters)
+                if (IsRequiredCharacter(character, value))
+                    return true;
+            return false;
+        }
+
+        static bool IsRequiredCharacter(CharacterEntry character, string requiredIdOrName)
+        {
+            if (character == null || string.IsNullOrWhiteSpace(requiredIdOrName)) return false;
+            return string.Equals(character.id, requiredIdOrName, StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(character.displayName, requiredIdOrName, StringComparison.OrdinalIgnoreCase);
+        }
+
         void EnsureFixedPartySlots()
         {
             while (selectedParty.Count < requiredPartySize) selectedParty.Add(null);
             if (selectedParty.Count > requiredPartySize)
                 selectedParty.RemoveRange(requiredPartySize, selectedParty.Count - requiredPartySize);
+        }
+
+        void EnsureSelectionSlotBindings()
+        {
+            if (HasAnySlotBinding(selectionSlots)) return;
+            selectionSlots = beforeSlots;
+        }
+
+        static bool HasAnySlotBinding(List<StoryPartySlotBinding> slots)
+        {
+            if (slots == null) return false;
+            foreach (var slot in slots)
+                if (slot != null && (slot.button != null || slot.portrait != null || slot.nameText != null || slot.levelText != null || slot.emptyState != null))
+                    return true;
+            return false;
         }
 
         int AssignedCharacterCount()
@@ -529,11 +644,53 @@ namespace BES.UI.Menu
 
         static void Apply(StoryPartySlotBinding slot, CharacterEntry character)
         {
-            if (slot.portrait != null) { slot.portrait.sprite = character?.portrait; slot.portrait.enabled = character != null; }
-            if (slot.elementIcon != null) { slot.elementIcon.sprite = character?.elementIcon; slot.elementIcon.enabled = character != null; }
+            if (slot.portrait != null)
+            {
+                slot.portrait.sprite = character?.portrait;
+                slot.portrait.enabled = character != null;
+                if (character != null) ForceVisible(slot.portrait);
+            }
+            if (slot.elementIcon != null)
+            {
+                slot.elementIcon.sprite = character?.elementIcon;
+                slot.elementIcon.enabled = character != null && character.elementIcon != null;
+                if (character != null && character.elementIcon != null) ForceVisible(slot.elementIcon);
+            }
             if (slot.nameText != null) slot.nameText.text = character?.displayName ?? string.Empty;
             if (slot.levelText != null) slot.levelText.text = character == null ? string.Empty : $"Lv. {CharacterProgressionState.GetLevel(character.id)}";
             if (slot.emptyState != null) slot.emptyState.SetActive(character == null);
+        }
+
+        static void ApplyRosterSelectedState(StoryRosterCardBinding card, bool selected)
+        {
+            if (card?.selectedState == null) return;
+
+            if (card.button != null && card.selectedState == card.button.gameObject)
+            {
+                ForceVisible(card.button.image);
+                return;
+            }
+
+            card.selectedState.SetActive(selected);
+            var image = card.selectedState.GetComponent<Image>();
+            if (image != null)
+            {
+                image.raycastTarget = false;
+                image.color = selected ? new Color(.35f, .35f, .35f, .55f) : new Color(.35f, .35f, .35f, 0f);
+            }
+            card.selectedState.transform.SetAsLastSibling();
+        }
+
+        static void ForceVisible(Image image)
+        {
+            if (image == null) return;
+            var color = image.color;
+            if (color.a < .99f)
+            {
+                color.a = 1f;
+                image.color = color;
+            }
+            image.enabled = true;
         }
     }
 }

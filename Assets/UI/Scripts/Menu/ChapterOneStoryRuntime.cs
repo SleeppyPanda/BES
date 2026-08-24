@@ -4,6 +4,9 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace BES.UI.Menu
 {
@@ -71,7 +74,7 @@ namespace BES.UI.Menu
                 id = "chapter_1_intro",
                 title = "Mở đầu - Rừng biên giới Akherat",
                 summary = "Lunen và Tinh Linh lần theo chiếc vòng ngọc, bị một con mèo đen cướp vòng và chạm mặt thiếu niên bí ẩn.",
-                beats = new List<DialogueBeat>()
+                beats = parsedScenes.Count > 0 ? new List<DialogueBeat>(parsedScenes[0].IntroBeats) : new List<DialogueBeat>()
             };
 
             chapter.stages ??= new List<StageEntry>();
@@ -115,6 +118,14 @@ namespace BES.UI.Menu
         static List<string> LoadSceneSources()
         {
             var result = new List<string>();
+            for (var i = 1; i <= 7; i++)
+            {
+                var text = LoadSceneSourceByFileName($"Chương 1 cảnh {i}");
+                if (!string.IsNullOrWhiteSpace(text))
+                    result.Add(text);
+            }
+            if (result.Count > 0) return result;
+
             foreach (var resourcePath in SceneStoryResourcePaths)
             {
                 var text = LoadSceneSource(resourcePath);
@@ -122,6 +133,16 @@ namespace BES.UI.Menu
                     result.Add(text);
             }
             return result;
+        }
+
+        static string LoadSceneSourceByFileName(string fileName)
+        {
+            var projectFile = Path.Combine(Application.dataPath, "Resources", "Main Story", fileName);
+            if (File.Exists(projectFile))
+                return File.ReadAllText(projectFile, Encoding.UTF8);
+
+            var textAsset = Resources.Load<TextAsset>("Main Story/" + fileName);
+            return textAsset != null ? textAsset.text : string.Empty;
         }
 
         static string LoadSceneSource(string resourcePath)
@@ -585,6 +606,7 @@ namespace BES.UI.Menu
             var speech = new StringBuilder();
             CombatBlock currentCombat = null;
             TriggerBlock currentTrigger = null;
+            var checkpointNextBeat = false;
 
             List<DialogueBeat> CurrentTarget()
             {
@@ -634,6 +656,7 @@ namespace BES.UI.Menu
                     }
                     else if (tag == "ck")
                     {
+                        checkpointNextBeat = true;
                         if (currentTrigger != null && ShouldEndTriggerAtCheckpoint(currentTrigger))
                         {
                             currentTrigger.endAction = string.IsNullOrWhiteSpace(currentTrigger.endAction)
@@ -687,6 +710,7 @@ namespace BES.UI.Menu
             {
                 if (string.IsNullOrEmpty(pendingSpeaker) || speech.Length == 0) return;
                 var beat = CreateBeat(pendingSpeaker, speech.ToString(), false, background, profiles, leftFallback, rightFallback);
+                ApplyCheckpointIfNeeded(beat);
                 CurrentTarget().Add(beat);
                 pendingSpeaker = null;
                 speech.Clear();
@@ -696,8 +720,16 @@ namespace BES.UI.Menu
             {
                 if (sceneText.Length == 0) return;
                 var beat = CreateBeat(string.Empty, sceneText.ToString(), true, background, profiles, leftFallback, rightFallback);
+                ApplyCheckpointIfNeeded(beat);
                 CurrentTarget().Add(beat);
                 sceneText.Clear();
+            }
+
+            void ApplyCheckpointIfNeeded(DialogueBeat beat)
+            {
+                if (!checkpointNextBeat || beat == null) return;
+                beat.fadeToBlackCheckpoint = true;
+                checkpointNextBeat = false;
             }
         }
 
@@ -789,6 +821,9 @@ namespace BES.UI.Menu
                 displayName = !string.IsNullOrWhiteSpace(character?.displayName) ? character.displayName : fallbackName,
                 portrait = character?.portrait,
                 battlefieldSprite = character?.chibi != null ? character.chibi : character?.portrait,
+                attackEffectPrefabs = character?.attackEffectPrefabs != null ? new List<GameObject>(character.attackEffectPrefabs) : new List<GameObject>(),
+                attackEffectOffset = character?.attackEffectOffset ?? Vector3.zero,
+                attackEffectScale = character?.attackEffectScale ?? Vector3.one,
                 maxHealth = Mathf.Max(1, character?.maxHealth ?? 140),
                 attack = Mathf.Max(1, character?.attack ?? 18),
                 isRanged = character?.attributes != null && (character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa")),
@@ -801,16 +836,95 @@ namespace BES.UI.Menu
             var result = new List<BattleUnitDefinition>();
             for (var i = 0; i < count; i++)
             {
-                result.Add(new BattleUnitDefinition
+                result.Add(BuildSmallEnemy(i)); /*
                 {
                     id = $"chapter_1_ma_vat_{i + 1}",
                     displayName = "Ma Vật Truy Sát",
                     maxHealth = 90,
                     attack = 12,
                     skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
-                });
+                */
             }
             return result;
+        }
+
+        static BattleUnitDefinition BuildSmallEnemy(int index)
+        {
+            var type = Mathf.Abs(index) % 4;
+            switch (type)
+            {
+                case 0:
+                    return NewEnemy($"chapter_1_cat_xoay_cat_{index + 1}", "Cát Xoáy Sa Mạc", "enemy_sand_random_5_percent", "Lao Tới", LoadEnemySprite("sprite-sheet-2frames (2).png"), 95, 10, 5, 13);
+                case 1:
+                    return NewEnemy($"chapter_1_lua_linh_hon_{index + 1}", "Lửa Linh Hồn", "enemy_blue_heal_20_percent", "Hồi Máu Đồng Đội", LoadEnemySprite("sprite-sheet-2frames (3).png"), 80, 1, 3, 9);
+                case 2:
+                    return NewEnemy($"chapter_1_quan_tai_khien_{index + 1}", "Quan Tài Hộ Vệ", "enemy_coffin_shield_2000_once", "Tạo Khiên", LoadEnemySprite("sprite-sheet-2frames (4).png"), 110, 1, 8, 8);
+                default:
+                    return NewEnemy($"chapter_1_thu_lua_nho_{index + 1}", "Thú Lửa Nhỏ", "enemy_fire_aoe_5_percent", "Lửa Lan", LoadEnemySprite("sprite-sheet-2frames (5).png"), 90, 8, 4, 11);
+            }
+        }
+
+        static BattleUnitDefinition NewEnemy(string id, string displayName, string skillId, string skillName, Sprite sprite, int maxHealth, int attack, int defense, int speed)
+        {
+            return new BattleUnitDefinition
+            {
+                id = id,
+                displayName = displayName,
+                portrait = sprite,
+                battlefieldSprite = sprite,
+                attackEffectPrefabs = TestEffectsForEnemy(id),
+                attackEffectScale = Vector3.one,
+                maxHealth = maxHealth,
+                attack = attack,
+                defense = defense,
+                speed = speed,
+                skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = skillId, displayName = skillName, powerMultiplier = 1f } }
+            };
+        }
+
+        static Sprite LoadEnemySprite(string fileName)
+        {
+#if UNITY_EDITOR
+            const string folder = "Assets/Art Ui/Game Việt hóa mới/enemy/";
+            var path = folder + fileName;
+            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+            if (sprite != null) return sprite;
+
+            var assets = AssetDatabase.LoadAllAssetsAtPath(path);
+            foreach (var asset in assets)
+                if (asset is Sprite found)
+                    return found;
+#endif
+            return null;
+        }
+
+        static List<GameObject> TestEffectsForEnemy(string id)
+        {
+            var result = new List<GameObject>();
+            if (id.IndexOf("cat_xoay", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                AddEffect(result, "Assets/JMO Assets/Cartoon FX Remaster/CFXR Prefabs/Impacts/CFXR Hit D 3D (Yellow).prefab");
+                AddEffect(result, "Assets/CartoonVFX9x/Comic_FX/Prefabs/Explosion_1_Woa_Yellow.prefab");
+            }
+            else if (id.IndexOf("lua_linh", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                AddEffect(result, "Assets/JMO Assets/Cartoon FX Remaster/CFXR Prefabs/Light/CFXR3 Hit Light B (Air).prefab");
+                AddEffect(result, "Assets/CartoonVFX9x/Comic_FX/Prefabs/Battle_Effect_Blue.prefab");
+            }
+            else if (id.IndexOf("thu_lua", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                AddEffect(result, "Assets/JMO Assets/Cartoon FX Remaster/CFXR Prefabs/Fire/CFXR3 Hit Fire B (Air).prefab");
+                AddEffect(result, "Assets/CartoonVFX9x/Comic_FX/Prefabs/Explosion_2_Bomb_Red.prefab");
+            }
+            return result;
+        }
+
+        static void AddEffect(List<GameObject> result, string assetPath)
+        {
+#if UNITY_EDITOR
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+            if (prefab != null) result.Add(prefab);
+#endif
         }
 
         static BattleUnitDefinition BuildBoss(string displayName)
@@ -968,6 +1082,7 @@ namespace BES.UI.Menu
                 rightCharacter = isSceneText ? null : rightActive ? profile.sprite : rightFallback,
                 dimLeft = isSceneText || !leftActive,
                 dimRight = isSceneText || !rightActive,
+                hideAllCharacters = isSceneText,
                 layoutMode = DialogueLayoutMode.Auto,
                 instantLayout = false,
                 castActions = new List<DialogueCastAction>(),

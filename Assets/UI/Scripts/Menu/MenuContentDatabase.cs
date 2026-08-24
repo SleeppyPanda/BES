@@ -14,11 +14,23 @@ namespace BES.UI.Menu
         public string id;
         public string displayName;
         [TextArea] public string description;
+        public string faction;
+        public bool playable = true;
+        public string element;
+        public string weaponType;
+        public string skillType;
+        [TextArea] public string normalAttack;
+        [TextArea] public string skillDescription;
+        [TextArea] public string passiveDescription;
         public Sprite portrait;
         [Tooltip("Card background shared by Gallery, Story Mode and future Play Mode rosters.")]
         public Sprite cardBackground;
         public Sprite fullBody;
         public Sprite chibi;
+        [Tooltip("Attack VFX prefabs tested/assigned for this character. Copied into battle units and played when attacking.")]
+        public List<GameObject> attackEffectPrefabs = new();
+        public Vector3 attackEffectOffset = Vector3.zero;
+        public Vector3 attackEffectScale = Vector3.one;
         public Sprite elementIcon;
         [Tooltip("Four artifact slot sprites shown in Character Information and Equipment tabs.")]
         public List<Sprite> equippedArtifacts = new();
