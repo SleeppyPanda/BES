@@ -9217,7 +9217,6 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: ed71445d249641c418034a110c4f6758, type: 2}
   navigator: {fileID: 3024524859543128419}
   requiredPartySize: 4
-  stageIndex: 0
   beforeSelectionPanel: {fileID: 60049832532378563}
   characterSelectionPanel: {fileID: 2790724300988900338}
   storyDialogueUI: {fileID: 0}
@@ -9230,40 +9229,6 @@ MonoBehaviour:
   - {fileID: 6323260307716012997}
   - {fileID: 0}
   - {fileID: 0}
-  storyProgressMarker: {fileID: 6208074831782717865}
-  storyProgressPositions:
-  - {fileID: 6901223687078858909}
-  - {fileID: 2539764992571027491}
-  - {fileID: 4943879171175442121}
-  - {fileID: 9179921396843399539}
-  - {fileID: 1500059731846680691}
-  - {fileID: 1222911063583970909}
-  - {fileID: 4860266663222626922}
-  storyProgressMoveDuration: 0.65
-  storyProgressMoveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   openSelectionButton: {fileID: 0}
   beforeBackButton: {fileID: 545008201893333887}
   beforeSlots:
@@ -75098,7 +75063,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6208074831782717865
 RectTransform:
   m_ObjectHideFlags: 0
@@ -108176,6 +108141,8 @@ MonoBehaviour:
   menuContentDatabase: {fileID: 0}
   combatDialogueUI: {fileID: 0}
   pauseBattleDuringDialogue: 1
+  hideCombatHudDuringDialogue: 1
+  extraHudRootsToHideDuringDialogue: []
 --- !u!1 &9097546452774667872
 GameObject:
   m_ObjectHideFlags: 0

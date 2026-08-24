@@ -123,6 +123,9 @@ namespace BES.UI.Menu
         [Header("Story dialogue popups")]
         [SerializeField] DialogueSequenceUI combatDialogueUI;
         [SerializeField] bool pauseBattleDuringDialogue = true;
+        [SerializeField] bool hideCombatHudDuringDialogue = true;
+        [Tooltip("Optional extra UI roots to hide while a combat trigger dialogue is playing. Do not put battlefield/background roots here.")]
+        [SerializeField] List<GameObject> extraHudRootsToHideDuringDialogue = new();
 
         public static string ActiveStageId;
         public static List<string> SelectedPartyCharacterIds = new();
@@ -428,8 +431,9 @@ namespace BES.UI.Menu
             round++; turnQueue.Clear(); AddAlive(turnQueue, allies); AddAlive(turnQueue, enemies);
             turnQueue.Sort(CompareTurnOrder); queueIndex = 0;
             if (roundText != null) roundText.text = $"ROUND {round}";
-            onRoundStarted?.Invoke(round); BeginCurrentTurn();
-            TryPlayCombatDialogue(CombatDialogueTriggerType.RoundStart, null, round);
+            onRoundStarted?.Invoke(round);
+            if (TryPlayCombatDialogue(CombatDialogueTriggerType.RoundStart, null, round, BeginCurrentTurn)) return;
+            BeginCurrentTurn();
         }
 
         static void AddAlive(List<BattleUnitView> destination, List<BattleUnitView> source) { foreach (var unit in source) if (unit != null && unit.IsAlive) destination.Add(unit); }
@@ -493,6 +497,13 @@ namespace BES.UI.Menu
         IEnumerator PerformAction(BattleUnitView actor, BattleUnitView target, int skillIndex)
         {
             var skill = GetSkill(actor, skillIndex);
+            if (skill != null && string.Equals(skill.id, "summon", StringComparison.OrdinalIgnoreCase))
+            {
+                yield return ScaledWait(actionWindup);
+                SummonInactiveEnemies(2);
+                yield return ScaledWait(actionRecovery);
+                yield break;
+            }
 
             System.Action onStrike = () =>
             {
@@ -689,7 +700,8 @@ namespace BES.UI.Menu
                     if (!TryPlayCombatDialogue(CombatDialogueTriggerType.PhaseVictory, null, 0, StartNextPhase))
                         StartNextPhase();
                 }
-                else if (!TryPlayCombatDialogue(CombatDialogueTriggerType.BeforeVictory, null, 0, CompleteVictory))
+                else if (!TryPlayCombatDialogue(CombatDialogueTriggerType.PhaseVictory, null, 0, CompleteVictory) &&
+                         !TryPlayCombatDialogue(CombatDialogueTriggerType.BeforeVictory, null, 0, CompleteVictory))
                 {
                     CompleteVictory();
                 }
@@ -840,7 +852,7 @@ namespace BES.UI.Menu
                 menuContentDatabase = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
 #if UNITY_EDITOR
                 if (menuContentDatabase == null)
-                    menuContentDatabase = UnityEditor.AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/_Project/Data/UI/MenuContentDatabase.asset");
+                    menuContentDatabase = UnityEditor.AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/Scenes/MenuContentDatabase.asset");
 #endif
             }
 
@@ -890,14 +902,14 @@ namespace BES.UI.Menu
                 menuContentDatabase = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
 #if UNITY_EDITOR
                 if (menuContentDatabase == null)
-                    menuContentDatabase = UnityEditor.AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/_Project/Data/UI/MenuContentDatabase.asset");
+                    menuContentDatabase = UnityEditor.AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/Scenes/MenuContentDatabase.asset");
 #endif
             }
 
             if (menuContentDatabase == null || string.IsNullOrEmpty(ActiveStageId))
                 return;
 
-            ChapterOneStoryRuntime.Apply(menuContentDatabase);
+            menuContentDatabase = ChapterOneStoryRuntime.Apply(menuContentDatabase);
 
             currentStage = null;
             StageEntry stage = null;
@@ -939,6 +951,8 @@ namespace BES.UI.Menu
                     view.definition = CloneAndScaleDefinition(currentPhase.allies[i], allyPhaseLevel);
                     if (view.root != null) view.root.SetActive(true);
                 }
+
+                ApplySelectedPartyToAllySlots(currentPhase.allies.Count);
             }
 
             for (var i = 0; i < enemies.Count; i++)
@@ -971,6 +985,60 @@ namespace BES.UI.Menu
             }
         }
 
+        void SummonInactiveEnemies(int maxActiveSummons)
+        {
+            var activeSummons = 0;
+            foreach (var enemy in enemies)
+            {
+                if (enemy == null || enemy.definition == null) continue;
+                if (string.Equals(enemy.definition.id, "nephkar", StringComparison.OrdinalIgnoreCase)) continue;
+                if (enemy.root != null && enemy.root.activeSelf && enemy.IsAlive) activeSummons++;
+            }
+
+            foreach (var enemy in enemies)
+            {
+                if (activeSummons >= maxActiveSummons) break;
+                if (enemy == null || enemy.definition == null) continue;
+                if (string.Equals(enemy.definition.id, "nephkar", StringComparison.OrdinalIgnoreCase)) continue;
+                if (enemy.root != null && enemy.root.activeSelf && enemy.IsAlive) continue;
+                enemy.health = enemy.definition.maxHealth;
+                if (enemy.root != null) enemy.root.SetActive(true);
+                if (enemy.battlefieldImage != null) enemy.battlefieldImage.gameObject.SetActive(true);
+                RefreshUnit(enemy);
+                activeSummons++;
+            }
+            RefreshTurnOrder();
+        }
+
+        void ApplySelectedPartyToAllySlots(int startSlot)
+        {
+            if (menuContentDatabase == null || SelectedPartyCharacterIds == null) return;
+            startSlot = Mathf.Clamp(startSlot, 0, allies.Count);
+            for (var i = 0; i < SelectedPartyCharacterIds.Count && startSlot + i < allies.Count; i++)
+            {
+                var character = menuContentDatabase.FindCharacter(SelectedPartyCharacterIds[i]);
+                var view = allies[startSlot + i];
+                if (character == null || view == null) continue;
+
+                var levelValue = CharacterProgressionState.GetLevel(character.id);
+                var scale = 1f + (levelValue - 1) * 0.1f;
+                view.definition = new BattleUnitDefinition
+                {
+                    id = character.id,
+                    displayName = character.displayName,
+                    maxHealth = Mathf.RoundToInt(character.maxHealth * scale),
+                    attack = Mathf.RoundToInt(character.attack * scale),
+                    defense = 5,
+                    speed = 10,
+                    portrait = character.portrait,
+                    battlefieldSprite = character.chibi != null ? character.chibi : character.portrait,
+                    isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa"),
+                    skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
+                };
+                if (view.root != null) view.root.SetActive(true);
+            }
+        }
+
         void ResetCombatDialogueTriggers()
         {
             foreach (var trigger in ActiveCombatTriggers())
@@ -997,9 +1065,13 @@ namespace BES.UI.Menu
                     paused = true;
                     ApplyPlaybackSpeed();
                 }
+                if (hideCombatHudDuringDialogue)
+                    SetCombatHudSuppressed(true);
 
                 combatDialogueUI.Play(trigger.dialogue, () =>
                 {
+                    if (hideCombatHudDuringDialogue)
+                        SetCombatHudSuppressed(false);
                     if (shouldPause)
                     {
                         paused = false;
@@ -1012,6 +1084,42 @@ namespace BES.UI.Menu
             }
 
             return false;
+        }
+
+        void SetCombatHudSuppressed(bool suppressed)
+        {
+            var visible = !suppressed;
+            if (skillPanel != null) skillPanel.SetActive(visible);
+            if (selectionHintText != null) selectionHintText.gameObject.SetActive(visible);
+            if (roundText != null) roundText.gameObject.SetActive(visible);
+            if (currentActorText != null) currentActorText.gameObject.SetActive(visible);
+            if (speedButton != null) speedButton.gameObject.SetActive(visible);
+            if (speedText != null) speedText.gameObject.SetActive(visible);
+            if (autoButton != null) autoButton.gameObject.SetActive(visible);
+            if (autoText != null) autoText.gameObject.SetActive(visible);
+            if (pauseButton != null) pauseButton.gameObject.SetActive(visible);
+
+            foreach (var entry in turnOrderEntries)
+                if (entry?.root != null) entry.root.SetActive(visible);
+
+            SetUnitHudVisible(allies, visible);
+            SetUnitHudVisible(enemies, visible);
+
+            foreach (var root in extraHudRootsToHideDuringDialogue)
+                if (root != null) root.SetActive(visible);
+        }
+
+        static void SetUnitHudVisible(List<BattleUnitView> units, bool visible)
+        {
+            if (units == null) return;
+            foreach (var unit in units)
+            {
+                if (unit == null) continue;
+                if (unit.portrait != null) unit.portrait.gameObject.SetActive(visible);
+                if (unit.healthBar != null) unit.healthBar.gameObject.SetActive(visible);
+                if (unit.healthFill != null) unit.healthFill.gameObject.SetActive(visible);
+                if (unit.healthText != null) unit.healthText.gameObject.SetActive(visible);
+            }
         }
 
         IEnumerable<CombatDialogueTrigger> ActiveCombatTriggers()
@@ -1062,7 +1170,80 @@ namespace BES.UI.Menu
                     ConvertEnemyToAlly(ResolveUnit(trigger.convertUnitId, unit));
                     StartNextPhase();
                     break;
+                case CombatTriggerActionType.KillAllEnemiesAndPlayPhaseVictory:
+                    KillAllEnemies();
+                    if (!TryPlayCombatDialogue(CombatDialogueTriggerType.PhaseVictory, null, 0, CompleteVictory))
+                        CompleteVictory();
+                    break;
+                case CombatTriggerActionType.ReturnToStoryWithoutResult:
+                    ReturnToStoryModeAfterDialogue();
+                    break;
+                case CombatTriggerActionType.SetElioHealthToTenPercentAndPlayPhaseVictory:
+                    SetAllyHealthPercent("elio", 10);
+                    if (!TryPlayCombatDialogue(CombatDialogueTriggerType.PhaseVictory, null, 0))
+                        BeginCurrentTurn();
+                    break;
+                case CombatTriggerActionType.HealElioToThirtyFivePercent:
+                    SetAllyHealthPercent("elio", 35);
+                    break;
+                case CombatTriggerActionType.AddAurelianAlly:
+                    AddDatabaseCharacterToAllySlot("Aurelian", 2, 100);
+                    break;
             }
+        }
+
+        void SetAllyHealthPercent(string characterId, int percent)
+        {
+            var unit = ResolveUnit(characterId, null);
+            if (unit == null || unit.definition == null) return;
+            unit.health = Mathf.Clamp(Mathf.CeilToInt(unit.definition.maxHealth * Mathf.Clamp(percent, 1, 100) / 100f), 1, unit.definition.maxHealth);
+            RefreshUnit(unit);
+        }
+
+        void AddDatabaseCharacterToAllySlot(string characterName, int slotIndex, int healthPercent)
+        {
+            if (menuContentDatabase == null || allies == null || allies.Count == 0) return;
+            slotIndex = Mathf.Clamp(slotIndex, 0, allies.Count - 1);
+            var character = menuContentDatabase.characters?.Find(x =>
+                string.Equals(x.id, characterName, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(x.displayName, characterName, StringComparison.OrdinalIgnoreCase));
+            var view = allies[slotIndex];
+            if (character == null || view == null) return;
+
+            var levelValue = CharacterProgressionState.GetLevel(character.id);
+            var scale = 1f + (levelValue - 1) * 0.1f;
+            view.definition = new BattleUnitDefinition
+            {
+                id = character.id,
+                displayName = character.displayName,
+                maxHealth = Mathf.RoundToInt(character.maxHealth * scale),
+                attack = Mathf.RoundToInt(character.attack * scale),
+                defense = 5,
+                speed = 10,
+                portrait = character.portrait,
+                battlefieldSprite = character.chibi != null ? character.chibi : character.portrait,
+                isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa"),
+                skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
+            };
+            view.isPlayer = true;
+            view.health = Mathf.Clamp(Mathf.CeilToInt(view.definition.maxHealth * Mathf.Clamp(healthPercent, 1, 100) / 100f), 1, view.definition.maxHealth);
+            if (view.root != null) view.root.SetActive(true);
+            RefreshUnit(view);
+        }
+
+        void KillAllEnemies()
+        {
+            foreach (var enemy in enemies)
+            {
+                if (enemy == null) continue;
+                enemy.health = 0;
+                RefreshUnit(enemy);
+                if (enemy.root != null) enemy.root.SetActive(false);
+            }
+            turnQueue.RemoveAll(unit => unit == null || !unit.IsAlive);
+            RefreshTurnOrder(true);
+            HideSkills();
+            resolving = false;
         }
 
         BattleUnitView ResolveUnit(string unitId, BattleUnitView fallback)

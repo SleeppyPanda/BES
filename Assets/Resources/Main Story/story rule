@@ -1,0 +1,7 @@
+1. cuối dòng có dấu :  nghĩa là đó là tên nhân vật sẽ chat 
+2. nằm trong dấu " " nghĩa là đó là đoạn chat của nhân vật nằm ngay bên trên. cuối dòng bên trên không có dấu : nghĩa là nó là 1 đoạn dẫn truyện
+3. mọi phân đoạn đã được phân cách nhau bằng 1 dòng trống. nếu không có đoạn trống nghĩa là 2 đoạn đó liền nhau
+4. có tag [combat] nghĩa là cho setup team để vào trận, nếu không có tag [trigger] nghĩa là đoạn chat này hiển thị ngay khi bắt đầu trận đấu. bên cạnh có ghi rõ điều kiện cho các ô chọn nhân vật, có bao nhiêu enemy. 
+5. tag [trigger] nghĩa là cách đoạn chat ở các dòng tiếp theo được hiển thị lên dưới điều kiện nào được viết ngay cạnh tag này để tiếp tục tuyến truyện. chat sẽ hiển thị theo đúng tuyến truyện cho đến khi xuất hiện tag [trigger end]. đồng thời tạm dừng auto combat và các hiển thị ui combat trừ background để tập trung vào chat.
+6. tag [trigger end] nghĩa là đoạn chat bên trên kết thúc, tiếp tục các thao tác bình thường. bên cạnh có ghi rõ tiếp theo sẽ làm gì.
+7. những phân đoạn có tag [ck] nghĩa là cho mờ đen đi rồi hiện lại giao diện với 1 back ground khác rồi tiếp tục tuyến truyện.

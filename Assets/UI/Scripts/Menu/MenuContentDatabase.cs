@@ -97,7 +97,12 @@ namespace BES.UI.Menu
         None,
         StartNextPhase,
         ConvertUnitToAlly,
-        ConvertUnitToAllyAndStartNextPhase
+        ConvertUnitToAllyAndStartNextPhase,
+        KillAllEnemiesAndPlayPhaseVictory,
+        ReturnToStoryWithoutResult,
+        SetElioHealthToTenPercentAndPlayPhaseVictory,
+        HealElioToThirtyFivePercent,
+        AddAurelianAlly
     }
 
     [Serializable]

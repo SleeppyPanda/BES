@@ -18,77 +18,82 @@ namespace BES.UI.Menu
             "Main Story/Chương 1 cảnh 3",
             "Main Story/Chương 1 cảnh 4",
             "Main Story/Chương 1 cảnh 5",
-            "Main Story/Chương 1 cảnh 6"
+            "Main Story/Chương 1 cảnh 6",
+            "Main Story/Chương 1 cảnh 7"
         };
         const string CastConfigResourcePath = "Data/ChapterOneStoryCastConfig";
 
-        static readonly Regex SpeakerLine = new(@"^\s*(?<speaker>[A-Za-zÀ-ỹ0-9?&\s]+)\s*:\s*$", RegexOptions.Compiled);
-        static readonly HashSet<string> KnownSpeakers = new(StringComparer.OrdinalIgnoreCase)
-        {
-            "???", "Lunen", "Tinh Linh", "Tinh linh", "Elio", "Rashad", "Aurelian",
-            "Sahure", "Nefru", "Bekhet", "Menkara", "Nephkar", "Khepraen",
-            "Ramesses", "Kasim", "Vezkara"
-        };
+        static readonly Regex SpeakerLine = new(@"^\s*(?<speaker>.+?)\s*:\s*$", RegexOptions.Compiled);
+        static readonly Regex TagLine = new(@"^\s*\[\s*(?<tag>combat|trigger|trigger end|ck)\s*\]\s*(?<note>.*)$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        static readonly Dictionary<MenuContentDatabase, MenuContentDatabase> RuntimeCopies = new();
 
-        public static void Apply(MenuContentDatabase database)
+        public static MenuContentDatabase Apply(MenuContentDatabase database) => Apply(database, false);
+
+        public static MenuContentDatabase Apply(MenuContentDatabase database, bool writeToSourceAsset)
         {
-            if (database == null || database.storyChapters == null) return;
+            if (database == null || database.storyChapters == null) return database;
             var castConfig = Resources.Load<ChapterOneStoryCastConfig>(CastConfigResourcePath);
-            if (castConfig == null || !castConfig.autoGenerateChapterFromTextFiles) return;
+            if (castConfig == null || !castConfig.autoGenerateChapterFromTextFiles) return database;
+
+            if (!writeToSourceAsset)
+                database = GetRuntimeDatabase(database);
 
             var chapter = database.storyChapters.Find(x => x != null && x.id == ChapterId);
-            if (chapter == null) return;
+            if (chapter == null) return database;
 
-            var source = LoadStorySource();
-            if (string.IsNullOrWhiteSpace(source)) return;
+            var sceneSources = LoadSceneSources();
+            if (sceneSources.Count == 0)
+            {
+                var fallbackSource = LoadStorySource();
+                if (!string.IsNullOrWhiteSpace(fallbackSource))
+                    sceneSources.Add(fallbackSource);
+            }
+            if (sceneSources.Count == 0) return database;
 
             var leftFallback = ResolveLeftSprite(chapter);
             var rightFallback = ResolveRightSprite(chapter);
             var profiles = BuildCharacterProfiles(database, castConfig, leftFallback, rightFallback);
-            var allBeats = ParseBeats(source, chapter.background, profiles, leftFallback, rightFallback);
-            if (allBeats.Count == 0) return;
-            ApplyCastOverrides(allBeats, profiles, castConfig);
+            var parsedScenes = new List<ParsedStory>();
+            foreach (var sceneSource in sceneSources)
+            {
+                var parsedScene = ParseStory(sceneSource, chapter.background, profiles, leftFallback, rightFallback);
+                if (parsedScene.AllBeats.Count == 0) continue;
+                ApplyCastOverrides(parsedScene.AllBeats, profiles, castConfig);
+                parsedScenes.Add(parsedScene);
+            }
+            if (parsedScenes.Count == 0) return database;
 
             chapter.title = "Chương 1 - Ngọn Lửa Dưới Mặt Trời Sa Mạc";
             chapter.summary = "Lunen lần theo chiếc vòng ngọc tới biên giới Akherat, gặp Elio, bị cuốn vào âm mưu truy sát vương tử, chứng kiến biến cố của Hỏa thần Aurelian và sự ra đời của vị vua con người đầu tiên của Akherat.";
-
-            var battleStart = FindBeatIndex(allBeats, "Đám ma vật đồng loạt lao tới");
-            var forestCalm = FindBeatIndex(allBeats, "Khu rừng cuối cùng cũng trở lại yên tĩnh");
-            var firstWarning = FindBeatIndex(allBeats, "Ta không thích phải nói lần thứ hai");
-
-            if (firstWarning < 0) firstWarning = Mathf.Min(24, allBeats.Count);
-            if (battleStart < 0) battleStart = Mathf.Min(firstWarning + 35, allBeats.Count);
-            if (forestCalm < 0 || forestCalm <= battleStart) forestCalm = Mathf.Min(battleStart + 18, allBeats.Count);
 
             chapter.introDialogue = new DialogueSequence
             {
                 id = "chapter_1_intro",
                 title = "Mở đầu - Rừng biên giới Akherat",
                 summary = "Lunen và Tinh Linh lần theo chiếc vòng ngọc, bị một con mèo đen cướp vòng và chạm mặt thiếu niên bí ẩn.",
-                beats = CopyRange(allBeats, 0, firstWarning)
+                beats = new List<DialogueBeat>()
             };
 
-            var stage = EnsureFirstStage(chapter);
-            stage.id = "chapter_1_stage_1";
-            stage.title = "Rừng biên giới Akherat";
-            stage.description = "Lunen và Elio từ hiểu lầm ban đầu buộc phải cùng chiến đấu khi ma vật xuất hiện, để lộ mục tiêu thật sự của chúng là vương tử Akherat.";
-            stage.preBattleDialogue = new DialogueSequence
-            {
-                id = "chapter_1_stage_1_prebattle",
-                title = "Trước trận - Vương tử bị truy sát",
-                summary = "Cuộc chạm trán với thiếu niên bí ẩn chuyển thành trận chiến thật sự khi ma vật nhắm thẳng vào cậu.",
-                beats = CopyRange(allBeats, firstWarning, battleStart)
-            };
-            stage.victoryDialogue = new DialogueSequence
-            {
-                id = "chapter_1_stage_1_victory",
-                title = "Sau trận - Akherat và ngọn lửa kế vị",
-                summary = "Elio đưa Lunen vào Akherat; hoàng cung, đại lễ, biến cố Aurelian, thử luyện Hỏa Ấn và lời tiễn biệt được mở ra theo đúng tuyến truyện.",
-                beats = CopyRange(allBeats, forestCalm, allBeats.Count)
-            };
+            chapter.stages ??= new List<StageEntry>();
+            while (chapter.stages.Count < parsedScenes.Count) chapter.stages.Add(new StageEntry());
 
-            ApplyCombatDialogue(stage, allBeats, battleStart, forestCalm);
-            ApplyEnemyNames(stage);
+            for (var i = 0; i < parsedScenes.Count; i++)
+                ApplySceneToStage(chapter.stages[i], parsedScenes[i], i, database);
+
+            if (chapter.stages.Count > parsedScenes.Count)
+                chapter.stages.RemoveRange(parsedScenes.Count, chapter.stages.Count - parsedScenes.Count);
+            return database;
+        }
+
+        static MenuContentDatabase GetRuntimeDatabase(MenuContentDatabase database)
+        {
+            if (database == null) return null;
+            if (database.name.EndsWith(" Runtime", StringComparison.OrdinalIgnoreCase)) return database;
+            if (RuntimeCopies.TryGetValue(database, out var cached) && cached != null) return cached;
+            var copy = UnityEngine.Object.Instantiate(database);
+            copy.name = database.name + " Runtime";
+            RuntimeCopies[database] = copy;
+            return copy;
         }
 
         static string LoadStorySource()
@@ -105,6 +110,28 @@ namespace BES.UI.Menu
                 return File.ReadAllText(projectFile, Encoding.UTF8);
 
             return string.Empty;
+        }
+
+        static List<string> LoadSceneSources()
+        {
+            var result = new List<string>();
+            foreach (var resourcePath in SceneStoryResourcePaths)
+            {
+                var text = LoadSceneSource(resourcePath);
+                if (!string.IsNullOrWhiteSpace(text))
+                    result.Add(text);
+            }
+            return result;
+        }
+
+        static string LoadSceneSource(string resourcePath)
+        {
+            var projectFile = Path.Combine(Application.dataPath, "Resources", resourcePath.Replace('/', Path.DirectorySeparatorChar));
+            if (File.Exists(projectFile))
+                return File.ReadAllText(projectFile, Encoding.UTF8);
+
+            var textAsset = Resources.Load<TextAsset>(resourcePath);
+            return textAsset != null ? textAsset.text : string.Empty;
         }
 
         static string LoadCombinedSceneSources()
@@ -141,6 +168,60 @@ namespace BES.UI.Menu
             chapter.stages ??= new List<StageEntry>();
             while (chapter.stages.Count == 0) chapter.stages.Add(new StageEntry());
             return chapter.stages[0];
+        }
+
+        static void ApplySceneToStage(StageEntry stage, ParsedStory parsed, int sceneIndex, MenuContentDatabase database)
+        {
+            var sceneNumber = sceneIndex + 1;
+            stage.id = $"chapter_1_stage_{sceneNumber}";
+            stage.title = SceneTitle(sceneIndex);
+            stage.description = SceneDescription(sceneIndex);
+            stage.preBattleDialogue = new DialogueSequence
+            {
+                id = $"chapter_1_stage_{sceneNumber}_story",
+                title = stage.title,
+                summary = stage.description,
+                beats = parsed.IntroBeats
+            };
+            stage.victoryDialogue = new DialogueSequence
+            {
+                id = $"chapter_1_stage_{sceneNumber}_after",
+                title = $"Sau cảnh {sceneNumber}",
+                summary = stage.description,
+                beats = parsed.VictoryBeats
+            };
+
+            ApplyCombatBlocks(stage, parsed, database);
+        }
+
+        static string SceneTitle(int sceneIndex)
+        {
+            return sceneIndex switch
+            {
+                0 => "Rừng biên giới Akherat",
+                1 => "Con đường vào Hoàng cung",
+                2 => "Bữa tiệc hoàng gia",
+                3 => "Câu chuyện của ngọn lửa ngoại lai",
+                4 => "Đại lễ tế trời",
+                5 => "Khi ngọn lửa không còn sự bảo hộ",
+                6 => "Mong ngọn lửa vĩnh hằng vĩnh viễn bảo hộ chúng ta",
+                _ => $"Cảnh {sceneIndex + 1}"
+            };
+        }
+
+        static string SceneDescription(int sceneIndex)
+        {
+            return sceneIndex switch
+            {
+                0 => "Lunen và Elio từ hiểu lầm ban đầu buộc phải cùng chiến đấu khi ma vật xuất hiện.",
+                1 => "Rashad đưa Lunen và Tinh Linh vào hoàng cung Akherat, giới thiệu lịch sử Hỏa thần và hé lộ sự căng thẳng trong cung.",
+                2 => "Lunen và Tinh Linh dự yến tiệc hoàng gia, diện kiến Aurelian và chứng kiến mâu thuẫn âm ỉ trong Akherat.",
+                3 => "Lunen và Tinh Linh tới Đại Thư Khố, gặp Menkara và tiếp tục lần theo manh mối về chiếc vòng.",
+                4 => "Đại lễ tế trời bị ma vật tập kích, Aurelian ra tay cứu Elio rồi nghi lễ chuyển thành biến cố nguy hiểm.",
+                5 => "Aurelian bất tỉnh, Elio gánh lấy Akherat, rồi biến cố Nephkar đẩy ngọn lửa kế vị tới thử thách sinh tử.",
+                6 => "Lunen rời Akherat trong lời tiễn biệt của Elio và những người bạn mới, khép lại chương đầu của ngọn lửa sa mạc.",
+                _ => "Một phân đoạn tiếp theo của Chương 1."
+            };
         }
 
         static void ApplyCombatDialogue(StageEntry stage, List<DialogueBeat> allBeats, int battleStart, int forestCalm)
@@ -220,6 +301,29 @@ namespace BES.UI.Menu
             public bool leftSide;
             public int defaultSlotIndex = -1;
             public bool defaultDimWhenNotSpeaking = true;
+        }
+
+        class ParsedStory
+        {
+            public readonly List<DialogueBeat> IntroBeats = new();
+            public readonly List<DialogueBeat> PreBattleBeats = new();
+            public readonly List<DialogueBeat> VictoryBeats = new();
+            public readonly List<CombatBlock> CombatBlocks = new();
+            public readonly List<DialogueBeat> AllBeats = new();
+        }
+
+        class CombatBlock
+        {
+            public string note;
+            public readonly List<DialogueBeat> startBeats = new();
+            public readonly List<TriggerBlock> triggers = new();
+        }
+
+        class TriggerBlock
+        {
+            public string condition;
+            public string endAction;
+            public readonly List<DialogueBeat> beats = new();
         }
 
         static Dictionary<string, RuntimeCharacterProfile> BuildCharacterProfiles(MenuContentDatabase database, ChapterOneStoryCastConfig castConfig, Sprite leftFallback, Sprite rightFallback)
@@ -468,17 +572,26 @@ namespace BES.UI.Menu
             return fallback;
         }
 
-        static List<DialogueBeat> ParseBeats(
+        static ParsedStory ParseStory(
             string source,
             Sprite background,
             Dictionary<string, RuntimeCharacterProfile> profiles,
             Sprite leftFallback,
             Sprite rightFallback)
         {
-            var beats = new List<DialogueBeat>();
+            var parsed = new ParsedStory();
             var sceneText = new StringBuilder();
             string pendingSpeaker = null;
             var speech = new StringBuilder();
+            CombatBlock currentCombat = null;
+            TriggerBlock currentTrigger = null;
+
+            List<DialogueBeat> CurrentTarget()
+            {
+                if (currentTrigger != null) return currentTrigger.beats;
+                if (currentCombat != null) return currentCombat.startBeats;
+                return parsed.CombatBlocks.Count == 0 ? parsed.IntroBeats : parsed.VictoryBeats;
+            }
 
             foreach (var raw in source.Replace("\r\n", "\n").Replace('\r', '\n').Split('\n'))
             {
@@ -486,11 +599,55 @@ namespace BES.UI.Menu
                 if (string.IsNullOrWhiteSpace(line) || IsDivider(line))
                 {
                     FlushSpeech();
+                    FlushSceneText();
+                    continue;
+                }
+
+                var tagMatch = TagLine.Match(line);
+                if (tagMatch.Success)
+                {
+                    FlushSpeech();
+                    FlushSceneText();
+                    var tag = tagMatch.Groups["tag"].Value.Trim().ToLowerInvariant();
+                    var note = tagMatch.Groups["note"].Value.Trim();
+
+                    if (tag == "combat")
+                    {
+                        currentTrigger = null;
+                        currentCombat = new CombatBlock { note = note };
+                        parsed.CombatBlocks.Add(currentCombat);
+                    }
+                    else if (tag == "trigger")
+                    {
+                        if (currentCombat == null)
+                        {
+                            currentCombat = new CombatBlock();
+                            parsed.CombatBlocks.Add(currentCombat);
+                        }
+                        currentTrigger = new TriggerBlock { condition = note };
+                        currentCombat.triggers.Add(currentTrigger);
+                    }
+                    else if (tag == "trigger end")
+                    {
+                        if (currentTrigger != null) currentTrigger.endAction = note;
+                        currentTrigger = null;
+                    }
+                    else if (tag == "ck")
+                    {
+                        if (currentTrigger != null && ShouldEndTriggerAtCheckpoint(currentTrigger))
+                        {
+                            currentTrigger.endAction = string.IsNullOrWhiteSpace(currentTrigger.endAction)
+                                ? "không hiện win/lose panel. quay trở về story panel và tiếp tục tuyến truyện"
+                                : currentTrigger.endAction;
+                            currentTrigger = null;
+                            currentCombat = null;
+                        }
+                    }
                     continue;
                 }
 
                 var match = SpeakerLine.Match(line);
-                if (match.Success && IsKnownSpeaker(match.Groups["speaker"].Value))
+                if (match.Success)
                 {
                     FlushSpeech();
                     FlushSceneText();
@@ -498,23 +655,39 @@ namespace BES.UI.Menu
                     continue;
                 }
 
-                if (!string.IsNullOrEmpty(pendingSpeaker))
+                var clean = CleanLine(line);
+                var quoted = IsQuotedLine(line);
+                if (!string.IsNullOrEmpty(pendingSpeaker) && quoted)
                 {
-                    AppendLine(speech, CleanLine(line));
+                    AppendLine(speech, clean);
                     continue;
                 }
 
-                AppendLine(sceneText, CleanLine(line));
+                if (!string.IsNullOrEmpty(pendingSpeaker) && !quoted)
+                    FlushSpeech();
+
+                AppendLine(sceneText, clean);
             }
 
             FlushSpeech();
             FlushSceneText();
-            return beats;
+            foreach (var beat in parsed.IntroBeats) parsed.AllBeats.Add(beat);
+            foreach (var beat in parsed.PreBattleBeats) parsed.AllBeats.Add(beat);
+            foreach (var combat in parsed.CombatBlocks)
+            {
+                foreach (var beat in combat.startBeats) parsed.AllBeats.Add(beat);
+                foreach (var trigger in combat.triggers)
+                    foreach (var beat in trigger.beats)
+                        parsed.AllBeats.Add(beat);
+            }
+            foreach (var beat in parsed.VictoryBeats) parsed.AllBeats.Add(beat);
+            return parsed;
 
             void FlushSpeech()
             {
                 if (string.IsNullOrEmpty(pendingSpeaker) || speech.Length == 0) return;
-                beats.Add(CreateBeat(pendingSpeaker, speech.ToString(), false, background, profiles, leftFallback, rightFallback));
+                var beat = CreateBeat(pendingSpeaker, speech.ToString(), false, background, profiles, leftFallback, rightFallback);
+                CurrentTarget().Add(beat);
                 pendingSpeaker = null;
                 speech.Clear();
             }
@@ -522,9 +695,246 @@ namespace BES.UI.Menu
             void FlushSceneText()
             {
                 if (sceneText.Length == 0) return;
-                beats.Add(CreateBeat(string.Empty, sceneText.ToString(), true, background, profiles, leftFallback, rightFallback));
+                var beat = CreateBeat(string.Empty, sceneText.ToString(), true, background, profiles, leftFallback, rightFallback);
+                CurrentTarget().Add(beat);
                 sceneText.Clear();
             }
+        }
+
+        static void ApplyCombatBlocks(StageEntry stage, ParsedStory parsed, MenuContentDatabase database)
+        {
+            stage.combatDialogueTriggers ??= new List<CombatDialogueTrigger>();
+            stage.combatDialogueTriggers.Clear();
+            stage.battlePhases ??= new List<BattlePhaseEntry>();
+            stage.battlePhases.Clear();
+
+            if (parsed == null || parsed.CombatBlocks.Count == 0)
+            {
+                stage.enemies ??= new List<BattleUnitDefinition>();
+                stage.enemies.Clear();
+                stage.boss = null;
+                return;
+            }
+
+            for (var i = 0; i < parsed.CombatBlocks.Count; i++)
+            {
+                var block = parsed.CombatBlocks[i];
+                var hasSummonBoss = ContainsAny(block.note, "boss tên là nephkar", "nephkar");
+                var phase = new BattlePhaseEntry
+                {
+                    id = $"chapter_1_scene_1_phase_{i + 1}",
+                    title = i == 0 ? "Ma vật trong rừng" : $"Combat {i + 1}",
+                    description = block.note,
+                    enemyLevel = Mathf.Max(1, stage.enemyLevel),
+                    allies = BuildFixedAllies(block.note, database),
+                    enemies = hasSummonBoss
+                        ? BuildEnemies(block.note, 2)
+                        : BuildEnemies(block.note, Mathf.Max(1, InferEnemyCount(block.note, i == 0 ? 4 : 4))),
+                    boss = hasSummonBoss ? BuildBoss("Nephkar") : null,
+                    combatDialogueTriggers = new List<CombatDialogueTrigger>()
+                };
+
+                if (block.startBeats.Count > 0)
+                {
+                    phase.combatDialogueTriggers.Add(new CombatDialogueTrigger
+                    {
+                        id = $"{phase.id}_start",
+                        triggerType = CombatDialogueTriggerType.PhaseStart,
+                        pauseCombat = true,
+                        dialogue = new DialogueSequence
+                        {
+                            id = $"{phase.id}_start_dialogue",
+                            title = "Combat - Mở đầu",
+                            summary = block.note,
+                            beats = block.startBeats
+                        }
+                    });
+                }
+
+                for (var j = 0; j < block.triggers.Count; j++)
+                {
+                    var triggerBlock = block.triggers[j];
+                    if (triggerBlock.beats.Count == 0) continue;
+                    phase.combatDialogueTriggers.Add(BuildCombatTrigger(phase.id, j, triggerBlock, i, parsed.CombatBlocks.Count));
+                }
+
+                stage.battlePhases.Add(phase);
+            }
+
+            var firstPhase = stage.battlePhases[0];
+            stage.enemies = firstPhase.enemies;
+            stage.boss = firstPhase.boss;
+        }
+
+        static List<BattleUnitDefinition> BuildFixedAllies(string note, MenuContentDatabase database)
+        {
+            var allies = new List<BattleUnitDefinition>();
+            if (ContainsAny(note, "elio", "chọn sẵn"))
+                allies.Add(CharacterToBattleDefinition(database, "Elio", "elio_story_guest", "Elio"));
+            if (ContainsAny(note, "lunen"))
+                allies.Add(CharacterToBattleDefinition(database, "Lunen", "lunen_story_guest", "Lunen"));
+            if (ContainsAny(note, "khepraen"))
+                allies.Add(CharacterToBattleDefinition(database, "Khepraen", "khepraen_story_guest", "Khepraen"));
+            return allies;
+        }
+
+        static BattleUnitDefinition CharacterToBattleDefinition(MenuContentDatabase database, string characterName, string fallbackId, string fallbackName)
+        {
+            var character = database?.characters?.Find(x =>
+                string.Equals(x.id, characterName, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(x.displayName, characterName, StringComparison.OrdinalIgnoreCase));
+            return new BattleUnitDefinition
+            {
+                id = !string.IsNullOrWhiteSpace(character?.id) ? character.id : fallbackId,
+                displayName = !string.IsNullOrWhiteSpace(character?.displayName) ? character.displayName : fallbackName,
+                portrait = character?.portrait,
+                battlefieldSprite = character?.chibi != null ? character.chibi : character?.portrait,
+                maxHealth = Mathf.Max(1, character?.maxHealth ?? 140),
+                attack = Mathf.Max(1, character?.attack ?? 18),
+                isRanged = character?.attributes != null && (character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa")),
+                skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
+            };
+        }
+
+        static List<BattleUnitDefinition> BuildEnemies(string note, int count)
+        {
+            var result = new List<BattleUnitDefinition>();
+            for (var i = 0; i < count; i++)
+            {
+                result.Add(new BattleUnitDefinition
+                {
+                    id = $"chapter_1_ma_vat_{i + 1}",
+                    displayName = "Ma Vật Truy Sát",
+                    maxHealth = 90,
+                    attack = 12,
+                    skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
+                });
+            }
+            return result;
+        }
+
+        static BattleUnitDefinition BuildBoss(string displayName)
+        {
+            var id = NormalizeCharacterId(displayName);
+            return new BattleUnitDefinition
+            {
+                id = string.IsNullOrWhiteSpace(id) ? "story_boss" : id,
+                displayName = displayName,
+                maxHealth = 260,
+                attack = 1,
+                defense = 8,
+                speed = 12,
+                skills = new List<BattleSkillDefinition>
+                {
+                    new BattleSkillDefinition { id = "summon", displayName = "Triệu Hồi", powerMultiplier = 0.1f }
+                }
+            };
+        }
+
+        static CombatDialogueTrigger BuildCombatTrigger(string phaseId, int index, TriggerBlock block, int phaseIndex, int phaseCount)
+        {
+            var condition = block.condition ?? string.Empty;
+            var action = block.endAction ?? string.Empty;
+            var trigger = new CombatDialogueTrigger
+            {
+                id = $"{phaseId}_trigger_{index + 1}",
+                triggerType = InferTriggerType(condition),
+                round = InferRound(condition),
+                healthPercent = InferPercent(condition),
+                enemyCount = InferEnemyCount(condition, 0),
+                pauseCombat = true,
+                actionAfterDialogue = InferTriggerAction(action, phaseIndex, phaseCount),
+                dialogue = new DialogueSequence
+                {
+                    id = $"{phaseId}_trigger_{index + 1}_dialogue",
+                    title = $"Combat - {condition}",
+                    summary = action,
+                    beats = block.beats
+                }
+            };
+            return trigger;
+        }
+
+        static CombatDialogueTriggerType InferTriggerType(string condition)
+        {
+            if (ContainsAny(condition, "combat kết thúc", "kết thúc combat", "win", "thắng", "hết enemy", "hết quái"))
+                return CombatDialogueTriggerType.PhaseVictory;
+            if (ContainsAny(condition, "ngay khi kết thúc hoạt ảnh", "kết thúc hoạt ảnh", "ánh sáng đỏ bên trên"))
+                return CombatDialogueTriggerType.PhaseVictory;
+            if (ContainsAny(condition, "đòn đầu tiên", "đánh xong đòn đầu", "toàn bộ đánh xong"))
+                return CombatDialogueTriggerType.RoundStart;
+            if (ContainsAny(condition, "quái con chết", "quái con được triệu hồi bị tiêu diệt", "quái được triệu hồi đã tiêu diệt"))
+                return CombatDialogueTriggerType.EnemyCountAtOrBelow;
+            if (ContainsAny(condition, "còn") && ContainsAny(condition, "enemy", "quái", "ma vật"))
+                return CombatDialogueTriggerType.EnemyCountAtOrBelow;
+            if (ContainsAny(condition, "%", "phần trăm", "nửa máu", "nửa hp", "half hp"))
+                return ContainsAny(condition, "tổng", "toàn bộ", "enemy", "quái", "ma vật")
+                    ? CombatDialogueTriggerType.TotalEnemyHealthBelowPercent
+                    : CombatDialogueTriggerType.BossHealthBelowPercent;
+            if (ContainsAny(condition, "round", "lượt"))
+                return CombatDialogueTriggerType.RoundStart;
+            return CombatDialogueTriggerType.PhaseStart;
+        }
+
+        static CombatTriggerActionType InferTriggerAction(string action, int phaseIndex, int phaseCount)
+        {
+            if (ContainsAny(action, "giết tất cả enemy", "giết toàn bộ enemy", "giết tất cả quái", "giết toàn bộ quái", "không hiện win/lose", "thực hiện trigger tiếp theo"))
+                return CombatTriggerActionType.KillAllEnemiesAndPlayPhaseVictory;
+            if (ContainsAny(action, "kéo xuống còn 10% hp", "xuống còn 10%hp", "10% hp", "10%hp"))
+                return CombatTriggerActionType.SetElioHealthToTenPercentAndPlayPhaseVictory;
+            if (ContainsAny(action, "hồi hp của elio lên 35%", "hồi hp elio lên 35%", "35%"))
+                return CombatTriggerActionType.HealElioToThirtyFivePercent;
+            if (ContainsAny(action, "đồng minh mới là aurelian", "aurelian trong team", "aurelian"))
+                return CombatTriggerActionType.AddAurelianAlly;
+            if (ContainsAny(action, "không cần hiển thị win/lose", "không hiện win/lose", "quay trở về story panel"))
+                return CombatTriggerActionType.ReturnToStoryWithoutResult;
+            var convert = ContainsAny(action, "về đội", "vào đội", "đồng hành", "chuyển phe");
+            var nextPhase = ContainsAny(action, "combat tiếp", "combat lần", "phase", "trận tiếp", "tiếp tục combat mới");
+            if (!nextPhase && phaseIndex + 1 < phaseCount && convert) nextPhase = true;
+            if (convert && nextPhase) return CombatTriggerActionType.ConvertUnitToAllyAndStartNextPhase;
+            if (convert) return CombatTriggerActionType.ConvertUnitToAlly;
+            if (nextPhase) return CombatTriggerActionType.StartNextPhase;
+            return CombatTriggerActionType.None;
+        }
+
+        static int InferRound(string text)
+        {
+            if (ContainsAny(text, "đòn đầu tiên", "đánh xong đòn đầu", "toàn bộ đánh xong"))
+                return 2;
+            var match = Regex.Match(text ?? string.Empty, @"(?:round|lượt)\s*(\d+)", RegexOptions.IgnoreCase);
+            return match.Success && int.TryParse(match.Groups[1].Value, out var value) ? Mathf.Max(1, value) : 1;
+        }
+
+        static bool ShouldEndTriggerAtCheckpoint(TriggerBlock trigger)
+        {
+            if (trigger == null) return false;
+            return ContainsAny(trigger.condition, "trận đấu kết thúc") && trigger.beats.Count > 0;
+        }
+
+        static int InferEnemyCount(string text, int fallback)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return fallback;
+            if (ContainsAny(text, "2 con quái con chết", "2 con quái con được triệu hồi bị tiêu diệt", "2 con quái được triệu hồi đã tiêu diệt"))
+                return 1;
+            var match = Regex.Match(text, @"(?:còn|có)\s*(\d+)\s*(?:con\s*)?(?:enemy|quái|ma vật)", RegexOptions.IgnoreCase);
+            if (!match.Success) match = Regex.Match(text, @"\d+\s*v\s*(\d+)", RegexOptions.IgnoreCase);
+            return match.Success && int.TryParse(match.Groups[1].Value, out var value) ? Mathf.Max(0, value) : fallback;
+        }
+
+        static int InferPercent(string text)
+        {
+            if (ContainsAny(text, "nửa máu", "nửa hp", "half hp")) return 50;
+            var match = Regex.Match(text ?? string.Empty, @"(\d+)\s*%");
+            return match.Success && int.TryParse(match.Groups[1].Value, out var value) ? Mathf.Clamp(value, 1, 100) : 50;
+        }
+
+        static bool ContainsAny(string text, params string[] needles)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return false;
+            foreach (var needle in needles)
+                if (!string.IsNullOrWhiteSpace(needle) && text.IndexOf(needle, StringComparison.OrdinalIgnoreCase) >= 0)
+                    return true;
+            return false;
         }
 
         static DialogueBeat CreateBeat(
@@ -614,7 +1024,6 @@ namespace BES.UI.Menu
             return null;
         }
 
-        static bool IsKnownSpeaker(string speaker) => KnownSpeakers.Contains(NormalizeSpeaker(speaker));
         static bool IsDivider(string line) => line.StartsWith("___", StringComparison.Ordinal) || line == " ";
         static bool IsLeftSpeaker(string speaker) => string.Equals(speaker, "Lunen", StringComparison.OrdinalIgnoreCase) || string.Equals(speaker, "Tinh Linh", StringComparison.OrdinalIgnoreCase);
 
@@ -634,6 +1043,14 @@ namespace BES.UI.Menu
         static string CleanLine(string line)
         {
             return line.Trim().Trim('“', '”', '"').Trim();
+        }
+
+        static bool IsQuotedLine(string line)
+        {
+            if (string.IsNullOrWhiteSpace(line)) return false;
+            line = line.Trim();
+            return (line.StartsWith("\"", StringComparison.Ordinal) && line.EndsWith("\"", StringComparison.Ordinal)) ||
+                   (line.StartsWith("“", StringComparison.Ordinal) && line.EndsWith("”", StringComparison.Ordinal));
         }
 
         static void AppendLine(StringBuilder builder, string line)

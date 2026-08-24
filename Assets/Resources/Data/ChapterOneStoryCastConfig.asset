@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8897f6ea3d404554b8282c0d6a6c9d31, type: 3}
   m_Name: ChapterOneStoryCastConfig
   m_EditorClassIdentifier: 
-  autoGenerateChapterFromTextFiles: 0
+  autoGenerateChapterFromTextFiles: 1
   characterProfiles: []
   beatOverrides: []
