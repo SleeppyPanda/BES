@@ -18,28 +18,7 @@ namespace BES.UI.Menu
             "Main Story/Chương 2 cảnh 3",
             "Main Story/Chương 2 cảnh 4",
             "Main Story/Chương 2 cảnh 5",
-            "Main Story/Chương 2 cảnh 6",
-            "Main Story/Chương 2 cảnh 7",
-            "Main Story/Chương 2 cảnh 8",
-            "Main Story/Chương 2 cảnh 9",
-            "Main Story/Chương 2 cảnh 10",
-            "Main Story/Chương 2 cảnh 11",
-            "Main Story/Chương 2 cảnh 12",
-            "Main Story/Chương 2 cảnh 13",
-            "Main Story/Chương 2 cảnh 14",
-            "Main Story/Chương 2 cảnh 15",
-            "Main Story/Chương 2 cảnh 16",
-            "Main Story/Chương 2 cảnh 17",
-            "Main Story/Chương 2 cảnh 18",
-            "Main Story/Chương 2 cảnh 19",
-            "Main Story/Chương 2 cảnh 20",
-            "Main Story/Chương 2 cảnh 21",
-            "Main Story/Chương 2 cảnh 22",
-            "Main Story/Chương 2 cảnh 23",
-            "Main Story/Chương 2 cảnh 24",
-            "Main Story/Chương 2 cảnh 25",
-            "Main Story/Chương 2 cảnh 26",
-            "Main Story/Chương 2 cảnh 27"
+            "Main Story/Chương 2 cảnh 6"
         };
         const string GenericCastConfigResourcePath = "Data/StoryCastConfig";
 
@@ -98,7 +77,7 @@ namespace BES.UI.Menu
             }
             if (parsedScenes.Count == 0) return database;
 
-            chapter.title = "Chương 2 - Khúc Ca Của Bão Tốt";
+            chapter.title = "Chương 2 — Khúc Ca Của Bão Tố";
             chapter.summary = "Lunen rời Akherat đi qua vùng hoang mạc Tây, chạm trán đoàn thương nhân Rihara và đến thung lũng gió Talvera. Tại đây họ bị cuốn vào mâu thuẫn bão tố của Tộc Bão Gió và đối diện linh thú Vorash.";
 
             chapter.introDialogue = new DialogueSequence
@@ -159,7 +138,7 @@ namespace BES.UI.Menu
             stage.victoryDialogue = new DialogueSequence
             {
                 id = $"chapter_2_stage_{sceneNumber}_after",
-                title = $"Sau cảnh {sceneNumber}",
+                title = $"Sau phần {sceneNumber}",
                 summary = stage.description,
                 beats = parsed.VictoryBeats
             };
@@ -169,20 +148,30 @@ namespace BES.UI.Menu
 
         static string SceneTitle(int sceneIndex)
         {
-            if (sceneIndex >= 0 && sceneIndex < 5)
-                return $"Ốc đảo Tây - Phần {sceneIndex + 1}";
-            if (sceneIndex >= 5 && sceneIndex < 17)
-                return $"Thung lũng Talvera - Phần {sceneIndex - 4}";
-            return $"Vorash Bão Tố - Phần {sceneIndex - 16}";
+            switch (sceneIndex)
+            {
+                case 0: return "Phần I — Người Lữ Hành Giữa Sa Mạc";
+                case 1: return "Phần II — Nơi Ngọn Gió Gọi Là Nhà";
+                case 2: return "Phần III — Bóng Tối Phía Sau Cơn Bão";
+                case 3: return "Phần IV — Ba Chìa Khóa Của Lời Nguyện Ước";
+                case 4: return "Phần V — Ngọn Gió Cuối Cùng";
+                case 5: return "Phần VI — Lời Chúc Của Ngọn Gió";
+                default: return $"Phần {sceneIndex + 1}";
+            }
         }
 
         static string SceneDescription(int sceneIndex)
         {
-            if (sceneIndex >= 0 && sceneIndex < 5)
-                return "Hành trình lạc lối giữa sa mạc phía Tây, chạm trán với toán cướp ốc đảo và Lila.";
-            if (sceneIndex >= 5 && sceneIndex < 17)
-                return "Đặt chân tới Talvera, làm quen với Seyran và Mireya, chuẩn bị phòng vệ chống lại Tộc Bão Gió.";
-            return "Trận chiến quyết định chống lại linh thú Vorash bão tố cổ đại tại tâm bão Talvera.";
+            switch (sceneIndex)
+            {
+                case 0: return "Hành trình lạc lối sa mạc Tây, gặp gỡ Lila và đoàn thương nhân Rihara.";
+                case 1: return "Đặt chân tới Talvera, làm quen với Seyran và Mireya.";
+                case 2: return "Bất ổn dâng cao quanh Talvera, âm mưu của Kharzek và Tộc Bão Gió.";
+                case 3: return "Nayel tiến sát vùng đất thiêng để thực hiện nghi thức thức tỉnh linh thú.";
+                case 4: return "Chiến đấu chống lại linh thú Vorash bão tố cổ đại tại tâm bão.";
+                case 5: return "Sau cơn bão, khôi phục Talvera và chuẩn bị hành trình mới.";
+                default: return string.Empty;
+            }
         }
 
         static void ApplyCombatBlocks(StageEntry stage, ParsedStory parsed, MenuContentDatabase database)
