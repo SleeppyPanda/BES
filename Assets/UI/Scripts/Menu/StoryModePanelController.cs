@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BES.Core;
 using TMPro;
@@ -77,6 +77,9 @@ namespace BES.UI.Menu
         [SerializeField] TMP_Text selectionRequirementText;
         [SerializeField] List<StoryRosterCardBinding> rosterCards = new();
         [SerializeField] List<StoryPartySlotBinding> selectionSlots = new();
+        [Header("Chapter navigation")]
+        [SerializeField] Button nextChapterButton;
+        [SerializeField] Button prevChapterButton;
 
         [SerializeField] UnityEvent<List<string>> onPartyConfirmed;
 
@@ -91,6 +94,13 @@ namespace BES.UI.Menu
         public StoryPartyPhase Phase => phase;
         public IReadOnlyList<CharacterEntry> SelectedParty => selectedParty;
 
+        void ApplyStoryRuntime(int index)
+        {
+            if (index == 0)
+                database = ChapterOneStoryRuntime.Apply(database);
+            else if (index == 1)
+                database = ChapterTwoStoryRuntime.Apply(database);
+        }
         void Awake()
         {
             EnsureFixedPartySlots();
@@ -98,20 +108,28 @@ namespace BES.UI.Menu
             HideLegacyStoryProgressUi();
             BindButtons();
             database = ChapterOneStoryRuntime.Apply(database);
+            database = ChapterTwoStoryRuntime.Apply(database);
             SelectChapter(chapterIndex);
             ShowPhase(StoryPartyPhase.Main);
         }
-
         void OnEnable()
         {
+            if (!Application.isPlaying) return;
             EnsureDialogueUI();
             EnsureSelectionSlotBindings();
             HideLegacyStoryProgressUi();
             database = ChapterOneStoryRuntime.Apply(database);
-            LoadStoryState();
+            database = ChapterTwoStoryRuntime.Apply(database);
+            
+            var save = GameManager.Instance?.Save?.Current;
+            if (save != null)
+            {
+                chapterIndex = Mathf.Clamp(save.storyChapterIndex, 0, database.storyChapters.Count - 1);
+            }
+            
             SelectChapter(chapterIndex);
             TryPlayChapterIntro();
-            RefreshAll();
+            ShowPhase(StoryPartyPhase.Main);
         }
 
         void BindButtons()
@@ -125,6 +143,8 @@ namespace BES.UI.Menu
             Add(sortConstellationButton, () => SetRosterSortMode(StoryRosterSortMode.Constellation));
             Add(sortQualityButton, () => SetRosterSortMode(StoryRosterSortMode.Quality));
             Add(sortRequiredCharacterButton, () => SetRosterSortMode(StoryRosterSortMode.RequiredCharacter));
+            Add(nextChapterButton, NextChapter);
+            Add(prevChapterButton, PrevChapter);
 
             for (var i = 0; i < rosterCards.Count; i++)
             {
@@ -176,11 +196,63 @@ namespace BES.UI.Menu
         {
             if (database == null || database.storyChapters.Count == 0) return;
             database = ChapterOneStoryRuntime.Apply(database);
-            chapterIndex = Mathf.Clamp(index, 0, database.storyChapters.Count - 1);
+            database = ChapterTwoStoryRuntime.Apply(database);
+            
+            var newChapterIndex = Mathf.Clamp(index, 0, database.storyChapters.Count - 1);
+
+            // Save old chapter progress ONLY if we are actually switching chapters!
+            if (newChapterIndex != chapterIndex)
+            {
+                PlayerPrefs.SetString($"StoryActiveStageId_{chapterIndex}", currentStageId);
+                PlayerPrefs.Save();
+            }
+
+            chapterIndex = newChapterIndex;
+            ApplyStoryRuntime(chapterIndex);
+
+            // Load progress for the new chapter (with fallback to active save for migration)
+            if (PlayerPrefs.HasKey($"StoryActiveStageId_{chapterIndex}"))
+            {
+                currentStageId = PlayerPrefs.GetString($"StoryActiveStageId_{chapterIndex}");
+            }
+            else
+            {
+                var save = GameManager.Instance?.Save?.Current;
+                if (save != null && save.storyChapterIndex == chapterIndex && !string.IsNullOrWhiteSpace(save.activeStoryStageId))
+                {
+                    currentStageId = save.activeStoryStageId;
+                }
+                else
+                {
+                    currentStageId = string.Empty;
+                }
+                PlayerPrefs.SetString($"StoryActiveStageId_{chapterIndex}", currentStageId);
+                PlayerPrefs.Save();
+            }
+
+            EnsureCurrentStageId();
+
+            // Sync with save data
+            var saveObj = GameManager.Instance?.Save?.Current;
+            if (saveObj != null)
+            {
+                saveObj.storyChapterIndex = chapterIndex;
+                saveObj.activeStoryStageId = currentStageId;
+                saveObj.storyStageIndex = CurrentStageOrdinal();
+            }
+            GameManager.Instance?.SaveGame();
+
+            if (saveObj != null)
+            {
+                RestoreSavedStoryParty(saveObj.storyPartyCharacterIds);
+            }
+            AlignPartyWithFixedAllies();
+
             var chapter = database.storyChapters[chapterIndex];
             foreach (var title in chapterTitles) if (title != null) title.text = chapter.title;
             foreach (var summary in chapterSummaries) if (summary != null) summary.text = chapter.summary;
-            EnsureCurrentStageId();
+            RefreshChapterButtons();
+            RefreshAll();
         }
 
         public void ShowPhase(StoryPartyPhase next)
@@ -275,17 +347,21 @@ namespace BES.UI.Menu
         void CompleteStoryOnlyStage()
         {
             CompleteStoryBattle();
+            SelectChapter(chapterIndex);
             ShowPhase(StoryPartyPhase.Main);
             RefreshAll();
         }
 
         void TryPlayChapterIntro()
         {
-            if (playChapterIntroOnce && chapterIntroPlayed) return;
+            if (playChapterIntroOnce && (chapterIntroPlayed || PlayerPrefs.GetInt($"ChapterIntroPlayed_{chapterIndex}", 0) == 1)) return;
             if (database == null || database.storyChapters.Count == 0 || storyDialogueUI == null) return;
             var chapter = database.storyChapters[Mathf.Clamp(chapterIndex, 0, database.storyChapters.Count - 1)];
             if (chapter?.introDialogue == null || chapter.introDialogue.beats.Count == 0) return;
+            
             chapterIntroPlayed = true;
+            PlayerPrefs.SetInt($"ChapterIntroPlayed_{chapterIndex}", 1);
+            PlayerPrefs.Save();
             storyDialogueUI.Play(chapter.introDialogue);
         }
 
@@ -357,6 +433,10 @@ namespace BES.UI.Menu
                 save.activeStoryStageId = CurrentStage()?.id ?? string.Empty;
             }
             GameManager.Instance?.SaveGame();
+
+            // Also save to PlayerPrefs persistently
+            PlayerPrefs.SetString($"StoryActiveStageId_{chapterIndex}", currentStageId);
+            PlayerPrefs.Save();
         }
 
         void SaveStoryState(StageEntry stage)
@@ -391,8 +471,35 @@ namespace BES.UI.Menu
             var chapter = CurrentChapter();
             if (chapter?.stages == null || chapter.stages.Count == 0) return;
             var current = CurrentStageOrdinal();
-            var next = Mathf.Min(current + 1, chapter.stages.Count - 1);
-            currentStageId = chapter.stages[next]?.id ?? currentStageId;
+            if (current < chapter.stages.Count - 1)
+            {
+                currentStageId = chapter.stages[current + 1]?.id ?? currentStageId;
+            }
+            else
+            {
+                // Transition to Chapter 2 automatically
+                if (database != null && chapterIndex < database.storyChapters.Count - 1)
+                {
+                    chapterIndex++;
+                    var nextChapter = database.storyChapters[chapterIndex];
+                    currentStageId = FirstStageId(nextChapter);
+                    
+                    var saveObj = GameManager.Instance?.Save?.Current;
+                    if (saveObj != null)
+                    {
+                        saveObj.storyChapterIndex = chapterIndex;
+                        saveObj.activeStoryStageId = currentStageId;
+                        saveObj.storyStageIndex = 0;
+                    }
+                    GameManager.Instance?.SaveGame();
+                    
+                    PlayerPrefs.SetString($"StoryActiveStageId_{chapterIndex}", currentStageId);
+                    PlayerPrefs.Save();
+
+                    chapterIntroPlayed = false;
+                    TryPlayChapterIntro();
+                }
+            }
         }
 
         int CurrentStageOrdinal()
@@ -406,7 +513,20 @@ namespace BES.UI.Menu
         List<string> CurrentIds()
         {
             var result = new List<string>();
-            foreach (var character in selectedParty) if (character != null) result.Add(character.id);
+            var stage = CurrentStage();
+            var fixedCount = 0;
+            if (stage != null && StageHasCombat(stage) && stage.battlePhases != null && stage.battlePhases.Count > 0 && stage.battlePhases[0]?.allies != null)
+            {
+                fixedCount = stage.battlePhases[0].allies.Count;
+            }
+
+            for (var i = 0; i < selectedParty.Count; i++)
+            {
+                if (i >= fixedCount && selectedParty[i] != null)
+                {
+                    result.Add(selectedParty[i].id);
+                }
+            }
             return result;
         }
 
@@ -424,6 +544,7 @@ namespace BES.UI.Menu
             RefreshStoryRequirementImages();
             var status = BuildRequirementStatus();
             if (selectionRequirementText != null) selectionRequirementText.text = status;
+            RefreshChapterButtons();
         }
 
         void RefreshStoryRequirementImages()
@@ -474,7 +595,7 @@ namespace BES.UI.Menu
             foreach (var rect in GetComponentsInChildren<RectTransform>(true))
             {
                 if (rect == null) continue;
-                if (rect.name == "StoryProgress" || rect.name == "StoryProgressMarker")
+                if (rect.name == "StoryProgress" || rect.name == "StoryProgressMarker" || rect.name == "ProgressBar")
                     rect.gameObject.SetActive(false);
             }
         }
@@ -504,10 +625,22 @@ namespace BES.UI.Menu
 
         void RefreshSlots(List<StoryPartySlotBinding> slots)
         {
+            var stage = CurrentStage();
+            var fixedCount = 0;
+            if (stage != null && StageHasCombat(stage) && stage.battlePhases != null && stage.battlePhases.Count > 0 && stage.battlePhases[0]?.allies != null)
+            {
+                fixedCount = stage.battlePhases[0].allies.Count;
+            }
+
             for (var i = 0; i < slots.Count; i++)
             {
                 var character = i < selectedParty.Count ? selectedParty[i] : null;
                 Apply(slots[i], character);
+
+                if (slots[i].button != null)
+                {
+                    slots[i].button.interactable = (i >= fixedCount);
+                }
             }
         }
 
@@ -637,9 +770,59 @@ namespace BES.UI.Menu
 
         int AssignedCharacterCount()
         {
+            var stage = CurrentStage();
+            var fixedCount = 0;
+            if (stage != null && StageHasCombat(stage) && stage.battlePhases != null && stage.battlePhases.Count > 0 && stage.battlePhases[0]?.allies != null)
+            {
+                fixedCount = stage.battlePhases[0].allies.Count;
+            }
+
             var count = 0;
-            foreach (var character in selectedParty) if (character != null) count++;
+            for (var i = fixedCount; i < selectedParty.Count; i++)
+            {
+                if (selectedParty[i] != null) count++;
+            }
             return count;
+        }
+
+        void AlignPartyWithFixedAllies()
+        {
+            EnsureFixedPartySlots();
+            var stage = CurrentStage();
+            if (stage == null) return;
+
+            var fixedAllies = new List<CharacterEntry>();
+            if (StageHasCombat(stage) && stage.battlePhases != null && stage.battlePhases.Count > 0 && stage.battlePhases[0]?.allies != null)
+            {
+                foreach (var ally in stage.battlePhases[0].allies)
+                {
+                    if (ally == null) continue;
+                    var character = database?.FindCharacter(ally.id);
+                    if (character != null)
+                        fixedAllies.Add(character);
+                }
+            }
+
+            var fixedCount = fixedAllies.Count;
+            var userSelected = new List<CharacterEntry>();
+            foreach (var charEntry in selectedParty)
+            {
+                if (charEntry != null && !fixedAllies.Exists(x => string.Equals(x.id, charEntry.id, StringComparison.OrdinalIgnoreCase)))
+                    userSelected.Add(charEntry);
+            }
+
+            for (var i = 0; i < selectedParty.Count; i++)
+            {
+                if (i < fixedCount)
+                {
+                    selectedParty[i] = fixedAllies[i];
+                }
+                else
+                {
+                    var userIndex = i - fixedCount;
+                    selectedParty[i] = userIndex < userSelected.Count ? userSelected[userIndex] : null;
+                }
+            }
         }
 
         static void Apply(StoryPartySlotBinding slot, CharacterEntry character)
@@ -691,6 +874,36 @@ namespace BES.UI.Menu
                 image.color = color;
             }
             image.enabled = true;
+        }
+
+        void NextChapter()
+        {
+            if (database == null || chapterIndex >= database.storyChapters.Count - 1) return;
+            SelectChapter(chapterIndex + 1);
+            SaveStoryProgress();
+            chapterIntroPlayed = false;
+            TryPlayChapterIntro();
+        }
+
+        void PrevChapter()
+        {
+            if (chapterIndex <= 0) return;
+            SelectChapter(chapterIndex - 1);
+            SaveStoryProgress();
+            chapterIntroPlayed = false;
+            TryPlayChapterIntro();
+        }
+
+        void RefreshChapterButtons()
+        {
+            if (prevChapterButton != null)
+                prevChapterButton.gameObject.SetActive(chapterIndex > 0);
+            if (nextChapterButton != null)
+            {
+                bool hasNext = database != null && chapterIndex < database.storyChapters.Count - 1;
+                nextChapterButton.gameObject.SetActive(hasNext);
+                nextChapterButton.interactable = hasNext;
+            }
         }
     }
 }

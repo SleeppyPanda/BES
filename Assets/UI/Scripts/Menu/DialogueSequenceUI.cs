@@ -291,12 +291,6 @@ namespace BES.UI.Menu
 
         void ApplyCharacters(DialogueBeat beat)
         {
-            if (characterSlots.Count > 0)
-            {
-                ApplyCharacterSlots(beat);
-                return;
-            }
-
             ApplyLegacyCharacters(beat);
         }
 
@@ -855,27 +849,78 @@ namespace BES.UI.Menu
                 checkpointFadeGroup.blocksRaycasts = false;
                 checkpointFadeGroup.gameObject.SetActive(false);
             }
-            leftCharacter ??= CreateImage(transform, "LeftCharacter", Color.white, new Vector2(0f, 0f), new Vector2(0.45f, 1f), new Vector2(80f, 0f), new Vector2(-80f, 0f));
-            rightCharacter ??= CreateImage(transform, "RightCharacter", Color.white, new Vector2(0.55f, 0f), new Vector2(1f, 1f), new Vector2(80f, 0f), new Vector2(-80f, 0f));
+            if (leftCharacter == null)
+            {
+                leftCharacter = CreateImage(transform, "LeftCharacter", Color.white, new Vector2(0f, 0f), new Vector2(0.45f, 1f), new Vector2(80f, 0f), new Vector2(-80f, 0f));
+                leftCharacter.enabled = false;
+            }
+            if (rightCharacter == null)
+            {
+                rightCharacter = CreateImage(transform, "RightCharacter", Color.white, new Vector2(0.55f, 0f), new Vector2(1f, 1f), new Vector2(80f, 0f), new Vector2(-80f, 0f));
+                rightCharacter.enabled = false;
+            }
             leftGroup ??= leftCharacter.GetComponent<CanvasGroup>() ?? leftCharacter.gameObject.AddComponent<CanvasGroup>();
             rightGroup ??= rightCharacter.GetComponent<CanvasGroup>() ?? rightCharacter.gameObject.AddComponent<CanvasGroup>();
             if (characterSlots.Count == 0) CreateDefaultCharacterSlots();
 
-            var box = CreateImage(transform, "DialogueBox", new Color(0.93f, 0.88f, 0.78f, 0.96f), new Vector2(0.18f, 0.06f), new Vector2(0.82f, 0.24f), Vector2.zero, Vector2.zero);
-            var nameBox = CreateImage(transform, "NameBox", new Color(0.82f, 0.55f, 0.42f, 1f), new Vector2(0.21f, 0.22f), new Vector2(0.39f, 0.30f), Vector2.zero, Vector2.zero);
+            // if (characterSlots.Count > 0)
+            // {
+            //     if (leftCharacter != null) leftCharacter.enabled = false;
+            //     if (rightCharacter != null) rightCharacter.enabled = false;
+            // }
+
+            var boxTransform = transform.Find("DialogueBox");
+            Image box;
+            if (boxTransform != null)
+            {
+                box = boxTransform.GetComponent<Image>();
+            }
+            else
+            {
+                box = CreateImage(transform, "DialogueBox", new Color(0.93f, 0.88f, 0.78f, 0.96f), new Vector2(0.18f, 0.06f), new Vector2(0.82f, 0.24f), Vector2.zero, Vector2.zero);
+            }
+
+            var nameBoxTransform = transform.Find("NameBox");
+            Image nameBox;
+            if (nameBoxTransform != null)
+            {
+                nameBox = nameBoxTransform.GetComponent<Image>();
+            }
+            else
+            {
+                nameBox = CreateImage(transform, "NameBox", new Color(0.82f, 0.55f, 0.42f, 1f), new Vector2(0.21f, 0.22f), new Vector2(0.39f, 0.30f), Vector2.zero, Vector2.zero);
+            }
             speakerNameRoot ??= nameBox.gameObject;
 
-            speakerText ??= CreateText(nameBox.transform, "SpeakerText", "ALMA", 42f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
-            bodyText ??= CreateText(box.transform, "BodyText", string.Empty, 26f, FontStyles.Normal, TextAlignmentOptions.MidlineLeft, new Color(0.22f, 0.15f, 0.1f, 1f));
+            speakerText ??= nameBox.transform.Find("SpeakerText")?.GetComponent<TMP_Text>() ?? CreateText(nameBox.transform, "SpeakerText", "ALMA", 42f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
+            bodyText ??= box.transform.Find("BodyText")?.GetComponent<TMP_Text>() ?? CreateText(box.transform, "BodyText", string.Empty, 26f, FontStyles.Normal, TextAlignmentOptions.MidlineLeft, new Color(0.22f, 0.15f, 0.1f, 1f));
             var bodyRect = bodyText.rectTransform;
             bodyRect.anchorMin = new Vector2(0.08f, 0.18f);
             bodyRect.anchorMax = new Vector2(0.92f, 0.82f);
             bodyRect.offsetMin = Vector2.zero;
             bodyRect.offsetMax = Vector2.zero;
 
-            advanceButton ??= box.gameObject.AddComponent<Button>();
-            skipButton ??= CreateButton(transform, "SkipButton", "Skip", new Vector2(0.88f, 0.90f), new Vector2(0.98f, 0.98f));
-            skipConfirmation ??= CreateSkipConfirmation(transform);
+            advanceButton ??= box.gameObject.GetComponent<Button>() ?? box.gameObject.AddComponent<Button>();
+            
+            var skipButtonTransform = transform.Find("SkipButton");
+            if (skipButtonTransform != null)
+            {
+                skipButton ??= skipButtonTransform.GetComponent<Button>();
+            }
+            else
+            {
+                skipButton ??= CreateButton(transform, "SkipButton", "Skip", new Vector2(0.88f, 0.90f), new Vector2(0.98f, 0.98f));
+            }
+
+            var skipConfirmationTransform = transform.Find("SkipConfirmation");
+            if (skipConfirmationTransform != null)
+            {
+                skipConfirmation ??= skipConfirmationTransform.gameObject;
+            }
+            else
+            {
+                skipConfirmation ??= CreateSkipConfirmation(transform);
+            }
         }
 
         void CreateDefaultCharacterSlots()
@@ -939,7 +984,7 @@ namespace BES.UI.Menu
             text.fontStyle = style;
             text.alignment = alignment;
             text.color = color;
-            text.enableWordWrapping = true;
+            text.textWrappingMode = TextWrappingModes.Normal;
             return text;
         }
 

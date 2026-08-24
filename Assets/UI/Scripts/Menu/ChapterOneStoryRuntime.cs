@@ -26,9 +26,15 @@ namespace BES.UI.Menu
         };
         const string CastConfigResourcePath = "Data/ChapterOneStoryCastConfig";
 
-        static readonly Regex SpeakerLine = new(@"^\s*(?<speaker>.+?)\s*:\s*$", RegexOptions.Compiled);
+        static readonly Regex SpeakerLine = new(@"^\s*(?<speaker>[A-Za-zÀ-ỹ0-9?&\s]+)\s*:\s*(?<speech>.*)$", RegexOptions.Compiled);
         static readonly Regex TagLine = new(@"^\s*\[\s*(?<tag>combat|trigger|trigger end|ck)\s*\]\s*(?<note>.*)$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         static readonly Dictionary<MenuContentDatabase, MenuContentDatabase> RuntimeCopies = new();
+        static readonly HashSet<string> KnownSpeakers = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "???", "Lunen", "Tinh Linh", "Tinh linh", "Elio", "Rashad", "Aurelian",
+            "Sahure", "Nefru", "Bekhet", "Menkara", "Nephkar", "Khepraen",
+            "Ramesses", "Kasim", "Vezkara"
+        };
 
         public static MenuContentDatabase Apply(MenuContentDatabase database) => Apply(database, false);
 
@@ -352,7 +358,7 @@ namespace BES.UI.Menu
             var profiles = new Dictionary<string, RuntimeCharacterProfile>(StringComparer.OrdinalIgnoreCase);
 
             Add("Lunen", "Lunen", "lunen", leftFallback, true);
-            Add("Tinh Linh", "Tinh Linh", "tinh_linh", leftFallback, true);
+            Add("Tinh Linh", "Tinh Linh", "tinh_linh", rightFallback, false);
             Add("???", "???", "elio_unknown", ResolveCharacterSprite(database, "Elio", rightFallback), false);
 
             AddFromDatabase("Elio", false);
@@ -675,6 +681,11 @@ namespace BES.UI.Menu
                     FlushSpeech();
                     FlushSceneText();
                     pendingSpeaker = NormalizeSpeaker(match.Groups["speaker"].Value);
+                    var speechText = match.Groups["speech"].Value.Trim();
+                    if (!string.IsNullOrEmpty(speechText))
+                    {
+                        AppendLine(speech, CleanLine(speechText));
+                    }
                     continue;
                 }
 
@@ -1140,7 +1151,7 @@ namespace BES.UI.Menu
         }
 
         static bool IsDivider(string line) => line.StartsWith("___", StringComparison.Ordinal) || line == " ";
-        static bool IsLeftSpeaker(string speaker) => string.Equals(speaker, "Lunen", StringComparison.OrdinalIgnoreCase) || string.Equals(speaker, "Tinh Linh", StringComparison.OrdinalIgnoreCase);
+        static bool IsLeftSpeaker(string speaker) => string.Equals(speaker, "Lunen", StringComparison.OrdinalIgnoreCase);
 
         static string NormalizeSpeaker(string speaker)
         {

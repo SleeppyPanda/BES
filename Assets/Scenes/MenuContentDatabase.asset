@@ -3366,14 +3366,29 @@ MonoBehaviour:
         summary: "Lunen v\xE0 Elio t\u1EEB hi\u1EC3u l\u1EA7m ban \u0111\u1EA7u bu\u1ED9c
           ph\u1EA3i c\xF9ng chi\u1EBFn \u0111\u1EA5u khi ma v\u1EADt xu\u1EA5t hi\u1EC7n."
         beats:
-        - speaker: 
-          text: "Ch\u01B0\u01A1ng 1: Quest: Ng\u1ECDn L\u1EEDa D\u01B0\u1EDBi M\u1EB7t
-            Tr\u1EDDi Sa M\u1EA1c\nC\u1EA3nh 1: R\u1EEBng bi\xEAn gi\u1EDBi Akherat"
+        - speaker: "Ch\u01B0\u01A1ng 1"
+          text: "Quest: Ng\u1ECDn L\u1EEDa D\u01B0\u1EDBi M\u1EB7t Tr\u1EDDi Sa M\u1EA1c"
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
-          dimRight: 1
+          dimRight: 0
+          layoutMode: 0
+          instantLayout: 0
+          castActions: []
+          characterPlacements: []
+          characterMovements: []
+          characterVisuals: []
+          onBeatStarted:
+            m_PersistentCalls:
+              m_Calls: []
+        - speaker: "C\u1EA3nh 1"
+          text: "R\u1EEBng bi\xEAn gi\u1EDBi Akherat"
+          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          leftCharacter: {fileID: 0}
+          rightCharacter: {fileID: 0}
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -3489,8 +3504,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -3541,8 +3556,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -3591,8 +3606,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -3698,8 +3713,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -3931,8 +3946,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -4075,8 +4090,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -4125,8 +4140,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -4161,8 +4176,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -4177,8 +4192,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -4214,8 +4229,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -4272,8 +4287,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -4339,8 +4354,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -4390,8 +4405,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -4789,8 +4804,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -4868,8 +4883,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -4955,8 +4970,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -5304,13 +5319,13 @@ MonoBehaviour:
               onBeatStarted:
                 m_PersistentCalls:
                   m_Calls: []
-            - speaker: ...
-              text: "...v\u01B0\u01A1ng t\u1EED..."
+            - speaker: 
+              text: "...:\n...v\u01B0\u01A1ng t\u1EED..."
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
-              dimRight: 0
+              dimRight: 1
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -5337,13 +5352,13 @@ MonoBehaviour:
               onBeatStarted:
                 m_PersistentCalls:
                   m_Calls: []
-            - speaker: ...
-              text: "...truy s\xE1t... v\u01B0\u01A1ng t\u1EED..."
+            - speaker: 
+              text: "...:\n...truy s\xE1t... v\u01B0\u01A1ng t\u1EED..."
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
-              dimRight: 0
+              dimRight: 1
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -5370,13 +5385,13 @@ MonoBehaviour:
               onBeatStarted:
                 m_PersistentCalls:
                   m_Calls: []
-            - speaker: ...
-              text: "...v\u01B0\u01A1ng tri\u1EC1u... ph\u1EA3i ch\u1EBFt..."
+            - speaker: 
+              text: "...:\n...v\u01B0\u01A1ng tri\u1EC1u... ph\u1EA3i ch\u1EBFt..."
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
-              dimRight: 0
+              dimRight: 1
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -5952,8 +5967,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -6019,8 +6034,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -6223,8 +6238,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -6326,8 +6341,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -6524,8 +6539,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -6557,8 +6572,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -6687,8 +6702,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -6720,8 +6735,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -6801,8 +6816,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -6961,8 +6976,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -6994,8 +7009,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -7096,8 +7111,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -7244,15 +7259,29 @@ MonoBehaviour:
           Akherat, gi\u1EDBi thi\u1EC7u l\u1ECBch s\u1EED H\u1ECFa th\u1EA7n v\xE0
           h\xE9 l\u1ED9 s\u1EF1 c\u0103ng th\u1EB3ng trong cung."
         beats:
-        - speaker: 
-          text: "Ch\u01B0\u01A1ng 1: Quest: Ng\u1ECDn L\u1EEDa D\u01B0\u1EDBi M\u1EB7t
-            Tr\u1EDDi Sa M\u1EA1c\nC\u1EA3nh 2 : Con \u0111\u01B0\u1EDDng v\xE0o
-            Ho\xE0ng cung"
+        - speaker: "Ch\u01B0\u01A1ng 1"
+          text: "Quest: Ng\u1ECDn L\u1EEDa D\u01B0\u1EDBi M\u1EB7t Tr\u1EDDi Sa M\u1EA1c"
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
-          dimRight: 1
+          dimRight: 0
+          layoutMode: 0
+          instantLayout: 0
+          castActions: []
+          characterPlacements: []
+          characterMovements: []
+          characterVisuals: []
+          onBeatStarted:
+            m_PersistentCalls:
+              m_Calls: []
+        - speaker: "C\u1EA3nh 2"
+          text: "Con \u0111\u01B0\u1EDDng v\xE0o Ho\xE0ng cung"
+          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          leftCharacter: {fileID: 0}
+          rightCharacter: {fileID: 0}
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -7314,8 +7343,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -7347,8 +7376,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -7398,8 +7427,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -7517,8 +7546,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -7565,8 +7594,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8061,8 +8090,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8194,8 +8223,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8345,8 +8374,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8426,8 +8455,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8528,8 +8557,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8561,8 +8590,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8594,8 +8623,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8645,8 +8674,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8678,8 +8707,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8696,8 +8725,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8761,8 +8790,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -8890,8 +8919,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -9008,8 +9037,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -9134,8 +9163,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -9704,8 +9733,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -9928,8 +9957,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -9945,8 +9974,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -10069,14 +10098,29 @@ MonoBehaviour:
           di\u1EC7n ki\u1EBFn Aurelian v\xE0 ch\u1EE9ng ki\u1EBFn m\xE2u thu\u1EABn
           \xE2m \u1EC9 trong Akherat."
         beats:
-        - speaker: 
-          text: "Ch\u01B0\u01A1ng 1: Quest: Ng\u1ECDn L\u1EEDa D\u01B0\u1EDBi M\u1EB7t
-            Tr\u1EDDi Sa M\u1EA1c\nC\u1EA3nh 3: B\u1EEFa ti\u1EC7c ho\xE0ng gia"
+        - speaker: "Ch\u01B0\u01A1ng 1"
+          text: "Quest: Ng\u1ECDn L\u1EEDa D\u01B0\u1EDBi M\u1EB7t Tr\u1EDDi Sa M\u1EA1c"
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
-          dimRight: 1
+          dimRight: 0
+          layoutMode: 0
+          instantLayout: 0
+          castActions: []
+          characterPlacements: []
+          characterMovements: []
+          characterVisuals: []
+          onBeatStarted:
+            m_PersistentCalls:
+              m_Calls: []
+        - speaker: "C\u1EA3nh 3"
+          text: "B\u1EEFa ti\u1EC7c ho\xE0ng gia"
+          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          leftCharacter: {fileID: 0}
+          rightCharacter: {fileID: 0}
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -10161,8 +10205,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -10194,8 +10238,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -10271,8 +10315,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -10304,8 +10348,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -10336,8 +10380,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -10387,8 +10431,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -10419,8 +10463,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -10626,8 +10670,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -12068,8 +12112,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15026,15 +15070,29 @@ MonoBehaviour:
           g\u1EB7p Menkara v\xE0 ti\u1EBFp t\u1EE5c l\u1EA7n theo manh m\u1ED1i v\u1EC1
           chi\u1EBFc v\xF2ng."
         beats:
-        - speaker: 
-          text: "Ch\u01B0\u01A1ng 1: Quest: Ng\u1ECDn L\u1EEDa D\u01B0\u1EDBi M\u1EB7t
-            Tr\u1EDDi Sa M\u1EA1c\nC\u1EA3nh 4: C\xE2u chuy\u1EC7n c\u1EE7a ng\u1ECDn
-            l\u1EEDa ngo\u1EA1i lai"
+        - speaker: "Ch\u01B0\u01A1ng 1"
+          text: "Quest: Ng\u1ECDn L\u1EEDa D\u01B0\u1EDBi M\u1EB7t Tr\u1EDDi Sa M\u1EA1c"
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
-          dimRight: 1
+          dimRight: 0
+          layoutMode: 0
+          instantLayout: 0
+          castActions: []
+          characterPlacements: []
+          characterMovements: []
+          characterVisuals: []
+          onBeatStarted:
+            m_PersistentCalls:
+              m_Calls: []
+        - speaker: "C\u1EA3nh 4"
+          text: "C\xE2u chuy\u1EC7n c\u1EE7a ng\u1ECDn l\u1EEDa ngo\u1EA1i lai"
+          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          leftCharacter: {fileID: 0}
+          rightCharacter: {fileID: 0}
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15082,8 +15140,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15136,8 +15194,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15169,8 +15227,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15202,8 +15260,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15262,8 +15320,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15328,8 +15386,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15379,8 +15437,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15529,8 +15587,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15562,8 +15620,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15708,8 +15766,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15856,8 +15914,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15904,8 +15962,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -15970,8 +16028,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16002,8 +16060,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16136,8 +16194,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16168,8 +16226,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16218,8 +16276,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16290,8 +16348,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16322,8 +16380,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16355,8 +16413,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16420,8 +16478,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16453,8 +16511,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16485,8 +16543,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16535,8 +16593,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16568,8 +16626,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16699,8 +16757,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16763,8 +16821,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16795,8 +16853,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16843,8 +16901,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16891,8 +16949,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -16939,8 +16997,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -17234,8 +17292,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -17283,8 +17341,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -17399,8 +17457,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -17431,8 +17489,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -17463,8 +17521,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -17710,8 +17768,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -17858,8 +17916,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -17890,8 +17948,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -18334,8 +18392,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -18366,8 +18424,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -18436,8 +18494,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -18667,8 +18725,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -18731,8 +18789,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -18893,8 +18951,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -18941,8 +18999,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -19040,8 +19098,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -20501,8 +20559,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -20549,8 +20607,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -20635,8 +20693,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -20732,8 +20790,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -20765,8 +20823,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -20797,8 +20855,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -20846,8 +20904,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -20945,8 +21003,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -21074,8 +21132,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -21138,8 +21196,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -21390,8 +21448,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -21422,8 +21480,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -21504,8 +21562,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -21568,8 +21626,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -21664,8 +21722,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -21827,8 +21885,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -21939,8 +21997,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -22079,13 +22137,13 @@ MonoBehaviour:
           k\xEDch, Aurelian ra tay c\u1EE9u Elio r\u1ED3i nghi l\u1EC5 chuy\u1EC3n
           th\xE0nh bi\u1EBFn c\u1ED1 nguy hi\u1EC3m."
         beats:
-        - speaker: 
-          text: "C\u1EA3nh 5: \u0110\u1EA1i l\u1EC5 t\u1EBF tr\u1EDDi"
+        - speaker: "C\u1EA3nh 5"
+          text: "\u0110\u1EA1i l\u1EC5 t\u1EBF tr\u1EDDi"
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
-          dimRight: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -22144,8 +22202,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -22264,8 +22322,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -22355,8 +22413,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -22811,8 +22869,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -22910,8 +22968,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -23464,8 +23522,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -23673,8 +23731,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -25055,8 +25113,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -25695,8 +25753,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -25899,14 +25957,13 @@ MonoBehaviour:
           bi\u1EBFn c\u1ED1 Nephkar \u0111\u1EA9y ng\u1ECDn l\u1EEDa k\u1EBF v\u1ECB
           t\u1EDBi th\u1EED th\xE1ch sinh t\u1EED."
         beats:
-        - speaker: 
-          text: "C\u1EA3nh 6: Khi ng\u1ECDn l\u1EEDa kh\xF4ng c\xF2n s\u1EF1 b\u1EA3o
-            h\u1ED9"
+        - speaker: "C\u1EA3nh 6"
+          text: "Khi ng\u1ECDn l\u1EEDa kh\xF4ng c\xF2n s\u1EF1 b\u1EA3o h\u1ED9"
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
-          dimRight: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -26570,8 +26627,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -27164,8 +27221,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -27485,8 +27542,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -27518,8 +27575,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -27947,8 +28004,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -27979,8 +28036,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -28142,8 +28199,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -28385,8 +28442,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -29215,8 +29272,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -29348,8 +29405,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -29460,8 +29517,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -29492,8 +29549,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -30464,8 +30521,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -30562,8 +30619,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -30677,8 +30734,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -30760,8 +30817,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -32263,8 +32320,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -32295,8 +32352,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -32329,8 +32386,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -32377,8 +32434,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -33956,8 +34013,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -34286,8 +34343,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -34649,8 +34706,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -34681,8 +34738,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -35044,8 +35101,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -35515,8 +35572,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -37289,8 +37346,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -37436,8 +37493,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -38124,8 +38181,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -38156,8 +38213,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -38548,8 +38605,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -38596,8 +38653,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -38628,8 +38685,8 @@ MonoBehaviour:
               background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
-              dimLeft: 0
-              dimRight: 1
+              dimLeft: 1
+              dimRight: 0
               layoutMode: 0
               instantLayout: 0
               castActions: []
@@ -43798,14 +43855,14 @@ MonoBehaviour:
           Elio v\xE0 nh\u1EEFng ng\u01B0\u1EDDi b\u1EA1n m\u1EDBi, kh\xE9p l\u1EA1i
           ch\u01B0\u01A1ng \u0111\u1EA7u c\u1EE7a ng\u1ECDn l\u1EEDa sa m\u1EA1c."
         beats:
-        - speaker: 
-          text: "C\u1EA3nh 7: Mong ng\u1ECDn l\u1EEDa v\u0129nh h\u1EB1ng v\u0129nh
-            vi\u1EC5n b\u1EA3o h\u1ED9 ch\xFAng ta"
+        - speaker: "C\u1EA3nh 7"
+          text: "Mong ng\u1ECDn l\u1EEDa v\u0129nh h\u1EB1ng v\u0129nh vi\u1EC5n
+            b\u1EA3o h\u1ED9 ch\xFAng ta"
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
-          dimRight: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -43841,8 +43898,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -43909,8 +43966,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -43942,8 +43999,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -44041,8 +44098,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -44236,8 +44293,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -44269,8 +44326,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -44365,8 +44422,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -44563,8 +44620,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -44789,8 +44846,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -44837,8 +44894,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -45408,8 +45465,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -45585,8 +45642,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -45746,8 +45803,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -45794,8 +45851,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -46760,8 +46817,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -46792,8 +46849,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -46824,8 +46881,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -46872,8 +46929,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -47741,8 +47798,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -47790,8 +47847,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -47904,8 +47961,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []
@@ -48033,8 +48090,8 @@ MonoBehaviour:
           background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
-          dimLeft: 0
-          dimRight: 1
+          dimLeft: 1
+          dimRight: 0
           layoutMode: 0
           instantLayout: 0
           castActions: []

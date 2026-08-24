@@ -43,9 +43,19 @@ namespace BES.UI.Menu
             if (rosterToggleButton != null) rosterToggleButton.onClick.AddListener(ToggleRoster);
             if (startButton != null) startButton.onClick.AddListener(StartStory);
             if (backButton != null) backButton.onClick.AddListener(() => navigator?.Back());
+            database = ChapterOneStoryRuntime.Apply(database);
+            database = ChapterTwoStoryRuntime.Apply(database);
             BuildRoster();
             SelectChapter(0);
             RefreshParty();
+        }
+
+        void ApplyStoryRuntime(int index)
+        {
+            if (index == 0)
+                database = ChapterOneStoryRuntime.Apply(database);
+            else if (index == 1)
+                database = ChapterTwoStoryRuntime.Apply(database);
         }
 
         public void SelectChapter(int index)
@@ -53,6 +63,7 @@ namespace BES.UI.Menu
             if (database == null || database.storyChapters.Count == 0) return;
             database = ChapterOneStoryRuntime.Apply(database);
             chapterIndex = Mathf.Clamp(index, 0, database.storyChapters.Count - 1);
+            ApplyStoryRuntime(chapterIndex);
             var chapter = database.storyChapters[chapterIndex];
             if (chapterBackground != null) chapterBackground.sprite = chapter.background;
             if (chapterTitle != null) chapterTitle.text = chapter.title;

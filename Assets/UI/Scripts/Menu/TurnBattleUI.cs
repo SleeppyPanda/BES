@@ -1215,6 +1215,8 @@ namespace BES.UI.Menu
                 return;
 
             menuContentDatabase = ChapterOneStoryRuntime.Apply(menuContentDatabase);
+            if (ActiveStageId.StartsWith("chapter_2_", StringComparison.OrdinalIgnoreCase))
+                menuContentDatabase = ChapterTwoStoryRuntime.Apply(menuContentDatabase);
 
             currentStage = null;
             StageEntry stage = null;
