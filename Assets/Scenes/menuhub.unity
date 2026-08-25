@@ -5357,10 +5357,11 @@ MonoBehaviour:
     \u1ECA | O \xD3 \xD2 \u1ECE \xD5 \u1ECC \xD4 \u1ED0 \u1ED2 \u1ED4 \u1ED6 \u1ED8
     \u01A0 \u1EDA \u1EDC \u1EDE \u1EE0 \u1EE2\nU \xDA \xD9 \u1EE6 \u0168 \u1EE4 \u01AF
     \u1EE8 \u1EEA \u1EEC \u1EEE \u1EF0 | Y \xDD \u1EF2 \u1EF6 \u1EF8 \u1EF4 | \u0110
-    \u0111"
+    \u0111  a \u0103 \xE2 b c d \u0111 e \xEA g h i k l m n o \xF4 \u01A1 p q r s
+    t u \u01B0 v s y game vui nh\u01B0ng kh\xF4ng h\u1EC1 vui"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 714db48b82333e444b30fe203a9dd976, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: a7b84dceb885da84c91c7cde2ca81746, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5499,10 +5500,12 @@ MonoBehaviour:
     \xCA \u1EBE \u1EC0 \u1EC2 \u1EC4 \u1EC6\nI \xCD \xCC \u1EC8 \u0128 \u1ECA | O
     \xD3 \xD2 \u1ECE \xD5 \u1ECC \xD4 \u1ED0 \u1ED2 \u1ED4 \u1ED6 \u1ED8 \u01A0 \u1EDA
     \u1EDC \u1EDE \u1EE0 \u1EE2\nU \xDA \xD9 \u1EE6 \u0168 \u1EE4 \u01AF \u1EE8 \u1EEA
-    \u1EEC \u1EEE \u1EF0 | Y \xDD \u1EF2 \u1EF6 \u1EF8 \u1EF4 | \u0110 \u0111"
+    \u1EEC \u1EEE \u1EF0| Y \xDD \u1EF2 \u1EF6 \u1EF8 \u1EF4 | \u0110 \u0111 a \u0103
+    \xE2 b c d \u0111 e \xEA g h i k l m n o \xF4 \u01A1 p q r s t u \u01B0 v s y
+    game vui nh\u01B0ng kh\xF4ng h\u1EC1 vui "
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3741a0997c8e00b4db27511881a73174, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: ad7cfa3f9c9a38f4b8d4560a05c9211f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
