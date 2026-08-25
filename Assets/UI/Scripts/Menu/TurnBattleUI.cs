@@ -973,7 +973,7 @@ namespace BES.UI.Menu
             if (wallet != null)
             {
                 wallet.AddCoins(1000);
-                rewardsList.Add("+ 1000 VÃ ng");
+                rewardsList.Add("+ 1000 Vàng");
             }
 
             if (inventory != null)
@@ -1032,6 +1032,8 @@ namespace BES.UI.Menu
             {
                 HideSkills();
                 RefreshTurnOrder(true);
+                if (TryPlayCombatDialogue(CombatDialogueTriggerType.AllAlliesDefeated, null, 0, CompleteDefeat))
+                    return;
                 CompleteDefeat();
                 return;
             }
@@ -1444,7 +1446,8 @@ namespace BES.UI.Menu
                         ApplyPlaybackSpeed();
                     }
                     ApplyTriggerAction(trigger, unit);
-                    completed?.Invoke();
+                    if (trigger.actionAfterDialogue != CombatTriggerActionType.ReturnToStoryWithoutResult)
+                        completed?.Invoke();
                 });
                 return true;
             }

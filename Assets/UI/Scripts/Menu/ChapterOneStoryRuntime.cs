@@ -895,15 +895,13 @@ namespace BES.UI.Menu
 
         static BattleUnitDefinition BuildSmallEnemy(int index)
         {
-            var type = Mathf.Abs(index) % 4;
+            var type = Mathf.Abs(index) % 3;
             switch (type)
             {
                 case 0:
                     return NewEnemy($"chapter_1_cat_xoay_cat_{index + 1}", "Cát Xoáy Sa Mạc", "enemy_sand_random_5_percent", "Lao Tới", LoadEnemySprite("sprite-sheet-2frames (2).png"), 520, 90, 34, 13);
                 case 1:
                     return NewEnemy($"chapter_1_lua_linh_hon_{index + 1}", "Lửa Linh Hồn", "enemy_blue_heal_20_percent", "Hồi Máu Đồng Đội", LoadEnemySprite("sprite-sheet-2frames (3).png"), 620, 12, 45, 9);
-                case 2:
-                    return NewEnemy($"chapter_1_quan_tai_khien_{index + 1}", "Quan Tài Hộ Vệ", "enemy_coffin_shield_2000_once", "Tạo Khiên", LoadEnemySprite("sprite-sheet-2frames (4).png"), 760, 10, 80, 8);
                 default:
                     return NewEnemy($"chapter_1_thu_lua_nho_{index + 1}", "Thú Lửa Nhỏ", "enemy_fire_aoe_5_percent", "Lửa Lan", LoadEnemySprite("sprite-sheet-2frames (5).png"), 500, 82, 30, 12);
             }
@@ -1032,6 +1030,8 @@ namespace BES.UI.Menu
         {
             if (ContainsAny(condition, "combat ket thuc", "ket thuc combat", "win", "thang", "het enemy", "het quai"))
                 return CombatDialogueTriggerType.PhaseVictory;
+            if (ContainsAny(condition, "thua", "lose", "defeat", "that bai", "toan doi guc", "tat ca dong minh chet"))
+                return CombatDialogueTriggerType.AllAlliesDefeated;
             if (ContainsAny(condition, "ngay khi ket thuc hoat anh", "ket thuc hoat anh", "anh sang do ben tren"))
                 return CombatDialogueTriggerType.PhaseVictory;
             if (ContainsAny(condition, "don dau tien", "danh xong don dau", "toan bo danh xong"))

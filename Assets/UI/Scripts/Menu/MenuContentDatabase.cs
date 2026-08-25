@@ -105,7 +105,8 @@ namespace BES.UI.Menu
         TotalEnemyHealthBelowPercent,
         EnemyCountAtOrBelow,
         PhaseStart,
-        PhaseVictory
+        PhaseVictory,
+        AllAlliesDefeated
     }
 
     public enum CombatTriggerActionType
@@ -180,7 +181,7 @@ namespace BES.UI.Menu
                 sanctumStages.Add(CreateDefaultStage("play_sanctum_01", "Thánh Tích Vang Vọng", "Ải thánh tích với quái hỗ trợ và khống chế.", 3,
                     NewReward("artifact_shard", 3, 4),
                     NewReward("relic_exp_blue", 1, 4),
-                    NewEnemy("sarcophagus_guard", "Quan Tài Hộ Vệ", 760, 10, 80, 8),
+                    NewEnemy("sand_wisp_guard", "Cát Xoáy Sa Mạc", 680, 112, 44, 13),
                     NewEnemy("fire_wisp_elite", "Lửa Linh Hồn", 720, 14, 54, 9),
                     NewEnemy("flame_beast", "Thú Lửa Nhỏ", 560, 96, 34, 14)));
 
@@ -191,7 +192,7 @@ namespace BES.UI.Menu
                     NewEnemy("flame_beast_a", "Thú Lửa Nhỏ", 620, 108, 38, 15),
                     NewEnemy("flame_beast_b", "Thú Lửa Nhỏ", 620, 108, 38, 15),
                     NewEnemy("sand_wisp_elite", "Cát Xoáy Sa Mạc", 680, 112, 44, 13),
-                    NewEnemy("sarcophagus_elite", "Quan Tài Hộ Vệ", 920, 18, 96, 8)));
+                    NewEnemy("fire_wisp_support", "Lửa Linh Hồn", 720, 14, 54, 9)));
         }
 
         static StageEntry CreateDefaultStage(string id, string title, string description, int level, RewardEntry rewardA, RewardEntry rewardB, params BattleUnitDefinition[] enemies)

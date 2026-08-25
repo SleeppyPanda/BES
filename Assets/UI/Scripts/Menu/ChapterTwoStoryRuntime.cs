@@ -363,6 +363,8 @@ namespace BES.UI.Menu
         {
             if (ContainsAny(condition, "combat ket thuc", "ket thuc combat", "win", "thang", "het enemy", "het quai"))
                 return CombatDialogueTriggerType.PhaseVictory;
+            if (ContainsAny(condition, "thua", "lose", "defeat", "that bai", "toan doi guc", "tat ca dong minh chet"))
+                return CombatDialogueTriggerType.AllAlliesDefeated;
             if (ContainsAny(condition, "ngay khi ket thuc hoat anh", "ket thuc hoat anh"))
                 return CombatDialogueTriggerType.PhaseVictory;
             if (ContainsAny(condition, "don dau tien", "danh xong don dau", "toan bo danh xong"))
