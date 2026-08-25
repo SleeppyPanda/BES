@@ -185,6 +185,7 @@ namespace BES.UI.Menu
 
         void Awake()
         {
+            EnsureEditableCombatDialogueUI();
             EnsureDialogueUI();
             WireControls();
         }
@@ -195,6 +196,18 @@ namespace BES.UI.Menu
             HideResultRevealOverlay();
             ApplyPlaybackSpeed();
         }
+
+#if UNITY_EDITOR
+        void OnValidate()
+        {
+            if (Application.isPlaying) return;
+            UnityEditor.EditorApplication.delayCall += () =>
+            {
+                if (this != null && !Application.isPlaying)
+                    EnsureEditableCombatDialogueUI();
+            };
+        }
+#endif
 
         void Update()
         {
@@ -1336,10 +1349,54 @@ namespace BES.UI.Menu
 
         void EnsureDialogueUI()
         {
+            EnsureEditableCombatDialogueUI();
             if (combatDialogueUI != null) return;
             combatDialogueUI = FindAnyObjectByType<DialogueSequenceUI>(FindObjectsInactive.Include);
             if (combatDialogueUI == null)
                 combatDialogueUI = DialogueSequenceUI.CreateRuntimeOverlay("RuntimeCombatDialogueUI");
+        }
+
+        [ContextMenu("BES/Ensure Editable Combat Dialogue UI")]
+        void EnsureEditableCombatDialogueUI()
+        {
+            if (combatDialogueUI == null)
+            {
+                var existing = transform.Find("CombatDialogueUI");
+                if (existing != null)
+                    combatDialogueUI = existing.GetComponent<DialogueSequenceUI>();
+            }
+
+            if (combatDialogueUI == null && !Application.isPlaying)
+            {
+#if UNITY_EDITOR
+                var prefabStage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+                var editingInPrefabStage = prefabStage != null &&
+                                           prefabStage.prefabContentsRoot != null &&
+                                           (prefabStage.prefabContentsRoot == gameObject ||
+                                            transform.IsChildOf(prefabStage.prefabContentsRoot.transform));
+                if (UnityEditor.PrefabUtility.IsPartOfPrefabAsset(gameObject) && !editingInPrefabStage)
+                    return;
+#endif
+                var dialogueRoot = new GameObject("CombatDialogueUI", typeof(RectTransform));
+                dialogueRoot.transform.SetParent(transform, false);
+                var rect = dialogueRoot.GetComponent<RectTransform>();
+                rect.anchorMin = Vector2.zero;
+                rect.anchorMax = Vector2.one;
+                rect.offsetMin = Vector2.zero;
+                rect.offsetMax = Vector2.zero;
+                combatDialogueUI = dialogueRoot.AddComponent<DialogueSequenceUI>();
+                dialogueRoot.SetActive(false);
+            }
+
+            if (combatDialogueUI != null && !Application.isPlaying)
+            {
+                combatDialogueUI.EnsureRuntimeView();
+                combatDialogueUI.gameObject.SetActive(false);
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.SetDirty(combatDialogueUI);
+                UnityEditor.EditorUtility.SetDirty(this);
+#endif
+            }
         }
         void RefreshTurnOrder(bool battleFinished = false)
         {

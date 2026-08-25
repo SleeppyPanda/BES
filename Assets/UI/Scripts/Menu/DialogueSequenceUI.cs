@@ -194,6 +194,7 @@ namespace BES.UI.Menu
         bool waitingForBeatMovement;
         bool fullyShown;
         bool controlsWired;
+        bool playRequested;
         readonly List<Coroutine> characterRoutines = new();
 
         void Awake()
@@ -201,6 +202,18 @@ namespace BES.UI.Menu
             EnsureRuntimeView();
             WireControls();
             skipConfirmation?.SetActive(false);
+        }
+
+        void OnEnable()
+        {
+            if (Application.isPlaying && !playRequested)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+
+            if (Application.isPlaying && (beats == null || beats.Count == 0))
+                gameObject.SetActive(false);
         }
 
         void WireControls()
@@ -231,7 +244,20 @@ namespace BES.UI.Menu
             return ui;
         }
 
-        public void Play() { index = -1; gameObject.SetActive(true); Advance(); }
+        public void Play()
+        {
+            index = -1;
+            fullyShown = true;
+            waitingForBeatMovement = false;
+            if (beats == null || beats.Count == 0)
+            {
+                CompleteSequence();
+                return;
+            }
+            playRequested = true;
+            gameObject.SetActive(true);
+            Advance();
+        }
         public void SetBeats(List<DialogueBeat> value) { beats = value ?? new List<DialogueBeat>(); }
         public void Play(DialogueSequence sequence, Action completed = null)
         {
@@ -291,7 +317,10 @@ namespace BES.UI.Menu
 
         void ApplyCharacters(DialogueBeat beat)
         {
-            ApplyLegacyCharacters(beat);
+            if (characterSlots != null && characterSlots.Count > 0)
+                ApplyCharacterSlots(beat);
+            else
+                ApplyLegacyCharacters(beat);
         }
 
         void ApplyCharacterSlots(DialogueBeat beat)
@@ -833,11 +862,12 @@ namespace BES.UI.Menu
             onSequenceCompleted?.Invoke();
             var completed = runtimeCompleted;
             runtimeCompleted = null;
+            playRequested = false;
             gameObject.SetActive(false);
             completed?.Invoke();
         }
 
-        void EnsureRuntimeView()
+        public void EnsureRuntimeView()
         {
             if (background != null && speakerText != null && bodyText != null && advanceButton != null) return;
 

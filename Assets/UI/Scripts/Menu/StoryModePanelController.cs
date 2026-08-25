@@ -103,6 +103,7 @@ namespace BES.UI.Menu
         }
         void Awake()
         {
+            EnsureEditableDialogueUI();
             EnsureFixedPartySlots();
             EnsureSelectionSlotBindings();
             HideLegacyStoryProgressUi();
@@ -127,10 +128,22 @@ namespace BES.UI.Menu
                 chapterIndex = Mathf.Clamp(save.storyChapterIndex, 0, database.storyChapters.Count - 1);
             }
             
+            ShowPhase(StoryPartyPhase.Main);
             SelectChapter(chapterIndex);
             TryPlayChapterIntro();
-            ShowPhase(StoryPartyPhase.Main);
         }
+
+#if UNITY_EDITOR
+        void OnValidate()
+        {
+            if (Application.isPlaying) return;
+            UnityEditor.EditorApplication.delayCall += () =>
+            {
+                if (this != null && !Application.isPlaying)
+                    EnsureEditableDialogueUI();
+            };
+        }
+#endif
 
         void BindButtons()
         {
@@ -339,6 +352,11 @@ namespace BES.UI.Menu
         public void ConfirmParty()
         {
             if (!MeetsPartyRequirements()) return;
+            BeginCurrentStoryStage();
+        }
+
+        void BeginCurrentStoryStage()
+        {
             TurnBattleUI.SelectedPartyCharacterIds = CurrentIds();
             TurnBattleUI.IsPlayModeBattle = false;
             var stage = CurrentStage();
@@ -385,15 +403,59 @@ namespace BES.UI.Menu
                 return;
             
             chapterIntroPlayed = true;
-            storyDialogueUI.Play(chapter.introDialogue);
+            storyDialogueUI.Play(chapter.introDialogue, BeginCurrentStoryStage);
         }
 
         void EnsureDialogueUI()
         {
+            EnsureEditableDialogueUI();
             if (storyDialogueUI != null) return;
             storyDialogueUI = FindAnyObjectByType<DialogueSequenceUI>(FindObjectsInactive.Include);
             if (storyDialogueUI == null)
                 storyDialogueUI = DialogueSequenceUI.CreateRuntimeOverlay("RuntimeStoryDialogueUI");
+        }
+
+        [ContextMenu("BES/Ensure Editable Story Dialogue UI")]
+        void EnsureEditableDialogueUI()
+        {
+            if (storyDialogueUI == null)
+            {
+                var existing = transform.Find("StoryDialogueUI");
+                if (existing != null)
+                    storyDialogueUI = existing.GetComponent<DialogueSequenceUI>();
+            }
+
+            if (storyDialogueUI == null && !Application.isPlaying)
+            {
+#if UNITY_EDITOR
+                var prefabStage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+                var editingInPrefabStage = prefabStage != null &&
+                                           prefabStage.prefabContentsRoot != null &&
+                                           (prefabStage.prefabContentsRoot == gameObject ||
+                                            transform.IsChildOf(prefabStage.prefabContentsRoot.transform));
+                if (UnityEditor.PrefabUtility.IsPartOfPrefabAsset(gameObject) && !editingInPrefabStage)
+                    return;
+#endif
+                var dialogueRoot = new GameObject("StoryDialogueUI", typeof(RectTransform));
+                dialogueRoot.transform.SetParent(transform, false);
+                var rect = dialogueRoot.GetComponent<RectTransform>();
+                rect.anchorMin = Vector2.zero;
+                rect.anchorMax = Vector2.one;
+                rect.offsetMin = Vector2.zero;
+                rect.offsetMax = Vector2.zero;
+                storyDialogueUI = dialogueRoot.AddComponent<DialogueSequenceUI>();
+                dialogueRoot.SetActive(false);
+            }
+
+            if (storyDialogueUI != null && !Application.isPlaying)
+            {
+                storyDialogueUI.EnsureRuntimeView();
+                storyDialogueUI.gameObject.SetActive(false);
+#if UNITY_EDITOR
+                UnityEditor.EditorUtility.SetDirty(storyDialogueUI);
+                UnityEditor.EditorUtility.SetDirty(this);
+#endif
+            }
         }
 
         void BackToHome() => navigator?.Back();
