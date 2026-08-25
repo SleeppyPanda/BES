@@ -634,17 +634,14 @@ namespace BES.UI.Menu
             if (reward == null || string.IsNullOrWhiteSpace(reward.itemId))
                 return string.Empty;
 
-            var id = reward.itemId.StartsWith("wish_", StringComparison.OrdinalIgnoreCase)
-                ? reward.itemId[5..]
-                : reward.itemId;
-            return database != null && database.FindCharacter(id) != null ? id : reward.itemId;
+            return CharacterIdentity.Canonical(reward.itemId, database);
         }
 
         Sprite IconForReward(MenuWishReward reward)
         {
             if (reward != null && reward.unlockAsCharacter && database != null)
             {
-                var character = database.FindCharacter(CharacterIdFor(reward));
+                var character = CharacterIdentity.FindEntry(database, CharacterIdFor(reward));
                 if (character != null)
                 {
                     if (character.portrait != null) return character.portrait;
@@ -659,9 +656,8 @@ namespace BES.UI.Menu
         void ApplyCharacterReward(MenuWishReward reward)
         {
             var id = CharacterIdFor(reward);
-            var roster = ResolveRoster();
-            var wasOwned = roster != null && roster.IsCharacterUnlocked(id);
-            roster?.UnlockCharacter(id, reward.displayName);
+            var wasOwned = CharacterOwnership.Owns(id);
+            CharacterOwnership.Grant(id, reward.displayName);
             if (wasOwned)
             {
                 var definition = CharacterDatabaseLoader.Load()?.Get(id);

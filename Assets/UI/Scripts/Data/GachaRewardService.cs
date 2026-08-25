@@ -37,15 +37,14 @@ namespace BES.UI
                     GameManager.Instance?.Inventory.AddItem(entry.rewardId, entry.itemAmount);
                     break;
                 case GachaRewardType.Character:
-                    if (PartyRoster.Instance != null && PartyRoster.Instance.IsCharacterUnlocked(entry.rewardId))
+                    duplicateCharacter = CharacterOwnership.Owns(entry.rewardId);
+                    duplicate = duplicateCharacter;
+                    CharacterOwnership.Grant(entry.rewardId, label);
+                    if (duplicateCharacter)
                     {
-                        duplicate = true;
-                        duplicateCharacter = true;
                         var amount = CharacterDatabaseLoader.Load()?.Get(entry.rewardId)?.duplicateShardReward ?? 1;
                         CharacterProgressionState.AddDuplicateShards(entry.rewardId, amount);
                     }
-                    else
-                        PartyRoster.Instance?.UnlockCharacter(entry.rewardId, label);
                     break;
                 case GachaRewardType.Item:
                     GameManager.Instance?.Inventory.AddItem(entry.rewardId, entry.itemAmount);

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using BES.Core;
+using BES.Gameplay;
+using BES.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -116,6 +118,7 @@ namespace BES.UI.Menu
         void OnEnable()
         {
             if (!Application.isPlaying) return;
+            GameEvents.OnPartyChanged += RefreshAll;
             EnsureDialogueUI();
             EnsureSelectionSlotBindings();
             HideLegacyStoryProgressUi();
@@ -131,6 +134,11 @@ namespace BES.UI.Menu
             ShowPhase(StoryPartyPhase.Main);
             SelectChapter(chapterIndex);
             TryPlayChapterIntro();
+        }
+
+        void OnDisable()
+        {
+            GameEvents.OnPartyChanged -= RefreshAll;
         }
 
 #if UNITY_EDITOR
@@ -303,6 +311,7 @@ namespace BES.UI.Menu
                 rosterSortMode = StoryRosterSortMode.RequiredCharacter;
             ShowPhase(StoryPartyPhase.Selecting);
             if (characterSelectionPanel != null) characterSelectionPanel.transform.SetAsLastSibling();
+            EnsureDeployInventory();
         }
 
         void SetRosterSortMode(StoryRosterSortMode mode)
@@ -338,6 +347,7 @@ namespace BES.UI.Menu
 
             if (existing >= 0) selectedParty[existing] = null;
             selectedParty[targetSlotIndex] = character;
+            CharacterOwnership.Focus(character.id);
             RefreshAll();
             CloseCharacterSelection();
         }
@@ -504,7 +514,9 @@ namespace BES.UI.Menu
             for (var i = 0; i < ids.Count && i < selectedParty.Count; i++)
             {
                 if (string.IsNullOrWhiteSpace(ids[i])) continue;
-                selectedParty[i] = database.FindCharacter(ids[i]);
+                var character = database.FindCharacter(ids[i]);
+                if (character != null && CharacterOwnership.Owns(character.id))
+                    selectedParty[i] = character;
             }
         }
 
@@ -609,7 +621,7 @@ namespace BES.UI.Menu
             {
                 if (i >= fixedCount && selectedParty[i] != null)
                 {
-                    result.Add(selectedParty[i].id);
+                    result.Add(CharacterIdentity.Canonical(selectedParty[i].id, database));
                 }
             }
             return result;
@@ -630,6 +642,7 @@ namespace BES.UI.Menu
             var status = BuildRequirementStatus();
             if (selectionRequirementText != null) selectionRequirementText.text = status;
             RefreshChapterButtons();
+            RefreshDeployInventory();
         }
 
         void RefreshStoryRequirementImages()
@@ -763,12 +776,10 @@ namespace BES.UI.Menu
         void RebuildOwnedRoster()
         {
             ownedRoster.Clear();
-            var roster = PartyRoster.Instance ?? FindAnyObjectByType<PartyRoster>();
-            if (roster == null || database == null) return;
-            foreach (var member in roster.GetUnlockedRosterMembers())
+            foreach (var character in CharacterOwnership.GetOwnedEntries(database))
             {
-                var character = database.FindCharacter(member.characterId);
-                if (character != null && !ownedRoster.Contains(character)) ownedRoster.Add(character);
+                if (character != null && !ownedRoster.Contains(character))
+                    ownedRoster.Add(character);
             }
         }
 
@@ -824,10 +835,10 @@ namespace BES.UI.Menu
             return false;
         }
 
-        static bool IsRequiredCharacter(CharacterEntry character, string requiredIdOrName)
+        bool IsRequiredCharacter(CharacterEntry character, string requiredIdOrName)
         {
             if (character == null || string.IsNullOrWhiteSpace(requiredIdOrName)) return false;
-            return string.Equals(character.id, requiredIdOrName, StringComparison.OrdinalIgnoreCase) ||
+            return CharacterIdentity.Same(character.id, requiredIdOrName, database) ||
                    string.Equals(character.displayName, requiredIdOrName, StringComparison.OrdinalIgnoreCase);
         }
 
@@ -988,6 +999,89 @@ namespace BES.UI.Menu
                 bool hasNext = database != null && chapterIndex < database.storyChapters.Count - 1;
                 nextChapterButton.gameObject.SetActive(hasNext);
                 nextChapterButton.interactable = hasNext;
+            }
+        }
+
+        void EnsureDeployInventory()
+        {
+            if (characterSelectionPanel == null) return;
+            var existing = characterSelectionPanel.transform.Find("DeployInventory");
+            if (existing != null) return;
+
+            var root = new GameObject("DeployInventory", typeof(RectTransform), typeof(Image));
+            root.transform.SetParent(characterSelectionPanel.transform, false);
+            var rect = root.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.03f, 0.02f);
+            rect.anchorMax = new Vector2(0.42f, 0.22f);
+            rect.offsetMin = rect.offsetMax = Vector2.zero;
+            var background = root.GetComponent<Image>();
+            background.color = new Color(0.08f, 0.1f, 0.16f, 0.92f);
+
+            var title = new GameObject("Title", typeof(RectTransform), typeof(TextMeshProUGUI));
+            title.transform.SetParent(root.transform, false);
+            var titleRect = title.GetComponent<RectTransform>();
+            titleRect.anchorMin = new Vector2(0.04f, 0.72f);
+            titleRect.anchorMax = new Vector2(0.96f, 0.96f);
+            titleRect.offsetMin = titleRect.offsetMax = Vector2.zero;
+            var titleText = title.GetComponent<TextMeshProUGUI>();
+            titleText.text = "Kho đồ chiến đấu";
+            titleText.fontSize = 18;
+            titleText.color = Color.white;
+            titleText.raycastTarget = false;
+
+            var content = new GameObject("ItemRow", typeof(RectTransform), typeof(HorizontalLayoutGroup));
+            content.transform.SetParent(root.transform, false);
+            var contentRect = content.GetComponent<RectTransform>();
+            contentRect.anchorMin = new Vector2(0.04f, 0.08f);
+            contentRect.anchorMax = new Vector2(0.96f, 0.68f);
+            contentRect.offsetMin = contentRect.offsetMax = Vector2.zero;
+            var layout = content.GetComponent<HorizontalLayoutGroup>();
+            layout.spacing = 8f;
+            layout.childAlignment = TextAnchor.MiddleLeft;
+            layout.childControlHeight = true;
+            layout.childControlWidth = false;
+            layout.childForceExpandHeight = true;
+            layout.childForceExpandWidth = false;
+        }
+
+        void RefreshDeployInventory()
+        {
+            if (characterSelectionPanel == null || phase != StoryPartyPhase.Selecting) return;
+            EnsureDeployInventory();
+            var row = characterSelectionPanel.transform.Find("DeployInventory/ItemRow");
+            if (row == null) return;
+            foreach (Transform child in row) Destroy(child.gameObject);
+
+            var target = targetSlotIndex >= 0 && targetSlotIndex < selectedParty.Count ? selectedParty[targetSlotIndex] : null;
+            var characterId = target != null ? target.id : CharacterOwnership.FocusedCharacterId;
+            var inventory = GameManager.Instance?.Inventory;
+            if (inventory == null || string.IsNullOrEmpty(characterId)) return;
+
+            var added = 0;
+            foreach (var pair in inventory.Items)
+            {
+                if (added >= 6 || pair.Value <= 0) continue;
+                var definition = inventory.GetDefinition(pair.Key);
+                if (definition == null) continue;
+                if (definition.itemType != ItemType.Consumable && definition.itemType != ItemType.Quest &&
+                    definition.affinityGain == 0 && definition.characterExperience <= 0 &&
+                    !pair.Key.Contains("exp", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                var itemId = pair.Key;
+                var slot = new GameObject(itemId, typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
+                slot.transform.SetParent(row, false);
+                slot.GetComponent<LayoutElement>().preferredWidth = 56f;
+                slot.GetComponent<RectTransform>().sizeDelta = new Vector2(56f, 56f);
+                var image = slot.GetComponent<Image>();
+                image.sprite = definition.icon;
+                image.color = Color.white;
+                slot.GetComponent<Button>().onClick.AddListener(() =>
+                {
+                    if (CharacterOwnership.TryUseInventoryOnCharacter(itemId, characterId))
+                        RefreshAll();
+                });
+                added++;
             }
         }
     }

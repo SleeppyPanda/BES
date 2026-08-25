@@ -74,5 +74,6 @@ namespace BES.Gameplay
         public List<StringIntPair> characterBreakthroughs = new();
         public List<StringIntPair> characterConstellations = new();
         public List<StringIntPair> characterConstellationShards = new();
+        public List<StringIntPair> characterAffinity = new();
     }
 }

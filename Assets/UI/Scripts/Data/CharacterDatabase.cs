@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using BES.UI.Menu;
 
 namespace BES.UI
 {
@@ -74,14 +75,37 @@ namespace BES.UI
 
         public IReadOnlyList<CharacterDefinition> Characters => characters;
 
-        public CharacterDefinition Get(string characterId)
+        public CharacterDefinition GetRaw(string characterId)
         {
             if (string.IsNullOrEmpty(characterId) || characters == null)
                 return null;
 
             foreach (var character in characters)
             {
-                if (character != null && character.characterId == characterId)
+                if (character != null && string.Equals(character.characterId, characterId, StringComparison.OrdinalIgnoreCase))
+                    return character;
+            }
+
+            return null;
+        }
+
+        public CharacterDefinition Get(string characterId)
+        {
+            if (string.IsNullOrEmpty(characterId) || characters == null)
+                return null;
+
+            var combatId = CharacterIdentity.CombatId(characterId);
+            return GetRaw(combatId) ?? GetRaw(characterId) ?? GetRaw(CharacterIdentity.Canonical(characterId));
+        }
+
+        public CharacterDefinition GetByDisplayName(string displayName)
+        {
+            if (string.IsNullOrWhiteSpace(displayName) || characters == null)
+                return null;
+
+            foreach (var character in characters)
+            {
+                if (character != null && string.Equals(character.displayName, displayName, StringComparison.OrdinalIgnoreCase))
                     return character;
             }
 
@@ -91,7 +115,10 @@ namespace BES.UI
         public string GetDisplayName(string characterId)
         {
             var character = Get(characterId);
-            return !string.IsNullOrEmpty(character?.displayName) ? character.displayName : characterId;
+            if (!string.IsNullOrEmpty(character?.displayName))
+                return character.displayName;
+            var menu = CharacterIdentity.FindEntry(null, characterId);
+            return !string.IsNullOrEmpty(menu?.displayName) ? menu.displayName : characterId;
         }
 
         public IReadOnlyList<string> GetDefaultPartyIds() => defaultPartyIds;

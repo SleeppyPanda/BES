@@ -1507,7 +1507,7 @@ namespace BES.UI.Menu
 
             for (var i = 0; i < Mathf.Min(SelectedPartyCharacterIds.Count, allies.Count); i++)
             {
-                var characterId = SelectedPartyCharacterIds[i];
+                var characterId = CharacterIdentity.Canonical(SelectedPartyCharacterIds[i]);
                 var character = menuContentDatabase.FindCharacter(characterId);
                 var view = allies[i];
                 if (character == null || view == null) continue;
@@ -1641,7 +1641,7 @@ namespace BES.UI.Menu
             startSlot = Mathf.Clamp(startSlot, 0, allies.Count);
             for (var i = 0; i < SelectedPartyCharacterIds.Count && startSlot + i < allies.Count; i++)
             {
-                var character = menuContentDatabase.FindCharacter(SelectedPartyCharacterIds[i]);
+                var character = menuContentDatabase.FindCharacter(CharacterIdentity.Canonical(SelectedPartyCharacterIds[i]));
                 var view = allies[startSlot + i];
                 if (character == null || view == null) continue;
 

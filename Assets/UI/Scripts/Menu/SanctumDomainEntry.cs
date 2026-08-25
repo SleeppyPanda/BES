@@ -19,11 +19,26 @@ namespace BES.UI.Menu
 
         public string DomainId => domainId;
         public IReadOnlyList<Image> RewardSlots => rewardSlots;
+        public TMP_Text EnergyCostText => energyCostText;
+        public TMP_Text TitleText => titleText;
+        public TMP_Text ProgressText => progressText;
+        public Button EnterButton => enterButton;
+        public int EnergyCost { get => energyCost; set => energyCost = Mathf.Max(0, value); }
+
+        public void SetDomainId(string value)
+        {
+            if (!string.IsNullOrEmpty(value)) domainId = value;
+        }
+
+        public void RefreshEnergyText()
+        {
+            if (energyCostText != null) energyCostText.text = energyCost.ToString();
+        }
 
         void Awake()
         {
             if (enterButton != null) enterButton.onClick.AddListener(Enter);
-            if (energyCostText != null) energyCostText.text = energyCost.ToString();
+            RefreshEnergyText();
         }
 
         public void Enter()

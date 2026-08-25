@@ -155,17 +155,18 @@ namespace BES.UI.Menu
         void EnsureStartingCharacter()
         {
             if (database == null || database.characters.Count == 0) return;
-            if (string.IsNullOrWhiteSpace(currentCharacterId) || database.FindCharacter(currentCharacterId) == null)
-                currentCharacterId = database.characters[0].id;
+            currentCharacterId = CharacterOwnership.ResolveOwnedId(currentCharacterId, database);
+            CharacterOwnership.Focus(currentCharacterId);
         }
 
         public void SelectCharacter(string characterId)
         {
             if (database == null) return;
             var character = database.FindCharacter(characterId);
-            if (character == null) return;
-            currentCharacterId = characterId;
-            currentRank = CharacterProgressionState.GetConstellation(characterId);
+            if (character == null || !CharacterOwnership.Owns(character.id)) return;
+            currentCharacterId = character.id;
+            CharacterOwnership.Focus(currentCharacterId);
+            currentRank = CharacterProgressionState.GetConstellation(character.id);
             Refresh();
         }
 

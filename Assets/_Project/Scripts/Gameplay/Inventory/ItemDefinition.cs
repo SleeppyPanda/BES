@@ -15,6 +15,10 @@ namespace BES.Gameplay
         public float healAmount;
         public float manaRestore;
         public string linkedWeaponId;
+        [Tooltip("If set, this item can only be used on that character (Wish/library/combat share the same id).")]
+        public string linkedCharacterId;
+        [Min(0)] public int characterExperience;
+        public int affinityGain;
     }
 
     public enum ItemType
@@ -22,6 +26,7 @@ namespace BES.Gameplay
         Material,
         Consumable,
         Weapon,
-        Quest
+        Quest,
+        Character
     }
 }

@@ -68,7 +68,16 @@ namespace BES.Gameplay
         public bool TryUseItem(string itemId)
         {
             var def = GetDefinition(itemId);
-            if (def == null || def.itemType != ItemType.Consumable)
+            if (def == null || (def.itemType != ItemType.Consumable && def.itemType != ItemType.Quest))
+                return false;
+
+            var focused = BES.UI.CharacterOwnership.FocusedCharacterId;
+            if (!string.IsNullOrEmpty(focused) &&
+                (def.characterExperience > 0 || def.affinityGain != 0 || !string.IsNullOrEmpty(def.linkedCharacterId) ||
+                 itemId.Contains("exp")))
+                return BES.UI.CharacterOwnership.TryUseInventoryOnCharacter(itemId, focused);
+
+            if (def.itemType != ItemType.Consumable)
                 return false;
 
             if (!RemoveItem(itemId, 1))

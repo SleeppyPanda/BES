@@ -135,13 +135,26 @@ namespace BES.UI.Menu
         {
             if (inventory == null || string.IsNullOrEmpty(selectedItemId)) return;
             var definition = inventory.GetDefinition(selectedItemId);
+            var characterId = CharacterOwnership.FocusedCharacterId;
             var success = definition != null && definition.itemType switch
             {
-                ItemType.Consumable => inventory.TryUseItem(selectedItemId),
+                ItemType.Consumable => CharacterOwnership.TryUseInventoryOnCharacter(selectedItemId, characterId) ||
+                                       inventory.TryUseItem(selectedItemId),
+                ItemType.Quest => CharacterOwnership.TryUseInventoryOnCharacter(selectedItemId, characterId),
                 ItemType.Weapon => inventory.TryEquipWeaponItem(selectedItemId),
-                _ => false
+                ItemType.Character => OpenOwnedCharacter(selectedItemId),
+                _ => definition.affinityGain != 0 && CharacterOwnership.TryUseInventoryOnCharacter(selectedItemId, characterId)
             };
             if (success) Refresh();
+        }
+
+        bool OpenOwnedCharacter(string itemId)
+        {
+            var characterId = CharacterIdentity.Canonical(itemId);
+            if (!CharacterOwnership.Owns(characterId)) return false;
+            CharacterOwnership.Focus(characterId);
+            FindAnyObjectByType<CharacterCollectionPanel>(FindObjectsInactive.Include)?.OpenCharacter(characterId);
+            return true;
         }
 
         public void RemoveSelected()
@@ -166,7 +179,9 @@ namespace BES.UI.Menu
                 BagCategory.Supplies => definition.itemType == ItemType.Consumable,
                 BagCategory.Equipment => definition.itemType == ItemType.Weapon,
                 BagCategory.Materials => definition.itemType == ItemType.Material,
-                BagCategory.Mementos => definition.itemType == ItemType.Quest,
+                BagCategory.Mementos => definition.itemType == ItemType.Quest ||
+                                        definition.itemType == ItemType.Character ||
+                                        definition.affinityGain != 0,
                 _ => true
             };
         }
@@ -251,7 +266,11 @@ namespace BES.UI.Menu
 
             var usable = definition != null &&
                          (definition.itemType == ItemType.Consumable ||
-                          definition.itemType == ItemType.Weapon);
+                          definition.itemType == ItemType.Weapon ||
+                          definition.itemType == ItemType.Quest ||
+                          definition.itemType == ItemType.Character ||
+                          definition.affinityGain != 0 ||
+                          definition.characterExperience > 0);
             if (useButton != null)
             {
                 useButton.interactable = usable;

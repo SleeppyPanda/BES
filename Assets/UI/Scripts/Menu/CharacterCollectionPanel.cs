@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BES.Core;
+using BES.Gameplay;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -71,7 +72,13 @@ namespace BES.UI.Menu
         Image detailPortrait;
         Image levelPortrait;
         TMP_Text detailName;
-        TMP_Text detailStats;
+        [Header("Character information stat texts")]
+        [SerializeField] TMP_Text detailLevelText;
+        [SerializeField] TMP_Text detailHealthText;
+        [SerializeField] TMP_Text detailAttackText;
+        [SerializeField] TMP_Text detailDefenseText;
+        [SerializeField] TMP_Text detailSpeedText;
+        TMP_Text legacyDetailStats;
         TMP_Text detailDescription;
         TMP_Text levelName;
         TMP_Text levelValue;
@@ -149,7 +156,8 @@ namespace BES.UI.Menu
         {
             ResolveDatabase();
             BuildRuntimeUI();
-            selectedCharacterId = ResolveOwnedCharacter(characterId);
+            selectedCharacterId = CharacterOwnership.ResolveOwnedId(characterId, database);
+            CharacterOwnership.Focus(selectedCharacterId);
             RefreshCharacter();
             ShowPage(detailPage);
             modal?.Open();
@@ -172,7 +180,8 @@ namespace BES.UI.Menu
         {
             ResolveDatabase();
             BuildRuntimeUI();
-            selectedCharacterId = ResolveOwnedCharacter(string.IsNullOrWhiteSpace(characterId) ? selectedCharacterId : characterId);
+            selectedCharacterId = CharacterOwnership.ResolveOwnedId(string.IsNullOrWhiteSpace(characterId) ? selectedCharacterId : characterId, database);
+            CharacterOwnership.Focus(selectedCharacterId);
             RefreshCharacter();
 
             switch (destination)
@@ -330,7 +339,12 @@ namespace BES.UI.Menu
             detailPortrait = FindDeep(existing, "SelectedPortrait")?.GetComponent<Image>();
             levelPortrait = FindDeep(existing, "LevelPortrait")?.GetComponent<Image>();
             detailName = FindDeep(existing, "CharacterName")?.GetComponent<TMP_Text>();
-            detailStats = FindDeep(existing, "CharacterStats")?.GetComponent<TMP_Text>();
+            detailLevelText = FindText(existing, "CharacterLevelStatText", "LevelStatText", "InfoLevelText");
+            detailHealthText = FindText(existing, "CharacterHealthStatText", "HealthStatText", "InfoHealthText");
+            detailAttackText = FindText(existing, "CharacterAttackStatText", "AttackStatText", "InfoAttackText");
+            detailDefenseText = FindText(existing, "CharacterDefenseStatText", "DefenseStatText", "InfoDefenseText");
+            detailSpeedText = FindText(existing, "CharacterSpeedStatText", "SpeedStatText", "InfoSpeedText");
+            legacyDetailStats = FindDeep(existing, "CharacterStats")?.GetComponent<TMP_Text>();
             detailDescription = FindDeep(existing, "CharacterDescription")?.GetComponent<TMP_Text>();
             levelName = FindDeep(existing, "LevelCharacterName")?.GetComponent<TMP_Text>();
             levelValue = FindDeep(existing, "LevelValue")?.GetComponent<TMP_Text>();
@@ -357,7 +371,8 @@ namespace BES.UI.Menu
             galleryCardTemplate = null;
             galleryContent = characterSelectorContent = null;
             detailPortrait = levelPortrait = null;
-            detailName = detailStats = detailDescription = levelName = levelValue = emptyLabel = selectedNameLabel = null;
+            detailName = detailDescription = levelName = levelValue = emptyLabel = selectedNameLabel = null;
+            detailLevelText = detailHealthText = detailAttackText = detailDefenseText = detailSpeedText = legacyDetailStats = null;
             selectedElementIcon = null;
             tabIndicator = null;
             for (var i = 0; i < informationEquipmentSlots.Length; i++)
@@ -379,7 +394,7 @@ namespace BES.UI.Menu
             Wire("WeaponRefineBtn", RefineEquippedWeapon);
             Wire("WeaponEnhanceBtn", EnhanceEquippedWeapon);
             Wire("ConstellationTab", () => ShowPage(constellationPage));
-            Wire("AffinityTab", () => ShowPage(affinityPage));
+            Wire("AffinityTab", () => { ShowPage(affinityPage); RefreshAffinity(); });
             Wire("BackToGallery", OpenGallery);
             Wire("LevelButton", OpenLevel);
             Wire("BackToDetail", () => ShowPage(detailPage));
@@ -510,7 +525,11 @@ namespace BES.UI.Menu
         {
             detailPortrait = AddImage(detailPage.transform, "SelectedPortrait", new Vector2(.30f, .12f), new Vector2(.61f, .82f));
             detailName = AddText(detailPage.transform, "CharacterName", string.Empty, new Vector2(.66f, .69f), new Vector2(.94f, .78f), 38);
-            detailStats = AddText(detailPage.transform, "CharacterStats", string.Empty, new Vector2(.66f, .42f), new Vector2(.94f, .68f), 25);
+            detailLevelText = AddText(detailPage.transform, "CharacterLevelStatText", string.Empty, new Vector2(.66f, .63f), new Vector2(.94f, .68f), 25);
+            detailHealthText = AddText(detailPage.transform, "CharacterHealthStatText", string.Empty, new Vector2(.66f, .58f), new Vector2(.94f, .63f), 25);
+            detailAttackText = AddText(detailPage.transform, "CharacterAttackStatText", string.Empty, new Vector2(.66f, .53f), new Vector2(.94f, .58f), 25);
+            detailDefenseText = AddText(detailPage.transform, "CharacterDefenseStatText", string.Empty, new Vector2(.66f, .48f), new Vector2(.94f, .53f), 25);
+            detailSpeedText = AddText(detailPage.transform, "CharacterSpeedStatText", string.Empty, new Vector2(.66f, .43f), new Vector2(.94f, .48f), 25);
             detailDescription = AddText(detailPage.transform, "CharacterDescription", string.Empty, new Vector2(.66f, .23f), new Vector2(.94f, .41f), 22);
             AddButton(detailPage.transform, "LevelButton", "NÂNG LEVEL", new Vector2(.70f, .12f), new Vector2(.90f, .20f), OpenLevel);
         }
@@ -530,17 +549,7 @@ namespace BES.UI.Menu
             if (galleryContent == null) return;
             foreach (var card in generatedCards) if (card != null) Destroy(card);
             generatedCards.Clear();
-            var owned = new List<CharacterEntry>();
-            var roster = PartyRoster.Instance ?? FindAnyObjectByType<PartyRoster>();
-            if (roster != null)
-            {
-                foreach (var member in roster.GetUnlockedRosterMembers())
-                {
-                    var entry = database?.FindCharacter(member.characterId);
-                    if (entry == null) continue;
-                    owned.Add(entry);
-                }
-            }
+            var owned = new List<CharacterEntry>(CharacterOwnership.GetOwnedEntries(database));
             owned.Sort((a, b) => SortValue(b).CompareTo(SortValue(a)));
             foreach (var entry in owned) BuildCard(entry);
             if (emptyLabel != null) emptyLabel.gameObject.SetActive(owned.Count == 0);
@@ -551,7 +560,7 @@ namespace BES.UI.Menu
         {
             GallerySortMode.Constellation => CharacterProgressionState.GetConstellation(entry.id),
             GallerySortMode.Quality => entry.quality,
-            GallerySortMode.Affinity => entry.affinity,
+            GallerySortMode.Affinity => CharacterProgressionState.GetAffinity(entry.id),
             _ => entry.combatPower > 0
                 ? entry.combatPower
                 : entry.attack * 10 + entry.maxHealth + CharacterProgressionState.GetLevel(entry.id) * 5
@@ -564,12 +573,9 @@ namespace BES.UI.Menu
             foreach (var selector in generatedSelectors) if (selector != null) Destroy(selector);
             generatedSelectors.Clear();
 
-            var roster = PartyRoster.Instance ?? FindAnyObjectByType<PartyRoster>();
-            if (roster == null) return;
-            foreach (var member in roster.GetUnlockedRosterMembers())
+            var owned = CharacterOwnership.GetOwnedEntries(database);
+            foreach (var entry in owned)
             {
-                var entry = database?.FindCharacter(member.characterId);
-                if (entry == null) continue;
                 var id = entry.id;
                 var selector = new GameObject(id, typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
                 selector.transform.SetParent(characterSelectorContent, false);
@@ -587,8 +593,9 @@ namespace BES.UI.Menu
         void SelectCharacter(string characterId)
         {
             ResolveDatabase();
-            if (database?.FindCharacter(characterId) == null) return;
-            selectedCharacterId = characterId;
+            if (!CharacterOwnership.Owns(characterId) || database?.FindCharacter(characterId) == null) return;
+            selectedCharacterId = CharacterIdentity.Canonical(characterId, database);
+            CharacterOwnership.Focus(selectedCharacterId);
             RefreshCharacter();
             RefreshCharacterSelectors();
         }
@@ -648,7 +655,13 @@ namespace BES.UI.Menu
             if (detailName != null) detailName.text = entry.displayName;
             var currentLevel = CharacterProgressionState.GetLevel(entry.id);
             var levelCap = CharacterProgressionState.GetLevelCap(entry.id);
-            if (detailStats != null) detailStats.text = $"Cấp {currentLevel}/{levelCap}\nHP  {entry.maxHealth}\nTấn công  {entry.attack}";
+            SetText(detailLevelText, $"Cấp {currentLevel}/{levelCap}");
+            SetText(detailHealthText, $"HP  {entry.maxHealth}");
+            SetText(detailAttackText, $"Tấn công  {entry.attack}");
+            SetText(detailDefenseText, $"Phòng thủ  {entry.defense}");
+            SetText(detailSpeedText, $"Tốc độ  {entry.speed}");
+            if (legacyDetailStats != null)
+                legacyDetailStats.text = $"Cấp {currentLevel}/{levelCap}\nHP  {entry.maxHealth}\nTấn công  {entry.attack}\nPhòng thủ  {entry.defense}\nTốc độ  {entry.speed}";
             if (detailDescription != null) detailDescription.text = entry.description;
             if (levelName != null) levelName.text = entry.displayName;
             if (levelValue != null) levelValue.text = currentLevel >= levelCap && levelCap < CharacterProgressionState.AbsoluteMaxLevel
@@ -671,17 +684,73 @@ namespace BES.UI.Menu
                 slot.enabled = slot.sprite != null;
             }
             homeController?.SelectCharacter(entry.id);
+            CharacterOwnership.Focus(entry.id);
+            RefreshAffinity();
         }
 
-        string ResolveOwnedCharacter(string requested)
+        void RefreshAffinity()
         {
-            var roster = PartyRoster.Instance ?? FindAnyObjectByType<PartyRoster>();
-            if (roster != null && roster.IsCharacterUnlocked(requested) && database?.FindCharacter(requested) != null) return requested;
-            if (roster != null)
-                foreach (var member in roster.GetUnlockedRosterMembers())
-                    if (database?.FindCharacter(member.characterId) != null) return member.characterId;
-            return database != null && database.characters.Count > 0 ? database.characters[0].id : requested;
+            if (affinityPage == null || string.IsNullOrEmpty(selectedCharacterId)) return;
+            EnsureAffinityOverlay();
+            var entry = database?.FindCharacter(selectedCharacterId);
+            var name = FindDeep(affinityPage.transform, "AffinityCharacterName")?.GetComponent<TMP_Text>();
+            var value = FindDeep(affinityPage.transform, "AffinityValue")?.GetComponent<TMP_Text>();
+            var gifts = FindDeep(affinityPage.transform, "AffinityGiftHint")?.GetComponent<TMP_Text>();
+            var score = CharacterProgressionState.GetAffinity(selectedCharacterId);
+            if (name != null) name.text = entry != null ? entry.displayName : selectedCharacterId;
+            if (value != null) value.text = $"Giao cảm {score}/100\n{CharacterProgressionState.GetAffinityDisposition(selectedCharacterId)}";
+            if (gifts != null)
+                gifts.text = "Dùng vật phẩm giao cảm trong Túi đồ (tab Kỷ niệm) để tăng giao cảm cho nhân vật đang chọn.";
         }
+
+        void EnsureAffinityOverlay()
+        {
+            if (affinityPage == null || FindDeep(affinityPage.transform, "AffinityValue") != null) return;
+            AddText(affinityPage.transform, "AffinityCharacterName", string.Empty, new Vector2(.18f, .70f), new Vector2(.82f, .80f), 34);
+            AddText(affinityPage.transform, "AffinityValue", string.Empty, new Vector2(.18f, .48f), new Vector2(.82f, .68f), 26);
+            AddText(affinityPage.transform, "AffinityGiftHint", string.Empty, new Vector2(.18f, .28f), new Vector2(.82f, .46f), 20);
+            AddButton(affinityPage.transform, "UseAffinityGift", "DÙNG QUÀ TỪ TÚI ĐỒ", new Vector2(.32f, .12f), new Vector2(.68f, .22f), UseAffinityGiftFromBag);
+        }
+
+        void UseAffinityGiftFromBag()
+        {
+            var inventory = GameManager.Instance?.Inventory;
+            if (inventory == null || string.IsNullOrEmpty(selectedCharacterId)) return;
+            foreach (var pair in inventory.Items)
+            {
+                if (pair.Value <= 0) continue;
+                var definition = inventory.GetDefinition(pair.Key);
+                var isGift = definition != null && (definition.itemType == ItemType.Quest || definition.affinityGain != 0);
+                if (!isGift) continue;
+                if (CharacterOwnership.TryUseInventoryOnCharacter(pair.Key, selectedCharacterId))
+                {
+                    RefreshAffinity();
+                    RefreshCharacter();
+                    return;
+                }
+            }
+            var hint = FindDeep(affinityPage.transform, "AffinityGiftHint")?.GetComponent<TMP_Text>();
+            if (hint != null) hint.text = "Túi đồ chưa có quà giao cảm. Nhận từ Wish, nhiệm vụ hoặc kho đồ.";
+        }
+
+        static void SetText(TMP_Text text, string value)
+        {
+            if (text != null) text.text = value;
+        }
+
+        static TMP_Text FindText(Transform root, params string[] names)
+        {
+            if (root == null || names == null) return null;
+            foreach (var name in names)
+            {
+                if (string.IsNullOrWhiteSpace(name)) continue;
+                var found = FindDeep(root, name)?.GetComponent<TMP_Text>();
+                if (found != null) return found;
+            }
+            return null;
+        }
+
+        string ResolveOwnedCharacter(string requested) => CharacterOwnership.ResolveOwnedId(requested, database);
 
         void ShowPage(GameObject page)
         {
@@ -689,7 +758,11 @@ namespace BES.UI.Menu
             if (characterPage != null) characterPage.SetActive(page != galleryPage);
             if (detailPage != null) detailPage.SetActive(page == detailPage);
             if (levelPage != null) levelPage.SetActive(page == levelPage);
-            if (affinityPage != null) affinityPage.SetActive(page == affinityPage);
+            if (affinityPage != null)
+            {
+                affinityPage.SetActive(page == affinityPage);
+                if (page == affinityPage) RefreshAffinity();
+            }
             if (constellationPage != null) constellationPage.SetActive(page == constellationPage);
             if (artifactPage != null) artifactPage.SetActive(page == artifactPage);
             

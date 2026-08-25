@@ -15,6 +15,7 @@ namespace BES.UI
         static readonly Dictionary<string, int> breakthroughs = new();
         static readonly Dictionary<string, int> constellations = new();
         static readonly Dictionary<string, int> constellationShards = new();
+        static readonly Dictionary<string, int> affinity = new();
 
         public static int GetLevel(string characterId) => Get(levels, characterId, DefaultLevel(characterId));
         public static int GetExperience(string characterId) => Get(experience, characterId, 0);
@@ -47,6 +48,50 @@ namespace BES.UI
                     _ => 80
                 };
             }
+        }
+
+        public static int GetAffinity(string characterId)
+        {
+            var key = Key(characterId);
+            if (affinity.TryGetValue(key, out var value))
+                return Mathf.Clamp(value, 0, 100);
+
+            var relationships = GameManager.Instance?.Relationships;
+            if (relationships != null)
+            {
+                foreach (var alias in CharacterIdentity.Aliases(key))
+                {
+                    var related = relationships.GetAffinity(alias);
+                    if (related != 0)
+                    {
+                        affinity[key] = Mathf.Clamp(related, 0, 100);
+                        return affinity[key];
+                    }
+                }
+            }
+
+            var entry = CharacterIdentity.FindEntry(null, key);
+            return Mathf.Clamp(entry?.affinity ?? 0, 0, 100);
+        }
+
+        public static int AddAffinity(string characterId, int delta)
+        {
+            if (string.IsNullOrEmpty(characterId) || delta == 0) return GetAffinity(characterId);
+            var key = Key(characterId);
+            var next = Mathf.Clamp(GetAffinity(key) + delta, 0, 100);
+            affinity[key] = next;
+            GameEvents.RaisePartyChanged();
+            GameManager.Instance?.SaveGame();
+            return next;
+        }
+
+        public static string GetAffinityDisposition(string characterId)
+        {
+            var value = GetAffinity(characterId);
+            if (value >= 80) return "Khăng khít";
+            if (value >= 50) return "Thân thiết";
+            if (value >= 20) return "Thân thiện";
+            return "Xa cách";
         }
 
         public static int GetConstellation(string characterId) => Mathf.Clamp(Get(constellations, characterId, 0), 0, ConstellationCount);
@@ -89,8 +134,9 @@ namespace BES.UI
                 exp -= required;
                 level++;
             }
-            levels[characterId] = level;
-            experience[characterId] = level >= cap ? Mathf.Min(exp, Mathf.Max(0, GetExperienceToNextLevel(characterId) - 1)) : exp;
+            var key = Key(characterId);
+            levels[key] = level;
+            experience[key] = level >= cap ? Mathf.Min(exp, Mathf.Max(0, GetExperienceToNextLevel(key) - 1)) : exp;
             GameEvents.RaisePartyChanged();
             GameManager.Instance?.SaveGame();
             return level;
@@ -152,7 +198,8 @@ namespace BES.UI
                 PlayerWallet.Instance.TrySpendCoins(goldCost);
             }
 
-            breakthroughs[characterId] = GetBreakthroughCount(characterId) + 1;
+            var key = Key(characterId);
+            breakthroughs[key] = GetBreakthroughCount(key) + 1;
             GameEvents.RaisePartyChanged();
             GameManager.Instance?.SaveGame();
             return true;
@@ -163,8 +210,9 @@ namespace BES.UI
             if (string.IsNullOrEmpty(characterId)) return 0;
             var definition = CharacterDatabaseLoader.Load()?.Get(characterId);
             if (amount <= 0) amount = Mathf.Max(1, definition?.duplicateShardReward ?? 1);
-            var total = GetConstellationShards(characterId) + amount;
-            constellationShards[characterId] = total;
+            var key = Key(characterId);
+            var total = GetConstellationShards(key) + amount;
+            constellationShards[key] = total;
             GameEvents.RaisePartyChanged();
             GameManager.Instance?.SaveGame();
             return total;
@@ -172,15 +220,16 @@ namespace BES.UI
 
         public static bool TryUnlockNextConstellation(string characterId)
         {
-            var current = GetConstellation(characterId);
+            var key = Key(characterId);
+            var current = GetConstellation(key);
             if (current >= ConstellationCount) return false;
-            var definition = CharacterDatabaseLoader.Load()?.Get(characterId);
+            var definition = CharacterDatabaseLoader.Load()?.Get(key);
             var cost = definition?.constellationShardCosts != null && current < definition.constellationShardCosts.Count
                 ? Mathf.Max(1, definition.constellationShardCosts[current]) : 1;
-            var shards = GetConstellationShards(characterId);
+            var shards = GetConstellationShards(key);
             if (shards < cost) return false;
-            constellationShards[characterId] = shards - cost;
-            constellations[characterId] = current + 1;
+            constellationShards[key] = shards - cost;
+            constellations[key] = current + 1;
             GameEvents.RaisePartyChanged();
             GameManager.Instance?.SaveGame();
             return true;
@@ -226,16 +275,17 @@ namespace BES.UI
 
         public static void ResetAll()
         {
-            levels.Clear(); experience.Clear(); breakthroughs.Clear(); constellations.Clear(); constellationShards.Clear();
+            levels.Clear(); experience.Clear(); breakthroughs.Clear(); constellations.Clear(); constellationShards.Clear(); affinity.Clear();
         }
 
         public static void ExportToSave(SaveData data)
         {
-            data.characterLevels = SaveDataUtility.ToPairs(levels);
-            data.characterExperience = SaveDataUtility.ToPairs(experience);
-            data.characterBreakthroughs = SaveDataUtility.ToPairs(breakthroughs);
-            data.characterConstellations = SaveDataUtility.ToPairs(constellations);
-            data.characterConstellationShards = SaveDataUtility.ToPairs(constellationShards);
+            data.characterLevels = SaveDataUtility.ToPairs(Canonicalize(levels));
+            data.characterExperience = SaveDataUtility.ToPairs(Canonicalize(experience));
+            data.characterBreakthroughs = SaveDataUtility.ToPairs(Canonicalize(breakthroughs));
+            data.characterConstellations = SaveDataUtility.ToPairs(Canonicalize(constellations));
+            data.characterConstellationShards = SaveDataUtility.ToPairs(Canonicalize(constellationShards));
+            data.characterAffinity = SaveDataUtility.ToPairs(Canonicalize(affinity));
         }
 
         public static void ImportFromSave(SaveData data)
@@ -243,14 +293,45 @@ namespace BES.UI
             Replace(levels, data?.characterLevels); Replace(experience, data?.characterExperience);
             Replace(breakthroughs, data?.characterBreakthroughs); Replace(constellations, data?.characterConstellations);
             Replace(constellationShards, data?.characterConstellationShards);
+            Replace(affinity, data?.characterAffinity);
         }
 
         static int DefaultLevel(string id) => Mathf.Clamp(CharacterDatabaseLoader.Load()?.Get(id)?.level ?? 1, 1, AbsoluteMaxLevel);
-        static int Get(Dictionary<string, int> source, string key, int fallback) => !string.IsNullOrEmpty(key) && source.TryGetValue(key, out var value) ? value : fallback;
+        static string Key(string characterId) => CharacterIdentity.Canonical(characterId);
+        static int Get(Dictionary<string, int> source, string key, int fallback)
+        {
+            if (string.IsNullOrEmpty(key)) return fallback;
+            var canonical = Key(key);
+            if (source.TryGetValue(canonical, out var value)) return value;
+            if (source.TryGetValue(key, out value))
+            {
+                source[canonical] = value;
+                return value;
+            }
+            foreach (var alias in CharacterIdentity.Aliases(canonical))
+            {
+                if (!source.TryGetValue(alias, out value)) continue;
+                source[canonical] = value;
+                return value;
+            }
+            return fallback;
+        }
+        static Dictionary<string, int> Canonicalize(Dictionary<string, int> source)
+        {
+            var result = new Dictionary<string, int>();
+            foreach (var pair in source)
+            {
+                var key = Key(pair.Key);
+                if (string.IsNullOrEmpty(key)) continue;
+                result[key] = result.TryGetValue(key, out var current) ? Mathf.Max(current, pair.Value) : pair.Value;
+            }
+            return result;
+        }
         static void Replace(Dictionary<string, int> target, List<StringIntPair> source)
         {
             target.Clear();
-            foreach (var pair in SaveDataUtility.FromPairs(source)) target[pair.Key] = pair.Value;
+            foreach (var pair in Canonicalize(SaveDataUtility.FromPairs(source)))
+                target[pair.Key] = pair.Value;
         }
     }
 }

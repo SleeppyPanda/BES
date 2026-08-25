@@ -106,6 +106,7 @@ namespace BES.UI.Menu
             party.Remove(character);
             while (party.Count <= activeSlot) party.Add(null);
             party[activeSlot] = character;
+            CharacterOwnership.Focus(character.id);
             RefreshParty();
         }
 
@@ -171,22 +172,7 @@ namespace BES.UI.Menu
         void RebuildRosterCharacters()
         {
             rosterCharacters.Clear();
-            if (database == null) return;
-
-            var roster = PartyRoster.Instance ?? FindAnyObjectByType<PartyRoster>();
-            if (roster != null)
-            {
-                foreach (var member in roster.GetUnlockedRosterMembers())
-                {
-                    var character = database.FindCharacter(member.characterId);
-                    if (character != null && character.playable && !rosterCharacters.Contains(character))
-                        rosterCharacters.Add(character);
-                }
-            }
-
-            if (rosterCharacters.Count > 0) return;
-
-            foreach (var character in database.characters)
+            foreach (var character in CharacterOwnership.GetOwnedEntries(database))
             {
                 if (character != null && character.playable && !rosterCharacters.Contains(character))
                     rosterCharacters.Add(character);

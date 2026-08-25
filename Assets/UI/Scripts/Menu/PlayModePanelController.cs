@@ -8,10 +8,11 @@ namespace BES.UI.Menu
 {
     public enum PlayModeTab
     {
-        ResonanceSanctum,
-        SanctumOfLostEchoes,
-        RiftOfTheHunt,
-        DivineRemnant
+        SanctumOfRelics,
+        ArenaOfEchoes,
+        CharacterBreakthrough,
+        WeaponBreakthrough,
+        RiftOfTheHunt
     }
 
     [Serializable]
@@ -83,10 +84,11 @@ namespace BES.UI.Menu
             onOpened?.Invoke();
         }
 
-        public void OpenResonanceSanctum() => OpenTab(PlayModeTab.ResonanceSanctum);
-        public void OpenSanctumOfLostEchoes() => OpenTab(PlayModeTab.SanctumOfLostEchoes);
+        public void OpenSanctumOfRelics() => OpenTab(PlayModeTab.SanctumOfRelics);
+        public void OpenArenaOfEchoes() => OpenTab(PlayModeTab.ArenaOfEchoes);
+        public void OpenCharacterBreakthrough() => OpenTab(PlayModeTab.CharacterBreakthrough);
+        public void OpenWeaponBreakthrough() => OpenTab(PlayModeTab.WeaponBreakthrough);
         public void OpenRiftOfTheHunt() => OpenTab(PlayModeTab.RiftOfTheHunt);
-        public void OpenDivineRemnant() => OpenTab(PlayModeTab.DivineRemnant);
 
         public void SelectTab(PlayModeTab tab)
         {

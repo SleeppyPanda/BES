@@ -15,6 +15,13 @@ namespace BES.UI.Menu
         [SerializeField] Button playButton;
         [SerializeField] UnityEvent<string> onPlay;
 
+        public string StageId { get => stageId; set => stageId = value; }
+        public Image StageImage { get => stageImage; set => stageImage = value; }
+        public TMP_Text TitleText { get => titleText; set => titleText = value; }
+        public List<TMP_Text> DescriptionLines => descriptionLines;
+        public Button PlayButton { get => playButton; set => playButton = value; }
+        public UnityEvent<string> OnPlay => onPlay;
+
         void Awake()
         {
             if (playButton != null) playButton.onClick.AddListener(Play);

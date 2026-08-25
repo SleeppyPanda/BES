@@ -21,7 +21,7 @@ namespace BES.EditorTools
             Apply();
         }
 
-        [MenuItem("BES/UI/Fix Play Mode Tabs And Remove Main Tab Hover")]
+        [MenuItem("BES/UI/Strip Play Mode Main Tab Hover")]
         public static void Apply()
         {
             var root = PrefabUtility.LoadPrefabContents(PrefabPath);
@@ -32,10 +32,9 @@ namespace BES.EditorTools
                 if (mainController == null) return;
 
                 RemoveMainTabHover(mainController);
-                RebindResonanceSubTabs(playModePanel);
 
                 PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
-                Debug.Log("[BES] Play Mode subtabs mapped 1:1 and hover removed from the four main Tab buttons.");
+                Debug.Log("[BES] Play Mode main Tab buttons no longer use hover sprites.");
             }
             finally { PrefabUtility.UnloadPrefabContents(root); }
         }
@@ -52,52 +51,6 @@ namespace BES.EditorTools
                 if (hover != null) Object.DestroyImmediate(hover);
                 button.transition = Selectable.Transition.None;
             }
-        }
-
-        static void RebindResonanceSubTabs(Transform playModePanel)
-        {
-            var content = Find(playModePanel, "Content_0_Resonance Sanctum");
-            var controller = content != null ? content.GetComponent<ResonanceSubTabController>() : null;
-            if (controller == null) return;
-
-            var serialized = new SerializedObject(controller);
-            var tabs = serialized.FindProperty("tabs");
-            tabs.arraySize = 4;
-            var names = new[]
-            {
-                "Sanctum of Lost Echoes",
-                "Sanctum of Ascension",
-                "Sanctum of Insight",
-                "Sanctum of Forging"
-            };
-
-            for (var i = 0; i < 4; i++)
-            {
-                var buttonRoot = Find(content, "SubTab_" + i);
-                var listRoot = FindByPrefix(content, "TabList_" + i + "_");
-                var selectedState = buttonRoot != null ? Find(buttonRoot, "SelectedState") : null;
-                var binding = tabs.GetArrayElementAtIndex(i);
-                binding.FindPropertyRelative("tabName").stringValue = names[i];
-                binding.FindPropertyRelative("button").objectReferenceValue = buttonRoot != null ? buttonRoot.GetComponent<Button>() : null;
-                binding.FindPropertyRelative("listRoot").objectReferenceValue = listRoot != null ? listRoot.gameObject : null;
-                binding.FindPropertyRelative("selectedState").objectReferenceValue = selectedState != null ? selectedState.gameObject : null;
-            }
-            serialized.FindProperty("initialTab").intValue = 0;
-            serialized.ApplyModifiedPropertiesWithoutUndo();
-
-            for (var i = 0; i < 4; i++)
-            {
-                var list = FindByPrefix(content, "TabList_" + i + "_");
-                if (list != null) list.gameObject.SetActive(i == 0);
-            }
-        }
-
-        static Transform FindByPrefix(Transform root, string prefix)
-        {
-            if (root == null) return null;
-            foreach (var child in root.GetComponentsInChildren<Transform>(true))
-                if (child.name.StartsWith(prefix, System.StringComparison.Ordinal)) return child;
-            return null;
         }
 
         static Transform Find(Transform root, string name)

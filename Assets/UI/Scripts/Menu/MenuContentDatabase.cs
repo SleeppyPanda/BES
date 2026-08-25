@@ -243,26 +243,7 @@ namespace BES.UI.Menu
             return string.Empty;
         }
 
-        public CharacterEntry FindCharacter(string id)
-        {
-            if (string.IsNullOrWhiteSpace(id)) return null;
-
-            // Clean wish_ prefix if present
-            if (id.StartsWith("wish_", StringComparison.OrdinalIgnoreCase))
-                id = id[5..];
-
-            // Map default combat IDs to menu database IDs
-            if (string.Equals(id, "hero_01", StringComparison.OrdinalIgnoreCase))
-                id = "Elio";
-            else if (string.Equals(id, "hero_02", StringComparison.OrdinalIgnoreCase))
-                id = "Sahure";
-            else if (string.Equals(id, "hero_03", StringComparison.OrdinalIgnoreCase))
-                id = "luna";
-            else if (string.Equals(id, "hero_04", StringComparison.OrdinalIgnoreCase))
-                id = "sol";
-
-            return characters.Find(x => string.Equals(x.id?.Trim(), id.Trim(), StringComparison.OrdinalIgnoreCase));
-        }
+        public CharacterEntry FindCharacter(string id) => CharacterIdentity.FindEntry(this, id);
     }
 }
 

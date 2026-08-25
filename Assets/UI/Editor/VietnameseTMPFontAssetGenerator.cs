@@ -60,30 +60,6 @@ namespace BES.UI.Editor
             Generate();
         }
 
-        [InitializeOnLoadMethod]
-        static void GenerateIfMissing()
-        {
-            EditorApplication.delayCall += () =>
-            {
-                if (!AnyFontAssetMissing()) return;
-                Generate();
-            };
-        }
-
-        static bool AnyFontAssetMissing()
-        {
-            foreach (var request in Fonts)
-            {
-                if (!File.Exists(GetAssetPath(request.AssetName)))
-                    return true;
-                if (!File.Exists(GetMainMaterialPath(request.AssetName)))
-                    return true;
-                if (!File.Exists(GetOutlineMaterialPath(request.AssetName)))
-                    return true;
-            }
-            return false;
-        }
-
         static void GenerateFontAsset(FontBuildRequest request)
         {
             var sourceFont = AssetDatabase.LoadAssetAtPath<Font>(request.SourcePath);

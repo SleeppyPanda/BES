@@ -59,21 +59,38 @@ namespace BES.UI
             return characterDatabase?.Get(characterId);
         }
 
-        public bool IsCharacterUnlocked(string characterId) =>
-            !string.IsNullOrEmpty(characterId) && unlockedCharacterIds.Contains(characterId);
+        public bool IsCharacterUnlocked(string characterId)
+        {
+            if (string.IsNullOrEmpty(characterId))
+                return false;
+
+            foreach (var alias in CharacterIdentity.Aliases(characterId))
+            {
+                if (unlockedCharacterIds.Contains(alias))
+                    return true;
+            }
+
+            return unlockedCharacterIds.Contains(characterId);
+        }
 
         public void UnlockCharacter(string characterId, string displayName)
         {
             if (string.IsNullOrEmpty(characterId))
                 return;
 
-            unlockedCharacterIds.Add(characterId);
+            var canonical = CharacterIdentity.Canonical(characterId);
+            foreach (var alias in CharacterIdentity.Aliases(canonical))
+                unlockedCharacterIds.Remove(alias);
+            unlockedCharacterIds.Add(canonical);
+            CharacterOwnership.SyncInventoryToken(canonical, true);
+
             for (var i = 0; i < MaxPartySize; i++)
             {
-                if (members[i] == null || members[i].characterId != characterId)
+                if (members[i] == null || !CharacterIdentity.Same(members[i].characterId, canonical))
                     continue;
 
-                members[i].displayName = ResolveDisplayName(characterId, displayName);
+                members[i].characterId = canonical;
+                members[i].displayName = ResolveDisplayName(canonical, displayName);
                 members[i].isUnlocked = true;
                 GameEvents.RaisePartyChanged();
                 GameManager.Instance?.SaveGame();
@@ -86,27 +103,13 @@ namespace BES.UI
 
         public IEnumerable<PartyMemberSlot> GetUnlockedRosterMembers()
         {
-            characterDatabase ??= CharacterDatabaseLoader.Load();
-            var emitted = new HashSet<string>();
-
-            if (characterDatabase?.Characters != null)
-            {
-                foreach (var character in characterDatabase.Characters)
-                {
-                    if (character == null || !IsCharacterUnlocked(character.characterId))
-                        continue;
-
-                    emitted.Add(character.characterId);
-                    yield return CreateMemberFromId(character.characterId);
-                }
-            }
-
+            var emitted = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var id in unlockedCharacterIds)
             {
-                if (emitted.Contains(id))
+                var canonical = CharacterIdentity.Canonical(id);
+                if (string.IsNullOrEmpty(canonical) || !emitted.Add(canonical))
                     continue;
-
-                yield return CreateMemberFromId(id);
+                yield return CreateMemberFromId(canonical);
             }
         }
 
@@ -117,7 +120,8 @@ namespace BES.UI
             if (!IsCharacterUnlocked(member.characterId))
                 return;
 
-            SetSlot(slotIndex, member.characterId, member.displayName);
+            var canonical = CharacterIdentity.Canonical(member.characterId);
+            SetSlot(slotIndex, canonical, member.displayName);
         }
 
         public void SetActiveSlot(int index)
@@ -144,10 +148,11 @@ namespace BES.UI
             if (index < 0 || index >= MaxPartySize || string.IsNullOrEmpty(characterId))
                 return;
 
+            var canonical = CharacterIdentity.Canonical(characterId);
             members[index] ??= new PartyMemberSlot();
-            members[index].characterId = characterId;
-            members[index].displayName = ResolveDisplayName(characterId, displayName);
-            members[index].isUnlocked = IsCharacterUnlocked(characterId);
+            members[index].characterId = canonical;
+            members[index].displayName = ResolveDisplayName(canonical, displayName);
+            members[index].isUnlocked = IsCharacterUnlocked(canonical);
             EnsureSlotHealth(index);
 
             if (index == activeCharacterIndex)
@@ -166,19 +171,7 @@ namespace BES.UI
         {
             unlockedCharacterIds.Clear();
             characterDatabase = CharacterDatabaseLoader.Load();
-            var defaults = GetDefaultPartyIds();
-
-            for (var i = 0; i < MaxPartySize; i++)
-            {
-                var id = i < defaults.Count ? defaults[i] : $"hero_{i + 1:00}";
-                members[i] ??= new PartyMemberSlot();
-                members[i].characterId = id;
-                members[i].displayName = GetDisplayNameForId(id);
-                members[i].isUnlocked = true;
-                EnsureSlotHealth(i);
-                unlockedCharacterIds.Add(id);
-            }
-
+            ApplyStarterRoster(GetStarterCharacterIds());
             activeCharacterIndex = 0;
             suppressHealthCapture = true;
             RefreshActiveBuild();
@@ -206,20 +199,66 @@ namespace BES.UI
             if (unlockedCharacterIds.Count > 0)
                 return;
 
-            var defaults = GetDefaultPartyIds();
+            ApplyStarterRoster(GetStarterCharacterIds());
+        }
+
+        void ApplyStarterRoster(IReadOnlyList<string> starterIds)
+        {
             for (var i = 0; i < MaxPartySize; i++)
             {
-                var id = i < defaults.Count ? defaults[i] : $"hero_{i + 1:00}";
                 members[i] ??= new PartyMemberSlot();
+                members[i].characterId = string.Empty;
+                members[i].displayName = string.Empty;
+                members[i].isUnlocked = false;
+                members[i].currentHealth = -1f;
+                members[i].maxHealth = -1f;
+            }
 
-                if (string.IsNullOrEmpty(members[i].characterId))
-                    members[i].characterId = id;
-
-                members[i].displayName = GetDisplayNameForId(members[i].characterId);
+            for (var i = 0; i < starterIds.Count && i < MaxPartySize; i++)
+            {
+                var id = CharacterIdentity.Canonical(starterIds[i]);
+                unlockedCharacterIds.Add(id);
+                CharacterOwnership.SyncInventoryToken(id, true);
+                members[i].characterId = id;
+                members[i].displayName = GetDisplayNameForId(id);
                 members[i].isUnlocked = true;
                 EnsureSlotHealth(i);
-                unlockedCharacterIds.Add(members[i].characterId);
             }
+
+            if (string.IsNullOrEmpty(CharacterOwnership.FocusedCharacterId) && starterIds.Count > 0)
+                CharacterOwnership.Focus(starterIds[0]);
+        }
+
+        IReadOnlyList<string> GetStarterCharacterIds()
+        {
+            var starters = new List<string>();
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var menu = CharacterIdentity.LoadMenuDatabase();
+
+            foreach (var id in GetDefaultPartyIds())
+            {
+                var entry = CharacterIdentity.FindEntry(menu, id);
+                if (entry == null || !seen.Add(entry.id))
+                    continue;
+                starters.Add(entry.id);
+            }
+
+            if (starters.Count > 0)
+                return starters;
+
+            if (menu?.characters != null)
+            {
+                foreach (var character in menu.characters)
+                {
+                    if (character == null || !character.playable || string.IsNullOrWhiteSpace(character.id) || !seen.Add(character.id))
+                        continue;
+                    starters.Add(character.id);
+                    if (starters.Count >= MaxPartySize)
+                        break;
+                }
+            }
+
+            return starters.Count > 0 ? starters : new[] { "hero_01" };
         }
 
         void OnEnable()
@@ -276,7 +315,14 @@ namespace BES.UI
                 }
             }
 
-            data.unlockedCharacterIds = new List<string>(unlockedCharacterIds);
+            var uniqueOwned = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var id in unlockedCharacterIds)
+            {
+                var canonical = CharacterIdentity.Canonical(id);
+                if (!string.IsNullOrEmpty(canonical))
+                    uniqueOwned.Add(canonical);
+            }
+            data.unlockedCharacterIds = new List<string>(uniqueOwned);
             data.activeCharacterIndex = activeCharacterIndex;
         }
 
@@ -289,7 +335,14 @@ namespace BES.UI
             if (data.unlockedCharacterIds != null && data.unlockedCharacterIds.Count > 0)
             {
                 foreach (var id in data.unlockedCharacterIds)
-                    unlockedCharacterIds.Add(id);
+                {
+                    var canonical = CharacterIdentity.Canonical(id);
+                    if (!string.IsNullOrEmpty(canonical))
+                    {
+                        unlockedCharacterIds.Add(canonical);
+                        CharacterOwnership.SyncInventoryToken(canonical, true);
+                    }
+                }
             }
             else
             {
@@ -305,9 +358,9 @@ namespace BES.UI
                         continue;
 
                     members[i] ??= new PartyMemberSlot();
-                    members[i].characterId = id;
-                    members[i].displayName = GetDisplayNameForId(id);
-                    members[i].isUnlocked = IsCharacterUnlocked(id);
+                    members[i].characterId = CharacterIdentity.Canonical(id);
+                    members[i].displayName = GetDisplayNameForId(members[i].characterId);
+                    members[i].isUnlocked = IsCharacterUnlocked(members[i].characterId);
                     EnsureSlotHealth(i);
                 }
             }
