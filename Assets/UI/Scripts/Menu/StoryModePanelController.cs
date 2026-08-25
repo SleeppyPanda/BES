@@ -233,24 +233,20 @@ namespace BES.UI.Menu
             chapterIndex = newChapterIndex;
             ApplyStoryRuntime(chapterIndex);
 
-            // Load progress for the new chapter (with fallback to active save for migration)
-            if (PlayerPrefs.HasKey($"StoryActiveStageId_{chapterIndex}"))
+            // SaveData is the source of truth. PlayerPrefs from old tests can point
+            // to an outdated stage and skip the first story scene on a fresh run.
+            var save = GameManager.Instance?.Save?.Current;
+            if (save != null &&
+                save.storyChapterIndex == chapterIndex &&
+                !string.IsNullOrWhiteSpace(save.activeStoryStageId) &&
+                database.storyChapters[chapterIndex].stages.Exists(stage =>
+                    stage != null && string.Equals(stage.id, save.activeStoryStageId, StringComparison.OrdinalIgnoreCase)))
             {
-                currentStageId = PlayerPrefs.GetString($"StoryActiveStageId_{chapterIndex}");
+                currentStageId = save.activeStoryStageId;
             }
             else
             {
-                var save = GameManager.Instance?.Save?.Current;
-                if (save != null && save.storyChapterIndex == chapterIndex && !string.IsNullOrWhiteSpace(save.activeStoryStageId))
-                {
-                    currentStageId = save.activeStoryStageId;
-                }
-                else
-                {
-                    currentStageId = string.Empty;
-                }
-                PlayerPrefs.SetString($"StoryActiveStageId_{chapterIndex}", currentStageId);
-                PlayerPrefs.Save();
+                currentStageId = string.Empty;
             }
 
             EnsureCurrentStageId();
@@ -377,14 +373,18 @@ namespace BES.UI.Menu
 
         void TryPlayChapterIntro()
         {
-            if (playChapterIntroOnce && (chapterIntroPlayed || PlayerPrefs.GetInt($"ChapterIntroPlayed_{chapterIndex}", 0) == 1)) return;
+            if (playChapterIntroOnce && chapterIntroPlayed) return;
+            EnsureDialogueUI();
             if (database == null || database.storyChapters.Count == 0 || storyDialogueUI == null) return;
             var chapter = database.storyChapters[Mathf.Clamp(chapterIndex, 0, database.storyChapters.Count - 1)];
             if (chapter?.introDialogue == null || chapter.introDialogue.beats.Count == 0) return;
+            var firstStageId = chapter.stages != null && chapter.stages.Count > 0 ? chapter.stages[0]?.id : string.Empty;
+            if (!string.IsNullOrWhiteSpace(firstStageId) &&
+                !string.IsNullOrWhiteSpace(currentStageId) &&
+                !string.Equals(currentStageId, firstStageId, StringComparison.OrdinalIgnoreCase))
+                return;
             
             chapterIntroPlayed = true;
-            PlayerPrefs.SetInt($"ChapterIntroPlayed_{chapterIndex}", 1);
-            PlayerPrefs.Save();
             storyDialogueUI.Play(chapter.introDialogue);
         }
 
@@ -393,7 +393,7 @@ namespace BES.UI.Menu
             if (storyDialogueUI != null) return;
             storyDialogueUI = FindAnyObjectByType<DialogueSequenceUI>(FindObjectsInactive.Include);
             if (storyDialogueUI == null)
-                Debug.LogWarning("[BES] StoryModePanelController is missing storyDialogueUI. Assign DialogueSequenceUI in Unity; runtime UI creation is disabled.");
+                storyDialogueUI = DialogueSequenceUI.CreateRuntimeOverlay("RuntimeStoryDialogueUI");
         }
 
         void BackToHome() => navigator?.Back();

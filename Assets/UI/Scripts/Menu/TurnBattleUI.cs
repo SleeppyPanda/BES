@@ -101,6 +101,7 @@ namespace BES.UI.Menu
         [SerializeField] Button pauseResumeButton;
         [SerializeField] GameObject winPanel;
         [SerializeField] Button winReturnButton;
+        [SerializeField] Button winExitButton;
         [SerializeField] GameObject losePanel;
         [SerializeField] Button loseReturnButton;
         [SerializeField] Button loseExitButton;
@@ -118,6 +119,16 @@ namespace BES.UI.Menu
         [Header("Result UI Art")]
         [SerializeField] Sprite winPanelArt;
         [SerializeField] Sprite losePanelArt;
+        [Header("Result reveal animation")]
+        [SerializeField] bool animateResultPanels = true;
+        [SerializeField] Color resultBackdropColor = new(0f, 0f, 0f, 0.62f);
+        [SerializeField] Color winRevealColor = new(1f, 0.86f, 0.2f, 0.95f);
+        [SerializeField] Color loseRevealColor = new(0.72f, 0.28f, 1f, 0.95f);
+        [SerializeField, Min(0.01f)] float resultLineSweepDuration = 0.28f;
+        [SerializeField, Min(0.01f)] float resultExpandDuration = 0.32f;
+        [SerializeField, Min(1f)] float resultLineHeight = 8f;
+        [SerializeField, Min(1f)] float resultLineBlurHeight = 92f;
+        [SerializeField] AnimationCurve resultRevealCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
         [Header("Timing and animation")]
         [SerializeField, Min(0.05f)] float actionWindup = 0.45f;
         [SerializeField, Min(0.05f)] float actionRecovery = 0.35f;
@@ -163,6 +174,14 @@ namespace BES.UI.Menu
         StageEntry currentStage;
         int currentPhaseIndex;
         BattlePhaseEntry currentPhase;
+        bool battleEnded;
+        Coroutine resultRevealRoutine;
+        GameObject resultRevealOverlay;
+        Image resultRevealBackdrop;
+        Image resultRevealLine;
+        Image resultRevealGlow;
+        RectTransform resultRevealLineRect;
+        RectTransform resultRevealGlowRect;
 
         void Awake()
         {
@@ -170,11 +189,16 @@ namespace BES.UI.Menu
             WireControls();
         }
         void OnEnable() { ResetBattle(); }
-        void OnDisable() { paused = false; ApplyPlaybackSpeed(); }
+        void OnDisable()
+        {
+            paused = false;
+            HideResultRevealOverlay();
+            ApplyPlaybackSpeed();
+        }
 
         void Update()
         {
-            if (paused || resolving || currentActor == null || !currentActor.IsAlive) return;
+            if (battleEnded || paused || resolving || currentActor == null || !currentActor.IsAlive) return;
             if (currentActor.isPlayer && autoMode && selectedSkillIndex < 0)
             {
                 SelectSkill(0);
@@ -195,6 +219,7 @@ namespace BES.UI.Menu
             if (pauseButton != null) pauseButton.onClick.AddListener(TogglePause);
             if (pauseResumeButton != null) pauseResumeButton.onClick.AddListener(ResumeBattle);
             if (winReturnButton != null) winReturnButton.onClick.AddListener(ReturnToStoryMode);
+            if (winExitButton != null) winExitButton.onClick.AddListener(ExitBattleToHome);
 
             if (loseReturnButton != null) loseReturnButton.onClick.AddListener(ExitBattleToHome);
             if (loseExitButton != null) loseExitButton.onClick.AddListener(ExitBattleToHome);
@@ -209,6 +234,7 @@ namespace BES.UI.Menu
         void OpenScreen(MenuScreenId screenId)
         {
             if (losePanel != null) losePanel.SetActive(false);
+            HideResultRevealOverlay();
             navigator?.Open(screenId);
         }
 
@@ -273,6 +299,7 @@ namespace BES.UI.Menu
             if (winPanel != null) winPanel.SetActive(false);
             if (losePanel != null) losePanel.SetActive(false);
             if (pausePanel != null) pausePanel.SetActive(false);
+            HideResultRevealOverlay();
             paused = false;
             ApplyPlaybackSpeed();
             navigator?.OpenAsRoot(MenuScreenId.Home);
@@ -284,6 +311,7 @@ namespace BES.UI.Menu
             SaveBattleProgress();
             if (losePanel != null) losePanel.SetActive(false);
             if (pausePanel != null) pausePanel.SetActive(false);
+            HideResultRevealOverlay();
             paused = false;
             ApplyPlaybackSpeed();
             navigator?.OpenAsRoot(MenuScreenId.Home);
@@ -295,6 +323,7 @@ namespace BES.UI.Menu
             SaveBattleProgress();
             if (losePanel != null) losePanel.SetActive(false);
             if (pausePanel != null) pausePanel.SetActive(false);
+            HideResultRevealOverlay();
             paused = false;
             ApplyPlaybackSpeed();
             navigator?.OpenAsRoot(MenuScreenId.Home);
@@ -327,6 +356,7 @@ namespace BES.UI.Menu
                 pauseResumeButton = CreateRuntimePauseResumeButton();
 
             winReturnButton ??= FindButton(winPanel, "ContinueButton", "Continue", "NextButton", "TiepTuc", "Tieptuc");
+            winExitButton ??= FindButton(winPanel, "ExitButton", "CloseButton", "ReturnButton", "Thoat", "Exit");
 
             loseReturnButton ??= FindButton(losePanel, "ExitButton", "CloseButton", "ReturnButton", "Thoat", "Exit");
             loseExitButton ??= FindButton(losePanel, "ExitButton", "CloseButton", "ReturnButton", "Thoat", "Exit");
@@ -430,11 +460,14 @@ namespace BES.UI.Menu
             LoadCurrentBattlePhase();
             InitializeTeam(allies, true); InitializeTeam(enemies, false);
             round = 0; queueIndex = 0; selectedSkillIndex = -1; currentActor = null;
-            resolving = false; paused = false; autoMode = false; playbackSpeed = 1f;
+            resolving = false; paused = false; autoMode = false; playbackSpeed = 1f; battleEnded = false;
             ResetCombatDialogueTriggers();
             if (pausePanel != null) pausePanel.SetActive(false);
             if (winPanel != null) winPanel.SetActive(false);
             if (losePanel != null) losePanel.SetActive(false);
+            HideResultRevealOverlay();
+            SetResultPanelAlpha(winPanel, 1f, true);
+            SetResultPanelAlpha(losePanel, 1f, true);
             ApplyPlaybackSpeed(); StartNextRound();
             TryPlayCombatDialogue(CombatDialogueTriggerType.BattleStart);
             TryPlayCombatDialogue(CombatDialogueTriggerType.PhaseStart);
@@ -953,7 +986,7 @@ namespace BES.UI.Menu
             if (actor?.definition?.skills == null || actor.definition.skills.Count == 0) return new BattleSkillDefinition();
             return actor.definition.skills[Mathf.Clamp(index, 0, actor.definition.skills.Count - 1)];
         }
-        void ProcessCombatDrops()
+        List<string> ProcessCombatDrops()
         {
             var stageId = ActiveStageId;
 
@@ -963,7 +996,7 @@ namespace BES.UI.Menu
                 {
                     PlayerWallet.Instance.AddCoins(200);
                 }
-                return;
+                return new List<string> { "+ 200 Vàng" };
             }
 
             var inventory = GameManager.Instance?.Inventory;
@@ -1006,6 +1039,8 @@ namespace BES.UI.Menu
                     }
                 }
             }
+
+            return rewardsList;
         }
 
         void FinishTurn()
@@ -1042,6 +1077,8 @@ namespace BES.UI.Menu
 
         void CompleteDefeat()
         {
+            if (battleEnded) return;
+            battleEnded = true;
             resolving = false;
             paused = true;
             ApplyPlaybackSpeed();
@@ -1055,7 +1092,7 @@ namespace BES.UI.Menu
 
             if (winPanel != null) winPanel.SetActive(false);
             if (pausePanel != null) pausePanel.SetActive(false);
-            if (losePanel != null) losePanel.SetActive(true);
+            ShowResultPanel(losePanel, false);
             onDefeat?.Invoke();
         }
 
@@ -1077,6 +1114,7 @@ namespace BES.UI.Menu
         void ReturnToStoryMode()
         {
             if (winPanel != null) winPanel.SetActive(false);
+            HideResultRevealOverlay();
             if (!IsPlayModeBattle && currentStage?.victoryDialogue != null && currentStage.victoryDialogue.beats.Count > 0 && combatDialogueUI != null)
             {
                 combatDialogueUI.Play(currentStage.victoryDialogue, ReturnToStoryModeAfterDialogue);
@@ -1102,9 +1140,198 @@ namespace BES.UI.Menu
 
         void CompleteVictory()
         {
+            if (battleEnded) return;
+            battleEnded = true;
+            resolving = false;
+            paused = true;
+            ApplyPlaybackSpeed();
             ProcessCombatDrops();
-            if (winPanel != null) winPanel.SetActive(true);
+            if (losePanel != null) losePanel.SetActive(false);
+            if (pausePanel != null) pausePanel.SetActive(false);
+            ShowResultPanel(winPanel, true);
             onVictory?.Invoke();
+        }
+
+        void ShowResultPanel(GameObject panel, bool victory)
+        {
+            if (panel == null) return;
+            panel.SetActive(true);
+            if (resultRevealRoutine != null)
+            {
+                StopCoroutine(resultRevealRoutine);
+                resultRevealRoutine = null;
+            }
+
+            if (!animateResultPanels)
+            {
+                HideResultRevealOverlay();
+                SetResultPanelAlpha(panel, 1f, true);
+                return;
+            }
+
+            var canvasGroup = EnsureResultPanelCanvasGroup(panel);
+            canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = true;
+            resultRevealRoutine = StartCoroutine(PlayResultReveal(panel, canvasGroup, victory));
+        }
+
+        IEnumerator PlayResultReveal(GameObject panel, CanvasGroup canvasGroup, bool victory)
+        {
+            EnsureResultRevealOverlay(panel);
+            var revealColor = victory ? winRevealColor : loseRevealColor;
+            SetRevealColors(revealColor, 0f, 0f);
+            SetRevealLineWidth(0f);
+            SetRevealGlowHeight(resultLineBlurHeight);
+            resultRevealOverlay.SetActive(true);
+            resultRevealOverlay.transform.SetAsLastSibling();
+            panel.transform.SetAsLastSibling();
+
+            var elapsed = 0f;
+            while (elapsed < resultLineSweepDuration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                var t = Mathf.Clamp01(elapsed / Mathf.Max(0.01f, resultLineSweepDuration));
+                t = resultRevealCurve != null ? resultRevealCurve.Evaluate(t) : t;
+                SetRevealColors(revealColor, 0f, t);
+                SetRevealLineWidth(t);
+                yield return null;
+            }
+
+            SetRevealLineWidth(1f);
+            elapsed = 0f;
+            while (elapsed < resultExpandDuration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                var t = Mathf.Clamp01(elapsed / Mathf.Max(0.01f, resultExpandDuration));
+                var eased = resultRevealCurve != null ? resultRevealCurve.Evaluate(t) : t;
+                SetRevealColors(revealColor, eased, 1f - eased);
+                SetRevealGlowHeight(Mathf.Lerp(resultLineBlurHeight, GetRevealRootHeight(), eased));
+                if (canvasGroup != null)
+                    canvasGroup.alpha = eased;
+                yield return null;
+            }
+
+            SetRevealColors(revealColor, 1f, 0f);
+            SetRevealLineWidth(1f);
+            SetRevealGlowHeight(GetRevealRootHeight());
+            if (canvasGroup != null)
+            {
+                canvasGroup.alpha = 1f;
+                canvasGroup.interactable = true;
+                canvasGroup.blocksRaycasts = true;
+            }
+            resultRevealRoutine = null;
+        }
+
+        void EnsureResultRevealOverlay(GameObject panel)
+        {
+            if (resultRevealOverlay != null) return;
+            var parent = panel.transform.parent != null ? panel.transform.parent : transform;
+
+            resultRevealOverlay = new GameObject("BattleResultRevealOverlay", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            resultRevealOverlay.transform.SetParent(parent, false);
+            var rootRect = resultRevealOverlay.GetComponent<RectTransform>();
+            rootRect.anchorMin = Vector2.zero;
+            rootRect.anchorMax = Vector2.one;
+            rootRect.offsetMin = Vector2.zero;
+            rootRect.offsetMax = Vector2.zero;
+            resultRevealBackdrop = resultRevealOverlay.GetComponent<Image>();
+            resultRevealBackdrop.raycastTarget = false;
+
+            resultRevealGlow = CreateRevealImage("RevealGlow", resultRevealOverlay.transform, out resultRevealGlowRect);
+            resultRevealLine = CreateRevealImage("RevealLine", resultRevealOverlay.transform, out resultRevealLineRect);
+            resultRevealOverlay.SetActive(false);
+        }
+
+        Image CreateRevealImage(string objectName, Transform parent, out RectTransform rect)
+        {
+            var obj = new GameObject(objectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            obj.transform.SetParent(parent, false);
+            rect = obj.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = Vector2.zero;
+            var image = obj.GetComponent<Image>();
+            image.raycastTarget = false;
+            return image;
+        }
+
+        CanvasGroup EnsureResultPanelCanvasGroup(GameObject panel)
+        {
+            var canvasGroup = panel.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+                canvasGroup = panel.AddComponent<CanvasGroup>();
+            return canvasGroup;
+        }
+
+        void SetResultPanelAlpha(GameObject panel, float alpha, bool interactable)
+        {
+            if (panel == null) return;
+            var canvasGroup = panel.GetComponent<CanvasGroup>();
+            if (canvasGroup == null) return;
+            canvasGroup.alpha = alpha;
+            canvasGroup.interactable = interactable;
+            canvasGroup.blocksRaycasts = interactable;
+        }
+
+        void HideResultRevealOverlay()
+        {
+            if (resultRevealRoutine != null)
+            {
+                StopCoroutine(resultRevealRoutine);
+                resultRevealRoutine = null;
+            }
+            if (resultRevealOverlay != null)
+                resultRevealOverlay.SetActive(false);
+        }
+
+        void SetRevealColors(Color revealColor, float backdropProgress, float lineProgress)
+        {
+            if (resultRevealBackdrop != null)
+            {
+                var color = resultBackdropColor;
+                color.a *= Mathf.Clamp01(backdropProgress);
+                resultRevealBackdrop.color = color;
+            }
+            if (resultRevealLine != null)
+            {
+                var color = revealColor;
+                color.a *= Mathf.Clamp01(lineProgress);
+                resultRevealLine.color = color;
+            }
+            if (resultRevealGlow != null)
+            {
+                var color = revealColor;
+                color.a *= 0.28f * Mathf.Clamp01(lineProgress);
+                resultRevealGlow.color = color;
+            }
+        }
+
+        void SetRevealLineWidth(float normalizedWidth)
+        {
+            if (resultRevealLineRect == null) return;
+            var width = GetRevealRootWidth() * Mathf.Clamp01(normalizedWidth);
+            resultRevealLineRect.sizeDelta = new Vector2(width, resultLineHeight);
+        }
+
+        void SetRevealGlowHeight(float height)
+        {
+            if (resultRevealGlowRect == null) return;
+            resultRevealGlowRect.sizeDelta = new Vector2(GetRevealRootWidth(), Mathf.Max(1f, height));
+        }
+
+        float GetRevealRootWidth()
+        {
+            var rect = resultRevealOverlay != null ? resultRevealOverlay.GetComponent<RectTransform>() : null;
+            return rect != null && rect.rect.width > 1f ? rect.rect.width : Screen.width;
+        }
+
+        float GetRevealRootHeight()
+        {
+            var rect = resultRevealOverlay != null ? resultRevealOverlay.GetComponent<RectTransform>() : null;
+            return rect != null && rect.rect.height > 1f ? rect.rect.height : Screen.height;
         }
 
         void EnsureDialogueUI()
@@ -1709,4 +1936,6 @@ namespace BES.UI.Menu
         }
     }
 }
+
+
 

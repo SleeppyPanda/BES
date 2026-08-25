@@ -5519,24 +5519,26 @@ MonoBehaviour:
           displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_quan_tai_khien_3
-        displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
-        element: "Th\u1EA3o"
-        portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
+      - id: chapter_1_thu_lua_nho_4
+        displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
+        element: "H\u1ECFa"
+        portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
-        attackEffectPrefabs: []
+        attackEffectPrefabs:
+        - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+        - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
         attackEffectOffset: {x: 0, y: 0, z: 0}
         attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
-        maxHealth: 760
-        attack: 10
-        defense: 80
-        speed: 8
+        maxHealth: 500
+        attack: 82
+        defense: 30
+        speed: 12
         skills:
-        - id: enemy_coffin_shield_2000_once
-          displayName: "T\u1EA1o Khi\xEAn"
+        - id: enemy_fire_aoe_5_percent
+          displayName: "L\u1EEDa Lan"
           icon: {fileID: 0}
           powerMultiplier: 1
       - id: chapter_1_thu_lua_nho_4
