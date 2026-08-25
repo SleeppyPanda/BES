@@ -3221,11 +3221,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!224 &1403718733 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 919373627371776197, guid: 0e6ceddde97dc0d4998a576b48cf6fb0, type: 3}
-  m_PrefabInstance: {fileID: 730515316}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1421912634
 GameObject:
   m_ObjectHideFlags: 0
@@ -5364,8 +5359,8 @@ MonoBehaviour:
     \u1EE8 \u1EEA \u1EEC \u1EEE \u1EF0 | Y \xDD \u1EF2 \u1EF6 \u1EF8 \u1EF4 | \u0110
     \u0111"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 0}
-  m_sharedMaterial: {fileID: 0}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5506,8 +5501,8 @@ MonoBehaviour:
     \u1EDC \u1EDE \u1EE0 \u1EE2\nU \xDA \xD9 \u1EE6 \u0168 \u1EE4 \u01AF \u1EE8 \u1EEA
     \u1EEC \u1EEE \u1EF0 | Y \xDD \u1EF2 \u1EF6 \u1EF8 \u1EF4 | \u0110 \u0111"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 0}
-  m_sharedMaterial: {fileID: 0}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
