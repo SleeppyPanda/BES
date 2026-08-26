@@ -428,6 +428,7 @@ namespace BES.EditorTools
                 agent.stoppingDistance = 1.5f;
 
                 root.AddComponent<EnemyHealth>();
+                root.AddComponent<EnemyHealthBar>();
                 root.AddComponent<EnemyDamageFeedback>();
                 root.AddComponent<BES.Gameplay.MeshyMonsterRuntimeWatcher>();
                 var ai = root.AddComponent<EnemyAI>();

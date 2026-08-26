@@ -16,6 +16,8 @@ namespace BES.Gameplay
         public string EnemyId => string.IsNullOrEmpty(enemyId) ? gameObject.name : enemyId;
         public bool IsAlive => currentHealth > 0f;
         public float CurrentHealth => currentHealth;
+        public float MaxHealth => maxHealth;
+        public event System.Action<float, float> OnHealthChanged;
 
         void Awake()
         {
@@ -23,6 +25,11 @@ namespace BES.Gameplay
             feedback = GetComponent<EnemyDamageFeedback>();
             if (feedback == null)
                 feedback = gameObject.AddComponent<EnemyDamageFeedback>();
+        }
+
+        void Start()
+        {
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
         }
 
         public void TakeDamage(DamageInfo damage)
@@ -33,6 +40,8 @@ namespace BES.Gameplay
             var reduced = Mathf.Max(1f, damage.Amount - defense * 0.4f);
             currentHealth -= reduced;
             feedback?.PlayHit(reduced, damage.IsCritical);
+
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
             if (currentHealth <= 0f)
                 Die();

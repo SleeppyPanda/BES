@@ -314,6 +314,7 @@ namespace BES.Editor
             enemy.transform.position = new Vector3(8f, 0.5f, -4f);
             enemy.layer = LayerMask.NameToLayer("Enemy");
             enemy.AddComponent<EnemyHealth>();
+            enemy.AddComponent<EnemyHealthBar>();
             enemy.AddComponent<EnemyAI>();
 
             var boss = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -324,6 +325,7 @@ namespace BES.Editor
             boss.transform.localScale = new Vector3(2f, 2f, 2f);
             boss.layer = LayerMask.NameToLayer("Enemy");
             boss.AddComponent<EnemyHealth>();
+            boss.AddComponent<EnemyHealthBar>();
             boss.AddComponent<EnemyAI>();
             boss.AddComponent<BossController>();
             var bossMarker = boss.AddComponent<QuestMarker>();

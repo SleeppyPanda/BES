@@ -87,25 +87,25 @@ namespace BES.Gameplay
                 return;
             }
 
-            Move = moveAction.ReadValue<Vector2>();
-            Look = lookAction.ReadValue<Vector2>();
-            JumpPressed = jumpAction.WasPressedThisFrame();
-            SprintHeld = sprintAction.IsPressed();
-            AttackPressed = attackAction.WasPressedThisFrame();
+            Move = moveAction != null ? moveAction.ReadValue<Vector2>() : Vector2.zero;
+            Look = lookAction != null ? lookAction.ReadValue<Vector2>() : Vector2.zero;
+            JumpPressed = jumpAction != null && jumpAction.WasPressedThisFrame();
+            SprintHeld = sprintAction != null && sprintAction.IsPressed();
+            AttackPressed = attackAction != null && attackAction.WasPressedThisFrame();
             HeavyAttackPressed = Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame;
-            Skill1Pressed = skill1Action.WasPressedThisFrame();
-            Skill2Pressed = skill2Action.WasPressedThisFrame();
-            DodgePressed = dodgeAction.WasPressedThisFrame();
-            InteractPressed = interactAction.WasPressedThisFrame();
-            InventoryPressed = inventoryAction.WasPressedThisFrame();
-            CharacterMenuPressed = characterMenuAction.WasPressedThisFrame();
-            MapTogglePressed = mapToggleAction.WasPressedThisFrame();
-            CloseMenuPressed = closeMenuAction.WasPressedThisFrame();
-            WeaponMenuPressed = weaponMenuAction.WasPressedThisFrame();
-            WishMenuPressed = wishMenuAction.WasPressedThisFrame();
-            TeamMenuPressed = teamMenuAction.WasPressedThisFrame();
-            EventMenuPressed = eventMenuAction.WasPressedThisFrame();
-            ArtifactsMenuPressed = artifactsMenuAction.WasPressedThisFrame();
+            Skill1Pressed = skill1Action != null && skill1Action.WasPressedThisFrame();
+            Skill2Pressed = skill2Action != null && skill2Action.WasPressedThisFrame();
+            DodgePressed = dodgeAction != null && dodgeAction.WasPressedThisFrame();
+            InteractPressed = interactAction != null && interactAction.WasPressedThisFrame();
+            InventoryPressed = inventoryAction != null && inventoryAction.WasPressedThisFrame();
+            CharacterMenuPressed = characterMenuAction != null && characterMenuAction.WasPressedThisFrame();
+            MapTogglePressed = mapToggleAction != null && mapToggleAction.WasPressedThisFrame();
+            CloseMenuPressed = closeMenuAction != null && closeMenuAction.WasPressedThisFrame();
+            WeaponMenuPressed = weaponMenuAction != null && weaponMenuAction.WasPressedThisFrame();
+            WishMenuPressed = wishMenuAction != null && wishMenuAction.WasPressedThisFrame();
+            TeamMenuPressed = teamMenuAction != null && teamMenuAction.WasPressedThisFrame();
+            EventMenuPressed = eventMenuAction != null && eventMenuAction.WasPressedThisFrame();
+            ArtifactsMenuPressed = artifactsMenuAction != null && artifactsMenuAction.WasPressedThisFrame();
 
             if (Move.sqrMagnitude < 0.001f)
                 ReadKeyboardMoveFallback();
@@ -130,27 +130,34 @@ namespace BES.Gameplay
             if (isBound || inputActions == null)
                 return;
 
-            playerMap = inputActions.FindActionMap("Player", true);
-            uiMap = inputActions.FindActionMap("UI", true);
+            playerMap = inputActions.FindActionMap("Player", false);
+            uiMap = inputActions.FindActionMap("UI", false);
 
-            moveAction = playerMap.FindAction("Move", true);
-            lookAction = playerMap.FindAction("Look", true);
-            jumpAction = playerMap.FindAction("Jump", true);
-            sprintAction = playerMap.FindAction("Sprint", true);
-            attackAction = playerMap.FindAction("Attack", true);
-            skill1Action = playerMap.FindAction("Skill1", true);
-            skill2Action = playerMap.FindAction("Skill2", true);
-            dodgeAction = playerMap.FindAction("Dodge", true);
-            interactAction = playerMap.FindAction("Interact", true);
-            inventoryAction = uiMap.FindAction("Inventory", true);
-            characterMenuAction = uiMap.FindAction("CharacterMenu", true);
-            mapToggleAction = uiMap.FindAction("MapToggle", true);
-            closeMenuAction = uiMap.FindAction("CloseMenu", true);
-            weaponMenuAction = uiMap.FindAction("WeaponMenu", true);
-            wishMenuAction = uiMap.FindAction("WishMenu", true);
-            teamMenuAction = uiMap.FindAction("TeamMenu", true);
-            eventMenuAction = uiMap.FindAction("EventMenu", true);
-            artifactsMenuAction = uiMap.FindAction("ArtifactsMenu", true);
+            if (playerMap != null)
+            {
+                moveAction = playerMap.FindAction("Move", false);
+                lookAction = playerMap.FindAction("Look", false);
+                jumpAction = playerMap.FindAction("Jump", false);
+                sprintAction = playerMap.FindAction("Sprint", false);
+                attackAction = playerMap.FindAction("Attack", false);
+                skill1Action = playerMap.FindAction("Skill1", false);
+                skill2Action = playerMap.FindAction("Skill2", false);
+                dodgeAction = playerMap.FindAction("Dodge", false);
+                interactAction = playerMap.FindAction("Interact", false);
+            }
+
+            if (uiMap != null)
+            {
+                inventoryAction = uiMap.FindAction("Inventory", false);
+                characterMenuAction = uiMap.FindAction("CharacterMenu", false);
+                mapToggleAction = uiMap.FindAction("MapToggle", false);
+                closeMenuAction = uiMap.FindAction("CloseMenu", false);
+                weaponMenuAction = uiMap.FindAction("WeaponMenu", false);
+                wishMenuAction = uiMap.FindAction("WishMenu", false);
+                teamMenuAction = uiMap.FindAction("TeamMenu", false);
+                eventMenuAction = uiMap.FindAction("EventMenu", false);
+                artifactsMenuAction = uiMap.FindAction("ArtifactsMenu", false);
+            }
             isBound = true;
         }
 

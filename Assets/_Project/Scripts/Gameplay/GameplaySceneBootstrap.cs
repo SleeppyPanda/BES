@@ -147,6 +147,8 @@ namespace BES.Gameplay
 
             if (enemy.GetComponent<EnemyHealth>() == null)
                 enemy.AddComponent<EnemyHealth>();
+            if (enemy.GetComponent<EnemyHealthBar>() == null)
+                enemy.AddComponent<EnemyHealthBar>();
             if (enemy.GetComponent<EnemyDamageFeedback>() == null)
                 enemy.AddComponent<EnemyDamageFeedback>();
             var ai = enemy.GetComponent<EnemyAI>();
