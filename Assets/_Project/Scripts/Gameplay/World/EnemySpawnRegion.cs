@@ -12,8 +12,8 @@ namespace BES.Gameplay
         [Tooltip("Optional box used to pick a random position inside the region. When assigned, it is preferred over Spawn Points.")]
         [SerializeField] BoxCollider spawnArea;
         [SerializeField] LayerMask groundMask = ~0;
-        [SerializeField] float groundProbeHeight = 80f;
-        [SerializeField] float groundProbeDistance = 200f;
+        [SerializeField] float groundProbeHeight = 4f;
+        [SerializeField] float groundProbeDistance = 15f;
         [SerializeField] int positionAttempts = 12;
         [SerializeField] Transform spawnedParent;
         [SerializeField] int minSpawnCount = 1;
@@ -72,22 +72,14 @@ namespace BES.Gameplay
         {
             if (spawnArea != null)
             {
-                var attempts = Mathf.Max(1, positionAttempts);
-                for (var i = 0; i < attempts; i++)
-                {
-                    var half = spawnArea.size * 0.5f;
-                    var local = spawnArea.center + new Vector3(
-                        Random.Range(-half.x, half.x),
-                        half.y,
-                        Random.Range(-half.z, half.z));
-                    var origin = spawnArea.transform.TransformPoint(local) + Vector3.up * groundProbeHeight;
-                    if (!Physics.Raycast(origin, Vector3.down, out var hit, groundProbeDistance, groundMask, QueryTriggerInteraction.Ignore))
-                        continue;
-
-                    position = hit.point;
-                    rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-                    return true;
-                }
+                var half = spawnArea.size * 0.5f;
+                var local = spawnArea.center + new Vector3(
+                    Random.Range(-half.x, half.x),
+                    0f,
+                    Random.Range(-half.z, half.z));
+                position = spawnArea.transform.TransformPoint(local);
+                rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+                return true;
             }
 
             if (spawnPoints != null && spawnPoints.Length > 0)
