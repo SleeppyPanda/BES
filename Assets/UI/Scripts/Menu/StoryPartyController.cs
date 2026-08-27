@@ -13,8 +13,6 @@ namespace BES.UI.Menu
     {
         public Button button;
         public Image portrait;
-        public Image elementIcon;
-        public TMP_Text nameText;
         public TMP_Text levelText;
         public GameObject emptyState;
     }
@@ -85,20 +83,35 @@ namespace BES.UI.Menu
         void BuildRoster()
         {
             ResolveDatabase();
-            if (database == null || rosterRoot == null || characterButtonPrefab == null) return;
-            foreach (Transform child in rosterRoot) Destroy(child.gameObject);
+            if (database == null || rosterRoot == null) return;
             RebuildRosterCharacters();
-            foreach (var character in rosterCharacters)
+            for (var i = 0; i < rosterRoot.childCount; i++)
             {
+                var slot = rosterRoot.GetChild(i);
+                var character = i < rosterCharacters.Count ? rosterCharacters[i] : null;
+                slot.gameObject.SetActive(character != null);
+                if (character == null) continue;
+
                 var captured = character;
-                var button = Instantiate(characterButtonPrefab, rosterRoot);
-                var image = button.GetComponent<Image>();
+                var button = slot.GetComponent<Button>() ?? slot.GetComponentInChildren<Button>(true);
+                var image = button != null ? button.GetComponent<Image>() : slot.GetComponent<Image>();
                 if (image != null) image.sprite = character.cardBackground;
-                var portrait = button.transform.Find("Portrait")?.GetComponent<Image>() ?? button.GetComponentInChildren<Image>(true);
-                if (portrait != null && portrait != image) portrait.sprite = CharacterChibiSprite(character);
-                var label = button.GetComponentInChildren<TMP_Text>();
-                if (label != null) label.text = character.displayName;
-                button.onClick.AddListener(() => AssignCharacter(captured));
+                var portrait = FindDeep(slot, "AssignablePortrait")?.GetComponent<Image>()
+                    ?? FindDeep(slot, "Portrait")?.GetComponent<Image>();
+                if (portrait != null && portrait != image)
+                {
+                    portrait.sprite = character.cardBackground;
+                    portrait.enabled = character.cardBackground != null;
+                }
+                var label = FindDeep(slot, "CharacterLevel")?.GetComponent<TMP_Text>()
+                    ?? FindDeep(slot, "Level")?.GetComponent<TMP_Text>()
+                    ?? button.GetComponentInChildren<TMP_Text>(true);
+                if (label != null) label.text = $"Lv. {CharacterProgressionState.GetLevel(character.id)}";
+                if (button != null)
+                {
+                    button.onClick.RemoveAllListeners();
+                    button.onClick.AddListener(() => AssignCharacter(captured));
+                }
             }
         }
 
@@ -124,9 +137,8 @@ namespace BES.UI.Menu
             {
                 var character = i < party.Count ? party[i] : null;
                 var slot = partySlots[i];
-                if (slot.portrait != null) { slot.portrait.enabled = character != null; slot.portrait.sprite = CharacterChibiSprite(character); }
-                if (slot.elementIcon != null) { slot.elementIcon.enabled = character != null; slot.elementIcon.sprite = character?.elementIcon; }
-                if (slot.nameText != null) slot.nameText.text = character?.displayName ?? string.Empty;
+                var background = slot.portrait != null ? slot.portrait : slot.button != null ? slot.button.image : null;
+                if (background != null) { background.enabled = character != null; background.sprite = character?.cardBackground; }
                 if (slot.levelText != null) slot.levelText.text = character == null ? string.Empty : $"Lv. {CharacterProgressionState.GetLevel(character.id)}";
                 slot.emptyState?.SetActive(character == null);
             }
@@ -141,14 +153,6 @@ namespace BES.UI.Menu
             TurnBattleUI.SelectedPartyCharacterIds = ids;
             onPartyConfirmed?.Invoke(ids);
             navigator?.Open(MenuScreenId.Battle);
-        }
-
-        static Sprite CharacterChibiSprite(CharacterEntry character)
-        {
-            if (character == null) return null;
-            return character.chibi != null ? character.chibi :
-                   character.fullBody != null ? character.fullBody :
-                   character.portrait;
         }
 
         void OnEnable()
@@ -193,6 +197,18 @@ namespace BES.UI.Menu
         {
             if (chapterTitle != null) chapterTitle.text = "CHỌN ĐỘI PLAY MODE";
             if (chapterSummary != null) chapterSummary.text = "Chọn tối thiểu 1 nhân vật đã sở hữu để vào trận.";
+        }
+
+        static Transform FindDeep(Transform root, string name)
+        {
+            if (root == null || string.IsNullOrWhiteSpace(name)) return null;
+            if (root.name.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0) return root;
+            for (var i = 0; i < root.childCount; i++)
+            {
+                var result = FindDeep(root.GetChild(i), name);
+                if (result != null) return result;
+            }
+            return null;
         }
     }
 }

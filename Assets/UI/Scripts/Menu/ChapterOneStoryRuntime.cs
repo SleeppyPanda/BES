@@ -15,6 +15,7 @@ namespace BES.UI.Menu
     {
         const string ChapterId = "chapter_1";
         const string StoryResourcePath = "Main Story/Chương 1";
+        const bool DebugChapterOneFlow = true;
         static readonly string[] SceneStoryResourcePaths =
         {
             "Main Story/Chương 1 cảnh 1",
@@ -64,9 +65,21 @@ namespace BES.UI.Menu
             var rightFallback = ResolveRightSprite(chapter);
             var profiles = BuildCharacterProfiles(database, castConfig, leftFallback, rightFallback);
             var parsedScenes = new List<ParsedStory>();
-            foreach (var sceneSource in sceneSources)
+            for (var sceneIndex = 0; sceneIndex < sceneSources.Count; sceneIndex++)
             {
+                var sceneSource = sceneSources[sceneIndex];
                 var parsedScene = ParseStory(sceneSource, chapter.background, profiles, leftFallback, rightFallback);
+                LogChapterOne($"Parsed scene {sceneIndex + 1}: intro={parsedScene.IntroBeats.Count} victory={parsedScene.VictoryBeats.Count} combats={parsedScene.CombatBlocks.Count} allBeats={parsedScene.AllBeats.Count}");
+                for (var combatIndex = 0; combatIndex < parsedScene.CombatBlocks.Count; combatIndex++)
+                {
+                    var combat = parsedScene.CombatBlocks[combatIndex];
+                    LogChapterOne($"Scene {sceneIndex + 1} combat {combatIndex + 1}: note='{Short(combat.note)}' startBeats={combat.startBeats.Count} triggers={combat.triggers.Count}");
+                    for (var triggerIndex = 0; triggerIndex < combat.triggers.Count; triggerIndex++)
+                    {
+                        var trigger = combat.triggers[triggerIndex];
+                        LogChapterOne($"Scene {sceneIndex + 1} combat {combatIndex + 1} trigger {triggerIndex + 1}: condition='{Short(trigger.condition)}' beats={trigger.beats.Count} endAction='{Short(trigger.endAction)}'");
+                    }
+                }
                 if (parsedScene.AllBeats.Count == 0) continue;
                 ApplyCastOverrides(parsedScene.AllBeats, profiles, castConfig);
                 parsedScenes.Add(parsedScene);
@@ -83,6 +96,7 @@ namespace BES.UI.Menu
                 summary = "Lunen và Tinh Linh lần theo chiếc vòng ngọc, bị một con mèo đen cướp vòng và chạm mặt thiếu niên bí ẩn.",
                 beats = parsedScenes.Count > 0 ? new List<DialogueBeat>(parsedScenes[0].IntroBeats) : new List<DialogueBeat>()
             };
+            LogChapterOne($"Applied chapter intro beats={chapter.introDialogue.beats.Count} stagesBefore={chapter.stages?.Count ?? 0}");
 
             chapter.stages ??= new List<StageEntry>();
             while (chapter.stages.Count < parsedScenes.Count) chapter.stages.Add(new StageEntry());
@@ -615,6 +629,7 @@ namespace BES.UI.Menu
             TriggerBlock currentTrigger = null;
             var checkpointNextBeat = false;
             var currentBackground = background;
+            var seenStoryContent = false;
 
             List<DialogueBeat> CurrentTarget()
             {
@@ -632,6 +647,11 @@ namespace BES.UI.Menu
                     FlushSceneText();
                     continue;
                 }
+
+                if (!seenStoryContent && IsSceneHeaderLine(line))
+                    continue;
+
+                seenStoryContent = true;
 
                 var tagMatch = TagLine.Match(line);
                 if (tagMatch.Success)
@@ -1216,6 +1236,31 @@ namespace BES.UI.Menu
         }
 
         static bool IsDivider(string line) => line.StartsWith("___", StringComparison.Ordinal) || line == "\u2003";
+
+        static bool IsSceneHeaderLine(string line)
+        {
+            if (string.IsNullOrWhiteSpace(line)) return false;
+            var text = line.Trim();
+            return text.StartsWith("Chương", StringComparison.OrdinalIgnoreCase) ||
+                   text.StartsWith("ChÆ", StringComparison.OrdinalIgnoreCase) ||
+                   text.StartsWith("Cảnh", StringComparison.OrdinalIgnoreCase) ||
+                   text.StartsWith("Cáº", StringComparison.OrdinalIgnoreCase) ||
+                   text.IndexOf("Quest:", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        static void LogChapterOne(string message)
+        {
+            if (!DebugChapterOneFlow) return;
+            Debug.Log($"[BES][Chapter1Runtime] {message}");
+        }
+
+        static string Short(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return string.Empty;
+            value = value.Replace("\r", " ").Replace("\n", " ").Trim();
+            return value.Length <= 100 ? value : value.Substring(0, 100) + "...";
+        }
+
         static bool IsLeftSpeaker(string speaker) => string.Equals(speaker, "Lunen", StringComparison.OrdinalIgnoreCase);
 
         static string NormalizeSpeaker(string speaker)

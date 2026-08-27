@@ -186,6 +186,8 @@ namespace BES.UI.Menu
         [SerializeField, Min(0f)] float charactersPerSecond = 45f;
         [SerializeField] List<DialogueBeat> beats = new();
         [SerializeField] UnityEvent onSequenceCompleted;
+        [Header("Debug")]
+        [SerializeField] bool debugDialogueFlow = true;
         Action runtimeCompleted;
         int index = -1;
         Coroutine typing;
@@ -202,18 +204,32 @@ namespace BES.UI.Menu
             EnsureRuntimeView();
             WireControls();
             skipConfirmation?.SetActive(false);
+            LogDialogue($"Awake active={gameObject.activeSelf} beats={beats?.Count ?? 0} hasBg={background != null} hasBody={bodyText != null} hasSpeaker={speakerText != null} hasAdvance={advanceButton != null}");
         }
 
         void OnEnable()
         {
+            LogDialogue($"OnEnable playRequested={playRequested} beats={beats?.Count ?? 0}");
             if (Application.isPlaying && !playRequested)
             {
+                LogDialogue("OnEnable blocked: playRequested=false -> hide dialogue object");
+                ResetCheckpointFade();
                 gameObject.SetActive(false);
                 return;
             }
 
             if (Application.isPlaying && (beats == null || beats.Count == 0))
+            {
+                LogDialogue("OnEnable blocked: no beats -> hide dialogue object");
+                ResetCheckpointFade();
                 gameObject.SetActive(false);
+            }
+        }
+
+        void OnDisable()
+        {
+            LogDialogue($"OnDisable index={index} current='{Short(currentBeat?.text)}'");
+            ResetCheckpointFade();
         }
 
         void WireControls()
@@ -234,15 +250,19 @@ namespace BES.UI.Menu
 
         public void Play()
         {
+            CacheNamedPrefabReferences(true);
             index = -1;
             fullyShown = true;
             waitingForBeatMovement = false;
+            ResetCheckpointFade();
             if (beats == null || beats.Count == 0)
             {
+                LogDialogue("Play called with no beats -> CompleteSequence");
                 CompleteSequence();
                 return;
             }
             playRequested = true;
+            LogDialogue($"Play start beats={beats.Count} activeBefore={gameObject.activeSelf} firstSpeaker='{beats[0]?.speaker}' firstText='{Short(beats[0]?.text)}'");
             gameObject.SetActive(true);
             Advance();
         }
@@ -267,32 +287,88 @@ namespace BES.UI.Menu
 
         public void Advance()
         {
+            LogDialogue($"Advance click/request index={index} fullyShown={fullyShown} waitingMove={waitingForBeatMovement} beatRoutine={beatRoutine != null}");
             if (waitingForBeatMovement && beatRoutine != null)
+            {
+                LogDialogue("Advance ignored: character movement still running");
                 return;
+            }
 
-            if (!fullyShown && index >= 0) { CompleteTyping(); return; }
-            index++;
-            if (index >= beats.Count) { CompleteSequence(); return; }
+            if (!fullyShown && index >= 0)
+            {
+                LogDialogue($"Advance completes current typing index={index}");
+                CompleteTyping();
+                return;
+            }
+            do
+            {
+                index++;
+                if (index >= beats.Count)
+                {
+                    LogDialogue("Advance reached end -> CompleteSequence");
+                    CompleteSequence();
+                    return;
+                }
+                currentBeat = beats[index];
+                if (IsEmptyBeat(currentBeat))
+                    LogDialogue($"Skip empty beat index={index} speaker='{currentBeat?.speaker}' bg={currentBeat?.background != null} fade={currentBeat?.fadeToBlackCheckpoint}");
+            }
+            while (IsEmptyBeat(currentBeat));
+
             currentBeat = beats[index];
+            LogDialogue($"Show beat index={index}/{beats.Count - 1} speaker='{currentBeat?.speaker}' text='{Short(currentBeat?.text)}' bg={currentBeat?.background != null} fade={currentBeat?.fadeToBlackCheckpoint}");
             if (beatRoutine != null) StopCoroutine(beatRoutine);
             beatRoutine = StartCoroutine(ShowBeatRoutine(currentBeat));
         }
 
+        static bool IsEmptyBeat(DialogueBeat beat)
+        {
+            if (beat == null) return true;
+            if (!string.IsNullOrWhiteSpace(beat.text)) return false;
+
+            return (beat.castActions == null || beat.castActions.Count == 0) &&
+                   (beat.characterPlacements == null || beat.characterPlacements.Count == 0) &&
+                   (beat.characterMovements == null || beat.characterMovements.Count == 0) &&
+                   (beat.characterVisuals == null || beat.characterVisuals.Count == 0);
+        }
+
         IEnumerator ShowBeatRoutine(DialogueBeat beat)
         {
+            LogDialogue($"ShowBeatRoutine begin index={index} speaker='{beat?.speaker}' hasText={!string.IsNullOrWhiteSpace(beat?.text)}");
             if (beat.fadeToBlackCheckpoint)
+            {
+                LogDialogue("Checkpoint fade out begin");
                 yield return PlayCheckpointFadeOut();
+            }
             if (background != null && beat.background != null) background.sprite = beat.background;
             StopCharacterRoutines();
             ApplyCharacters(beat);
             if (speakerNameRoot != null) speakerNameRoot.SetActive(!string.IsNullOrWhiteSpace(beat.speaker));
-            if (speakerText != null) speakerText.text = beat.speaker;
+            if (speakerText != null) speakerText.text = beat.speaker ?? string.Empty;
             beat.onBeatStarted?.Invoke();
             waitingForBeatMovement = true;
             yield return PlayBeatMovements(beat);
             waitingForBeatMovement = false;
             if (beat.fadeToBlackCheckpoint)
+            {
+                LogDialogue("Checkpoint fade in begin");
                 yield return PlayCheckpointFadeIn();
+            }
+
+            if (string.IsNullOrWhiteSpace(beat.text))
+            {
+                LogDialogue($"Beat index={index} has no text after actions -> auto advance");
+                if (bodyText != null)
+                {
+                    bodyText.text = string.Empty;
+                    bodyText.maxVisibleCharacters = 0;
+                }
+                fullyShown = true;
+                beatRoutine = null;
+                Advance();
+                yield break;
+            }
+
             StartBeatTyping(beat);
             beatRoutine = null;
         }
@@ -814,11 +890,13 @@ namespace BES.UI.Menu
             fullyShown = false;
             if (bodyText == null)
             {
+                LogDialogue("TypeText blocked: bodyText is null");
                 fullyShown = true;
                 yield break;
             }
             bodyText.text = value ?? string.Empty;
             bodyText.maxVisibleCharacters = 0;
+            bodyText.ForceMeshUpdate(true, true);
             var count = bodyText.text.Length;
             var shown = 0f;
             while (bodyText.maxVisibleCharacters < count)
@@ -829,6 +907,7 @@ namespace BES.UI.Menu
             }
             fullyShown = true;
             typing = null;
+            LogDialogue($"TypeText complete index={index} chars={count}");
         }
 
         void CompleteTyping()
@@ -837,16 +916,23 @@ namespace BES.UI.Menu
             typing = null;
             if (bodyText != null) bodyText.maxVisibleCharacters = int.MaxValue;
             fullyShown = true;
+            LogDialogue($"CompleteTyping index={index}");
         }
 
-        public void OpenSkipConfirmation() { if (skipConfirmation != null) skipConfirmation.SetActive(true); }
-        public void CloseSkipConfirmation() { if (skipConfirmation != null) skipConfirmation.SetActive(false); }
-        public void SkipNow() { CloseSkipConfirmation(); CompleteSequence(); }
+        public void OpenSkipConfirmation() { LogDialogue("OpenSkipConfirmation"); if (skipConfirmation != null) skipConfirmation.SetActive(true); }
+        public void CloseSkipConfirmation() { LogDialogue("CloseSkipConfirmation"); if (skipConfirmation != null) skipConfirmation.SetActive(false); }
+        public void SkipNow() { LogDialogue("SkipNow -> CompleteSequence"); CloseSkipConfirmation(); CompleteSequence(); }
         void CompleteSequence()
         {
+            LogDialogue($"CompleteSequence index={index} beats={beats?.Count ?? 0}");
             CompleteTyping();
+            if (typing != null) StopCoroutine(typing);
+            if (beatRoutine != null) StopCoroutine(beatRoutine);
+            typing = null;
+            beatRoutine = null;
             waitingForBeatMovement = false;
             currentBeat = null;
+            ResetCheckpointFade();
             onSequenceCompleted?.Invoke();
             var completed = runtimeCompleted;
             runtimeCompleted = null;
@@ -855,8 +941,31 @@ namespace BES.UI.Menu
             completed?.Invoke();
         }
 
+        void LogDialogue(string message)
+        {
+            if (!debugDialogueFlow) return;
+            Debug.Log($"[BES][DialogueFlow][{name}] {message}");
+        }
+
+        static string Short(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return string.Empty;
+            value = value.Replace("\r", " ").Replace("\n", " ").Trim();
+            return value.Length <= 80 ? value : value.Substring(0, 80) + "...";
+        }
+
+        void ResetCheckpointFade()
+        {
+            if (checkpointFadeGroup == null) return;
+            checkpointFadeGroup.alpha = 0f;
+            checkpointFadeGroup.blocksRaycasts = false;
+            checkpointFadeGroup.interactable = false;
+            checkpointFadeGroup.gameObject.SetActive(false);
+        }
+
         public void EnsureRuntimeView()
         {
+            CacheNamedPrefabReferences(false);
             if (background != null && speakerText != null && bodyText != null && advanceButton != null) return;
 
             var rect = GetComponent<RectTransform>() ?? gameObject.AddComponent<RectTransform>();
@@ -915,6 +1024,71 @@ namespace BES.UI.Menu
 
             if (background == null || speakerText == null || bodyText == null || advanceButton == null)
                 Debug.LogWarning($"[BES] {name} is missing prefab dialogue references. Required: Background, DialogueBox/Button, DialogueBox/BodyText, NameBox/SpeakerText.");
+        }
+
+        void CacheNamedPrefabReferences(bool force)
+        {
+            var foundBackground = transform.Find("Background")?.GetComponent<Image>();
+            if (force || background == null)
+                background = foundBackground != null ? foundBackground : background;
+
+            var fade = transform.Find("CheckpointFade");
+            var foundFade = fade != null ? fade.GetComponent<CanvasGroup>() : null;
+            if (force || checkpointFadeGroup == null)
+                checkpointFadeGroup = foundFade != null ? foundFade : checkpointFadeGroup;
+
+            var left = transform.Find("LeftCharacter");
+            var right = transform.Find("RightCharacter");
+            if (force || leftCharacter == null)
+                leftCharacter = left != null ? left.GetComponent<Image>() : leftCharacter;
+            if (force || rightCharacter == null)
+                rightCharacter = right != null ? right.GetComponent<Image>() : rightCharacter;
+            if (force || leftGroup == null)
+                leftGroup = left != null ? left.GetComponent<CanvasGroup>() : leftGroup;
+            if (force || rightGroup == null)
+                rightGroup = right != null ? right.GetComponent<CanvasGroup>() : rightGroup;
+
+            var dialogueBox = transform.Find("DialogueBox");
+            if (dialogueBox != null)
+            {
+                if (force || advanceButton == null)
+                    advanceButton = dialogueBox.GetComponent<Button>() ?? advanceButton;
+
+                var foundBody = FindDeep(dialogueBox, "BodyText")?.GetComponent<TMP_Text>()
+                    ?? dialogueBox.GetComponentInChildren<TMP_Text>(true);
+                if (force || bodyText == null)
+                    bodyText = foundBody != null ? foundBody : bodyText;
+            }
+
+            var nameBox = transform.Find("NameBox");
+            if (nameBox != null)
+            {
+                if (force || speakerNameRoot == null)
+                    speakerNameRoot = nameBox.gameObject;
+
+                var foundSpeaker = FindDeep(nameBox, "SpeakerText")?.GetComponent<TMP_Text>()
+                    ?? nameBox.GetComponentInChildren<TMP_Text>(true);
+                if (force || speakerText == null)
+                    speakerText = foundSpeaker != null ? foundSpeaker : speakerText;
+            }
+
+            if (force || skipButton == null)
+                skipButton = FindDeep(transform, "SkipButton")?.GetComponent<Button>() ?? skipButton;
+            if (force || skipConfirmation == null)
+                skipConfirmation = FindDeep(transform, "SkipConfirmation")?.gameObject ?? skipConfirmation;
+            if (force || confirmSkipButton == null)
+                confirmSkipButton = FindDeep(transform, "ConfirmSkipButton")?.GetComponent<Button>() ?? confirmSkipButton;
+            if (force || cancelSkipButton == null)
+                cancelSkipButton = FindDeep(transform, "CancelSkipButton")?.GetComponent<Button>() ?? cancelSkipButton;
+
+            if (checkpointFadeGroup != null)
+            {
+                checkpointFadeGroup.alpha = 0f;
+                checkpointFadeGroup.blocksRaycasts = false;
+                checkpointFadeGroup.interactable = false;
+                if (!Application.isPlaying)
+                    checkpointFadeGroup.gameObject.SetActive(false);
+            }
         }
 
         void CachePrefabCharacterSlots()
@@ -1023,6 +1197,20 @@ namespace BES.UI.Menu
             cancelSkipButton = CreateButton(panel.transform, "CancelSkipButton", "Không", new Vector2(0.56f, 0.08f), new Vector2(0.88f, 0.32f));
             panel.gameObject.SetActive(false);
             return panel.gameObject;
+        }
+
+        static Transform FindDeep(Transform root, string objectName)
+        {
+            if (root == null || string.IsNullOrWhiteSpace(objectName)) return null;
+            if (string.Equals(root.name, objectName, StringComparison.OrdinalIgnoreCase)) return root;
+
+            for (var i = 0; i < root.childCount; i++)
+            {
+                var result = FindDeep(root.GetChild(i), objectName);
+                if (result != null) return result;
+            }
+
+            return null;
         }
     }
 }

@@ -163,6 +163,8 @@ namespace BES.UI.Menu
         [SerializeField] bool hideCombatHudDuringDialogue = true;
         [Tooltip("Optional extra UI roots to hide while a combat trigger dialogue is playing. Do not put battlefield/background roots here.")]
         [SerializeField] List<GameObject> extraHudRootsToHideDuringDialogue = new();
+        [Header("Debug")]
+        [SerializeField] bool debugBattleFlow = true;
 
         public static string ActiveStageId;
         public static string ActivePlayModeStageGroupId;
@@ -194,13 +196,19 @@ namespace BES.UI.Menu
 
         void Awake()
         {
+            LogBattle($"Awake active={gameObject.activeSelf} combatDialogueUI={combatDialogueUI != null} allySlots={allies.Count} enemySlots={enemies.Count}");
             EnsureEditableCombatDialogueUI();
             EnsureDialogueUI();
             WireControls();
         }
-        void OnEnable() { ResetBattle(); }
+        void OnEnable()
+        {
+            LogBattle($"OnEnable ActiveStageId='{ActiveStageId}' IsPlayMode={IsPlayModeBattle} SelectedParty='{JoinIds(SelectedPartyCharacterIds)}'");
+            ResetBattle();
+        }
         void OnDisable()
         {
+            LogBattle($"OnDisable stage='{currentStage?.id}' battleEnded={battleEnded} round={round}");
             paused = false;
             HideResultRevealOverlay();
             ApplyPlaybackSpeed();
@@ -475,6 +483,7 @@ namespace BES.UI.Menu
 
         public void ResetBattle()
         {
+            LogBattle($"ResetBattle begin ActiveStageId='{ActiveStageId}' IsPlayMode={IsPlayModeBattle} SelectedParty='{JoinIds(SelectedPartyCharacterIds)}'");
             StopAllCoroutines();
             EnsureDialogueUI();
             LoadPlayerParty();
@@ -491,6 +500,7 @@ namespace BES.UI.Menu
             HideResultRevealOverlay();
             SetResultPanelAlpha(winPanel, 1f, true);
             SetResultPanelAlpha(losePanel, 1f, true);
+            LogBattle($"ResetBattle loaded stage='{currentStage?.id}' phase={currentPhaseIndex} alliesAlive={AliveCount(allies)} enemiesAlive={AliveCount(enemies)} phaseTriggers={currentPhase?.combatDialogueTriggers?.Count ?? 0} stageTriggers={currentStage?.combatDialogueTriggers?.Count ?? 0}");
             ApplyPlaybackSpeed(); StartNextRound();
             TryPlayCombatDialogue(CombatDialogueTriggerType.BattleStart);
             TryPlayCombatDialogue(CombatDialogueTriggerType.PhaseStart);
@@ -536,6 +546,7 @@ namespace BES.UI.Menu
             round++; turnQueue.Clear(); AddAlive(turnQueue, allies); AddAlive(turnQueue, enemies);
             turnQueue.Sort(CompareTurnOrder); queueIndex = 0;
             if (roundText != null) roundText.text = $"ROUND {round}";
+            LogBattle($"StartNextRound round={round} queue='{DescribeQueue()}' alliesAlive={AliveCount(allies)} enemiesAlive={AliveCount(enemies)}");
             onRoundStarted?.Invoke(round);
             if (TryPlayCombatDialogue(CombatDialogueTriggerType.RoundStart, null, round, BeginCurrentTurn)) return;
             BeginCurrentTurn();
@@ -553,8 +564,14 @@ namespace BES.UI.Menu
         {
             selectedSkillIndex = -1;
             while (queueIndex < turnQueue.Count && !turnQueue[queueIndex].IsAlive) queueIndex++;
-            if (queueIndex >= turnQueue.Count) { StartNextRound(); return; }
+            if (queueIndex >= turnQueue.Count)
+            {
+                LogBattle("BeginCurrentTurn queue ended -> StartNextRound");
+                StartNextRound();
+                return;
+            }
             currentActor = turnQueue[queueIndex];
+            LogBattle($"BeginCurrentTurn queueIndex={queueIndex} actor='{UnitName(currentActor)}' isPlayer={currentActor?.isPlayer} hp={currentActor?.health}/{currentActor?.definition?.maxHealth}");
             if (currentActorText != null) currentActorText.text = currentActor.definition.displayName;
             RefreshTurnOrder();
             if (currentActor.isPlayer) { ShowSkills(currentActor); if (selectionHintText != null) selectionHintText.text = "SELECT A SKILL"; }
@@ -602,6 +619,7 @@ namespace BES.UI.Menu
         IEnumerator PerformAction(BattleUnitView actor, BattleUnitView target, int skillIndex)
         {
             var skill = GetSkill(actor, skillIndex);
+            LogBattle($"PerformAction actor='{UnitName(actor)}' target='{UnitName(target)}' skillIndex={skillIndex} skill='{skill?.id}' power={skill?.powerMultiplier}");
             if (skill != null && string.Equals(skill.id, "summon", StringComparison.OrdinalIgnoreCase))
             {
                 yield return ScaledWait(actionWindup);
@@ -909,6 +927,8 @@ namespace BES.UI.Menu
         void DamageUnit(BattleUnitView target, int damage)
         {
             if (target == null || !target.IsAlive) return;
+            var beforeHp = target.health;
+            var beforeShield = target.shield;
             var remaining = Mathf.Max(0, damage);
             var requestedDamage = remaining;
             var blockedTotal = 0;
@@ -930,6 +950,7 @@ namespace BES.UI.Menu
             }
 
             RefreshUnit(target);
+            LogBattle($"DamageUnit target='{UnitName(target)}' requested={damage} hp {beforeHp}->{target.health} shield {beforeShield}->{target.shield}");
             TryPlayCombatDialogue(CombatDialogueTriggerType.BossHealthBelowPercent, target);
 
             if (target.health == 0)
@@ -1273,6 +1294,7 @@ namespace BES.UI.Menu
 
         void FinishTurn()
         {
+            LogBattle($"FinishTurn actor='{UnitName(currentActor)}' alliesAlive={AliveCount(allies)} enemiesAlive={AliveCount(enemies)}");
             resolving = false; selectedSkillIndex = -1;
             if (TryPlayAggregateCombatTriggers()) return;
             if (!AnyAlive(enemies))
@@ -1306,6 +1328,7 @@ namespace BES.UI.Menu
         void CompleteDefeat()
         {
             if (battleEnded) return;
+            LogBattle($"CompleteDefeat stage='{currentStage?.id}' phase={currentPhaseIndex} IsPlayMode={IsPlayModeBattle}");
             battleEnded = true;
             resolving = false;
             paused = true;
@@ -1370,6 +1393,7 @@ namespace BES.UI.Menu
         void CompleteVictory()
         {
             if (battleEnded) return;
+            LogBattle($"CompleteVictory stage='{currentStage?.id}' phase={currentPhaseIndex} IsPlayMode={IsPlayModeBattle}");
             battleEnded = true;
             resolving = false;
             paused = true;
@@ -1689,6 +1713,7 @@ namespace BES.UI.Menu
 
         void LoadPlayerParty()
         {
+            LogBattle($"LoadPlayerParty begin selectedIds='{JoinIds(SelectedPartyCharacterIds)}' database={menuContentDatabase != null}");
             if (menuContentDatabase == null)
             {
                 menuContentDatabase = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
@@ -1704,22 +1729,31 @@ namespace BES.UI.Menu
             }
 
             if (menuContentDatabase == null || SelectedPartyCharacterIds == null || SelectedPartyCharacterIds.Count == 0)
+            {
+                LogBattle($"LoadPlayerParty blocked database={menuContentDatabase != null} selectedCount={SelectedPartyCharacterIds?.Count ?? 0}");
                 return;
+            }
 
             for (var i = 0; i < Mathf.Min(SelectedPartyCharacterIds.Count, allies.Count); i++)
             {
                 var characterId = CharacterIdentity.Canonical(SelectedPartyCharacterIds[i]);
                 var character = menuContentDatabase.FindCharacter(characterId);
                 var view = allies[i];
-                if (character == null || view == null) continue;
+                if (character == null || view == null)
+                {
+                    LogBattle($"LoadPlayerParty skip slot={i} id='{characterId}' character={character != null} view={view != null}");
+                    continue;
+                }
 
                 view.definition = BuildBattleDefinitionFromCharacter(character);
                 SetUnitVisualsActive(view, true);
+                LogBattle($"LoadPlayerParty slot={i} character='{character.id}' hp={view.definition.maxHealth} atk={view.definition.attack}");
             }
         }
 
         void LoadStageData()
         {
+            LogBattle($"LoadStageData begin ActiveStageId='{ActiveStageId}' IsPlayMode={IsPlayModeBattle}");
             if (menuContentDatabase == null)
             {
                 menuContentDatabase = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
@@ -1730,7 +1764,10 @@ namespace BES.UI.Menu
             }
 
             if (menuContentDatabase == null || string.IsNullOrEmpty(ActiveStageId))
+            {
+                LogBattle($"LoadStageData blocked database={menuContentDatabase != null} ActiveStageId='{ActiveStageId}'");
                 return;
+            }
 
             menuContentDatabase.EnsureDefaultPlayModeStages();
             menuContentDatabase = ChapterOneStoryRuntime.Apply(menuContentDatabase);
@@ -1762,8 +1799,13 @@ namespace BES.UI.Menu
                 }
             }
 
-            if (stage == null) return;
+            if (stage == null)
+            {
+                LogBattle($"LoadStageData failed: no stage found for '{ActiveStageId}'");
+                return;
+            }
             currentStage = stage;
+            LogBattle($"LoadStageData found stage='{stage.id}' title='{stage.title}' enemyLevel={stage.enemyLevel} enemies={stage.enemies?.Count ?? 0} phases={stage.battlePhases?.Count ?? 0}");
         }
 
         void LoadCurrentBattlePhase()
@@ -1774,6 +1816,7 @@ namespace BES.UI.Menu
                 currentPhaseIndex >= 0 &&
                 currentPhaseIndex < currentStage.battlePhases.Count)
                 currentPhase = currentStage.battlePhases[currentPhaseIndex];
+            LogBattle($"LoadCurrentBattlePhase index={currentPhaseIndex} hasPhase={currentPhase != null} phaseEnemies={currentPhase?.enemies?.Count ?? 0} phaseAllies={currentPhase?.allies?.Count ?? 0}");
 
             if (currentPhase?.allies != null && currentPhase.allies.Count > 0)
             {
@@ -1962,7 +2005,12 @@ namespace BES.UI.Menu
 
         bool TryPlayCombatDialogue(CombatDialogueTriggerType triggerType, BattleUnitView unit = null, int roundValue = 0, Action completed = null)
         {
-            if (combatDialogueUI == null) return false;
+            if (combatDialogueUI == null)
+            {
+                LogBattle($"TryPlayCombatDialogue {triggerType} blocked: combatDialogueUI=null");
+                return false;
+            }
+            LogBattle($"TryPlayCombatDialogue scan type={triggerType} unit='{UnitName(unit)}' round={roundValue}");
             foreach (var trigger in ActiveCombatTriggers())
             {
                 if (trigger == null || trigger.played || trigger.triggerType != triggerType) continue;
@@ -1975,6 +2023,7 @@ namespace BES.UI.Menu
 
                 trigger.played = true;
                 var shouldPause = pauseBattleDuringDialogue && trigger.pauseCombat;
+                LogBattle($"Trigger matched type={triggerType} condition unitId='{trigger.unitId}' hp%={trigger.healthPercent} enemyCount={trigger.enemyCount} beats={trigger.dialogue.beats.Count} pause={shouldPause} action={trigger.actionAfterDialogue}");
                 if (shouldPause)
                 {
                     paused = true;
@@ -1985,6 +2034,7 @@ namespace BES.UI.Menu
 
                 combatDialogueUI.Play(trigger.dialogue, () =>
                 {
+                    LogBattle($"Trigger dialogue completed type={triggerType} action={trigger.actionAfterDialogue}");
                     if (hideCombatHudDuringDialogue)
                         SetCombatHudSuppressed(false);
                     if (shouldPause)
@@ -1999,6 +2049,7 @@ namespace BES.UI.Menu
                 return true;
             }
 
+            LogBattle($"TryPlayCombatDialogue no match type={triggerType}");
             return false;
         }
 
@@ -2052,10 +2103,40 @@ namespace BES.UI.Menu
             return false;
         }
 
+        void LogBattle(string message)
+        {
+            if (!debugBattleFlow) return;
+            Debug.Log($"[BES][BattleFlow][{name}] {message}");
+        }
+
+        static string JoinIds(IReadOnlyList<string> ids)
+        {
+            return ids == null || ids.Count == 0 ? string.Empty : string.Join(", ", ids);
+        }
+
+        static string UnitName(BattleUnitView unit)
+        {
+            if (unit == null) return "null";
+            var id = unit.definition != null && !string.IsNullOrWhiteSpace(unit.definition.id)
+                ? unit.definition.id
+                : unit.root != null ? unit.root.name : "unknown";
+            return $"{id}({(unit.isPlayer ? "ally" : "enemy")})";
+        }
+
+        string DescribeQueue()
+        {
+            if (turnQueue == null || turnQueue.Count == 0) return string.Empty;
+            var parts = new List<string>();
+            foreach (var unit in turnQueue)
+                parts.Add(UnitName(unit));
+            return string.Join(" -> ", parts);
+        }
+
         bool HasNextPhase() => currentStage?.battlePhases != null && currentPhaseIndex + 1 < currentStage.battlePhases.Count;
 
         void StartNextPhase()
         {
+            LogBattle($"StartNextPhase requested currentPhase={currentPhaseIndex} hasNext={HasNextPhase()}");
             if (!HasNextPhase()) { CompleteVictory(); return; }
             currentPhaseIndex++;
             LoadCurrentBattlePhase();

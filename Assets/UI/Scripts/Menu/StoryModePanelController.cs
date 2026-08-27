@@ -18,8 +18,6 @@ namespace BES.UI.Menu
     {
         public Button button;
         public Image portrait;
-        public Image elementIcon;
-        public TMP_Text nameText;
         public TMP_Text levelText;
         public GameObject emptyState;
     }
@@ -29,8 +27,6 @@ namespace BES.UI.Menu
     {
         public Button button;
         public Image portrait;
-        public Image elementIcon;
-        public TMP_Text nameText;
         public TMP_Text levelText;
         public GameObject selectedState;
     }
@@ -84,6 +80,8 @@ namespace BES.UI.Menu
         [SerializeField] Button prevChapterButton;
 
         [SerializeField] UnityEvent<List<string>> onPartyConfirmed;
+        [Header("Debug")]
+        [SerializeField] bool debugStoryFlow = true;
 
         readonly List<CharacterEntry> selectedParty = new();
         readonly List<CharacterEntry> ownedRoster = new();
@@ -105,6 +103,7 @@ namespace BES.UI.Menu
         }
         void Awake()
         {
+            LogStory($"Awake active={gameObject.activeSelf} database={database != null} storyDialogueUI={storyDialogueUI != null}");
             EnsureEditableDialogueUI();
             EnsureFixedPartySlots();
             EnsureSelectionSlotBindings();
@@ -112,12 +111,14 @@ namespace BES.UI.Menu
             BindButtons();
             database = ChapterOneStoryRuntime.Apply(database);
             database = ChapterTwoStoryRuntime.Apply(database);
+            LogStory($"Awake after runtime apply chapters={database?.storyChapters?.Count ?? 0}");
             SelectChapter(chapterIndex);
             ShowPhase(StoryPartyPhase.Main);
         }
         void OnEnable()
         {
             if (!Application.isPlaying) return;
+            LogStory("OnEnable begin");
             GameEvents.OnPartyChanged += RefreshAll;
             EnsureDialogueUI();
             EnsureSelectionSlotBindings();
@@ -129,6 +130,11 @@ namespace BES.UI.Menu
             if (save != null)
             {
                 chapterIndex = Mathf.Clamp(save.storyChapterIndex, 0, database.storyChapters.Count - 1);
+                LogStory($"Loaded save chapterIndex={chapterIndex} activeStage='{save.activeStoryStageId}' storyStageIndex={save.storyStageIndex} party='{JoinIds(save.storyPartyCharacterIds)}'");
+            }
+            else
+            {
+                LogStory("No save object available");
             }
             
             ShowPhase(StoryPartyPhase.Main);
@@ -238,7 +244,12 @@ namespace BES.UI.Menu
 
         public void SelectChapter(int index)
         {
-            if (database == null || database.storyChapters.Count == 0) return;
+            LogStory($"SelectChapter request index={index}");
+            if (database == null || database.storyChapters.Count == 0)
+            {
+                LogStory("SelectChapter blocked: database/chapter list missing");
+                return;
+            }
             database = ChapterOneStoryRuntime.Apply(database);
             database = ChapterTwoStoryRuntime.Apply(database);
             
@@ -246,6 +257,7 @@ namespace BES.UI.Menu
 
             chapterIndex = newChapterIndex;
             ApplyStoryRuntime(chapterIndex);
+            LogStory($"SelectChapter applied chapterIndex={chapterIndex} chapterId='{database.storyChapters[chapterIndex]?.id}' stages={database.storyChapters[chapterIndex]?.stages?.Count ?? 0} introBeats={database.storyChapters[chapterIndex]?.introDialogue?.beats?.Count ?? 0}");
 
             // SaveData is the source of truth so old test data cannot skip the first story scene.
             var save = GameManager.Instance?.Save?.Current;
@@ -256,13 +268,16 @@ namespace BES.UI.Menu
                     stage != null && string.Equals(stage.id, save.activeStoryStageId, StringComparison.OrdinalIgnoreCase)))
             {
                 currentStageId = save.activeStoryStageId;
+                LogStory($"SelectChapter using saved stage '{currentStageId}'");
             }
             else
             {
                 currentStageId = string.Empty;
+                LogStory("SelectChapter no valid saved stage -> use first stage");
             }
 
             EnsureCurrentStageId();
+            LogStory($"SelectChapter currentStageId='{currentStageId}'");
 
             // Sync with save data
             var saveObj = GameManager.Instance?.Save?.Current;
@@ -292,6 +307,7 @@ namespace BES.UI.Menu
             phase = next;
             if (beforeSelectionPanel != null) beforeSelectionPanel.SetActive(true);
             if (characterSelectionPanel != null) characterSelectionPanel.SetActive(next == StoryPartyPhase.Selecting);
+            LogStory($"ShowPhase {next} beforePanel={beforeSelectionPanel?.activeSelf} selectionPanel={characterSelectionPanel?.activeSelf}");
             RefreshAll();
         }
 
@@ -301,6 +317,7 @@ namespace BES.UI.Menu
             targetSlotIndex = Mathf.Clamp(slotIndex, 0, requiredPartySize - 1);
             if (!string.IsNullOrWhiteSpace(RequiredCharacterIdForSlot(targetSlotIndex)))
                 rosterSortMode = StoryRosterSortMode.RequiredCharacter;
+            LogStory($"OpenCharacterSelection requestedSlot={slotIndex} targetSlot={targetSlotIndex} sort={rosterSortMode} required='{RequiredCharacterIdForSlot(targetSlotIndex)}'");
             ShowPhase(StoryPartyPhase.Selecting);
             if (characterSelectionPanel != null) characterSelectionPanel.transform.SetAsLastSibling();
         }
@@ -308,6 +325,7 @@ namespace BES.UI.Menu
         void SetRosterSortMode(StoryRosterSortMode mode)
         {
             rosterSortMode = mode;
+            LogStory($"SetRosterSortMode {mode}");
             RefreshRoster();
         }
 
@@ -322,16 +340,23 @@ namespace BES.UI.Menu
 
         void SelectCharacterForTargetSlot(int rosterIndex)
         {
+            LogStory($"SelectCharacterForTargetSlot rosterIndex={rosterIndex} targetSlot={targetSlotIndex}");
             RebuildOwnedRoster();
             ApplyRosterSortAndFilter();
-            if (rosterIndex < 0 || rosterIndex >= ownedRoster.Count) return;
+            if (rosterIndex < 0 || rosterIndex >= ownedRoster.Count)
+            {
+                LogStory($"SelectCharacterForTargetSlot blocked: rosterIndex out of range ownedRoster={ownedRoster.Count}");
+                return;
+            }
             EnsureFixedPartySlots();
             var character = ownedRoster[rosterIndex];
             var existing = selectedParty.FindIndex(x => x != null && (x == character || x.id == character.id));
+            LogStory($"Selected roster character='{character?.id}' existingSlot={existing} beforeParty='{JoinSelectedParty()}'");
 
             if (existing == targetSlotIndex)
             {
                 selectedParty[targetSlotIndex] = null;
+                LogStory($"Toggle off character='{character?.id}' from slot={targetSlotIndex}");
                 RefreshAll();
                 return;
             }
@@ -339,6 +364,7 @@ namespace BES.UI.Menu
             if (existing >= 0) selectedParty[existing] = null;
             selectedParty[targetSlotIndex] = character;
             CharacterOwnership.Focus(character.id);
+            LogStory($"Assigned character='{character?.id}' to slot={targetSlotIndex} afterParty='{JoinSelectedParty()}'");
             RefreshAll();
             CloseCharacterSelection();
         }
@@ -352,35 +378,46 @@ namespace BES.UI.Menu
 
         public void ConfirmParty()
         {
-            if (!MeetsPartyRequirements()) return;
+            var meets = MeetsPartyRequirements();
+            LogStory($"ConfirmParty meets={meets} stage='{CurrentStage()?.id}' party='{JoinSelectedParty()}' currentIds='{JoinIds(CurrentIds())}'");
+            if (!meets) return;
             BeginCurrentStoryStage();
         }
 
         void BeginCurrentStoryStage()
         {
-            TurnBattleUI.SelectedPartyCharacterIds = CurrentIds();
+            var ids = CurrentIds();
+            TurnBattleUI.SelectedPartyCharacterIds = ids;
             TurnBattleUI.IsPlayModeBattle = false;
             var stage = CurrentStage();
             TurnBattleUI.ActiveStageId = stage?.id;
             SaveStoryState(stage);
-            onPartyConfirmed?.Invoke(CurrentIds());
+            LogStory($"BeginCurrentStoryStage stage='{stage?.id}' hasCombat={StageHasCombat(stage)} selectedIds='{JoinIds(ids)}' preBattleBeats={stage?.preBattleDialogue?.beats?.Count ?? 0} battlePhases={stage?.battlePhases?.Count ?? 0}");
+            onPartyConfirmed?.Invoke(ids);
             ShowPhase(StoryPartyPhase.Main);
             var hasCombat = StageHasCombat(stage);
             if (stage?.preBattleDialogue != null && stage.preBattleDialogue.beats.Count > 0 && storyDialogueUI != null)
             {
+                LogStory("Playing preBattleDialogue before battle/story completion");
                 storyDialogueUI.Play(stage.preBattleDialogue, hasCombat ? OpenBattle : CompleteStoryOnlyStage);
             }
             else if (!hasCombat)
             {
+                LogStory("No combat -> CompleteStoryOnlyStage");
                 CompleteStoryOnlyStage();
             }
             else
             {
+                LogStory("No preBattleDialogue -> OpenBattle");
                 OpenBattle();
             }
         }
 
-        void OpenBattle() => navigator?.Open(MenuScreenId.Battle);
+        void OpenBattle()
+        {
+            LogStory($"OpenBattle activeStage='{TurnBattleUI.ActiveStageId}' selectedIds='{JoinIds(TurnBattleUI.SelectedPartyCharacterIds)}'");
+            navigator?.Open(MenuScreenId.Battle);
+        }
 
         void CompleteStoryOnlyStage()
         {
@@ -392,19 +429,52 @@ namespace BES.UI.Menu
 
         void TryPlayChapterIntro()
         {
-            if (playChapterIntroOnce && chapterIntroPlayed) return;
+            LogStory($"TryPlayChapterIntro playOnce={playChapterIntroOnce} introPlayed={chapterIntroPlayed} currentStage='{currentStageId}'");
+            if (playChapterIntroOnce && chapterIntroPlayed)
+            {
+                LogStory("TryPlayChapterIntro blocked: already played");
+                return;
+            }
             EnsureDialogueUI();
-            if (database == null || database.storyChapters.Count == 0 || storyDialogueUI == null) return;
+            if (database == null || database.storyChapters.Count == 0 || storyDialogueUI == null)
+            {
+                LogStory($"TryPlayChapterIntro blocked: database={database != null} chapters={database?.storyChapters?.Count ?? 0} storyDialogueUI={storyDialogueUI != null}");
+                return;
+            }
             var chapter = database.storyChapters[Mathf.Clamp(chapterIndex, 0, database.storyChapters.Count - 1)];
-            if (chapter?.introDialogue == null || chapter.introDialogue.beats.Count == 0) return;
+            if (chapter?.introDialogue == null || chapter.introDialogue.beats.Count == 0)
+            {
+                LogStory($"TryPlayChapterIntro blocked: no intro beats chapter='{chapter?.id}'");
+                return;
+            }
             var firstStageId = chapter.stages != null && chapter.stages.Count > 0 ? chapter.stages[0]?.id : string.Empty;
             if (!string.IsNullOrWhiteSpace(firstStageId) &&
                 !string.IsNullOrWhiteSpace(currentStageId) &&
                 !string.Equals(currentStageId, firstStageId, StringComparison.OrdinalIgnoreCase))
+            {
+                LogStory($"TryPlayChapterIntro blocked: currentStage '{currentStageId}' != firstStage '{firstStageId}'");
                 return;
+            }
             
             chapterIntroPlayed = true;
-            storyDialogueUI.Play(chapter.introDialogue, BeginCurrentStoryStage);
+            LogStory($"TryPlayChapterIntro PLAY chapter='{chapter.id}' beats={chapter.introDialogue.beats.Count}");
+            storyDialogueUI.Play(chapter.introDialogue, ContinueAfterChapterIntro);
+        }
+
+        void ContinueAfterChapterIntro()
+        {
+            LogStory($"ContinueAfterChapterIntro currentStage='{CurrentStage()?.id}' hasCombat={StageHasCombat(CurrentStage())}");
+            ShowPhase(StoryPartyPhase.Main);
+            RefreshAll();
+
+            if (StageHasCombat(CurrentStage()))
+            {
+                OpenFirstAvailableSlot();
+            }
+            else
+            {
+                BeginCurrentStoryStage();
+            }
         }
 
         void EnsureDialogueUI()
@@ -448,12 +518,15 @@ namespace BES.UI.Menu
 
         public void CompleteStoryBattle()
         {
+            LogStory($"CompleteStoryBattle stageBefore='{currentStageId}'");
             AdvanceCurrentStageId();
+            LogStory($"CompleteStoryBattle stageAfter='{currentStageId}'");
             SaveStoryProgress();
         }
 
         public void FailStoryBattle(string failedStageId = null)
         {
+            LogStory($"FailStoryBattle failedStageId='{failedStageId}' currentStageBefore='{currentStageId}'");
             var chapter = CurrentChapter();
             if (!string.IsNullOrWhiteSpace(failedStageId) &&
                 chapter?.stages != null &&
@@ -464,6 +537,7 @@ namespace BES.UI.Menu
 
             SaveStoryState(CurrentStage());
             RefreshAll();
+            LogStory($"FailStoryBattle saved currentStage='{currentStageId}'");
         }
 
         void LoadStoryState()
@@ -714,33 +788,84 @@ namespace BES.UI.Menu
 
         void RefreshRoster()
         {
+            EnsureRosterCardBindings();
             RebuildOwnedRoster();
             ApplyRosterSortAndFilter();
+            LogStory($"RefreshRoster cards={rosterCards.Count} owned={ownedRoster.Count} sort={rosterSortMode} targetSlot={targetSlotIndex}");
             for (var i = 0; i < rosterCards.Count; i++)
             {
                 var card = rosterCards[i];
+                if (card == null) continue;
                 var character = i < ownedRoster.Count ? ownedRoster[i] : null;
                 if (card.button != null) card.button.gameObject.SetActive(character != null);
-                if (character == null) continue;
+                else if (card.portrait != null) card.portrait.gameObject.SetActive(character != null);
+
+                if (character == null)
+                {
+                    if (card.portrait != null)
+                    {
+                        card.portrait.sprite = null;
+                        card.portrait.enabled = false;
+                    }
+                    if (card.levelText != null) card.levelText.text = string.Empty;
+                    if (card.selectedState != null) card.selectedState.SetActive(false);
+                    continue;
+                }
+
+                var characterIndex = i;
+                if (card.button != null)
+                {
+                    card.button.onClick.RemoveAllListeners();
+                    card.button.onClick.AddListener(() => SelectCharacterForTargetSlot(characterIndex));
+                }
+
                 ForceVisible(card.button?.image);
                 if (card.button != null && card.button.image != null)
                     card.button.image.sprite = character.cardBackground;
                 if (card.portrait != null)
                 {
-                    card.portrait.sprite = CharacterChibiSprite(character);
+                    card.portrait.sprite = character.cardBackground;
                     ForceVisible(card.portrait);
                 }
-                if (card.elementIcon != null)
-                {
-                    card.elementIcon.sprite = character.elementIcon;
-                    card.elementIcon.enabled = character.elementIcon != null;
-                    if (character.elementIcon != null) ForceVisible(card.elementIcon);
-                }
-                if (card.nameText != null) card.nameText.text = character.displayName;
                 if (card.levelText != null) card.levelText.text = $"Lv. {CharacterProgressionState.GetLevel(character.id)}";
                 if (card.selectedState != null)
                     ApplyRosterSelectedState(card, selectedParty.Exists(x => x != null && (x == character || x.id == character.id)));
             }
+        }
+
+        void EnsureRosterCardBindings()
+        {
+            var content = characterSelectionPanel != null
+                ? FindDeep(characterSelectionPanel.transform, "RosterContent")
+                : null;
+            if (content == null) return;
+
+            var resolved = new List<StoryRosterCardBinding>();
+            for (var i = 0; i < content.childCount; i++)
+            {
+                var child = content.GetChild(i);
+                if (child == null) continue;
+                if (child.name.IndexOf("RosterCard", StringComparison.OrdinalIgnoreCase) < 0 &&
+                    child.GetComponent<Button>() == null &&
+                    child.GetComponentInChildren<Button>(true) == null)
+                    continue;
+
+                var button = child.GetComponent<Button>() ?? child.GetComponentInChildren<Button>(true);
+                var portraitRoot = FindDeep(child, "AssignablePortrait");
+                var levelRoot = FindDeep(child, "CharacterLevel");
+                var selectedRoot = FindDeep(child, "SelectedState");
+
+                resolved.Add(new StoryRosterCardBinding
+                {
+                    button = button,
+                    portrait = portraitRoot != null ? portraitRoot.GetComponent<Image>() : child.GetComponent<Image>(),
+                    levelText = levelRoot != null ? levelRoot.GetComponent<TMP_Text>() : child.GetComponentInChildren<TMP_Text>(true),
+                    selectedState = selectedRoot != null ? selectedRoot.gameObject : null
+                });
+            }
+
+            if (resolved.Count == 0) return;
+            rosterCards = resolved;
         }
 
         void RebuildOwnedRoster()
@@ -751,6 +876,7 @@ namespace BES.UI.Menu
                 if (character != null && !ownedRoster.Contains(character))
                     ownedRoster.Add(character);
             }
+            LogStory($"RebuildOwnedRoster owned={JoinOwnedRoster()}");
         }
 
         void ApplyRosterSortAndFilter()
@@ -829,7 +955,7 @@ namespace BES.UI.Menu
         {
             if (slots == null) return false;
             foreach (var slot in slots)
-                if (slot != null && (slot.button != null || slot.portrait != null || slot.nameText != null || slot.levelText != null || slot.emptyState != null))
+                if (slot != null && (slot.button != null || slot.portrait != null || slot.levelText != null || slot.emptyState != null))
                     return true;
             return false;
         }
@@ -893,19 +1019,13 @@ namespace BES.UI.Menu
 
         static void Apply(StoryPartySlotBinding slot, CharacterEntry character)
         {
-            if (slot.portrait != null)
+            var background = slot.portrait != null ? slot.portrait : slot.button != null ? slot.button.image : null;
+            if (background != null)
             {
-                slot.portrait.sprite = CharacterChibiSprite(character);
-                slot.portrait.enabled = character != null;
-                if (character != null) ForceVisible(slot.portrait);
+                background.sprite = character?.cardBackground;
+                background.enabled = character != null;
+                if (character != null) ForceVisible(background);
             }
-            if (slot.elementIcon != null)
-            {
-                slot.elementIcon.sprite = character?.elementIcon;
-                slot.elementIcon.enabled = character != null && character.elementIcon != null;
-                if (character != null && character.elementIcon != null) ForceVisible(slot.elementIcon);
-            }
-            if (slot.nameText != null) slot.nameText.text = character?.displayName ?? string.Empty;
             if (slot.levelText != null) slot.levelText.text = character == null ? string.Empty : $"Lv. {CharacterProgressionState.GetLevel(character.id)}";
             if (slot.emptyState != null) slot.emptyState.SetActive(character == null);
         }
@@ -942,14 +1062,6 @@ namespace BES.UI.Menu
             image.enabled = true;
         }
 
-        static Sprite CharacterChibiSprite(CharacterEntry character)
-        {
-            if (character == null) return null;
-            return character.chibi != null ? character.chibi :
-                   character.fullBody != null ? character.fullBody :
-                   character.portrait;
-        }
-
         void NextChapter()
         {
             if (database == null || chapterIndex >= database.storyChapters.Count - 1) return;
@@ -980,6 +1092,35 @@ namespace BES.UI.Menu
             }
         }
 
+        void LogStory(string message)
+        {
+            if (!debugStoryFlow) return;
+            Debug.Log($"[BES][StoryFlow][{name}] {message}");
+        }
+
+        string JoinSelectedParty()
+        {
+            if (selectedParty == null || selectedParty.Count == 0) return string.Empty;
+            var parts = new List<string>();
+            for (var i = 0; i < selectedParty.Count; i++)
+                parts.Add(selectedParty[i] != null ? $"{i}:{selectedParty[i].id}" : $"{i}:empty");
+            return string.Join(", ", parts);
+        }
+
+        string JoinOwnedRoster()
+        {
+            if (ownedRoster == null || ownedRoster.Count == 0) return string.Empty;
+            var parts = new List<string>();
+            for (var i = 0; i < ownedRoster.Count; i++)
+                parts.Add(ownedRoster[i] != null ? ownedRoster[i].id : "null");
+            return string.Join(", ", parts);
+        }
+
+        static string JoinIds(IReadOnlyList<string> ids)
+        {
+            return ids == null || ids.Count == 0 ? string.Empty : string.Join(", ", ids);
+        }
+
         void EnsureDeployInventory()
         {
             // UI phải được tạo/gán sẵn trong Unity để tránh runtime làm reset layout prefab.
@@ -990,7 +1131,8 @@ namespace BES.UI.Menu
             if (characterSelectionPanel == null || phase != StoryPartyPhase.Selecting) return;
             var row = characterSelectionPanel.transform.Find("DeployInventory/ItemRow");
             if (row == null) return;
-            foreach (Transform child in row) Destroy(child.gameObject);
+            foreach (Transform child in row)
+                if (child != null) child.gameObject.SetActive(false);
 
             var target = targetSlotIndex >= 0 && targetSlotIndex < selectedParty.Count ? selectedParty[targetSlotIndex] : null;
             var characterId = target != null ? target.id : CharacterOwnership.FocusedCharacterId;
@@ -1000,7 +1142,7 @@ namespace BES.UI.Menu
             var added = 0;
             foreach (var pair in inventory.Items)
             {
-                if (added >= 6 || pair.Value <= 0) continue;
+                if (added >= row.childCount || pair.Value <= 0) continue;
                 var definition = inventory.GetDefinition(pair.Key);
                 if (definition == null) continue;
                 if (definition.itemType != ItemType.Consumable && definition.itemType != ItemType.Quest &&
@@ -1009,18 +1151,26 @@ namespace BES.UI.Menu
                     continue;
 
                 var itemId = pair.Key;
-                var slot = new GameObject(itemId, typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
-                slot.transform.SetParent(row, false);
-                slot.GetComponent<LayoutElement>().preferredWidth = 56f;
-                slot.GetComponent<RectTransform>().sizeDelta = new Vector2(56f, 56f);
-                var image = slot.GetComponent<Image>();
-                image.sprite = definition.icon;
-                image.color = Color.white;
-                slot.GetComponent<Button>().onClick.AddListener(() =>
+                var slot = row.GetChild(added);
+                if (slot == null) continue;
+                slot.gameObject.SetActive(true);
+                var image = slot.GetComponent<Image>() ?? slot.GetComponentInChildren<Image>(true);
+                if (image != null)
                 {
-                    if (CharacterOwnership.TryUseInventoryOnCharacter(itemId, characterId))
-                        RefreshAll();
-                });
+                    image.sprite = definition.icon;
+                    image.color = Color.white;
+                    image.enabled = definition.icon != null;
+                }
+                var button = slot.GetComponent<Button>() ?? slot.GetComponentInChildren<Button>(true);
+                if (button != null)
+                {
+                    button.onClick.RemoveAllListeners();
+                    button.onClick.AddListener(() =>
+                    {
+                        if (CharacterOwnership.TryUseInventoryOnCharacter(itemId, characterId))
+                            RefreshAll();
+                    });
+                }
                 added++;
             }
         }
