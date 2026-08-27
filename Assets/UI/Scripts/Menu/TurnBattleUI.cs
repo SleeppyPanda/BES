@@ -103,6 +103,7 @@ namespace BES.UI.Menu
         [SerializeField] List<Button> skillButtons = new();
         [SerializeField] List<Image> skillIcons = new();
         [SerializeField] List<TMP_Text> skillLabels = new();
+        [SerializeField, Range(0.05f, 1f)] float unavailableSkillAlpha = 0.35f;
         [SerializeField] TMP_Text selectionHintText;
         [Header("Header controls")]
         [SerializeField] TMP_Text roundText;
@@ -595,21 +596,43 @@ namespace BES.UI.Menu
                 if (!available) continue;
                 var skill = actor.definition.skills[i];
                 var hasEnergy = i == 0 || actor.skillEnergy >= Mathf.Max(1, actor.definition.energyTurns);
-                if (skillButtons[i] != null) skillButtons[i].interactable = hasEnergy;
+                if (skillButtons[i] != null)
+                {
+                    skillButtons[i].interactable = hasEnergy;
+                    SetSkillButtonDim(skillButtons[i], hasEnergy ? 1f : unavailableSkillAlpha);
+                }
                 if (i < skillIcons.Count && skillIcons[i] != null)
                 {
                     var icon = i == 0 ? actor.definition.normalAttackIcon : actor.definition.skillIcon;
                     skillIcons[i].sprite = icon != null ? icon : skill.icon;
                     skillIcons[i].enabled = skillIcons[i].sprite != null;
+                    SetGraphicAlpha(skillIcons[i], hasEnergy ? 1f : unavailableSkillAlpha);
                 }
                 if (i < skillLabels.Count && skillLabels[i] != null)
                 {
                     skillLabels[i].text = i == 1 && !hasEnergy
                         ? $"{skill.displayName} {actor.skillEnergy}/{Mathf.Max(1, actor.definition.energyTurns)}"
                         : skill.displayName;
+                    SetGraphicAlpha(skillLabels[i], hasEnergy ? 1f : unavailableSkillAlpha);
                 }
             }
             SetEnemyTargeting(false);
+        }
+
+        static void SetSkillButtonDim(Button button, float alpha)
+        {
+            if (button == null) return;
+            SetGraphicAlpha(button.targetGraphic, alpha);
+            foreach (var graphic in button.GetComponentsInChildren<Graphic>(true))
+                SetGraphicAlpha(graphic, alpha);
+        }
+
+        static void SetGraphicAlpha(Graphic graphic, float alpha)
+        {
+            if (graphic == null) return;
+            var color = graphic.color;
+            color.a = Mathf.Clamp01(alpha);
+            graphic.color = color;
         }
 
         void HideSkills() { if (skillPanel != null) skillPanel.SetActive(false); SetEnemyTargeting(false); }
