@@ -66,7 +66,9 @@ namespace BES.UI.Menu
         GameObject weaponPage;
         GameObject breakthroughPage;
         GameObject detailNavigation;
-        RectTransform characterSelectorContent;
+        [Header("Owned character selector")]
+        [SerializeField] RectTransform characterSelectorContent;
+        [SerializeField] Vector2 selectorCardSize = new Vector2(92f, 92f);
         RectTransform galleryContent;
         GameObject galleryCardTemplate;
         Image detailPortrait;
@@ -119,7 +121,7 @@ namespace BES.UI.Menu
         {
             ResolveDatabase();
             modal ??= GetComponent<SimpleModalPanel>();
-            if (!CacheExistingUI()) BuildRuntimeUI();
+            EnsureExistingUI();
             WireRuntimeButtons();
         }
 
@@ -138,7 +140,13 @@ namespace BES.UI.Menu
         {
             ResolveDatabase();
             GameEvents.OnPartyChanged += RefreshGallery;
-            if (runtimeRoot != null) RefreshGallery();
+            if (runtimeRoot != null)
+            {
+                RefreshGallery();
+                RefreshCharacterSelectors();
+                if (!string.IsNullOrEmpty(selectedCharacterId))
+                    RefreshCharacter();
+            }
         }
 
         void OnDisable() => GameEvents.OnPartyChanged -= RefreshGallery;
@@ -146,7 +154,7 @@ namespace BES.UI.Menu
         public void OpenGallery()
         {
             ResolveDatabase();
-            BuildRuntimeUI();
+            if (!EnsureExistingUI()) return;
             ShowPage(galleryPage);
             RefreshGallery();
             modal?.Open();
@@ -155,10 +163,11 @@ namespace BES.UI.Menu
         public void OpenCharacter(string characterId)
         {
             ResolveDatabase();
-            BuildRuntimeUI();
+            if (!EnsureExistingUI()) return;
             selectedCharacterId = CharacterOwnership.ResolveOwnedId(characterId, database);
             CharacterOwnership.Focus(selectedCharacterId);
             RefreshCharacter();
+            RefreshCharacterSelectors();
             ShowPage(detailPage);
             modal?.Open();
         }
@@ -179,10 +188,11 @@ namespace BES.UI.Menu
         public void OpenDestination(CharacterCollectionDestination destination, string characterId = null)
         {
             ResolveDatabase();
-            BuildRuntimeUI();
+            if (!EnsureExistingUI()) return;
             selectedCharacterId = CharacterOwnership.ResolveOwnedId(string.IsNullOrWhiteSpace(characterId) ? selectedCharacterId : characterId, database);
             CharacterOwnership.Focus(selectedCharacterId);
             RefreshCharacter();
+            RefreshCharacterSelectors();
 
             switch (destination)
             {
@@ -204,6 +214,14 @@ namespace BES.UI.Menu
             }
 
             modal?.Open();
+        }
+
+        bool EnsureExistingUI()
+        {
+            if (runtimeRoot != null) return true;
+            if (CacheExistingUI()) return true;
+            Debug.LogWarning("[BES] CharacterCollectionPanel is missing editable prefab UI. Runtime UI creation is disabled; create CharacterCollectionRuntime/CharacterPage/InformationContent in prefab and assign fields in Unity.");
+            return false;
         }
 
         public void OpenRateUp()
@@ -335,7 +353,10 @@ namespace BES.UI.Menu
             detailNavigation = FindDeep(existing, "TabNavigation")?.gameObject;
             galleryContent = FindDeep(existing, "OwnedCharacterContent") as RectTransform;
             galleryCardTemplate = FindDeep(existing, "CharacterCardTemplate")?.gameObject;
-            characterSelectorContent = FindDeep(existing, "OwnedCharacterSelector") as RectTransform;
+            characterSelectorContent ??= FindDeep(existing, "OwnedCharacterSelector") as RectTransform;
+            characterSelectorContent ??= FindDeep(existing, "OwnedCharacterList") as RectTransform;
+            characterSelectorContent ??= FindDeep(existing, "CharacterOwnedList") as RectTransform;
+            characterSelectorContent ??= FindDeep(existing, "CharacterList") as RectTransform;
             detailPortrait = FindDeep(existing, "SelectedPortrait")?.GetComponent<Image>();
             levelPortrait = FindDeep(existing, "LevelPortrait")?.GetComponent<Image>();
             detailName = FindDeep(existing, "CharacterName")?.GetComponent<TMP_Text>();
@@ -546,14 +567,13 @@ namespace BES.UI.Menu
         void RefreshGallery()
         {
             ResolveDatabase();
+            RefreshCharacterSelectors();
             if (galleryContent == null) return;
-            foreach (var card in generatedCards) if (card != null) Destroy(card);
             generatedCards.Clear();
             var owned = new List<CharacterEntry>(CharacterOwnership.GetOwnedEntries(database));
             owned.Sort((a, b) => SortValue(b).CompareTo(SortValue(a)));
-            foreach (var entry in owned) BuildCard(entry);
+            PopulateExistingCharacterSlots(galleryContent, owned, true);
             if (emptyLabel != null) emptyLabel.gameObject.SetActive(owned.Count == 0);
-            RefreshCharacterSelectors();
         }
 
         int SortValue(CharacterEntry entry) => gallerySortMode switch
@@ -570,23 +590,88 @@ namespace BES.UI.Menu
         {
             ResolveDatabase();
             if (characterSelectorContent == null) return;
-            foreach (var selector in generatedSelectors) if (selector != null) Destroy(selector);
             generatedSelectors.Clear();
 
-            var owned = CharacterOwnership.GetOwnedEntries(database);
-            foreach (var entry in owned)
+            var owned = new List<CharacterEntry>(CharacterOwnership.GetOwnedEntries(database));
+            owned.Sort((a, b) => SortValue(b).CompareTo(SortValue(a)));
+            PopulateExistingCharacterSlots(characterSelectorContent, owned, false);
+        }
+
+        void PopulateExistingCharacterSlots(RectTransform parent, IReadOnlyList<CharacterEntry> owned, bool galleryStyle)
+        {
+            if (parent == null) return;
+            var slotIndex = 0;
+            foreach (Transform child in parent)
             {
-                var id = entry.id;
-                var selector = new GameObject(id, typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
-                selector.transform.SetParent(characterSelectorContent, false);
-                selector.GetComponent<RectTransform>().sizeDelta = new Vector2(92f, 92f);
-                selector.GetComponent<LayoutElement>().preferredHeight = 92f;
-                var image = selector.GetComponent<Image>();
-                image.sprite = CharacterChibiSprite(entry);
-                image.preserveAspect = true;
-                image.color = id == selectedCharacterId ? Color.white : new Color(.68f, .68f, .68f, 1f);
-                selector.GetComponent<Button>().onClick.AddListener(() => SelectCharacter(id));
-                generatedSelectors.Add(selector);
+                if (child == null || child.name.Contains("Template")) continue;
+
+                var slotObject = child.gameObject;
+                var entry = slotIndex < owned.Count ? owned[slotIndex] : null;
+                slotObject.SetActive(entry != null);
+
+                if (entry != null)
+                {
+                    PopulateCharacterSlot(slotObject, entry, galleryStyle);
+                    if (!galleryStyle) generatedSelectors.Add(slotObject);
+                    else generatedCards.Add(slotObject);
+                }
+
+                slotIndex++;
+            }
+        }
+
+        void PopulateCharacterSlot(GameObject slotObject, CharacterEntry entry, bool galleryStyle)
+        {
+            if (slotObject == null || entry == null) return;
+
+            var id = entry.id;
+            slotObject.name = id;
+
+            var background = slotObject.GetComponent<Image>();
+            if (background != null)
+            {
+                if (galleryStyle)
+                    background.sprite = BackgroundFor(entry.rarity);
+                background.color = id == selectedCharacterId ? Color.white : new Color(.68f, .68f, .68f, 1f);
+            }
+
+            var portrait = FindDeep(slotObject.transform, "Portrait")?.GetComponent<Image>()
+                ?? FindDeep(slotObject.transform, "CharacterPortrait")?.GetComponent<Image>()
+                ?? FindDeep(slotObject.transform, "Icon")?.GetComponent<Image>()
+                ?? slotObject.GetComponent<Image>();
+            if (portrait != null)
+            {
+                portrait.sprite = CharacterChibiSprite(entry);
+                portrait.preserveAspect = true;
+                portrait.color = Color.white;
+                portrait.enabled = portrait.sprite != null;
+            }
+
+            var element = FindDeep(slotObject.transform, "Element")?.GetComponent<Image>()
+                ?? FindDeep(slotObject.transform, "ElementIcon")?.GetComponent<Image>();
+            if (element != null)
+            {
+                element.sprite = entry.elementIcon;
+                element.enabled = entry.elementIcon != null;
+            }
+
+            var name = FindDeep(slotObject.transform, "CharacterName")?.GetComponent<TMP_Text>()
+                ?? FindDeep(slotObject.transform, "Name")?.GetComponent<TMP_Text>();
+            if (name != null) name.text = entry.displayName;
+
+            var level = FindDeep(slotObject.transform, "CharacterLevel")?.GetComponent<TMP_Text>()
+                ?? FindDeep(slotObject.transform, "Level")?.GetComponent<TMP_Text>();
+            if (level != null) level.text = $"Lv.{CharacterProgressionState.GetLevel(entry.id)}";
+
+            var button = slotObject.GetComponent<Button>() ?? slotObject.GetComponentInChildren<Button>(true);
+            if (button != null)
+            {
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(() =>
+                {
+                    if (galleryStyle) OpenCharacter(id);
+                    else SelectCharacter(id);
+                });
             }
         }
 
@@ -656,13 +741,16 @@ namespace BES.UI.Menu
             var currentLevel = CharacterProgressionState.GetLevel(entry.id);
             var levelCap = CharacterProgressionState.GetLevelCap(entry.id);
             var stats = CalculateDisplayStats(entry, currentLevel);
-            SetText(detailLevelText, $"Cấp {currentLevel}/{levelCap}");
-            SetText(detailHealthText, $"HP  {stats.health}");
-            SetText(detailAttackText, $"Tấn công  {stats.attack}");
-            SetText(detailDefenseText, $"Phòng thủ  {stats.defense}");
-            SetText(detailSpeedText, $"Tốc độ  {stats.speed}");
+            SetText(detailLevelText, currentLevel.ToString());
+            SetText(detailHealthText, stats.health.ToString());
+            SetText(detailAttackText, stats.attack.ToString());
+            SetText(detailDefenseText, stats.defense.ToString());
+            SetText(detailSpeedText, stats.speed.ToString());
             if (legacyDetailStats != null)
-                legacyDetailStats.text = $"Cấp {currentLevel}/{levelCap}\nHP  {stats.health}\nTấn công  {stats.attack}\nPhòng thủ  {stats.defense}\nTốc độ  {stats.speed}";
+            {
+                legacyDetailStats.text = string.Empty;
+                legacyDetailStats.gameObject.SetActive(false);
+            }
             if (detailDescription != null) detailDescription.text = entry.description;
             if (levelName != null) levelName.text = entry.displayName;
             if (levelValue != null) levelValue.text = currentLevel >= levelCap && levelCap < CharacterProgressionState.AbsoluteMaxLevel
@@ -718,7 +806,6 @@ namespace BES.UI.Menu
         void RefreshAffinity()
         {
             if (affinityPage == null || string.IsNullOrEmpty(selectedCharacterId)) return;
-            EnsureAffinityOverlay();
             var entry = database?.FindCharacter(selectedCharacterId);
             var name = FindDeep(affinityPage.transform, "AffinityCharacterName")?.GetComponent<TMP_Text>();
             var value = FindDeep(affinityPage.transform, "AffinityValue")?.GetComponent<TMP_Text>();
@@ -732,11 +819,8 @@ namespace BES.UI.Menu
 
         void EnsureAffinityOverlay()
         {
-            if (affinityPage == null || FindDeep(affinityPage.transform, "AffinityValue") != null) return;
-            AddText(affinityPage.transform, "AffinityCharacterName", string.Empty, new Vector2(.18f, .70f), new Vector2(.82f, .80f), 34);
-            AddText(affinityPage.transform, "AffinityValue", string.Empty, new Vector2(.18f, .48f), new Vector2(.82f, .68f), 26);
-            AddText(affinityPage.transform, "AffinityGiftHint", string.Empty, new Vector2(.18f, .28f), new Vector2(.82f, .46f), 20);
-            AddButton(affinityPage.transform, "UseAffinityGift", "DÙNG QUÀ TỪ TÚI ĐỒ", new Vector2(.32f, .12f), new Vector2(.68f, .22f), UseAffinityGiftFromBag);
+            // Runtime UI creation is intentionally disabled. Create and assign these objects in the prefab instead:
+            // AffinityCharacterName, AffinityValue, AffinityGiftHint, UseAffinityGift.
         }
 
         void UseAffinityGiftFromBag()
@@ -1055,56 +1139,64 @@ namespace BES.UI.Menu
             var grid = weaponListPage.transform.Find("WeaponViewport/WeaponListGrid");
             if (grid == null) return;
 
-            // Clear old cards
-            foreach (Transform child in grid)
-            {
-                Destroy(child.gameObject);
-            }
-
             var equipped = EquippedWeaponState.Instance;
             var itemDb = Resources.Load<Gameplay.ItemDatabase>("Data/ItemDatabase");
             var weaponDb = Resources.Load<WeaponDatabase>("Data/WeaponDatabase");
             if (equipped == null || weaponDb == null) return;
 
+            var slotIndex = 0;
             foreach (var instance in equipped.OwnedWeaponInstances)
             {
                 if (instance == null) continue;
                 var weaponId = instance.weaponId;
                 var weapon = weaponDb.FindExact(weaponId);
                 if (weapon == null) continue;
+                if (slotIndex >= grid.childCount) break;
 
                 var itemDef = itemDb?.Get(weaponId);
-
-                var slot = new GameObject(instance.instanceId, typeof(RectTransform), typeof(Image), typeof(Button));
-                slot.transform.SetParent(grid, false);
-                slot.GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 100f);
+                var slotTransform = grid.GetChild(slotIndex++);
+                var slot = slotTransform.gameObject;
+                slot.SetActive(true);
 
                 var bgImage = slot.GetComponent<Image>();
-                bgImage.sprite = weaponSlotFrameSprite;
-                bgImage.color = Color.white;
-
-                var iconGo = Rect("Icon", slot.transform, new Vector2(.15f, .15f), new Vector2(.85f, .85f));
-                var iconImage = iconGo.gameObject.AddComponent<Image>();
-                iconImage.sprite = itemDef?.icon;
-                iconImage.preserveAspect = true;
-                iconImage.enabled = iconImage.sprite != null;
-
-                // Highlight if equipped
-                if (equipped.EquippedWeaponInstanceId == instance.instanceId)
+                if (bgImage != null)
                 {
-                    var highlight = AddImage(slot.transform, "Highlight", new Vector2(-.05f, -.05f), new Vector2(1.05f, 1.05f));
-                    highlight.color = new Color(0.95f, 0.78f, 0.28f, 0.5f);
-                    highlight.transform.SetAsFirstSibling();
+                    bgImage.sprite = weaponSlotFrameSprite != null ? weaponSlotFrameSprite : bgImage.sprite;
+                    bgImage.color = Color.white;
                 }
 
-                slot.GetComponent<Button>().onClick.AddListener(() =>
+                var iconImage = FindDeep(slot.transform, "Icon")?.GetComponent<Image>()
+                    ?? FindDeep(slot.transform, "WeaponIcon")?.GetComponent<Image>();
+                if (iconImage != null)
                 {
-                    equipped.EquipInstance(instance.instanceId, selectedCharacterId);
-                    weaponListPage.SetActive(false);
-                    RefreshWeaponUI();
-                    RefreshCharacter(); // refresh character stats like ATK
-                    GameManager.Instance?.SaveGame();
-                });
+                    iconImage.sprite = itemDef?.icon;
+                    iconImage.preserveAspect = true;
+                    iconImage.enabled = iconImage.sprite != null;
+                }
+
+                var highlight = FindDeep(slot.transform, "Highlight")?.gameObject;
+                if (highlight != null)
+                    highlight.SetActive(equipped.EquippedWeaponInstanceId == instance.instanceId);
+
+                var button = slot.GetComponent<Button>() ?? slot.GetComponentInChildren<Button>(true);
+                if (button != null)
+                {
+                    button.onClick.RemoveAllListeners();
+                    button.onClick.AddListener(() =>
+                    {
+                        equipped.EquipInstance(instance.instanceId, selectedCharacterId);
+                        weaponListPage.SetActive(false);
+                        RefreshWeaponUI();
+                        RefreshCharacter();
+                        GameManager.Instance?.SaveGame();
+                    });
+                }
+            }
+
+            for (var i = slotIndex; i < grid.childCount; i++)
+            {
+                var child = grid.GetChild(i);
+                if (child != null) child.gameObject.SetActive(false);
             }
         }
 
