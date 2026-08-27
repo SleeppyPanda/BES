@@ -592,7 +592,7 @@ Transform:
   m_GameObject: {fileID: 4729215998307139338}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.20789528, z: 0}
+  m_LocalPosition: {x: 0.012534171, y: 0.20789528, z: -0.08404866}
   m_LocalScale: {x: 96.861855, y: 96.861855, z: 96.861855}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -609,7 +609,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4729215998307139338}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 76ef9899c22512447b3e4a7d2046acc2, type: 3}
   m_Controller: {fileID: 9100000, guid: 0f8484a2964acc042962fae27304b682, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -891,6 +891,7 @@ GameObject:
   - component: {fileID: 5866769219133276547}
   - component: {fileID: 8276788286929177654}
   - component: {fileID: 4429050644618811052}
+  - component: {fileID: 7105154210176209532}
   - component: {fileID: 5082162563318429110}
   m_Layer: 8
   m_Name: Enemy_BabyMonster
@@ -1011,6 +1012,18 @@ MonoBehaviour:
   normalColor: {r: 0.75, g: 0.12, b: 0.12, a: 1}
   hitColor: {r: 1, g: 0.95, b: 0.25, a: 1}
   critColor: {r: 1, g: 0.35, b: 0.05, a: 1}
+--- !u!114 &7105154210176209532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7867031871070699838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1239b384669abbc4992a47ac167dcad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.RootMotionFixer
 --- !u!114 &5082162563318429110
 MonoBehaviour:
   m_ObjectHideFlags: 0

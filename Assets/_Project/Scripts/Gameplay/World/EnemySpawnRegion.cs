@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace BES.Gameplay
 {
@@ -19,6 +20,7 @@ namespace BES.Gameplay
         [SerializeField] int minSpawnCount = 1;
         [SerializeField] int maxSpawnCount = 3;
         [SerializeField] bool spawnOnStart = true;
+        [SerializeField] float patrolRadiusOverride = -1f;
         [SerializeField] bool respawnWhenCleared;
         [SerializeField] float respawnDelay = 30f;
 
@@ -64,6 +66,14 @@ namespace BES.Gameplay
                     continue;
 
                 var enemy = Instantiate(prefab, position, rotation, spawnedParent != null ? spawnedParent : transform);
+                if (patrolRadiusOverride > 0f)
+                {
+                    var ai = enemy.GetComponent<EnemyAI>();
+                    if (ai != null)
+                    {
+                        ai.PatrolRadius = patrolRadiusOverride;
+                    }
+                }
                 spawnedEnemies.Add(enemy);
             }
         }
@@ -72,12 +82,29 @@ namespace BES.Gameplay
         {
             if (spawnArea != null)
             {
-                var half = spawnArea.size * 0.5f;
-                var local = spawnArea.center + new Vector3(
-                    Random.Range(-half.x, half.x),
-                    0f,
-                    Random.Range(-half.z, half.z));
-                position = spawnArea.transform.TransformPoint(local);
+                for (int attempt = 0; attempt < 15; attempt++)
+                {
+                    var half = spawnArea.size * 0.5f;
+                    var local = spawnArea.center + new Vector3(
+                        Random.Range(-half.x, half.x),
+                        0f,
+                        Random.Range(-half.z, half.z));
+                    Vector3 candidatePos = spawnArea.transform.TransformPoint(local);
+                    
+                    if (NavMesh.SamplePosition(candidatePos, out NavMeshHit hit, 8f, NavMesh.AllAreas))
+                    {
+                        position = hit.position;
+                        rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+                        return true;
+                    }
+                }
+
+                // Fallback: spawn at the region center, which is configured to be a safe open position
+                position = spawnArea.transform.position;
+                if (NavMesh.SamplePosition(position, out NavMeshHit fallbackHit, 15f, NavMesh.AllAreas))
+                {
+                    position = fallbackHit.position;
+                }
                 rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
                 return true;
             }
@@ -89,6 +116,13 @@ namespace BES.Gameplay
                     var point = spawnPoints[Random.Range(0, spawnPoints.Length)];
                     if (point == null)
                         continue;
+
+                    if (NavMesh.SamplePosition(point.position, out NavMeshHit hit, 5f, NavMesh.AllAreas))
+                    {
+                        position = hit.position;
+                        rotation = point.rotation;
+                        return true;
+                    }
 
                     position = point.position;
                     rotation = point.rotation;

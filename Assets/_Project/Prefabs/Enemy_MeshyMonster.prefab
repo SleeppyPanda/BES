@@ -152,7 +152,7 @@ Transform:
   m_GameObject: {fileID: 1209847245463148047}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.28388798, z: 0}
+  m_LocalPosition: {x: 0.026501238, y: 0.28388798, z: -0.036254674}
   m_LocalScale: {x: 1.2228558, y: 1.2228558, z: 1.2228558}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -922,6 +922,7 @@ GameObject:
   - component: {fileID: 7770803531289322876}
   - component: {fileID: 1743021174879478304}
   - component: {fileID: 2151166655966359918}
+  - component: {fileID: 7032569003072996747}
   - component: {fileID: 4966373444239672583}
   m_Layer: 8
   m_Name: Enemy_MeshyMonster
@@ -1054,6 +1055,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f612cb08030758947b1b6c2949b8156d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.MeshyMonsterRuntimeWatcher
+--- !u!114 &7032569003072996747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8904496747493146273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1239b384669abbc4992a47ac167dcad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.RootMotionFixer
 --- !u!114 &4966373444239672583
 MonoBehaviour:
   m_ObjectHideFlags: 0

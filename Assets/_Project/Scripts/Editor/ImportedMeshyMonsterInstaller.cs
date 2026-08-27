@@ -113,9 +113,9 @@ namespace BES.EditorTools
 
             bool changed = false;
 
-            if (modelImporter.animationType != ModelImporterAnimationType.Generic)
+            if (modelImporter.animationType != ModelImporterAnimationType.Human)
             {
-                modelImporter.animationType = ModelImporterAnimationType.Generic;
+                modelImporter.animationType = ModelImporterAnimationType.Human;
                 modelImporter.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
                 changed = true;
             }
@@ -133,10 +133,19 @@ namespace BES.EditorTools
             {
                 for (int i = 0; i < clipAnims.Length; i++)
                 {
-                    if (clipAnims[i].loopTime != shouldLoop)
+                    if (clipAnims[i].loopTime != shouldLoop ||
+                        !clipAnims[i].lockRootPositionXZ ||
+                        !clipAnims[i].lockRootHeightY ||
+                        !clipAnims[i].lockRootRotation)
                     {
                         clipAnims[i].loopTime = shouldLoop;
                         clipAnims[i].loopPose = shouldLoop;
+                        clipAnims[i].lockRootPositionXZ = true;
+                        clipAnims[i].lockRootHeightY = true;
+                        clipAnims[i].lockRootRotation = true;
+                        clipAnims[i].keepOriginalPositionXZ = true;
+                        clipAnims[i].keepOriginalPositionY = true;
+                        clipAnims[i].keepOriginalOrientation = true;
                         changed = true;
                     }
                 }
@@ -144,7 +153,10 @@ namespace BES.EditorTools
                 modelImporter.clipAnimations = clipAnims;
             }
 
-            modelImporter.SaveAndReimport();
+            if (changed)
+            {
+                modelImporter.SaveAndReimport();
+            }
         }
 
         static Material SetupSandstoneMaterial()
@@ -409,9 +421,11 @@ namespace BES.EditorTools
                         b.Encapsulate(allRenderers[i].bounds);
                     }
 
-                    // Shift visual so lowest vertex is at local Y = 0
+                    // Shift visual so lowest vertex is at local Y = 0 and centered in XZ
                     float lowestPoint = b.min.y - root.transform.position.y;
-                    visual.transform.localPosition = new Vector3(0f, -lowestPoint, 0f);
+                    float offsetX = b.center.x - root.transform.position.x;
+                    float offsetZ = b.center.z - root.transform.position.z;
+                    visual.transform.localPosition = new Vector3(-offsetX, -lowestPoint, -offsetZ);
                 }
 
                 var collider = root.AddComponent<CapsuleCollider>();
@@ -431,6 +445,7 @@ namespace BES.EditorTools
                 root.AddComponent<EnemyHealthBar>();
                 root.AddComponent<EnemyDamageFeedback>();
                 root.AddComponent<BES.Gameplay.MeshyMonsterRuntimeWatcher>();
+                root.AddComponent<RootMotionFixer>();
                 var ai = root.AddComponent<EnemyAI>();
                 ai.SetAnimatorController(controller);
                 

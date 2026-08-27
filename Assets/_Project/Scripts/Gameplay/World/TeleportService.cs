@@ -42,8 +42,13 @@ namespace BES.Gameplay
             if (player == null)
                 return;
 
+            var cc = player.GetComponent<CharacterController>();
+            if (cc != null) cc.enabled = false;
+
             player.position = position;
             player.rotation = rotation;
+
+            if (cc != null) cc.enabled = true;
 
             if (!string.IsNullOrEmpty(teleportId))
                 MetaProgressState.Instance?.UnlockTeleport(teleportId);

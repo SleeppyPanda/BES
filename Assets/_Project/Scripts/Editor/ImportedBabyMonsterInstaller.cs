@@ -19,7 +19,7 @@ namespace BES.EditorTools
         const string PrefabFolder = "Assets/_Project/Prefabs";
         const string PrefabPath = PrefabFolder + "/Enemy_BabyMonster.prefab";
         const string SpawnRootName = "EnemySpawnRegions_BabyMonster";
-        const string MeshyRootFolder = "Assets/MeshyImports/Model quái con";
+        const string MeshyRootFolder = "Assets/MeshyImports/Model_Quai_Con";
 
         [MenuItem("BES/Gameplay/Install Baby Monster Spawns")]
         public static void InstallFromMenu() => Install(true);
@@ -94,7 +94,7 @@ namespace BES.EditorTools
             foreach (var dir in dirs)
             {
                 string folderName = Path.GetFileName(dir).ToLower();
-                if (folderName.Contains("quái") && folderName.Contains("con"))
+                if (folderName.Contains("model_quai_con") || folderName.Contains("model_quái_con") || (folderName.Contains("quái") && folderName.Contains("con")))
                 {
                     return dir.Replace('\\', '/');
                 }
@@ -145,7 +145,8 @@ namespace BES.EditorTools
                     if (clipAnims[i].loopTime != shouldLoop || 
                         !clipAnims[i].lockRootPositionXZ || 
                         !clipAnims[i].lockRootHeightY || 
-                        !clipAnims[i].lockRootRotation)
+                        !clipAnims[i].lockRootRotation ||
+                        clipAnims[i].maskType != ClipAnimationMaskType.CreateFromThisModel)
                     {
                         clipAnims[i].loopTime = shouldLoop;
                         clipAnims[i].loopPose = shouldLoop;
@@ -155,6 +156,7 @@ namespace BES.EditorTools
                         clipAnims[i].keepOriginalPositionXZ = true;
                         clipAnims[i].keepOriginalPositionY = true;
                         clipAnims[i].keepOriginalOrientation = true;
+                        clipAnims[i].maskType = ClipAnimationMaskType.CreateFromThisModel;
                         changed = true;
                     }
                 }
@@ -425,9 +427,11 @@ namespace BES.EditorTools
                         b.Encapsulate(allRenderers[i].bounds);
                     }
 
-                    // Shift visual so lowest point is at local Y = 0
+                    // Shift visual so lowest point is at local Y = 0 and centered in XZ
                     float lowestPoint = b.min.y - root.transform.position.y;
-                    visual.transform.localPosition = new Vector3(0f, -lowestPoint, 0f);
+                    float offsetX = b.center.x - root.transform.position.x;
+                    float offsetZ = b.center.z - root.transform.position.z;
+                    visual.transform.localPosition = new Vector3(-offsetX, -lowestPoint, -offsetZ);
                 }
 
                 var collider = root.AddComponent<CapsuleCollider>();
@@ -453,6 +457,7 @@ namespace BES.EditorTools
 
                 root.AddComponent<EnemyHealthBar>();
                 root.AddComponent<EnemyDamageFeedback>();
+                root.AddComponent<RootMotionFixer>();
 
                 var ai = root.AddComponent<EnemyAI>();
                 ai.SetAnimatorController(controller);

@@ -40,6 +40,8 @@ namespace BES.Gameplay
                 cameraTransform = cam.transform;
         }
 
+        Animator animator;
+
         void Update()
         {
             isGrounded = controller.isGrounded;
@@ -49,6 +51,45 @@ namespace BES.Gameplay
             HandleMovement();
             HandleJump();
             ApplyGravity();
+            UpdateAnimator();
+        }
+
+        void UpdateAnimator()
+        {
+            // Always find the animator on the active visual child (skipping the root GameObject itself to avoid dummy animators)
+            animator = null;
+            foreach (Transform child in transform)
+            {
+                animator = child.GetComponentInChildren<Animator>(true);
+                if (animator != null) break;
+            }
+
+            if (animator != null && animator.isActiveAndEnabled && animator.runtimeAnimatorController != null)
+            {
+                // Set speed based on input movement to ensure stable animation transitions (no physics noise/jitter)
+                var moveInput = input != null ? input.Move : Vector2.zero;
+                if (moveInput.sqrMagnitude < 0.001f)
+                    moveInput = ReadKeyboardMove();
+
+                float targetSpeed = 0f;
+                if (moveInput.sqrMagnitude > 0.01f)
+                {
+                    targetSpeed = IsSprinting ? sprintSpeed : walkSpeed;
+                }
+                
+                // Smoothly interpolate the animator speed parameter to prevent instant snapping
+                float currentSpeed = animator.GetFloat("Speed");
+                float newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, 12f * Time.deltaTime);
+                animator.SetFloat("Speed", newSpeed);
+
+                // Temporary professional debug logging
+                if (Time.frameCount % 30 == 0)
+                {
+                    var clipInfo = animator.GetCurrentAnimatorClipInfo(0);
+                    string clipName = clipInfo.Length > 0 ? clipInfo[0].clip.name : "None";
+                    Debug.Log($"[BES Debug] Speed Param: {newSpeed:F2}, Target Speed: {targetSpeed:F2}, Active Clip: {clipName}");
+                }
+            }
         }
 
         void HandleMovement()
@@ -110,6 +151,11 @@ namespace BES.Gameplay
         public void ApplyExternalForce(Vector3 force)
         {
             velocity += force;
+        }
+
+        public void SetVerticalVelocity(float y)
+        {
+            velocity.y = y;
         }
 
         static Vector2 ReadKeyboardMove()

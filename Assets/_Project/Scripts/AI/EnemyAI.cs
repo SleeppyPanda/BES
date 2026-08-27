@@ -89,6 +89,12 @@ namespace BES.Gameplay
             }
         }
 
+        public float PatrolRadius
+        {
+            get => patrolRadius;
+            set => patrolRadius = Mathf.Max(0.1f, value);
+        }
+
         public void Configure(float newDetectRange, float newAttackRange, float newAttackDamage, float newAttackCooldown, float newMoveSpeed)
         {
             detectRange = Mathf.Max(0.1f, newDetectRange);
@@ -113,7 +119,15 @@ namespace BES.Gameplay
 
             if (agent != null && !agent.isOnNavMesh)
             {
-                agent.enabled = false;
+                if (NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 30f, NavMesh.AllAreas))
+                {
+                    agent.Warp(hit.position);
+                }
+                else
+                {
+                    agent.enabled = false;
+                    Debug.LogWarning($"[EnemyAI] {gameObject.name} failed to find NavMesh at {transform.position} within 30m. NavMeshAgent disabled.");
+                }
             }
 
             FindPlayerTarget();

@@ -2447,90 +2447,6 @@ Transform:
   - {fileID: 1799210658}
   m_Father: {fileID: 1247149823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &54614392
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 54614393}
-  - component: {fileID: 54614395}
-  - component: {fileID: 54614394}
-  m_Layer: 0
-  m_Name: SpawnRegion_BabyForest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &54614393
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 54614392}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12, y: 7, z: 38}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1993657988}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &54614394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 54614392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
-  regionId: region_baby_forest
-  subRegionId: sub_baby_north
-  enemyPrefabs:
-  - {fileID: 7867031871070699838, guid: cdfed98245800384691bb8a93a865505, type: 3}
-  spawnPoints: []
-  spawnArea: {fileID: 54614395}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  groundProbeHeight: 4
-  groundProbeDistance: 15
-  positionAttempts: 12
-  spawnedParent: {fileID: 1993657988}
-  minSpawnCount: 2
-  maxSpawnCount: 4
-  spawnOnStart: 1
-  respawnWhenCleared: 1
-  respawnDelay: 40
---- !u!65 &54614395
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 54614392}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 12, y: 0.5, z: 12}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &59727525
 GameObject:
   m_ObjectHideFlags: 0
@@ -16880,6 +16796,91 @@ MonoBehaviour:
   radius: 79.907715
   heightOffset: 18.32572
   speed: 12.885319
+--- !u!1 &375840588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 375840589}
+  - component: {fileID: 375840591}
+  - component: {fileID: 375840590}
+  m_Layer: 0
+  m_Name: SpawnRegion_BabySakura
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &375840589
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375840588}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -32, y: 7, z: -15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1052087517}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &375840590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375840588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
+  regionId: region_baby_sakura
+  subRegionId: sub_baby_west
+  enemyPrefabs:
+  - {fileID: 7867031871070699838, guid: cdfed98245800384691bb8a93a865505, type: 3}
+  spawnPoints: []
+  spawnArea: {fileID: 375840591}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  groundProbeHeight: 4
+  groundProbeDistance: 15
+  positionAttempts: 12
+  spawnedParent: {fileID: 1052087517}
+  minSpawnCount: 2
+  maxSpawnCount: 4
+  spawnOnStart: 1
+  patrolRadiusOverride: -1
+  respawnWhenCleared: 1
+  respawnDelay: 40
+--- !u!65 &375840591
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375840588}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 12, y: 0.5, z: 12}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &376982981
 GameObject:
   m_ObjectHideFlags: 0
@@ -25167,6 +25168,91 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 610681809}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &613316645
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 613316646}
+  - component: {fileID: 613316648}
+  - component: {fileID: 613316647}
+  m_Layer: 0
+  m_Name: SpawnRegion_WestSakura
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &613316646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613316645}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -40, y: 7, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1771664370}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &613316647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613316645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
+  regionId: region_west_sakura
+  subRegionId: sub_meshy_west
+  enemyPrefabs:
+  - {fileID: 8904496747493146273, guid: fc44ad964a3bbb947ad5bb4c376a73ec, type: 3}
+  spawnPoints: []
+  spawnArea: {fileID: 613316648}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  groundProbeHeight: 4
+  groundProbeDistance: 15
+  positionAttempts: 12
+  spawnedParent: {fileID: 1771664370}
+  minSpawnCount: 2
+  maxSpawnCount: 4
+  spawnOnStart: 1
+  patrolRadiusOverride: -1
+  respawnWhenCleared: 1
+  respawnDelay: 45
+--- !u!65 &613316648
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613316645}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 15, y: 0.5, z: 15}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &615536012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28128,90 +28214,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1253365200111565818, guid: 8109e9e16ba4cc04b8e0928aea897927, type: 3}
   m_PrefabInstance: {fileID: 674154796}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &675146192
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 675146193}
-  - component: {fileID: 675146195}
-  - component: {fileID: 675146194}
-  m_Layer: 0
-  m_Name: SpawnRegion_WestSakura
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &675146193
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 675146192}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40, y: 7, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1294143966}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &675146194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 675146192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
-  regionId: region_west_sakura
-  subRegionId: sub_meshy_west
-  enemyPrefabs:
-  - {fileID: 8904496747493146273, guid: fc44ad964a3bbb947ad5bb4c376a73ec, type: 3}
-  spawnPoints: []
-  spawnArea: {fileID: 675146195}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  groundProbeHeight: 4
-  groundProbeDistance: 15
-  positionAttempts: 12
-  spawnedParent: {fileID: 1294143966}
-  minSpawnCount: 2
-  maxSpawnCount: 4
-  spawnOnStart: 1
-  respawnWhenCleared: 1
-  respawnDelay: 45
---- !u!65 &675146195
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 675146192}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 15, y: 0.5, z: 15}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &675248688
 GameObject:
   m_ObjectHideFlags: 0
@@ -31278,90 +31280,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 738036812}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &740939471
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 740939472}
-  - component: {fileID: 740939474}
-  - component: {fileID: 740939473}
-  m_Layer: 0
-  m_Name: SpawnRegion_BabyCamp
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &740939472
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740939471}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40, y: 7, z: -28}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1993657988}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &740939473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740939471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
-  regionId: region_baby_camp
-  subRegionId: sub_baby_camp
-  enemyPrefabs:
-  - {fileID: 7867031871070699838, guid: cdfed98245800384691bb8a93a865505, type: 3}
-  spawnPoints: []
-  spawnArea: {fileID: 740939474}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  groundProbeHeight: 4
-  groundProbeDistance: 15
-  positionAttempts: 12
-  spawnedParent: {fileID: 1993657988}
-  minSpawnCount: 2
-  maxSpawnCount: 4
-  spawnOnStart: 1
-  respawnWhenCleared: 1
-  respawnDelay: 40
---- !u!65 &740939474
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740939471}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 12, y: 0.5, z: 12}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &743524881
 GameObject:
   m_ObjectHideFlags: 0
@@ -37383,90 +37301,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 858875337}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &861121149
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 861121150}
-  - component: {fileID: 861121152}
-  - component: {fileID: 861121151}
-  m_Layer: 0
-  m_Name: SpawnRegion_NorthForest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &861121150
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861121149}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7, z: 40}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1294143966}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &861121151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861121149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
-  regionId: region_north_forest
-  subRegionId: sub_meshy_north
-  enemyPrefabs:
-  - {fileID: 8904496747493146273, guid: fc44ad964a3bbb947ad5bb4c376a73ec, type: 3}
-  spawnPoints: []
-  spawnArea: {fileID: 861121152}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  groundProbeHeight: 4
-  groundProbeDistance: 15
-  positionAttempts: 12
-  spawnedParent: {fileID: 1294143966}
-  minSpawnCount: 2
-  maxSpawnCount: 4
-  spawnOnStart: 1
-  respawnWhenCleared: 1
-  respawnDelay: 45
---- !u!65 &861121152
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861121149}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 15, y: 0.5, z: 15}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &861871727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39410,6 +39244,91 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904720488}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &905397912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 905397913}
+  - component: {fileID: 905397915}
+  - component: {fileID: 905397914}
+  m_Layer: 0
+  m_Name: SpawnRegion_BabyCamp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &905397913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905397912}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 40, y: 7, z: -28}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1052087517}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &905397914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905397912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
+  regionId: region_baby_camp
+  subRegionId: sub_baby_camp
+  enemyPrefabs:
+  - {fileID: 7867031871070699838, guid: cdfed98245800384691bb8a93a865505, type: 3}
+  spawnPoints: []
+  spawnArea: {fileID: 905397915}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  groundProbeHeight: 4
+  groundProbeDistance: 15
+  positionAttempts: 12
+  spawnedParent: {fileID: 1052087517}
+  minSpawnCount: 2
+  maxSpawnCount: 4
+  spawnOnStart: 1
+  patrolRadiusOverride: -1
+  respawnWhenCleared: 1
+  respawnDelay: 40
+--- !u!65 &905397915
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905397912}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 12, y: 0.5, z: 12}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &909736667
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39965,6 +39884,91 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 917639011}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &918100354
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 918100355}
+  - component: {fileID: 918100357}
+  - component: {fileID: 918100356}
+  m_Layer: 0
+  m_Name: SpawnRegion_NorthForest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &918100355
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918100354}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 7, z: 40}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1771664370}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &918100356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918100354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
+  regionId: region_north_forest
+  subRegionId: sub_meshy_north
+  enemyPrefabs:
+  - {fileID: 8904496747493146273, guid: fc44ad964a3bbb947ad5bb4c376a73ec, type: 3}
+  spawnPoints: []
+  spawnArea: {fileID: 918100357}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  groundProbeHeight: 4
+  groundProbeDistance: 15
+  positionAttempts: 12
+  spawnedParent: {fileID: 1771664370}
+  minSpawnCount: 2
+  maxSpawnCount: 4
+  spawnOnStart: 1
+  patrolRadiusOverride: -1
+  respawnWhenCleared: 1
+  respawnDelay: 45
+--- !u!65 &918100357
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918100354}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 15, y: 0.5, z: 15}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &918529398
 GameObject:
   m_ObjectHideFlags: 0
@@ -40525,6 +40529,91 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2432962793492408293, guid: 7cb1a6b5b01d08b449d57dfddf54dd44, type: 3}
   m_PrefabInstance: {fileID: 927381072}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &929235080
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 929235081}
+  - component: {fileID: 929235083}
+  - component: {fileID: 929235082}
+  m_Layer: 0
+  m_Name: SpawnRegion_SoutheastCamp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &929235081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929235080}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 35, y: 7, z: -30}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1771664370}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &929235082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929235080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
+  regionId: region_southeast_camp
+  subRegionId: sub_meshy_camp
+  enemyPrefabs:
+  - {fileID: 8904496747493146273, guid: fc44ad964a3bbb947ad5bb4c376a73ec, type: 3}
+  spawnPoints: []
+  spawnArea: {fileID: 929235083}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  groundProbeHeight: 4
+  groundProbeDistance: 15
+  positionAttempts: 12
+  spawnedParent: {fileID: 1771664370}
+  minSpawnCount: 2
+  maxSpawnCount: 4
+  spawnOnStart: 1
+  patrolRadiusOverride: -1
+  respawnWhenCleared: 1
+  respawnDelay: 45
+--- !u!65 &929235083
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929235080}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 15, y: 0.5, z: 15}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &932424053
 GameObject:
   m_ObjectHideFlags: 0
@@ -42289,6 +42378,91 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 982871685}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &983812264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 983812265}
+  - component: {fileID: 983812267}
+  - component: {fileID: 983812266}
+  m_Layer: 0
+  m_Name: SpawnRegion_BabyForest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &983812265
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983812264}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12, y: 7, z: 38}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1052087517}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &983812266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983812264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
+  regionId: region_baby_forest
+  subRegionId: sub_baby_north
+  enemyPrefabs:
+  - {fileID: 7867031871070699838, guid: cdfed98245800384691bb8a93a865505, type: 3}
+  spawnPoints: []
+  spawnArea: {fileID: 983812267}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  groundProbeHeight: 4
+  groundProbeDistance: 15
+  positionAttempts: 12
+  spawnedParent: {fileID: 1052087517}
+  minSpawnCount: 2
+  maxSpawnCount: 4
+  spawnOnStart: 1
+  patrolRadiusOverride: -1
+  respawnWhenCleared: 1
+  respawnDelay: 40
+--- !u!65 &983812267
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983812264}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 12, y: 0.5, z: 12}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &986622342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45279,6 +45453,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1048932798}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1052087516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1052087517}
+  m_Layer: 0
+  m_Name: EnemySpawnRegions_BabyMonster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1052087517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052087516}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 983812265}
+  - {fileID: 375840589}
+  - {fileID: 905397913}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1056403732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55496,40 +55704,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4440892540295276295, guid: aa886239313e30842b6dba3a3f4b6754, type: 3}
   m_PrefabInstance: {fileID: 1292978525}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1294143965
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1294143966}
-  m_Layer: 0
-  m_Name: EnemySpawnRegions_MeshyMonster
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1294143966
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1294143965}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 861121150}
-  - {fileID: 675146193}
-  - {fileID: 1810868939}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1294550632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74850,6 +75024,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1767841580}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1771664369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1771664370}
+  m_Layer: 0
+  m_Name: EnemySpawnRegions_MeshyMonster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1771664370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771664369}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 918100355}
+  - {fileID: 613316646}
+  - {fileID: 929235081}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1772163231
 GameObject:
   m_ObjectHideFlags: 0
@@ -76228,90 +76436,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2432962793492408293, guid: 7cb1a6b5b01d08b449d57dfddf54dd44, type: 3}
   m_PrefabInstance: {fileID: 1808645313}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1810868938
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1810868939}
-  - component: {fileID: 1810868941}
-  - component: {fileID: 1810868940}
-  m_Layer: 0
-  m_Name: SpawnRegion_SoutheastCamp
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1810868939
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810868938}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 35, y: 7, z: -30}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1294143966}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1810868940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810868938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
-  regionId: region_southeast_camp
-  subRegionId: sub_meshy_camp
-  enemyPrefabs:
-  - {fileID: 8904496747493146273, guid: fc44ad964a3bbb947ad5bb4c376a73ec, type: 3}
-  spawnPoints: []
-  spawnArea: {fileID: 1810868941}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  groundProbeHeight: 4
-  groundProbeDistance: 15
-  positionAttempts: 12
-  spawnedParent: {fileID: 1294143966}
-  minSpawnCount: 2
-  maxSpawnCount: 4
-  spawnOnStart: 1
-  respawnWhenCleared: 1
-  respawnDelay: 45
---- !u!65 &1810868941
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810868938}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 15, y: 0.5, z: 15}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1811639225
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78481,90 +78605,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1854665967}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1855493194
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1855493195}
-  - component: {fileID: 1855493197}
-  - component: {fileID: 1855493196}
-  m_Layer: 0
-  m_Name: SpawnRegion_BabySakura
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1855493195
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1855493194}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -32, y: 7, z: -15}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1993657988}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1855493196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1855493194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e28d5ef5d94ac48bcdfafaf6fbab3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemySpawnRegion
-  regionId: region_baby_sakura
-  subRegionId: sub_baby_west
-  enemyPrefabs:
-  - {fileID: 7867031871070699838, guid: cdfed98245800384691bb8a93a865505, type: 3}
-  spawnPoints: []
-  spawnArea: {fileID: 1855493197}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  groundProbeHeight: 4
-  groundProbeDistance: 15
-  positionAttempts: 12
-  spawnedParent: {fileID: 1993657988}
-  minSpawnCount: 2
-  maxSpawnCount: 4
-  spawnOnStart: 1
-  respawnWhenCleared: 1
-  respawnDelay: 40
---- !u!65 &1855493197
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1855493194}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 12, y: 0.5, z: 12}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1858752638
 GameObject:
   m_ObjectHideFlags: 0
@@ -83796,40 +83836,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7496696158507816418, guid: 031f179d39054a14fbd0a25654de9def, type: 3}
   m_PrefabInstance: {fileID: 1993571757}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1993657987
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1993657988}
-  m_Layer: 0
-  m_Name: EnemySpawnRegions_BabyMonster
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1993657988
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993657987}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 54614393}
-  - {fileID: 1855493195}
-  - {fileID: 740939472}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1994989512
 GameObject:
   m_ObjectHideFlags: 0
@@ -90280,5 +90286,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1081395722}
-  - {fileID: 1294143966}
-  - {fileID: 1993657988}
+  - {fileID: 1052087517}
+  - {fileID: 1771664370}

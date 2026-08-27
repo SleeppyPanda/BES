@@ -236,10 +236,25 @@ namespace BES.Gameplay
             if (player == null || currentSave == null)
                 return;
 
-            player.transform.position = new Vector3(
+            var cc = player.GetComponent<CharacterController>();
+            if (cc != null) cc.enabled = false;
+
+            Vector3 savedPos = new Vector3(
                 currentSave.playerPosX,
                 currentSave.playerPosY,
                 currentSave.playerPosZ);
+
+            // Warp to nearest NavMesh position to prevent spawning/loading inside walls/colliders
+            if (UnityEngine.AI.NavMesh.SamplePosition(savedPos, out UnityEngine.AI.NavMeshHit hit, 30f, UnityEngine.AI.NavMesh.AllAreas))
+            {
+                player.transform.position = hit.position + Vector3.up * 0.1f;
+            }
+            else
+            {
+                player.transform.position = savedPos;
+            }
+
+            if (cc != null) cc.enabled = true;
 
             if (player.TryGetComponent<PlayerStats>(out var stats))
                 stats.LoadState(currentSave.playerHealth, currentSave.playerMana);

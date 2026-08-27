@@ -33,6 +33,9 @@ namespace BES.Gameplay
             if (GameManager.Instance?.Inventory.AddItem(itemId, amount) != true)
                 return;
 
+            // Hiển thị giao diện nhận vật phẩm trực quan
+            BES.UI.LootNotificationUI.Show(itemId, amount);
+
             MetaProgressState.Instance?.MarkWorldObjectCollected(instanceId);
             GameEvents.RaiseCollectiblePickedUp(itemId);
             Destroy(gameObject);

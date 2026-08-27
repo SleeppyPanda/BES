@@ -53,9 +53,27 @@ namespace BES.Editor
             Debug.LogWarning("[BES] BuildMainMenuPrefab skipped. Edit MainMenuScreen.prefab directly in Unity.");
         }
 
+        [MenuItem("BES/UI/Rebuild GameplayHUD Prefab")]
         public static void BuildGameplayHudPrefab()
         {
-            Debug.LogWarning("[BES] BuildGameplayHudPrefab skipped. Edit GameplayHUD.prefab directly in Unity.");
+            var folder = UIAssetPaths.ScreenPrefabs;
+            BESUIEditorUtils.EnsureFolder(folder);
+            
+            var path = folder + "/GameplayHUD.prefab";
+            var root = BuildGameplayHudRoot();
+            
+            // Đảm bảo thư mục Resources/Prefabs tồn tại
+            BESUIEditorUtils.EnsureFolder("Assets/_Project/Resources/Prefabs");
+            var resourcesPath = "Assets/_Project/Resources/Prefabs/GameplayHUD.prefab";
+            
+            // Lưu prefab ở cả hai nơi để tương thích cấu trúc dự án và chạy thực tế
+            PrefabUtility.SaveAsPrefabAsset(root, path);
+            PrefabUtility.SaveAsPrefabAsset(root, resourcesPath);
+            
+            Object.DestroyImmediate(root);
+            
+            Debug.Log($"[BES] Đã tạo lại thành công GameplayHUD.prefab tại {path} và {resourcesPath}!");
+            AssetDatabase.Refresh();
         }
 
         static GameObject BuildMainMenuRoot()
@@ -240,9 +258,14 @@ namespace BES.Editor
 
             var hud = go.AddComponent<HUDController>();
 
-            var health = BESUIEditorUtils.CreateFilledSlider(go.transform, "HealthBar", HUDLayoutTokens.HealthBarPos, HUDLayoutTokens.HealthBarSize,
+            // Khởi tạo thanh máu nhỏ gọn, thanh thoát kiểu Genshin Impact
+            Vector2 hpSize = new Vector2(420f, 12f);
+            Vector2 hpPos = new Vector2(0f, 18f);
+
+            var health = BESUIEditorUtils.CreateFilledSlider(go.transform, "HealthBar", hpPos, hpSize,
                 null, null, HUDPrimitiveStyles.HpBarFill);
-            ApplyPrimitiveBar(health, HUDPrimitiveStyles.HpBarBackground, HUDPrimitiveStyles.HpBarFill);
+            ApplyPrimitiveBar(health, new Color(0.05f, 0.05f, 0.05f, 0.7f), HUDPrimitiveStyles.HpBarFill);
+            
             var barFrame = LoadEditorFrame("Rectangle 39782.png");
             if (barFrame != null)
             {
@@ -251,18 +274,32 @@ namespace BES.Editor
                 {
                     bg.sprite = barFrame;
                     bg.type = Image.Type.Sliced;
-                    bg.color = Color.white;
+                    bg.color = new Color(0.05f, 0.05f, 0.05f, 0.7f); // Nền tối trong suốt cực đẹp
                 }
             }
 
-            var hpValue = BESUIEditorUtils.CreateText(health.transform, "HpValue", "100/100", Vector2.zero, 14f, TextAlignmentOptions.Center);
-            hpValue.color = new Color(0.12f, 0.14f, 0.18f, 0.95f);
+            // Chữ hiển thị số máu đặt tinh tế ngay phía trên thanh máu, màu trắng rõ nét
+            var hpValue = BESUIEditorUtils.CreateText(health.transform, "HpValue", "100/100", new Vector2(0f, 16f), 11f, TextAlignmentOptions.Center);
+            hpValue.color = Color.white;
 
-            var stamina = BESUIEditorUtils.CreateFilledSlider(go.transform, "StaminaBar", new Vector2(HUDLayoutTokens.HealthBarPos.x, HUDLayoutTokens.HealthBarPos.y - 24f), new Vector2(HUDLayoutTokens.HealthBarSize.x, 10f),
+            // Thanh thể lực nhỏ hơn nằm ngay bên dưới thanh máu
+            Vector2 staminaSize = new Vector2(420f, 6f);
+            Vector2 staminaPos = new Vector2(0f, 4f);
+
+            var stamina = BESUIEditorUtils.CreateFilledSlider(go.transform, "StaminaBar", staminaPos, staminaSize,
                 null, null, HUDPrimitiveStyles.StaminaBarFill);
-            ApplyPrimitiveBar(stamina, HUDPrimitiveStyles.HpBarBackground, HUDPrimitiveStyles.StaminaBarFill);
-            var staminaValue = BESUIEditorUtils.CreateText(stamina.transform, "StaminaValue", "100/100", Vector2.zero, 12f, TextAlignmentOptions.Center);
-            staminaValue.color = new Color(0.12f, 0.14f, 0.18f, 0.95f);
+            ApplyPrimitiveBar(stamina, new Color(0.05f, 0.05f, 0.05f, 0.7f), HUDPrimitiveStyles.StaminaBarFill);
+            
+            if (barFrame != null)
+            {
+                var bg = stamina.transform.Find("Background")?.GetComponent<Image>();
+                if (bg != null)
+                {
+                    bg.sprite = barFrame;
+                    bg.type = Image.Type.Sliced;
+                    bg.color = new Color(0.05f, 0.05f, 0.05f, 0.7f);
+                }
+            }
 
             var region = BESUIEditorUtils.CreateText(go.transform, "RegionText", string.Empty, HUDLayoutTokens.RegionTextPos, 13f, TextAlignmentOptions.BottomLeft);
             region.color = new Color(1f, 1f, 1f, 0.75f);
@@ -270,7 +307,7 @@ namespace BES.Editor
             BESUIEditorUtils.SetPrivateField(hud, "healthBar", health);
             BESUIEditorUtils.SetPrivateField(hud, "staminaBar", stamina);
             BESUIEditorUtils.SetPrivateField(hud, "hpValueText", hpValue);
-            BESUIEditorUtils.SetPrivateField(hud, "staminaValueText", staminaValue);
+            BESUIEditorUtils.SetPrivateField(hud, "staminaValueText", null); // Không hiển thị text số cho stamina để tối giản UI
             BESUIEditorUtils.SetPrivateField(hud, "regionText", region);
         }
 
@@ -567,10 +604,10 @@ namespace BES.Editor
             {
                 panelImg.sprite = manifest.interactPromptFrame;
                 panelImg.type = Image.Type.Sliced;
-                panelImg.color = Color.white;
+                panelImg.color = new Color(0.08f, 0.08f, 0.08f, 0.85f); // Viền/Nền tối tinh tế
             }
             else
-                panelImg.color = new Color(0.05f, 0.05f, 0.1f, 0.85f);
+                panelImg.color = new Color(0.08f, 0.08f, 0.08f, 0.85f);
 
             var text = BESUIEditorUtils.CreateText(panel.transform, "PromptText", "Nhấn F để tương tác", Vector2.zero);
             BESUIEditorUtils.SetPrivateField(prompt, "promptRoot", panel);
@@ -711,6 +748,10 @@ namespace BES.Editor
                 (pos: HUDLayoutTokens.SkillQPos, size: HUDLayoutTokens.SkillQSize, key: "Q"),
             };
 
+            // Lấy các sprite hình tròn và vòng tròn chất lượng cao của dự án
+            var circleSprite = HUDPrimitiveStyles.GetMinimapFaceSprite();
+            var ringSprite = HUDPrimitiveStyles.GetMinimapRingSprite();
+
             for (var i = 0; i < SkillBarUI.VisibleSlotCount; i++)
             {
                 var layout = layouts[i];
@@ -719,30 +760,88 @@ namespace BES.Editor
                 var slotRect = slotGo.AddComponent<RectTransform>();
                 slotRect.sizeDelta = layout.size;
                 slotRect.anchoredPosition = layout.pos;
+
+                // 1. Thêm hiệu ứng Hào quang phát sáng (Ultimate Charged Glow) nằm phía sau phím Q (Chiêu cuối)
+                if (layout.key == "Q")
+                {
+                    var glowGo = new GameObject("ChargedGlow");
+                    glowGo.transform.SetParent(slotGo.transform, false);
+                    var glowRect = glowGo.AddComponent<RectTransform>();
+                    glowRect.sizeDelta = layout.size * 1.25f; // Rộng hơn nút 25% để tạo quầng sáng tỏa ra ngoài
+                    var glowImg = glowGo.AddComponent<Image>();
+                    glowImg.sprite = circleSprite;
+                    glowImg.color = new Color(1f, 0.72f, 0.15f, 0.28f); // Ánh sáng vàng nộ ấm áp
+                }
+
+                // 2. Thiết lập nút cha đóng vai trò là nền tối
                 var img = slotGo.AddComponent<Image>();
                 frames[i] = img;
-                HUDPrimitiveStyles.ApplySolidPanel(img, HUDPrimitiveStyles.SlotBackground);
-                HUDPrimitiveStyles.TryApplySmallFrame(img, manifest?.skillSlotFrame);
+                img.sprite = circleSprite;
+                img.type = Image.Type.Simple;
+                img.color = new Color(0.04f, 0.04f, 0.05f, 0.85f);
 
+                // 3. Thêm Mask để bo tròn các phần tử hiển thị bên trong
+                var mask = slotGo.AddComponent<Mask>();
+                mask.showMaskGraphic = true;
+
+                // Icon kỹ năng
                 var iconGo = new GameObject("Icon");
                 iconGo.transform.SetParent(slotGo.transform, false);
                 var iconRect = iconGo.AddComponent<RectTransform>();
-                iconRect.sizeDelta = layout.size * 0.68f;
+                UIAnchorPresets.StretchFull(iconRect);
                 icons[i] = iconGo.AddComponent<Image>();
+                icons[i].color = new Color(1f, 1f, 1f, 0.65f);
 
+                // Cooldown overlay
                 var cdGo = new GameObject("Cooldown");
                 cdGo.transform.SetParent(slotGo.transform, false);
                 var cdRect = cdGo.AddComponent<RectTransform>();
                 UIAnchorPresets.StretchFull(cdRect);
                 cooldowns[i] = cdGo.AddComponent<Image>();
-                cooldowns[i].color = new Color(0, 0, 0, 0.5f);
+                cooldowns[i].sprite = circleSprite;
+                cooldowns[i].color = new Color(0f, 0f, 0f, 0.65f);
                 cooldowns[i].type = Image.Type.Filled;
                 cooldowns[i].fillMethod = Image.FillMethod.Radial360;
                 cooldowns[i].fillOrigin = (int)Image.Origin360.Top;
                 cooldowns[i].fillClockwise = true;
                 cooldowns[i].fillAmount = 0f;
 
-                var keyGo = BESUIEditorUtils.CreateText(slotGo.transform, "KeyLabel", layout.key, new Vector2(0, -layout.size.y * 0.55f), 11f, TMPro.TextAlignmentOptions.Center);
+                // 4. Lớp phủ bóng gương (Glossy Overlay) tạo cảm giác 3D thủy tinh sang trọng
+                var glossGo = new GameObject("GlossyOverlay");
+                glossGo.transform.SetParent(slotGo.transform, false);
+                var glossRect = glossGo.AddComponent<RectTransform>();
+                UIAnchorPresets.StretchFull(glossRect);
+                var glossImg = glossGo.AddComponent<Image>();
+                glossImg.sprite = circleSprite;
+                glossImg.color = new Color(1f, 1f, 1f, 0.06f); // Ánh phản chiếu nhẹ trắng mờ
+
+                // 5. Viền kép kim loại sáng bóng (Double Ring Border Frame) ở trên cùng của nút
+                var borderGo = new GameObject("BorderRing");
+                borderGo.transform.SetParent(slotGo.transform, false);
+                var borderRect = borderGo.AddComponent<RectTransform>();
+                UIAnchorPresets.StretchFull(borderRect);
+                var borderImg = borderGo.AddComponent<Image>();
+                borderImg.sprite = ringSprite;
+                // Nút Q viền vàng nộ lấp lánh, nút E viền bạc thanh lịch
+                borderImg.color = (layout.key == "Q") 
+                    ? new Color(1f, 0.82f, 0.35f, 0.85f) 
+                    : new Color(0.9f, 0.9f, 0.95f, 0.65f);
+
+                // 6. Huy hiệu phím tắt nằm đè ngoài mặt nạ để tránh bị che mất góc dưới
+                var badgeGo = new GameObject("KeyBadge");
+                badgeGo.transform.SetParent(go.transform, false);
+                var badgeRect = badgeGo.AddComponent<RectTransform>();
+                badgeRect.anchorMin = new Vector2(0.5f, 0.5f);
+                badgeRect.anchorMax = new Vector2(0.5f, 0.5f);
+                badgeRect.pivot = new Vector2(0.5f, 0.5f);
+                badgeRect.anchoredPosition = layout.pos + new Vector2(0f, -layout.size.y * 0.45f);
+                badgeRect.sizeDelta = new Vector2(20f, 20f);
+
+                var badgeImg = badgeGo.AddComponent<Image>();
+                badgeImg.sprite = circleSprite;
+                badgeImg.color = new Color(0.12f, 0.12f, 0.15f, 0.95f);
+
+                var keyGo = BESUIEditorUtils.CreateText(badgeGo.transform, "KeyLabel", layout.key, Vector2.zero, 10f, TMPro.TextAlignmentOptions.Center);
                 keyLabels[i] = keyGo;
                 keyGo.color = HUDPrimitiveStyles.SkillKeyLabel;
             }

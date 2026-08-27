@@ -81,6 +81,22 @@ namespace BES.EditorTools
                 SceneManager.MoveGameObjectToScene(dummy, desertScene);
             }
 
+            // 3.5. Add Mesh Colliders to environment renderers so raycasting works
+            var allMeshRenderers = Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None);
+            int collidersAdded = 0;
+            foreach (var mr in allMeshRenderers)
+            {
+                if (mr.gameObject.scene == desertScene && mr.gameObject.name != "Skybox" && mr.gameObject.name != "Sky")
+                {
+                    if (mr.GetComponent<Collider>() == null)
+                    {
+                        mr.gameObject.AddComponent<MeshCollider>();
+                        collidersAdded++;
+                    }
+                }
+            }
+            if (logResult) Debug.Log($"[BES Desert Setup] Added {collidersAdded} MeshColliders to environment elements.");
+
             // 4. Scans all meshes in scene to calculate map center and ground point
             Vector3 mapCenter = Vector3.zero;
             var renderers = Object.FindObjectsByType<Renderer>(FindObjectsSortMode.None);
@@ -123,10 +139,19 @@ namespace BES.EditorTools
             surface.collectObjects = CollectObjects.All;
             surface.useGeometry = NavMeshCollectGeometry.RenderMeshes;
             
-            // Mark ground environment elements static for navmesh baking
+            // Mark ground environment elements static for navmesh baking (including Vietnamese naming conventions in Egypt Props Pack)
             foreach (var r in renderers)
             {
-                if (r.gameObject.scene == desertScene && (r.gameObject.name.ToLower().Contains("floor") || r.gameObject.name.ToLower().Contains("ground") || r.gameObject.name.ToLower().Contains("stair") || r.gameObject.name.ToLower().Contains("rock") || r.gameObject.name.ToLower().Contains("prop")))
+                if (r.gameObject.scene == desertScene && (
+                    r.gameObject.name.ToLower().Contains("floor") || 
+                    r.gameObject.name.ToLower().Contains("ground") || 
+                    r.gameObject.name.ToLower().Contains("stair") || 
+                    r.gameObject.name.ToLower().Contains("rock") || 
+                    r.gameObject.name.ToLower().Contains("prop") ||
+                    r.gameObject.name.ToLower().Contains("nen") ||
+                    r.gameObject.name.ToLower().Contains("nha") ||
+                    r.gameObject.name.ToLower().Contains("tru") ||
+                    r.gameObject.name.ToLower().Contains("da")))
                 {
                     GameObjectUtility.SetStaticEditorFlags(r.gameObject, StaticEditorFlags.NavigationStatic);
                 }
