@@ -7,13 +7,17 @@ using UnityEngine.UI;
 
 namespace BES.UI.Menu
 {
-    public enum StageCollection { Resources, SanctumRelics, WeaponBreakthrough }
+    public enum StageCollection { Resources, SanctumRelics, WeaponBreakthrough, CustomGroup }
 
     public class StageSelectionController : MonoBehaviour
     {
+        static string pendingGroupOverride;
+
         [SerializeField] MenuContentDatabase database;
         [SerializeField] MenuNavigator navigator;
         [SerializeField] StageCollection collection;
+        [Tooltip("Used when Collection = CustomGroup. This matches MenuContentDatabase.PlayModeStageGroup.id.")]
+        [SerializeField] string customGroupId;
         [SerializeField] Transform stageRoot;
         [SerializeField] Button stageButtonPrefab;
         [SerializeField] Image previewImage;
@@ -27,6 +31,7 @@ namespace BES.UI.Menu
         [SerializeField] UnityEvent<string> onStageEntered;
         List<StageEntry> stages;
         StageEntry selected;
+        string activeGroupId;
 
         void OnEnable() { Rebuild(); }
         void Start()
@@ -40,12 +45,27 @@ namespace BES.UI.Menu
             ResolveDatabase();
             if (database == null) return;
             database.EnsureDefaultPlayModeStages();
-            stages = collection switch
+            var groupOverride = pendingGroupOverride;
+            pendingGroupOverride = null;
+            activeGroupId = !string.IsNullOrWhiteSpace(groupOverride)
+                ? groupOverride.Trim()
+                : collection switch
+                {
+                    StageCollection.SanctumRelics => "sanctum",
+                    StageCollection.WeaponBreakthrough => "weapon",
+                    StageCollection.CustomGroup => customGroupId,
+                    _ => "resources"
+                };
+            stages = !string.IsNullOrWhiteSpace(groupOverride)
+                ? database.GetPlayModeStages(groupOverride)
+                : collection switch
             {
                 StageCollection.SanctumRelics => database.sanctumStages,
                 StageCollection.WeaponBreakthrough => database.weaponStages,
+                StageCollection.CustomGroup => database.GetPlayModeStages(customGroupId),
                 _ => database.resourceStages
             };
+            stages ??= new List<StageEntry>();
             if (stageRoot != null && stageButtonPrefab != null)
             {
                 foreach (Transform child in stageRoot) Destroy(child.gameObject);
@@ -74,8 +94,20 @@ namespace BES.UI.Menu
             if (stage == null) return;
             foreach (var reward in stage.rewards)
             {
+                if (reward == null || string.IsNullOrWhiteSpace(reward.id) ||
+                    (reward.amount <= 0 && reward.minAmount <= 0 && reward.maxAmount <= 0))
+                    continue;
                 var icon = Instantiate(rewardIconPrefab, rewardRoot);
                 icon.sprite = reward.icon;
+                icon.enabled = reward.icon != null;
+                var label = icon.GetComponentInChildren<TMP_Text>(true);
+                if (label != null)
+                {
+                    var chance = reward.guaranteed ? "100%" : $"{Mathf.Clamp(reward.dropChancePercent, 0, 100)}%";
+                    var min = reward.minAmount > 0 ? reward.minAmount : Mathf.Max(1, reward.amount);
+                    var max = reward.maxAmount > 0 ? reward.maxAmount : min;
+                    label.text = max > min ? $"{min}-{max}\n{chance}" : $"{min}\n{chance}";
+                }
             }
         }
 
@@ -85,14 +117,23 @@ namespace BES.UI.Menu
             onStageEntered?.Invoke(selected.id);
             TurnBattleUI.ActiveStageId = selected.id;
             TurnBattleUI.IsPlayModeBattle = true;
+            TurnBattleUI.ActivePlayModeStageGroupId = !string.IsNullOrWhiteSpace(activeGroupId)
+                ? activeGroupId
+                : selected.playModeType;
             var save = GameManager.Instance?.Save?.Current;
             if (save != null)
             {
                 save.activeBattleStageId = selected.id;
                 save.activeBattleIsPlayMode = true;
+                save.activePlayModeStageGroupId = TurnBattleUI.ActivePlayModeStageGroupId;
                 GameManager.Instance.SaveGame();
             }
             navigator?.Open(MenuScreenId.PlayParty);
+        }
+
+        public static void OpenGroupOnNextEnable(string groupId)
+        {
+            pendingGroupOverride = string.IsNullOrWhiteSpace(groupId) ? null : groupId.Trim();
         }
 
         void ResolveDatabase()

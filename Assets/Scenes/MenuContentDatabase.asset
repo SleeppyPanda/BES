@@ -18,7 +18,7 @@ MonoBehaviour:
     amount: 0
   - id: gems
     icon: {fileID: 21300000, guid: 642780ad9c7b7174cae20a70a0ca5f98, type: 3}
-    amount: 50399
+    amount: 45599
   - id: coins
     icon: {fileID: 21300000, guid: 57fe28cdfe9856c4d814d8eae4c7d5c0, type: 3}
     amount: 99999
@@ -47,6 +47,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -82,6 +87,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -120,6 +130,11 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: 19fdd0dafe327db44b3191516969590e, type: 3}
     fullBody: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
     chibi: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs:
     - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
     - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
@@ -166,6 +181,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs:
     - {fileID: 6263782476919498309, guid: 1fd2749f2a4056446881dce86ed70c39, type: 3}
     - {fileID: 8367907410985086596, guid: 0b493b97a8e419d46903c1b023460740, type: 3}
@@ -211,6 +231,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs:
     - {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
     - {fileID: 6520436353736122353, guid: 117624082503aad42847c41c2da7e8da, type: 3}
@@ -258,6 +283,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -302,6 +332,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -347,6 +382,11 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: 049dfd20644f4be40a2a1c954e1dcd9a, type: 3}
     fullBody: {fileID: 21300000, guid: af113dc2e52074146ab6caf3002a6122, type: 3}
     chibi: {fileID: 21300000, guid: af113dc2e52074146ab6caf3002a6122, type: 3}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -390,7 +430,12 @@ MonoBehaviour:
     portrait: {fileID: 0}
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
-    chibi: {fileID: 0}
+    chibi: {fileID: 21300000, guid: c6ec6f82157332140af4d18326e6c224, type: 3}
+    attackFrame1: {fileID: -4500372732024133591, guid: d89cab734efe27a4bbf360d24b18c79b, type: 3}
+    attackFrame2: {fileID: -229271481906538435, guid: d89cab734efe27a4bbf360d24b18c79b, type: 3}
+    attackFrame3: {fileID: 8499719710951512933, guid: d89cab734efe27a4bbf360d24b18c79b, type: 3}
+    attackFrame4: {fileID: -4443609948556740571, guid: d89cab734efe27a4bbf360d24b18c79b, type: 3}
+    attackFrame5: {fileID: -2994336515865959731, guid: d89cab734efe27a4bbf360d24b18c79b, type: 3}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -433,6 +478,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -476,6 +526,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -519,6 +574,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -562,6 +622,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -608,6 +673,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -649,6 +719,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -688,6 +763,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -729,6 +809,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -773,6 +858,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -819,6 +909,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -861,6 +956,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -902,6 +1002,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -939,6 +1044,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -978,6 +1088,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1017,6 +1132,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1052,6 +1172,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1087,6 +1212,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1124,6 +1254,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1159,6 +1294,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1201,6 +1341,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1249,6 +1394,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1292,6 +1442,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1328,6 +1483,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1368,6 +1528,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1410,6 +1575,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1446,6 +1616,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1484,6 +1659,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1536,6 +1716,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1578,6 +1763,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1620,6 +1810,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1666,6 +1861,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1706,6 +1906,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1745,6 +1950,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1786,6 +1996,11 @@ MonoBehaviour:
     cardBackground: {fileID: 0}
     fullBody: {fileID: 0}
     chibi: {fileID: 0}
+    attackFrame1: {fileID: 0}
+    attackFrame2: {fileID: 0}
+    attackFrame3: {fileID: 0}
+    attackFrame4: {fileID: 0}
+    attackFrame5: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -2144,7 +2359,7 @@ MonoBehaviour:
         text: "B\xF3ng \u0111en \u0111\xE3 ch\u1EA1y xa.\nM\u1ED9t c\xE1i \u0111u\xF4i
           \u0111en tho\xE1ng bi\u1EBFn m\u1EA5t sau nh\u1EEFng th\xE2n c\xE2y.\nLunen
           l\u1EADp t\u1EE9c quay ng\u01B0\u1EDDi."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2162,7 +2377,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: Lunen
         text: "\u0110u\u1ED5i theo!"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 0
@@ -2184,7 +2399,7 @@ MonoBehaviour:
           nhi\xEAn bi\u1EBFn m\u1EA5t sau m\u1ED9t t\xE1n c\xE2y l\u1EDBn.\nLunen
           d\u1EEBng l\u1EA1i.\nTinh linh bay t\u1EDBi b\xEAn c\u1EA1nh, th\u1EDF
           h\u1ED5n h\u1EC3n."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2203,7 +2418,7 @@ MonoBehaviour:
       - speaker: Tinh Linh
         text: "\u0110\u1EEBng n\xF3i v\u1EDBi t\u1EDB l\xE0 m\u1EA5t d\u1EA5u r\u1ED3i
           nh\xE9..."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2228,7 +2443,7 @@ MonoBehaviour:
           r\u1ED3i \u0111\xE3 bi\u1EBFn m\u1EA5t sau m\u1ED9t t\xE1n c\xE2y l\u1EDBn.
           C\u1EA3 hai gi\u1EA3m t\u1ED1c \u0111\u1ED9, c\u1EA9n th\u1EADn ti\u1EBFn
           l\u1EA1i g\u1EA7n."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2249,7 +2464,7 @@ MonoBehaviour:
           t\xE1n c\xE2y. Con m\xE8o \u0111en \u0111ang n\u1EB1m tr\xEAn vai ch\xE0ng
           trai tr\u1EBB, chi\u1EBFc v\xF2ng ng\u1ECDc v\u1EABn m\u1EAFc tr\xEAn c\u1ED5
           n\xF3."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2288,7 +2503,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: 
         text: "R\u1EAFc."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2310,7 +2525,7 @@ MonoBehaviour:
           thi\u1EBFu ni\xEAn d\u01B0\u1EDBi g\u1ED1c c\xE2y l\u1EADp t\u1EE9c m\u1EDF
           m\u1EAFt.\nCh\u1EC9 trong kho\u1EA3nh kh\u1EAFc, v\u1EBB l\u01A1 \u0111\xE3ng
           tr\xEAn khu\xF4n m\u1EB7t bi\u1EBFn m\u1EA5t ho\xE0n to\xE0n."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2336,7 +2551,7 @@ MonoBehaviour:
           c\xF2n mang n\xE9t tr\u1EBB tu\u1ED5i. C\u1EADu xoay ng\u01B0\u1EDDi v\u1EC1
           ph\xEDa t\xE1n c\xE2y, \xE1nh m\u1EAFt s\u1EAFc l\u1EA1nh kh\xF3a ch\u1EB7t
           v\u1ECB tr\xED c\u1EE7a Lunen v\xE0 tinh linh."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2354,7 +2569,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: ???
         text: "Ra \u0111\xE2y"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2376,7 +2591,7 @@ MonoBehaviour:
           thay \u0111\u1ED5i. Ng\u1ECDn l\u1EEDa quanh l\u01B0\u1EE1i ki\u1EBFm cu\u1ED9n
           l\xEAn d\u1EEF d\u1ED9i, h\u01A1i n\xF3ng lan ra khi\u1EBFn nh\u1EEFng
           chi\u1EBFc l\xE1 kh\xF4 d\u01B0\u1EDBi ch\xE2n rung nh\u1EB9."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2394,7 +2609,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: ???
         text: "Ta kh\xF4ng th\xEDch ph\u1EA3i n\xF3i l\u1EA7n th\u1EE9 hai."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2418,7 +2633,7 @@ MonoBehaviour:
           \u0111\u1ECBnh t\u1EA5n c\xF4ng. C\u1EADu v\u1EEBa b\u01B0\u1EDBc ra kh\u1ECFi
           t\xE1n c\xE2y th\xEC ng\u01B0\u1EDDi thi\u1EBFu ni\xEAn tr\u01B0\u1EDBc
           m\u1EB7t \u0111\xE3 lao t\u1EDBi."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2441,7 +2656,7 @@ MonoBehaviour:
           vang l\xEAn khi l\u01B0\u1EE1i ki\u1EBFm ch\xE9m xu\u1ED1ng n\u1EC1n \u0111\u1EA5t,
           ng\u1ECDn l\u1EEDa b\u1EAFn tung nh\u1EEFng m\u1EA3nh \u0111\u1EA5t kh\xF4
           v\xE0 l\xE1 v\u1EE5n xung quanh."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2460,7 +2675,7 @@ MonoBehaviour:
       - speaker: Tinh Linh
         text: "Khoan \u0111\xE3\u2014?! C\u1EADu ta kh\xF4ng \u0111\u1ECBnh h\u1ECFi
           g\xEC lu\xF4n \xE0?!"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2484,7 +2699,7 @@ MonoBehaviour:
           d\xF2. M\u1ED7i \u0111\xF2n \u0111\u1EC1u mang theo s\u1EE9c n\xF3ng d\u1EEF
           d\u1ED9i, \xE9p Lunen li\xEAn t\u1EE5c l\xF9i l\u1EA1i gi\u1EEFa nh\u1EEFng
           th\xE2n c\xE2y."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2508,7 +2723,7 @@ MonoBehaviour:
           \u0111\u1EC1u ch\u1EAFc ch\u1EAFn, t\u1EEBng \u0111\xF2n \u0111\xE1nh \u0111\u1EC1u
           nh\u1EAFm v\xE0o nh\u1EEFng kho\u1EA3ng tr\u1ED1ng trong ph\xF2ng th\u1EE7
           c\u1EE7a \u0111\u1ED1i ph\u01B0\u01A1ng."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2532,7 +2747,7 @@ MonoBehaviour:
           ch\xF3ng l\u1EA5y l\u1EA1i th\u0103ng b\u1EB1ng v\xE0 ti\u1EBFp t\u1EE5c
           \xE1p s\xE1t.\nCu\u1ED9c giao tranh ch\u1EC9 k\xE9o d\xE0i trong m\u1ED9t
           kho\u1EA3ng th\u1EDDi gian ng\u1EAFn."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2556,7 +2771,7 @@ MonoBehaviour:
           t\xE1c, c\u1EADu \u0111\xE1nh b\u1EADt v\u0169 kh\xED c\u1EE7a \u0111\u1ED1i
           ph\u01B0\u01A1ng sang m\u1ED9t b\xEAn v\xE0 bu\u1ED9c thi\u1EBFu ni\xEAn
           ph\u1EA3i l\xF9i l\u1EA1i."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2579,7 +2794,7 @@ MonoBehaviour:
           C\u1EADu nh\xECn Lunen ch\u0103m ch\xFA, nh\u01B0ng thay v\xEC t\u1EE9c
           gi\u1EADn v\xEC b\u1ECB \xE1p \u0111\u1EA3o, \xE1nh m\u1EAFt \u1EA5y l\u1EA1i
           mang theo s\u1EF1 \u0111\xE1nh gi\xE1 r\xF5 r\u1EC7t."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2597,7 +2812,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: ???
         text: "Th\u1EF1c l\u1EF1c kh\xE1 \u0111\u1EA5y."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2617,7 +2832,7 @@ MonoBehaviour:
         text: "C\xE1c c\u1EADu b\u1ECB l\xE0m sao v\u1EADy?! Ng\u01B0\u1EDDi ta g\u1EB7p
           nhau l\xE0 ph\u1EA3i n\xF3i chuy\u1EC7n tr\u01B0\u1EDBc ch\u1EE9! Sao v\u1EEBa
           th\u1EA5y b\u1ECDn t\xF4i \u0111\xE3 lao v\xE0o \u0111\xE1nh r\u1ED3i?!"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2635,7 +2850,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: 
         text: "Thi\u1EBFu ni\xEAn quay sang nh\xECn c\xF4."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2654,7 +2869,7 @@ MonoBehaviour:
       - speaker: ???
         text: "C\xE1c ng\u01B0\u01A1i xu\u1EA5t hi\u1EC7n trong l\xE3nh th\u1ED5
           c\u1EE7a ta m\xE0 kh\xF4ng b\xE1o tr\u01B0\u1EDBc."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2673,7 +2888,7 @@ MonoBehaviour:
       - speaker: Tinh Linh
         text: "Th\xEC b\u1ECDn t\xF4i \u0111\xE2u bi\u1EBFt \u0111\xE2y l\xE0 l\xE3nh
           th\u1ED5 c\u1EE7a c\u1EADu!"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2695,7 +2910,7 @@ MonoBehaviour:
           gi\u1EEF nguy\xEAn s\u1EF1 c\u1EA3nh gi\xE1c.\n\u0110\xFAng l\xFAc \u0111\xF3,
           tinh linh \u0111\u1ED9t nhi\xEAn nh\xECn th\u1EA5y m\u1ED9t chuy\u1EC3n
           \u0111\u1ED9ng \u1EDF ph\xEDa sau c\u1EADu."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2713,7 +2928,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: Tinh Linh
         text: Khoan!
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2731,7 +2946,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: Tinh Linh
         text: "Lunen! Chi\u1EBFc v\xF2ng!"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2754,7 +2969,7 @@ MonoBehaviour:
           l\xFAc hai ng\u01B0\u1EDDi giao tranh, n\xF3 \u0111\xE3 tr\u1ED1n \u1EDF
           m\u1ED9t n\u01A1i g\u1EA7n \u0111\xF3 v\xE0 gi\u1EDD m\u1EDBi ch\u1ECBu
           l\xF3 ra."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2772,7 +2987,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: Tinh Linh
         text: "\u0110\u1EE9ng l\u1EA1i!"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2795,7 +3010,7 @@ MonoBehaviour:
           thi\u1EBFu ni\xEAn. Ch\u1EC9 trong ch\u1EDBp m\u1EAFt, n\xF3 \u0111\xE3
           nh\u1EA3y l\xEAn ch\xE2n c\u1EADu, b\xE1m v\xE0o v\u1EA1t \xE1o r\u1ED3i
           leo m\u1ED9t m\u1EA1ch l\xEAn vai."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2818,7 +3033,7 @@ MonoBehaviour:
           v\u1EEBa t\xECm \u0111\u01B0\u1EE3c n\u01A1i an to\xE0n nh\u1EA5t.\nTinh
           linh ch\u1EA1y t\u1EDBi n\u01A1i, t\u1EE9c \u0111\u1EBFn m\u1EE9c d\u1EADm
           ch\xE2n."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2836,7 +3051,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: Tinh Linh
         text: "L\u1EA1i c\xF2n ch\u1EA1y v\u1EC1 ch\u1ED7 c\u1EADu n\u1EEFa!"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2854,7 +3069,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: 
         text: "Thi\u1EBFu ni\xEAn h\u01A1i nh\u01B0\u1EDBng m\xE0y."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2872,7 +3087,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: ???
         text: "...N\xF3?"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2891,7 +3106,7 @@ MonoBehaviour:
       - speaker: 
         text: "C\u1EADu nh\xECn con m\xE8o tr\xEAn vai m\xECnh r\u1ED3i nh\xECn tinh
           linh. C\xF4 b\xE9 ch\u1EC9 th\u1EB3ng v\xE0o chi\u1EBFc v\xF2ng."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2911,7 +3126,7 @@ MonoBehaviour:
         text: "Con m\xE8o n\xE0y c\u01B0\u1EDBp \u0111\u1ED3 c\u1EE7a ch\xFAng t\xF4i
           tr\u01B0\u1EDBc! Chi\u1EBFc v\xF2ng tr\xEAn c\u1ED5 n\xF3 l\xE0 c\u1EE7a
           Lunen!"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2932,7 +3147,7 @@ MonoBehaviour:
           xu\u1ED1ng chi\u1EBFc v\xF2ng. R\u1ED3i sang Lunen.\nSau c\xF9ng, c\u1EADu
           nh\xECn con m\xE8o \u0111ang v\xF4 t\u01B0 li\u1EBFm ch\xE2n tr\xEAn vai
           m\xECnh.\nM\u1ED9t kho\u1EA3ng l\u1EB7ng k\xE9o d\xE0i."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2950,7 +3165,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: ???
         text: "...Chi\u1EBFc v\xF2ng \u0111\xF3 l\xE0 c\u1EE7a c\xE1c ng\u01B0\u01A1i?"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2968,7 +3183,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: Tinh Linh
         text: "\u0110\xFAng."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -2987,7 +3202,7 @@ MonoBehaviour:
       - speaker: Lunen
         text: "Ch\xFAng t\xF4i \u0111\xE3 \u0111u\u1ED5i theo n\xF3 t\u1EEB l\xFAc
           n\xF3 l\u1EA5y chi\u1EBFc v\xF2ng."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 0
@@ -3013,7 +3228,7 @@ MonoBehaviour:
           m\xECnh; h\u1ECD ch\u1EC9 \u0111\u01A1n gi\u1EA3n l\xE0 \u0111u\u1ED5i
           theo con m\xE8o \u0111\xE3 l\u1EA5y m\u1EA5t \u0111\u1ED3 c\u1EE7a h\u1ECD.\nCu\u1ED1i
           c\xF9ng, thi\u1EBFu ni\xEAn kh\u1EBD th\u1EDF ra."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3031,7 +3246,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: ???
         text: "V\u1EADy ra l\xE0 th\u1EBF."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3051,7 +3266,7 @@ MonoBehaviour:
         text: "C\u1EADu c\xFAi xu\u1ED1ng nh\xECn s\u1EE7ng v\u1EADt \u0111ang n\xE9p
           b\xEAn c\u1ED5 m\xECnh. \xC1nh m\u1EAFt ban n\xE3y c\xF2n l\u1EA1nh l\xF9ng
           gi\u1EDD chuy\u1EC3n th\xE0nh v\u1EBB b\u1EA5t l\u1EF1c r\xF5 r\u1EC7t."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3069,7 +3284,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: ???
         text: "Ng\u01B0\u01A1i l\u1EA1i g\xE2y chuy\u1EC7n n\u1EEFa r\u1ED3i."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3087,7 +3302,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: 
         text: "Con m\xE8o ng\u1EA9ng \u0111\u1EA7u nh\xECn ch\u1EE7 nh\xE2n."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3105,7 +3320,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: "Con m\xE8o"
         text: Meo.
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3123,7 +3338,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: ???
         text: "\u0110\u1EEBng gi\u1EA3 v\u1EDD v\xF4 t\u1ED9i."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3142,7 +3357,7 @@ MonoBehaviour:
       - speaker: 
         text: "Hai tai n\xF3 l\u1EADp t\u1EE9c c\u1EE5p xu\u1ED1ng.\nThi\u1EBFu ni\xEAn
           ch\u1EC9 v\u1EC1 ph\xEDa Lunen."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3161,7 +3376,7 @@ MonoBehaviour:
       - speaker: ???
         text: "Chi\u1EBFc v\xF2ng kh\xF4ng ph\u1EA3i c\u1EE7a ng\u01B0\u01A1i. Tr\u1EA3
           l\u1EA1i \u0111i."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3183,7 +3398,7 @@ MonoBehaviour:
           xu\u1ED1ng. Sau m\u1ED9t l\xE1t do d\u1EF1, n\xF3 nh\u1EA3y kh\u1ECFi vai
           ch\u1EE7 nh\xE2n, ng\u1EADm chi\u1EBFc v\xF2ng trong mi\u1EC7ng r\u1ED3i
           ch\u1EADm r\xE3i b\u01B0\u1EDBc t\u1EDBi tr\u01B0\u1EDBc m\u1EB7t Lunen."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3204,7 +3419,7 @@ MonoBehaviour:
           m\u1EA5t. N\xF3 c\xFAi th\u1EA5p \u0111\u1EA7u, nh\u1EB9 nh\xE0ng \u0111\u1EB7t
           chi\u1EBFc v\xF2ng xu\u1ED1ng \u0111\u1EA5t r\u1ED3i ph\xE1t ra m\u1ED9t
           ti\u1EBFng k\xEAu nh\u1ECF."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3222,7 +3437,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: "Con m\xE8o"
         text: Meo...
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3242,7 +3457,7 @@ MonoBehaviour:
         text: "Lunen nh\xECn n\xF3 m\u1ED9t l\xFAc r\u1ED3i b\u1EADt c\u01B0\u1EDDi.
           C\u1EADu c\xFAi xu\u1ED1ng nh\u1EB7t chi\u1EBFc v\xF2ng l\xEAn, ki\u1EC3m
           tra qua m\u1ED9t l\u01B0\u1EE3t r\u1ED3i \u0111eo l\u1EA1i v\xE0o tay."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3260,7 +3475,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: Lunen
         text: "\u0110\u01B0\u1EE3c r\u1ED3i. T\xF4i nh\u1EADn l\u1EA1i."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 0
@@ -3279,7 +3494,7 @@ MonoBehaviour:
       - speaker: 
         text: "Thay v\xEC \u0111\u1EE9ng l\xEAn ngay, Lunen \u0111\u01B0a tay xoa
           nh\u1EB9 l\xEAn \u0111\u1EA7u con m\xE8o."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3298,7 +3513,7 @@ MonoBehaviour:
       - speaker: Lunen
         text: "L\u1EA7n sau \u0111\u1EEBng l\u1EA5y \u0111\u1ED3 c\u1EE7a ng\u01B0\u1EDDi
           kh\xE1c n\u1EEFa nh\xE9."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 0
@@ -3320,7 +3535,7 @@ MonoBehaviour:
           d\u1EE5i \u0111\u1EA7u v\xE0o l\xF2ng b\xE0n tay Lunen, th\u1EADm ch\xED
           c\xF2n nheo m\u1EAFt \u0111\u1EA7y th\xEDch th\xFA khi \u0111\u01B0\u1EE3c
           vu\u1ED1t ve.\nThi\u1EBFu ni\xEAn h\u01A1i kh\u1EF1ng l\u1EA1i."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3338,7 +3553,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: ???
         text: "...L\u1EA1 th\u1EADt."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3356,7 +3571,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: Lunen
         text: "C\xF3 chuy\u1EC7n g\xEC sao?"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 0
@@ -3375,7 +3590,7 @@ MonoBehaviour:
       - speaker: 
         text: "Thi\u1EBFu ni\xEAn nh\xECn con m\xE8o \u0111ang qu\u1EA5n l\u1EA5y
           ch\xE2n Lunen."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3393,7 +3608,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: ???
         text: "N\xF3 kh\xF4ng g\u1EA7n ng\u01B0\u1EDDi l\u1EA1."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3412,7 +3627,7 @@ MonoBehaviour:
       - speaker: Tinh Linh
         text: "N\xF3 v\u1EEBa c\u01B0\u1EDBp \u0111\u1ED3 c\u1EE7a ng\u01B0\u1EDDi
           l\u1EA1 m\xE0."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3432,7 +3647,7 @@ MonoBehaviour:
         text: "Ta n\xF3i l\xE0 kh\xF4ng th\xE2n v\u1EDBi ng\u01B0\u1EDDi l\u1EA1,
           kh\xF4ng ph\u1EA3i kh\xF4ng g\xE2y r\u1EAFc r\u1ED1i cho ng\u01B0\u1EDDi
           l\u1EA1."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3457,7 +3672,7 @@ MonoBehaviour:
           kh\xED c\u1EE7a m\xECnh.\nNh\u01B0ng ngay l\xFAc \u0111\xF3, m\u1ED9t ti\u1EBFng
           g\u1EA7m tr\u1EA7m \u0111\u1EE5c b\u1EA5t ng\u1EDD vang l\xEAn t\u1EEB
           s\xE2u trong khu r\u1EEBng."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3481,7 +3696,7 @@ MonoBehaviour:
           bay kh\u1ECFi t\xE1n l\xE1. Ch\u1EC9 trong v\xE0i gi\xE2y, h\xE0ng lo\u1EA1t
           b\xF3ng \u0111en b\u1EAFt \u0111\u1EA7u xu\u1EA5t hi\u1EC7n gi\u1EEFa nh\u1EEFng
           th\xE2n c\xE2y."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3499,7 +3714,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: Tinh Linh
         text: Lunen...
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3517,7 +3732,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: 
         text: "Lunen \u0111\u01B0a tay l\xEAn v\u0169 kh\xED."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3541,7 +3756,7 @@ MonoBehaviour:
           th\xE2n nh\u01B0 dung nham \u0111ang ch\u1EA3y b\xEAn d\u01B0\u1EDBi l\u1EDBp
           da. Trong tay ch\xFAng l\xE0 nh\u1EEFng l\u01B0\u1EE1i v\u0169 kh\xED th\xF4
           r\xE1p, d\xEDnh \u0111\u1EA7y th\u1EE9 d\u1ECBch \u0111en s\u1EABm."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3559,7 +3774,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: 
         text: "Thi\u1EBFu ni\xEAn l\u1EADp t\u1EE9c b\u01B0\u1EDBc l\xEAn tr\u01B0\u1EDBc."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3577,7 +3792,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: ???
         text: "L\xF9i l\u1EA1i."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3595,7 +3810,7 @@ MonoBehaviour:
             m_Calls: []
       - speaker: Tinh Linh
         text: "L\u1EA1i n\u1EEFa \xE0?"
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3616,7 +3831,7 @@ MonoBehaviour:
           l\u1EEDa \u0111\xE3 b\xF9ng l\xEAn quanh v\u0169 kh\xED c\u1EE7a c\u1EADu.\n\u0110\xE1m
           ma v\u1EADt \u0111\u1ED3ng lo\u1EA1t lao t\u1EDBi.\nLunen c\u0169ng l\u1EADp
           t\u1EE9c nh\u1EADp tr\u1EADn."
-        background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+        background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
         leftCharacter: {fileID: 0}
         rightCharacter: {fileID: 0}
         dimLeft: 1
@@ -3970,7 +4185,7 @@ MonoBehaviour:
           text: "B\xF3ng \u0111en \u0111\xE3 ch\u1EA1y xa.\nM\u1ED9t c\xE1i \u0111u\xF4i
             \u0111en tho\xE1ng bi\u1EBFn m\u1EA5t sau nh\u1EEFng th\xE2n c\xE2y.\nLunen
             l\u1EADp t\u1EE9c quay ng\u01B0\u1EDDi."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -3988,7 +4203,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: Lunen
           text: "\u0110u\u1ED5i theo!"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 0
@@ -4010,7 +4225,7 @@ MonoBehaviour:
             nhi\xEAn bi\u1EBFn m\u1EA5t sau m\u1ED9t t\xE1n c\xE2y l\u1EDBn.\nLunen
             d\u1EEBng l\u1EA1i.\nTinh linh bay t\u1EDBi b\xEAn c\u1EA1nh, th\u1EDF
             h\u1ED5n h\u1EC3n."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4029,7 +4244,7 @@ MonoBehaviour:
         - speaker: Tinh Linh
           text: "\u0110\u1EEBng n\xF3i v\u1EDBi t\u1EDB l\xE0 m\u1EA5t d\u1EA5u r\u1ED3i
             nh\xE9..."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4054,7 +4269,7 @@ MonoBehaviour:
             r\u1ED3i \u0111\xE3 bi\u1EBFn m\u1EA5t sau m\u1ED9t t\xE1n c\xE2y l\u1EDBn.
             C\u1EA3 hai gi\u1EA3m t\u1ED1c \u0111\u1ED9, c\u1EA9n th\u1EADn ti\u1EBFn
             l\u1EA1i g\u1EA7n."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4075,7 +4290,7 @@ MonoBehaviour:
             t\xE1n c\xE2y. Con m\xE8o \u0111en \u0111ang n\u1EB1m tr\xEAn vai ch\xE0ng
             trai tr\u1EBB, chi\u1EBFc v\xF2ng ng\u1ECDc v\u1EABn m\u1EAFc tr\xEAn
             c\u1ED5 n\xF3."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 1538507120418b84591af37b95b2e42f, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4114,7 +4329,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: 
           text: "R\u1EAFc."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4136,7 +4351,7 @@ MonoBehaviour:
             thi\u1EBFu ni\xEAn d\u01B0\u1EDBi g\u1ED1c c\xE2y l\u1EADp t\u1EE9c m\u1EDF
             m\u1EAFt.\nCh\u1EC9 trong kho\u1EA3nh kh\u1EAFc, v\u1EBB l\u01A1 \u0111\xE3ng
             tr\xEAn khu\xF4n m\u1EB7t bi\u1EBFn m\u1EA5t ho\xE0n to\xE0n."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4162,7 +4377,7 @@ MonoBehaviour:
             v\u1ED1n c\xF2n mang n\xE9t tr\u1EBB tu\u1ED5i. C\u1EADu xoay ng\u01B0\u1EDDi
             v\u1EC1 ph\xEDa t\xE1n c\xE2y, \xE1nh m\u1EAFt s\u1EAFc l\u1EA1nh kh\xF3a
             ch\u1EB7t v\u1ECB tr\xED c\u1EE7a Lunen v\xE0 tinh linh."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4180,7 +4395,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: ???
           text: "Ra \u0111\xE2y"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4202,7 +4417,7 @@ MonoBehaviour:
             thay \u0111\u1ED5i. Ng\u1ECDn l\u1EEDa quanh l\u01B0\u1EE1i ki\u1EBFm
             cu\u1ED9n l\xEAn d\u1EEF d\u1ED9i, h\u01A1i n\xF3ng lan ra khi\u1EBFn
             nh\u1EEFng chi\u1EBFc l\xE1 kh\xF4 d\u01B0\u1EDBi ch\xE2n rung nh\u1EB9."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4220,7 +4435,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: ???
           text: "Ta kh\xF4ng th\xEDch ph\u1EA3i n\xF3i l\u1EA7n th\u1EE9 hai."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4244,7 +4459,7 @@ MonoBehaviour:
             \xFD \u0111\u1ECBnh t\u1EA5n c\xF4ng. C\u1EADu v\u1EEBa b\u01B0\u1EDBc
             ra kh\u1ECFi t\xE1n c\xE2y th\xEC ng\u01B0\u1EDDi thi\u1EBFu ni\xEAn
             tr\u01B0\u1EDBc m\u1EB7t \u0111\xE3 lao t\u1EDBi."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4267,7 +4482,7 @@ MonoBehaviour:
             \u1EA7m vang l\xEAn khi l\u01B0\u1EE1i ki\u1EBFm ch\xE9m xu\u1ED1ng n\u1EC1n
             \u0111\u1EA5t, ng\u1ECDn l\u1EEDa b\u1EAFn tung nh\u1EEFng m\u1EA3nh
             \u0111\u1EA5t kh\xF4 v\xE0 l\xE1 v\u1EE5n xung quanh."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4286,7 +4501,7 @@ MonoBehaviour:
         - speaker: Tinh Linh
           text: "Khoan \u0111\xE3\u2014?! C\u1EADu ta kh\xF4ng \u0111\u1ECBnh h\u1ECFi
             g\xEC lu\xF4n \xE0?!"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4310,7 +4525,7 @@ MonoBehaviour:
             d\xF2. M\u1ED7i \u0111\xF2n \u0111\u1EC1u mang theo s\u1EE9c n\xF3ng
             d\u1EEF d\u1ED9i, \xE9p Lunen li\xEAn t\u1EE5c l\xF9i l\u1EA1i gi\u1EEFa
             nh\u1EEFng th\xE2n c\xE2y."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4334,7 +4549,7 @@ MonoBehaviour:
             ch\xE2n \u0111\u1EC1u ch\u1EAFc ch\u1EAFn, t\u1EEBng \u0111\xF2n \u0111\xE1nh
             \u0111\u1EC1u nh\u1EAFm v\xE0o nh\u1EEFng kho\u1EA3ng tr\u1ED1ng trong
             ph\xF2ng th\u1EE7 c\u1EE7a \u0111\u1ED1i ph\u01B0\u01A1ng."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4358,7 +4573,7 @@ MonoBehaviour:
             nhanh ch\xF3ng l\u1EA5y l\u1EA1i th\u0103ng b\u1EB1ng v\xE0 ti\u1EBFp
             t\u1EE5c \xE1p s\xE1t.\nCu\u1ED9c giao tranh ch\u1EC9 k\xE9o d\xE0i trong
             m\u1ED9t kho\u1EA3ng th\u1EDDi gian ng\u1EAFn."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4382,7 +4597,7 @@ MonoBehaviour:
             t\xE1c, c\u1EADu \u0111\xE1nh b\u1EADt v\u0169 kh\xED c\u1EE7a \u0111\u1ED1i
             ph\u01B0\u01A1ng sang m\u1ED9t b\xEAn v\xE0 bu\u1ED9c thi\u1EBFu ni\xEAn
             ph\u1EA3i l\xF9i l\u1EA1i."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4405,7 +4620,7 @@ MonoBehaviour:
             C\u1EADu nh\xECn Lunen ch\u0103m ch\xFA, nh\u01B0ng thay v\xEC t\u1EE9c
             gi\u1EADn v\xEC b\u1ECB \xE1p \u0111\u1EA3o, \xE1nh m\u1EAFt \u1EA5y
             l\u1EA1i mang theo s\u1EF1 \u0111\xE1nh gi\xE1 r\xF5 r\u1EC7t."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4423,7 +4638,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: ???
           text: "Th\u1EF1c l\u1EF1c kh\xE1 \u0111\u1EA5y."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4444,7 +4659,7 @@ MonoBehaviour:
             g\u1EB7p nhau l\xE0 ph\u1EA3i n\xF3i chuy\u1EC7n tr\u01B0\u1EDBc ch\u1EE9!
             Sao v\u1EEBa th\u1EA5y b\u1ECDn t\xF4i \u0111\xE3 lao v\xE0o \u0111\xE1nh
             r\u1ED3i?!"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4462,7 +4677,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: 
           text: "Thi\u1EBFu ni\xEAn quay sang nh\xECn c\xF4."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4481,7 +4696,7 @@ MonoBehaviour:
         - speaker: ???
           text: "C\xE1c ng\u01B0\u01A1i xu\u1EA5t hi\u1EC7n trong l\xE3nh th\u1ED5
             c\u1EE7a ta m\xE0 kh\xF4ng b\xE1o tr\u01B0\u1EDBc."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4500,7 +4715,7 @@ MonoBehaviour:
         - speaker: Tinh Linh
           text: "Th\xEC b\u1ECDn t\xF4i \u0111\xE2u bi\u1EBFt \u0111\xE2y l\xE0 l\xE3nh
             th\u1ED5 c\u1EE7a c\u1EADu!"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4522,7 +4737,7 @@ MonoBehaviour:
             v\u1EABn gi\u1EEF nguy\xEAn s\u1EF1 c\u1EA3nh gi\xE1c.\n\u0110\xFAng
             l\xFAc \u0111\xF3, tinh linh \u0111\u1ED9t nhi\xEAn nh\xECn th\u1EA5y
             m\u1ED9t chuy\u1EC3n \u0111\u1ED9ng \u1EDF ph\xEDa sau c\u1EADu."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4540,7 +4755,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: Tinh Linh
           text: Khoan!
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4558,7 +4773,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: Tinh Linh
           text: "Lunen! Chi\u1EBFc v\xF2ng!"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4581,7 +4796,7 @@ MonoBehaviour:
             l\xFAc hai ng\u01B0\u1EDDi giao tranh, n\xF3 \u0111\xE3 tr\u1ED1n \u1EDF
             m\u1ED9t n\u01A1i g\u1EA7n \u0111\xF3 v\xE0 gi\u1EDD m\u1EDBi ch\u1ECBu
             l\xF3 ra."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4599,7 +4814,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: Tinh Linh
           text: "\u0110\u1EE9ng l\u1EA1i!"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4622,7 +4837,7 @@ MonoBehaviour:
             v\u1EC1 ph\xEDa thi\u1EBFu ni\xEAn. Ch\u1EC9 trong ch\u1EDBp m\u1EAFt,
             n\xF3 \u0111\xE3 nh\u1EA3y l\xEAn ch\xE2n c\u1EADu, b\xE1m v\xE0o v\u1EA1t
             \xE1o r\u1ED3i leo m\u1ED9t m\u1EA1ch l\xEAn vai."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4645,7 +4860,7 @@ MonoBehaviour:
             th\u1EC3 v\u1EEBa t\xECm \u0111\u01B0\u1EE3c n\u01A1i an to\xE0n nh\u1EA5t.\nTinh
             linh ch\u1EA1y t\u1EDBi n\u01A1i, t\u1EE9c \u0111\u1EBFn m\u1EE9c d\u1EADm
             ch\xE2n."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4663,7 +4878,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: Tinh Linh
           text: "L\u1EA1i c\xF2n ch\u1EA1y v\u1EC1 ch\u1ED7 c\u1EADu n\u1EEFa!"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4681,7 +4896,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: 
           text: "Thi\u1EBFu ni\xEAn h\u01A1i nh\u01B0\u1EDBng m\xE0y."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4699,7 +4914,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: ???
           text: "...N\xF3?"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4718,7 +4933,7 @@ MonoBehaviour:
         - speaker: 
           text: "C\u1EADu nh\xECn con m\xE8o tr\xEAn vai m\xECnh r\u1ED3i nh\xECn
             tinh linh. C\xF4 b\xE9 ch\u1EC9 th\u1EB3ng v\xE0o chi\u1EBFc v\xF2ng."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4738,7 +4953,7 @@ MonoBehaviour:
           text: "Con m\xE8o n\xE0y c\u01B0\u1EDBp \u0111\u1ED3 c\u1EE7a ch\xFAng
             t\xF4i tr\u01B0\u1EDBc! Chi\u1EBFc v\xF2ng tr\xEAn c\u1ED5 n\xF3 l\xE0
             c\u1EE7a Lunen!"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4759,7 +4974,7 @@ MonoBehaviour:
             chuy\u1EC3n xu\u1ED1ng chi\u1EBFc v\xF2ng. R\u1ED3i sang Lunen.\nSau
             c\xF9ng, c\u1EADu nh\xECn con m\xE8o \u0111ang v\xF4 t\u01B0 li\u1EBFm
             ch\xE2n tr\xEAn vai m\xECnh.\nM\u1ED9t kho\u1EA3ng l\u1EB7ng k\xE9o d\xE0i."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4777,7 +4992,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: ???
           text: "...Chi\u1EBFc v\xF2ng \u0111\xF3 l\xE0 c\u1EE7a c\xE1c ng\u01B0\u01A1i?"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4795,7 +5010,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: Tinh Linh
           text: "\u0110\xFAng."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4814,7 +5029,7 @@ MonoBehaviour:
         - speaker: Lunen
           text: "Ch\xFAng t\xF4i \u0111\xE3 \u0111u\u1ED5i theo n\xF3 t\u1EEB l\xFAc
             n\xF3 l\u1EA5y chi\u1EBFc v\xF2ng."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 0
@@ -4840,7 +5055,7 @@ MonoBehaviour:
             c\u1EADn m\xECnh; h\u1ECD ch\u1EC9 \u0111\u01A1n gi\u1EA3n l\xE0 \u0111u\u1ED5i
             theo con m\xE8o \u0111\xE3 l\u1EA5y m\u1EA5t \u0111\u1ED3 c\u1EE7a h\u1ECD.\nCu\u1ED1i
             c\xF9ng, thi\u1EBFu ni\xEAn kh\u1EBD th\u1EDF ra."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4858,7 +5073,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: ???
           text: "V\u1EADy ra l\xE0 th\u1EBF."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4879,7 +5094,7 @@ MonoBehaviour:
             n\xE9p b\xEAn c\u1ED5 m\xECnh. \xC1nh m\u1EAFt ban n\xE3y c\xF2n l\u1EA1nh
             l\xF9ng gi\u1EDD chuy\u1EC3n th\xE0nh v\u1EBB b\u1EA5t l\u1EF1c r\xF5
             r\u1EC7t."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4897,7 +5112,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: ???
           text: "Ng\u01B0\u01A1i l\u1EA1i g\xE2y chuy\u1EC7n n\u1EEFa r\u1ED3i."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4915,7 +5130,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: 
           text: "Con m\xE8o ng\u1EA9ng \u0111\u1EA7u nh\xECn ch\u1EE7 nh\xE2n."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4933,7 +5148,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: "Con m\xE8o"
           text: Meo.
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4951,7 +5166,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: ???
           text: "\u0110\u1EEBng gi\u1EA3 v\u1EDD v\xF4 t\u1ED9i."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4970,7 +5185,7 @@ MonoBehaviour:
         - speaker: 
           text: "Hai tai n\xF3 l\u1EADp t\u1EE9c c\u1EE5p xu\u1ED1ng.\nThi\u1EBFu
             ni\xEAn ch\u1EC9 v\u1EC1 ph\xEDa Lunen."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -4989,7 +5204,7 @@ MonoBehaviour:
         - speaker: ???
           text: "Chi\u1EBFc v\xF2ng kh\xF4ng ph\u1EA3i c\u1EE7a ng\u01B0\u01A1i.
             Tr\u1EA3 l\u1EA1i \u0111i."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5011,7 +5226,7 @@ MonoBehaviour:
             xu\u1ED1ng. Sau m\u1ED9t l\xE1t do d\u1EF1, n\xF3 nh\u1EA3y kh\u1ECFi
             vai ch\u1EE7 nh\xE2n, ng\u1EADm chi\u1EBFc v\xF2ng trong mi\u1EC7ng r\u1ED3i
             ch\u1EADm r\xE3i b\u01B0\u1EDBc t\u1EDBi tr\u01B0\u1EDBc m\u1EB7t Lunen."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5032,7 +5247,7 @@ MonoBehaviour:
             bi\u1EBFn m\u1EA5t. N\xF3 c\xFAi th\u1EA5p \u0111\u1EA7u, nh\u1EB9 nh\xE0ng
             \u0111\u1EB7t chi\u1EBFc v\xF2ng xu\u1ED1ng \u0111\u1EA5t r\u1ED3i ph\xE1t
             ra m\u1ED9t ti\u1EBFng k\xEAu nh\u1ECF."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5050,7 +5265,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: "Con m\xE8o"
           text: Meo...
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5070,7 +5285,7 @@ MonoBehaviour:
           text: "Lunen nh\xECn n\xF3 m\u1ED9t l\xFAc r\u1ED3i b\u1EADt c\u01B0\u1EDDi.
             C\u1EADu c\xFAi xu\u1ED1ng nh\u1EB7t chi\u1EBFc v\xF2ng l\xEAn, ki\u1EC3m
             tra qua m\u1ED9t l\u01B0\u1EE3t r\u1ED3i \u0111eo l\u1EA1i v\xE0o tay."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5088,7 +5303,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: Lunen
           text: "\u0110\u01B0\u1EE3c r\u1ED3i. T\xF4i nh\u1EADn l\u1EA1i."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 0
@@ -5107,7 +5322,7 @@ MonoBehaviour:
         - speaker: 
           text: "Thay v\xEC \u0111\u1EE9ng l\xEAn ngay, Lunen \u0111\u01B0a tay xoa
             nh\u1EB9 l\xEAn \u0111\u1EA7u con m\xE8o."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5126,7 +5341,7 @@ MonoBehaviour:
         - speaker: Lunen
           text: "L\u1EA7n sau \u0111\u1EEBng l\u1EA5y \u0111\u1ED3 c\u1EE7a ng\u01B0\u1EDDi
             kh\xE1c n\u1EEFa nh\xE9."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 0
@@ -5148,7 +5363,7 @@ MonoBehaviour:
             d\u1EE5i \u0111\u1EA7u v\xE0o l\xF2ng b\xE0n tay Lunen, th\u1EADm ch\xED
             c\xF2n nheo m\u1EAFt \u0111\u1EA7y th\xEDch th\xFA khi \u0111\u01B0\u1EE3c
             vu\u1ED1t ve.\nThi\u1EBFu ni\xEAn h\u01A1i kh\u1EF1ng l\u1EA1i."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5166,7 +5381,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: ???
           text: "...L\u1EA1 th\u1EADt."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5184,7 +5399,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: Lunen
           text: "C\xF3 chuy\u1EC7n g\xEC sao?"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 0
@@ -5203,7 +5418,7 @@ MonoBehaviour:
         - speaker: 
           text: "Thi\u1EBFu ni\xEAn nh\xECn con m\xE8o \u0111ang qu\u1EA5n l\u1EA5y
             ch\xE2n Lunen."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5221,7 +5436,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: ???
           text: "N\xF3 kh\xF4ng g\u1EA7n ng\u01B0\u1EDDi l\u1EA1."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5240,7 +5455,7 @@ MonoBehaviour:
         - speaker: Tinh Linh
           text: "N\xF3 v\u1EEBa c\u01B0\u1EDBp \u0111\u1ED3 c\u1EE7a ng\u01B0\u1EDDi
             l\u1EA1 m\xE0."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5260,7 +5475,7 @@ MonoBehaviour:
           text: "Ta n\xF3i l\xE0 kh\xF4ng th\xE2n v\u1EDBi ng\u01B0\u1EDDi l\u1EA1,
             kh\xF4ng ph\u1EA3i kh\xF4ng g\xE2y r\u1EAFc r\u1ED1i cho ng\u01B0\u1EDDi
             l\u1EA1."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5285,7 +5500,7 @@ MonoBehaviour:
             kh\xED c\u1EE7a m\xECnh.\nNh\u01B0ng ngay l\xFAc \u0111\xF3, m\u1ED9t
             ti\u1EBFng g\u1EA7m tr\u1EA7m \u0111\u1EE5c b\u1EA5t ng\u1EDD vang l\xEAn
             t\u1EEB s\xE2u trong khu r\u1EEBng."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5309,7 +5524,7 @@ MonoBehaviour:
             lo\u1EA1n bay kh\u1ECFi t\xE1n l\xE1. Ch\u1EC9 trong v\xE0i gi\xE2y,
             h\xE0ng lo\u1EA1t b\xF3ng \u0111en b\u1EAFt \u0111\u1EA7u xu\u1EA5t hi\u1EC7n
             gi\u1EEFa nh\u1EEFng th\xE2n c\xE2y."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5327,7 +5542,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: Tinh Linh
           text: Lunen...
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5345,7 +5560,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: 
           text: "Lunen \u0111\u01B0a tay l\xEAn v\u0169 kh\xED."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5370,7 +5585,7 @@ MonoBehaviour:
             l\u1EDBp da. Trong tay ch\xFAng l\xE0 nh\u1EEFng l\u01B0\u1EE1i v\u0169
             kh\xED th\xF4 r\xE1p, d\xEDnh \u0111\u1EA7y th\u1EE9 d\u1ECBch \u0111en
             s\u1EABm."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5388,7 +5603,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: 
           text: "Thi\u1EBFu ni\xEAn l\u1EADp t\u1EE9c b\u01B0\u1EDBc l\xEAn tr\u01B0\u1EDBc."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5406,7 +5621,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: ???
           text: "L\xF9i l\u1EA1i."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5424,7 +5639,7 @@ MonoBehaviour:
               m_Calls: []
         - speaker: Tinh Linh
           text: "L\u1EA1i n\u1EEFa \xE0?"
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5445,7 +5660,7 @@ MonoBehaviour:
             l\u1EEDa \u0111\xE3 b\xF9ng l\xEAn quanh v\u0169 kh\xED c\u1EE7a c\u1EADu.\n\u0110\xE1m
             ma v\u1EADt \u0111\u1ED3ng lo\u1EA1t lao t\u1EDBi.\nLunen c\u0169ng l\u1EADp
             t\u1EE9c nh\u1EADp tr\u1EADn."
-          background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+          background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
           leftCharacter: {fileID: 0}
           rightCharacter: {fileID: 0}
           dimLeft: 1
@@ -5480,6 +5695,11 @@ MonoBehaviour:
         element: Phong
         portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -5502,6 +5722,11 @@ MonoBehaviour:
         element: "Th\u1EE7y"
         portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
         battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -5519,11 +5744,16 @@ MonoBehaviour:
           displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_thu_lua_nho_4
+      - id: chapter_1_thu_lua_nho_3
         displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
         element: "H\u1ECFa"
         portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
         battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -5541,26 +5771,31 @@ MonoBehaviour:
           displayName: "L\u1EEDa Lan"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_thu_lua_nho_4
-        displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
-        element: "H\u1ECFa"
-        portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      - id: chapter_1_cat_xoay_cat_4
+        displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+        element: Phong
+        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
-        - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
-        - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
+        - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+        - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
         attackEffectOffset: {x: 0, y: 0, z: 0}
         attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
-        maxHealth: 500
-        attack: 82
-        defense: 30
-        speed: 12
+        maxHealth: 520
+        attack: 90
+        defense: 34
+        speed: 13
         skills:
-        - id: enemy_fire_aoe_5_percent
-          displayName: "L\u1EEDa Lan"
+        - id: enemy_sand_random_5_percent
+          displayName: "Lao T\u1EDBi"
           icon: {fileID: 0}
           powerMultiplier: 1
       boss:
@@ -5569,6 +5804,11 @@ MonoBehaviour:
         element: 
         portrait: {fileID: 0}
         battlefieldSprite: {fileID: 0}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs: []
@@ -5594,6 +5834,11 @@ MonoBehaviour:
           element: 
           portrait: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -5617,6 +5862,11 @@ MonoBehaviour:
           element: Phong
           portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -5639,6 +5889,11 @@ MonoBehaviour:
           element: "Th\u1EE7y"
           portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -5656,31 +5911,16 @@ MonoBehaviour:
             displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_quan_tai_khien_3
-          displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
-          element: "Th\u1EA3o"
-          portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
-          idleClip: {fileID: 0}
-          attackClip: {fileID: 0}
-          attackEffectPrefabs: []
-          attackEffectOffset: {x: 0, y: 0, z: 0}
-          attackEffectScale: {x: 1, y: 1, z: 1}
-          isRanged: 0
-          maxHealth: 760
-          attack: 10
-          defense: 80
-          speed: 8
-          skills:
-          - id: enemy_coffin_shield_2000_once
-            displayName: "T\u1EA1o Khi\xEAn"
-            icon: {fileID: 0}
-            powerMultiplier: 1
-        - id: chapter_1_thu_lua_nho_4
+        - id: chapter_1_thu_lua_nho_3
           displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
           element: "H\u1ECFa"
           portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -5698,12 +5938,44 @@ MonoBehaviour:
             displayName: "L\u1EEDa Lan"
             icon: {fileID: 0}
             powerMultiplier: 1
+        - id: chapter_1_cat_xoay_cat_4
+          displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+          element: Phong
+          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
+          idleClip: {fileID: 0}
+          attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+          - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
+          isRanged: 0
+          maxHealth: 520
+          attack: 90
+          defense: 34
+          speed: 13
+          skills:
+          - id: enemy_sand_random_5_percent
+            displayName: "Lao T\u1EDBi"
+            icon: {fileID: 0}
+            powerMultiplier: 1
         boss:
           id: 
           displayName: 
           element: 
           portrait: {fileID: 0}
           battlefieldSprite: {fileID: 0}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs: []
@@ -5740,7 +6012,7 @@ MonoBehaviour:
                 di\u1EC7n v\xE0 mang theo s\xE1t kh\xED r\xF5 r\u1EC7t. Ng\u1ECDn
                 l\u1EEDa qu\xE9t ngang qua m\u1EB7t \u0111\u1EA5t, thi\xEAu ch\xE1y
                 t\u1EEBng l\u1EDBp l\xE1 kh\xF4 d\u01B0\u1EDBi ch\xE2n."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5762,7 +6034,7 @@ MonoBehaviour:
                 \u0111\xF2n \u0111\xE1nh kh\xE1c. Trong kho\u1EA3nh kh\u1EAFc ng\u1EAFn
                 ng\u1EE7i \u1EA5y, c\u1EADu nghe th\u1EA5y nh\u1EEFng \xE2m thanh
                 k\u1EF3 l\u1EA1 ph\xE1t ra t\u1EEB ph\xEDa \u0111\u1ED1i ph\u01B0\u01A1ng."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5783,7 +6055,7 @@ MonoBehaviour:
                 g\u1EA7m v\xF4 ngh\u0129a.\nNh\u01B0ng khi m\u1ED9t ma v\u1EADt ti\u1EBFn
                 s\xE1t h\u01A1n, nh\u1EEFng t\u1EEB ng\u1EEF m\xE9o m\xF3 b\u1EAFt
                 \u0111\u1EA7u tr\u1EDF n\xEAn r\xF5 r\xE0ng."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5801,7 +6073,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ...
               text: "...v\u01B0\u01A1ng t\u1EED..."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5820,7 +6092,7 @@ MonoBehaviour:
             - speaker: 
               text: "Lunen kh\u1EF1ng l\u1EA1i.\nM\u1ED9t con kh\xE1c l\u1EA9m b\u1EA9m
                 qua h\xE0m r\u0103ng nghi\u1EBFn ch\u1EB7t."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5838,7 +6110,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ...
               text: "...truy s\xE1t... v\u01B0\u01A1ng t\u1EED..."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5857,7 +6129,7 @@ MonoBehaviour:
             - speaker: 
               text: "R\u1ED3i m\u1ED9t gi\u1ECDng kh\xE1c vang l\xEAn, kh\xE0n \u0111\u1EE5c
                 v\xE0 r\u1EDDi r\u1EA1c."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5875,7 +6147,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ...
               text: "...v\u01B0\u01A1ng tri\u1EC1u... ph\u1EA3i ch\u1EBFt..."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5896,7 +6168,7 @@ MonoBehaviour:
                 ng\u1EABu nhi\xEAn.\nPh\u1EA7n l\u1EDBn ch\xFAng \u0111\u1EC1u \u0111ang
                 c\u1ED1 v\u01B0\u1EE3t qua Lunen \u0111\u1EC3 lao th\u1EB3ng v\u1EC1
                 ph\xEDa ng\u01B0\u1EDDi thi\u1EBFu ni\xEAn t\xF3c \u0111en."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5914,7 +6186,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Lunen
               text: "C\u1EA9n th\u1EADn!"
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -5937,7 +6209,7 @@ MonoBehaviour:
                 \u0111en, nh\u1EAFm th\u1EB3ng v\xE0o kho\u1EA3ng tr\u1ED1ng sau
                 l\u01B0ng c\u1EADu.\nThi\u1EBFu ni\xEAn quay l\u1EA1i nh\u01B0ng
                 \u0111\xE3 mu\u1ED9n."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5956,7 +6228,7 @@ MonoBehaviour:
             - speaker: 
               text: "M\u1ED9t b\xF3ng ng\u01B0\u1EDDi l\u1EADp t\u1EE9c ch\u1EAFn
                 tr\u01B0\u1EDBc m\u1EB7t.\nLunen lao t\u1EDBi."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5974,7 +6246,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: Keng!
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -5997,7 +6269,7 @@ MonoBehaviour:
                 h\u1EA1 g\u1EE5c con ma v\u1EADt ch\u1EC9 trong m\u1ED9t \u0111\xF2n.\nThi\u1EBFu
                 ni\xEAn \u0111\u1EE9ng ph\xEDa sau c\u1EADu, \xE1nh m\u1EAFt tho\xE1ng
                 hi\u1EC7n l\xEAn v\u1EBB kinh ng\u1EA1c."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6015,7 +6287,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "Ng\u01B0\u01A1i..."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6033,7 +6305,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Lunen
               text: "\u0110\u1EEBng m\u1EA5t t\u1EADp trung."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -6054,7 +6326,7 @@ MonoBehaviour:
                 quay tr\u1EDF l\u1EA1i tr\u1EADn chi\u1EBFn.\nThi\u1EBFu ni\xEAn
                 nh\xECn b\xF3ng l\u01B0ng c\u1EADu trong m\u1ED9t tho\xE1ng, r\u1ED3i
                 kh\xF3e m\xF4i kh\u1EBD cong l\xEAn."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6072,7 +6344,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "\u0110\u01B0\u1EE3c."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6090,7 +6362,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Hai ng\u01B0\u1EDDi ti\u1EBFp t\u1EE5c chi\u1EBFn \u0111\u1EA5u."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6115,7 +6387,7 @@ MonoBehaviour:
                 Tinh linh li\xEAn t\u1EE5c bay v\xF2ng quanh, v\u1EEBa c\u1EA3nh
                 b\xE1o v\u1ECB tr\xED k\u1EBB \u0111\u1ECBch v\u1EEBa tr\xE1nh kh\u1ECFi
                 nh\u1EEFng \u0111\xF2n t\u1EA5n c\xF4ng h\u1ED7n lo\u1EA1n."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6152,7 +6424,7 @@ MonoBehaviour:
                 gi\u1EADn d\u1EEF, nh\u01B0ng thi\u1EBFu ni\xEAn ch\u1EC9 xoay c\u1ED5
                 tay. M\u1ED9t \u0111\u01B0\u1EDDng l\u1EEDa \u0111\u1ECF r\u1EF1c
                 c\u1EAFt ngang kh\xF4ng kh\xED."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6171,7 +6443,7 @@ MonoBehaviour:
             - speaker: 
               text: "Sinh v\u1EADt \u0111\u1ED5 xu\u1ED1ng.\nKhu r\u1EEBng cu\u1ED1i
                 c\xF9ng c\u0169ng tr\u1EDF l\u1EA1i y\xEAn t\u0129nh."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6194,7 +6466,7 @@ MonoBehaviour:
                 \u0111ang d\u1EA7n chuy\u1EC3n sang m\xE0u \u0111\u1ECF s\u1EABm.\nThi\u1EBFu
                 ni\xEAn thu v\u0169 kh\xED.\nSau m\u1ED9t tho\xE1ng im l\u1EB7ng,
                 c\u1EADu quay sang Lunen."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6212,7 +6484,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "V\u1EEBa r\u1ED3i... c\u1EA3m \u01A1n."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6230,7 +6502,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Lunen
               text: "Kh\xF4ng c\xF3 g\xEC."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -6249,7 +6521,7 @@ MonoBehaviour:
             - speaker: ???
               text: "Ng\u01B0\u01A1i c\xF3 th\u1EC3 kh\xF4ng c\u1EA7n ph\u1EA3i l\xE0m
                 v\u1EADy."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6267,7 +6539,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Lunen
               text: "Nh\u01B0ng t\xF4i \u0111\xE3 th\u1EA5y."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -6285,7 +6557,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Thi\u1EBFu ni\xEAn im l\u1EB7ng m\u1ED9t nh\u1ECBp."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6304,7 +6576,7 @@ MonoBehaviour:
             - speaker: Lunen
               text: "N\u1EBFu t\xF4i kh\xF4ng \u0111\u1EE1, c\u1EADu s\u1EBD b\u1ECB
                 th\u01B0\u01A1ng."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -6327,7 +6599,7 @@ MonoBehaviour:
                 v\u1EEBa m\u1EDBi giao tranh v\u1EDBi m\xECnh tr\u01B0\u1EDBc \u0111\xF3
                 kh\xF4ng l\xE2u l\u1EA1i s\u1EB5n s\xE0ng lao ra ch\u1EAFn \u0111\xF2n.\nCu\u1ED1i
                 c\xF9ng, c\u1EADu b\u1EADt c\u01B0\u1EDDi nh\u1EB9."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6346,7 +6618,7 @@ MonoBehaviour:
             - speaker: ???
               text: "Th\u1EF1c l\u1EF1c c\u1EE7a ng\u01B0\u01A1i qu\u1EA3 th\u1EADt
                 kh\xF4ng t\u1EC7."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6364,7 +6636,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Lunen
               text: "\xDD c\u1EADu l\xE0 g\xEC?"
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -6382,7 +6654,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "Kh\u1EA3 n\u0103ng chi\u1EBFn \u0111\u1EA5u."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6401,7 +6673,7 @@ MonoBehaviour:
             - speaker: 
               text: "C\u1EADu \u0111\u01B0a m\u1EAFt nh\xECn nh\u1EEFng x\xE1c ma
                 v\u1EADt n\u1EB1m r\u1EA3i r\xE1c xung quanh."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6425,7 +6697,7 @@ MonoBehaviour:
                 \u0111\u1EBFn khi \u0111\u1ED1i \u0111\u1EA7u v\u1EDBi \u0111\xE1m
                 n\xE0y v\u1EABn c\xF2n \u0111\u1EE7 s\u1EE9c \u0111\u1EC3 \u0111\u1EC3
                 m\u1EAFt \u0111\u1EBFn ng\u01B0\u1EDDi kh\xE1c."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6443,7 +6715,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Lunen kh\u1EBD c\u01B0\u1EDDi."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6461,7 +6733,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Lunen
               text: "C\u1EADu c\u0169ng kh\xF4ng y\u1EBFu."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -6479,7 +6751,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "Ta bi\u1EBFt."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6498,7 +6770,7 @@ MonoBehaviour:
             - speaker: 
               text: "C\xE2u tr\u1EA3 l\u1EDDi th\u1EB3ng th\u1EEBng \u0111\u1EBFn
                 m\u1EE9c tinh linh l\u1EADp t\u1EE9c quay sang."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6516,7 +6788,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Tinh Linh
               text: "C\u1EADu t\u1EF1 tin th\u1EADt \u0111\u1EA5y."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6534,7 +6806,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "Ta ch\u1EC9 n\xF3i s\u1EF1 th\u1EADt."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6553,7 +6825,7 @@ MonoBehaviour:
             - speaker: 
               text: "C\u1EADu nh\xECn Lunen, \xE1nh m\u1EAFt th\u1EA5p tho\xE1ng
                 v\u1EBB hi\u1EBFu th\u1EAFng."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6573,7 +6845,7 @@ MonoBehaviour:
               text: "Nh\u01B0ng n\u1EBFu tr\u1EADn v\u1EEBa r\u1ED3i k\xE9o d\xE0i
                 th\xEAm, k\u1EBFt qu\u1EA3 gi\u1EEFa ch\xFAng ta ch\u01B0a ch\u1EAFc
                 v\u1EABn nh\u01B0 l\xFAc tr\u01B0\u1EDBc."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6591,7 +6863,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Tinh Linh
               text: "\u0110\u1EA5y, l\u1EA1i b\u1EAFt \u0111\u1EA7u r\u1ED3i."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6609,7 +6881,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Lunen
               text: "V\u1EADy l\u1EA7n sau ch\xFAng ta c\xF3 th\u1EC3 th\u1EED l\u1EA1i."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -6628,7 +6900,7 @@ MonoBehaviour:
             - speaker: 
               text: "Thi\u1EBFu ni\xEAn nh\xECn c\u1EADu v\xE0i gi\xE2y r\u1ED3i
                 m\u1EC9m c\u01B0\u1EDDi."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6646,7 +6918,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "\u0110\u01B0\u1EE3c."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6668,7 +6940,7 @@ MonoBehaviour:
                 v\u1EADt n\u1EB1m tr\xEAn m\u1EB7t \u0111\u1EA5t.\nNh\u1EEFng l\u1EDDi
                 l\u1EA9m b\u1EA9m v\u1EEBa r\u1ED3i v\u1EABn c\xF2n vang trong \u0111\u1EA7u.\nTruy
                 s\xE1t v\u01B0\u01A1ng t\u1EED.\nV\u01B0\u01A1ng tri\u1EC1u."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6689,7 +6961,7 @@ MonoBehaviour:
                 \u0111\xE1m qu\xE1i v\u1EADt \u0111\u1EC1u t\u1EADp trung t\u1EA5n
                 c\xF4ng ng\u01B0\u1EDDi thi\u1EBFu ni\xEAn tr\u01B0\u1EDBc m\u1EB7t.\nLunen
                 nh\xECn c\u1EADu."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6707,7 +6979,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Lunen
               text: "C\xF3 m\u1ED9t chuy\u1EC7n t\xF4i mu\u1ED1n h\u1ECFi."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -6725,7 +6997,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "Chuy\u1EC7n g\xEC?"
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6744,7 +7016,7 @@ MonoBehaviour:
             - speaker: Lunen
               text: "\u0110\xE1m ma v\u1EADt v\u1EEBa r\u1ED3i... ch\xFAng nh\u1EAFm
                 v\xE0o c\u1EADu."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -6763,7 +7035,7 @@ MonoBehaviour:
             - speaker: 
               text: "N\u1EE5 c\u01B0\u1EDDi tr\xEAn khu\xF4n m\u1EB7t thi\u1EBFu
                 ni\xEAn h\u01A1i nh\u1EA1t \u0111i."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6783,7 +7055,7 @@ MonoBehaviour:
               text: "T\xF4i c\xF2n nghe th\u1EA5y ch\xFAng n\xF3i g\xEC \u0111\xF3
                 v\u1EC1 \u2018v\u01B0\u01A1ng t\u1EED\u2019 v\xE0 \u2018v\u01B0\u01A1ng
                 tri\u1EC1u\u2019."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -6801,7 +7073,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Tinh linh ch\u1EDBp m\u1EAFt."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6819,7 +7091,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Tinh Linh
               text: "Khoan... t\u1EDB c\u0169ng nghe lo\xE1ng tho\xE1ng."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6840,7 +7112,7 @@ MonoBehaviour:
                 qua nh\u1EEFng x\xE1c ma v\u1EADt, r\u1ED3i d\u1EEBng l\u1EA1i \u1EDF
                 khu r\u1EEBng s\xE2u ph\xEDa sau. M\u1ED9t l\xE1t sau, c\u1EADu m\u1EDBi
                 kh\u1EBD th\u1EDF ra."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6859,7 +7131,7 @@ MonoBehaviour:
             - speaker: ???
               text: "V\u1EADy ra c\xE1c ng\u01B0\u01A1i th\u1EADt s\u1EF1 kh\xF4ng
                 bi\u1EBFt m\xECnh \u0111ang \u1EDF \u0111\xE2u."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6877,7 +7149,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Lunen h\u01A1i nh\u01B0\u1EDBng m\xE0y."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6897,7 +7169,7 @@ MonoBehaviour:
               text: "Ch\xFAng t\xF4i ch\u1EC9 \u0111i theo manh m\u1ED1i v\u1EC1
                 chi\u1EBFc v\xF2ng. Sau khi \u0111u\u1ED5i theo con m\xE8o c\u1EE7a
                 c\u1EADu th\xEC..."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -6915,7 +7187,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Tinh linh l\u1EADp t\u1EE9c chen v\xE0o."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6934,7 +7206,7 @@ MonoBehaviour:
             - speaker: Tinh Linh
               text: "Th\xEC t\u1EF1 nhi\xEAn b\u1ECB k\xE9o v\xE0o m\u1ED9t tr\u1EADn
                 \u0111\xE1nh."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6954,7 +7226,7 @@ MonoBehaviour:
               text: "Thi\u1EBFu ni\xEAn b\u1EADt c\u01B0\u1EDDi nh\u1EB9.\nSau \u0111\xF3
                 c\u1EADu quay ng\u01B0\u1EDDi v\u1EC1 ph\xEDa kho\u1EA3ng tr\u1ED1ng
                 ph\xEDa cu\u1ED1i khu r\u1EEBng.\nLunen nh\xECn theo."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -6983,7 +7255,7 @@ MonoBehaviour:
                 \u0111i\u1EC7n v\u01B0\u01A1n l\xEAn kh\u1ECFi th\xE0nh ph\u1ED1,
                 r\u1EF1c s\xE1ng nh\u01B0 m\u1ED9t ng\u1ECDn l\u1EEDa kh\u1ED5ng
                 l\u1ED3 gi\u1EEFa \u0111\u1EA5t tr\u1EDDi."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7003,7 +7275,7 @@ MonoBehaviour:
               text: "Thi\u1EBFu ni\xEAn \u0111\u1EE9ng tr\u01B0\u1EDBc khung c\u1EA3nh
                 \u1EA5y, m\xE1i t\xF3c \u0111en kh\u1EBD lay \u0111\u1ED9ng trong
                 gi\xF3 n\xF3ng th\u1ED5i t\u1EEB sa m\u1EA1c."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7021,7 +7293,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "\u0110\xE2y l\xE0 Akherat."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7039,7 +7311,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Lunen nh\xECn th\xE0nh ph\u1ED1 ph\xEDa xa."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7057,7 +7329,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Lunen
               text: Akherat...?
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -7077,7 +7349,7 @@ MonoBehaviour:
               text: "V\u01B0\u01A1ng qu\u1ED1c n\u1EB1m gi\u1EEFa sa m\u1EA1c v\xE0
                 ng\u1ECDn l\u1EEDa b\u1EA5t di\u1EC7t c\u1EE7a m\u1EB7t tr\u1EDDi
                 ."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7098,7 +7370,7 @@ MonoBehaviour:
                 m\u1ED9t ni\u1EC1m t\u1EF1 h\xE0o r\u1EA5t t\u1EF1 nhi\xEAn.\nC\u1EADu
                 kh\u1EBD nghi\xEAng \u0111\u1EA7u v\u1EC1 ph\xEDa nh\u1EEFng b\u1EE9c
                 t\u01B0\u1EDDng th\xE0nh xa xa."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7117,7 +7389,7 @@ MonoBehaviour:
             - speaker: ???
               text: "\u0110i qua khu r\u1EEBng n\xE0y ch\xEDnh l\xE0 Ho\xE0ng th\xE0nh
                 Akherat."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7136,7 +7408,7 @@ MonoBehaviour:
             - speaker: 
               text: "Tinh linh nh\xECn khung c\u1EA3nh tr\u01B0\u1EDBc m\u1EAFt r\u1ED3i
                 l\u1EA1i nh\xECn ng\u01B0\u1EDDi thi\u1EBFu ni\xEAn."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7154,7 +7426,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Tinh Linh
               text: "Khoan \u0111\xE3..."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7173,7 +7445,7 @@ MonoBehaviour:
             - speaker: 
               text: "C\xF4 b\xE9 ch\u1EE3t nh\u1EDB \u0111\u1EBFn nh\u1EEFng l\u1EDDi
                 c\u1EE7a \u0111\xE1m ma v\u1EADt."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7191,7 +7463,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Tinh Linh
               text: "\u2018V\u01B0\u01A1ng t\u1EED\u2019..."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7210,7 +7482,7 @@ MonoBehaviour:
             - speaker: 
               text: "Thi\u1EBFu ni\xEAn nh\xECn c\xF4.\nM\u1ED9t n\u1EE5 c\u01B0\u1EDDi
                 nh\u1ECF xu\u1EA5t hi\u1EC7n."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7228,7 +7500,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "Ph\u1EA3i."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7246,7 +7518,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "C\u1EADu \u0111\u01B0a tay ra tr\u01B0\u1EDBc m\u1EB7t Lunen."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7264,7 +7536,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "Ta v\u1EABn ch\u01B0a gi\u1EDBi thi\u1EC7u b\u1EA3n th\xE2n."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7282,7 +7554,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: ???
               text: "Ta l\xE0 Elio."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7301,7 +7573,7 @@ MonoBehaviour:
             - speaker: ???
               text: "\u0110\u1EE9a con c\u1EE7a M\u1EB7t Tr\u1EDDi \u2014 Ho\xE0ng
                 t\u1EED c\u1EE7a Akherat."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7319,7 +7591,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Tinh linh l\u1EADp t\u1EE9c c\u1EE9ng ng\u01B0\u1EDDi."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7337,7 +7609,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Tinh Linh
               text: "Ho\xE0ng... ho\xE0ng t\u1EED \xE1?!"
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7356,7 +7628,7 @@ MonoBehaviour:
             - speaker: 
               text: "C\xF4 quay sang Lunen, h\u1EA1 gi\u1ECDng \u0111\u1EA7y hoang
                 mang."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7374,7 +7646,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Tinh Linh
               text: "Lunen, ch\xFAng ta c\xF3 c\u1EA7n h\xE0nh l\u1EC5 kh\xF4ng v\u1EADy...?"
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7392,7 +7664,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Elio kh\xF4ng nh\u1ECBn \u0111\u01B0\u1EE3c b\u1EADt c\u01B0\u1EDDi."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7410,7 +7682,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Elio
               text: "Kh\xF4ng c\u1EA7n."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7428,7 +7700,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Tinh linh quay ph\u1EAFt l\u1EA1i."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7447,7 +7719,7 @@ MonoBehaviour:
             - speaker: Elio
               text: "Ch\xFAng ta kh\xF4ng l\xE0m th\u1EBF \u1EDF \u0111\xE2y. \xCDt
                 nh\u1EA5t l\xE0 kh\xF4ng ph\u1EA3i m\u1ED7i khi g\u1EB7p ta."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7465,7 +7737,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Tinh Linh
               text: "V\u1EADy n\xF3i s\u1EDBm \u0111i ch\u1EE9!"
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7487,7 +7759,7 @@ MonoBehaviour:
                 nh\xE0ng nh\u1EA3y l\xEAn vai ch\u1EE7 nh\xE2n nh\u01B0 th\u1EC3
                 to\xE0n b\u1ED9 tr\u1EADn chi\u1EBFn v\u1EEBa r\u1ED3i ch\u1EB3ng
                 li\xEAn quan g\xEC \u0111\u1EBFn n\xF3."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7514,7 +7786,7 @@ MonoBehaviour:
                 con m\xE8o v\u1ED1n \xEDt khi th\xE2n thi\u1EC7n v\u1EDBi ng\u01B0\u1EDDi
                 l\u1EA1 c\u0169ng t\u1ECF ra ho\xE0n to\xE0n tho\u1EA3i m\xE1i b\xEAn
                 hai ng\u01B0\u1EDDi."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7532,7 +7804,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Elio
               text: "D\xF9 sao, tr\u1EDDi c\u0169ng s\u1EAFp t\u1ED1i r\u1ED3i."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7551,7 +7823,7 @@ MonoBehaviour:
             - speaker: Elio
               text: "C\xE1c ng\u01B0\u01A1i l\u1EA1i ho\xE0n to\xE0n kh\xF4ng bi\u1EBFt
                 g\xEC v\u1EC1 Akherat."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7569,7 +7841,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Lunen
               text: "C\xF3 v\u1EBB v\u1EADy."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -7588,7 +7860,7 @@ MonoBehaviour:
             - speaker: Elio
               text: "N\u1EBFu kh\xF4ng c\xF3 n\u01A1i n\xE0o c\u1EA7n \u0111\u1EBFn
                 ngay..."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7606,7 +7878,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "C\u1EADu quay l\u1EA1i, kh\xF3e m\xF4i h\u01A1i cong l\xEAn."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7625,7 +7897,7 @@ MonoBehaviour:
             - speaker: Elio
               text: "Ta m\u1EDDi hai ng\u01B0\u1EDDi v\u1EC1 ho\xE0ng cung l\xE0m
                 kh\xE1ch."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7643,7 +7915,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Tinh Linh
               text: "Ho\xE0ng cung?"
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7661,7 +7933,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Elio
               text: "\u1EEA."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7680,7 +7952,7 @@ MonoBehaviour:
             - speaker: Tinh Linh
               text: "C\u1EADu m\u1EDBi n\xF3i ch\u1EC9 t\u1EA1m tin b\u1ECDn t\xF4i
                 th\xF4i m\xE0?"
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7698,7 +7970,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Elio h\u01A1i nh\u01B0\u1EDBng m\xE0y."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7717,7 +7989,7 @@ MonoBehaviour:
             - speaker: Elio
               text: "Ta v\u1EEBa th\u1EA5y Lunen lao ra \u0111\u1EE1 m\u1ED9t \u0111\xF2n
                 thay ta."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7735,7 +8007,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "C\u1EADu nh\xECn sang Lunen."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7757,7 +8029,7 @@ MonoBehaviour:
                 l\xFAc n\xE0y , v\u1EDBi l\u1EA1i , ta kh\xF4ng ph\u1EA3i k\u1EBB
                 v\xF4 \u01A1n t\u1EDBi m\u1EE9c kh\xF4ng bi\u1EBFt \u0111\xE1p l\u1EC5
                 ng\u01B0\u1EDDi m\u1EDBi gi\xFAp m\xECnh ."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7775,7 +8047,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: Tinh linh khoanh tay.
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7794,7 +8066,7 @@ MonoBehaviour:
             - speaker: Tinh Linh
               text: "Nghe ch\u1EEF \u2018ngay l\xFAc n\xE0y\u2019 \u0111\xE1ng nghi
                 qu\xE1 \u0111\u1EA5y."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7812,7 +8084,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Elio
               text: "C\u1EA9n th\u1EADn m\u1ED9t ch\xFAt kh\xF4ng c\xF3 g\xEC sai."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7831,7 +8103,7 @@ MonoBehaviour:
             - speaker: 
               text: "C\u1EADu b\u1EADt c\u01B0\u1EDDi r\u1ED3i xoay ng\u01B0\u1EDDi
                 v\u1EC1 ph\xEDa con \u0111\u01B0\u1EDDng d\u1EABn ra kh\u1ECFi r\u1EEBng."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7850,7 +8122,7 @@ MonoBehaviour:
             - speaker: Elio
               text: "\u0110i th\xF4i. Ta s\u1EBD \u0111\u01B0a c\xE1c ng\u01B0\u01A1i
                 v\xE0o th\xE0nh."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7874,7 +8146,7 @@ MonoBehaviour:
                 c\u1EE7a v\xF9ng \u0111\u1EA5t n\xE0y \u2014 m\u1ED9t ng\u01B0\u1EDDi
                 m\xE0 \u0111\xE1m ma v\u1EADt r\xF5 r\xE0ng \u0111ang c\u1ED1 truy
                 s\xE1t."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7895,7 +8167,7 @@ MonoBehaviour:
                 l\u1EBD vi\u1EC7c \u0111\u1EB7t ch\xE2n v\xE0o Akherat s\u1EBD \u0111\u01B0a
                 h\u1ECD \u0111\u1EBFn g\u1EA7n c\xE2u tr\u1EA3 l\u1EDDi h\u01A1n
                 nh\u1EEFng g\xEC c\u1EADu t\u1EEBng ngh\u0129."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -7913,7 +8185,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: Lunen
               text: "\u0110\u01B0\u1EE3c. V\u1EADy l\xE0m phi\u1EC1n c\u1EADu."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 0
@@ -7931,7 +8203,7 @@ MonoBehaviour:
                   m_Calls: []
             - speaker: 
               text: "Elio kh\u1EBD g\u1EADt \u0111\u1EA7u."
-              background: {fileID: 21300000, guid: 44117fbeb6b31014ea4da2b5af930269, type: 3}
+              background: {fileID: 21300000, guid: 54134b49a4531ee4cba8135fc909cc9e, type: 3}
               leftCharacter: {fileID: 0}
               rightCharacter: {fileID: 0}
               dimLeft: 1
@@ -11098,6 +11370,11 @@ MonoBehaviour:
         element: 
         portrait: {fileID: 0}
         battlefieldSprite: {fileID: 0}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs: []
@@ -16664,6 +16941,11 @@ MonoBehaviour:
         element: 
         portrait: {fileID: 0}
         battlefieldSprite: {fileID: 0}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs: []
@@ -24585,6 +24867,11 @@ MonoBehaviour:
         element: 
         portrait: {fileID: 0}
         battlefieldSprite: {fileID: 0}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs: []
@@ -25828,6 +26115,11 @@ MonoBehaviour:
         element: Phong
         portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -25850,6 +26142,11 @@ MonoBehaviour:
         element: "Th\u1EE7y"
         portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
         battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -25867,31 +26164,16 @@ MonoBehaviour:
           displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_quan_tai_khien_3
-        displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
-        element: "Th\u1EA3o"
-        portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
-        idleClip: {fileID: 0}
-        attackClip: {fileID: 0}
-        attackEffectPrefabs: []
-        attackEffectOffset: {x: 0, y: 0, z: 0}
-        attackEffectScale: {x: 1, y: 1, z: 1}
-        isRanged: 0
-        maxHealth: 760
-        attack: 10
-        defense: 80
-        speed: 8
-        skills:
-        - id: enemy_coffin_shield_2000_once
-          displayName: "T\u1EA1o Khi\xEAn"
-          icon: {fileID: 0}
-          powerMultiplier: 1
-      - id: chapter_1_thu_lua_nho_4
+      - id: chapter_1_thu_lua_nho_3
         displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
         element: "H\u1ECFa"
         portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
         battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -25909,12 +26191,44 @@ MonoBehaviour:
           displayName: "L\u1EEDa Lan"
           icon: {fileID: 0}
           powerMultiplier: 1
+      - id: chapter_1_cat_xoay_cat_4
+        displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+        element: Phong
+        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
+        idleClip: {fileID: 0}
+        attackClip: {fileID: 0}
+        attackEffectPrefabs:
+        - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+        - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
+        isRanged: 0
+        maxHealth: 520
+        attack: 90
+        defense: 34
+        speed: 13
+        skills:
+        - id: enemy_sand_random_5_percent
+          displayName: "Lao T\u1EDBi"
+          icon: {fileID: 0}
+          powerMultiplier: 1
       boss:
         id: 
         displayName: 
         element: 
         portrait: {fileID: 0}
         battlefieldSprite: {fileID: 0}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs: []
@@ -25938,6 +26252,11 @@ MonoBehaviour:
           element: 
           portrait: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -25961,6 +26280,11 @@ MonoBehaviour:
           element: Phong
           portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -25983,6 +26307,11 @@ MonoBehaviour:
           element: "Th\u1EE7y"
           portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -26000,31 +26329,16 @@ MonoBehaviour:
             displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_quan_tai_khien_3
-          displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
-          element: "Th\u1EA3o"
-          portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
-          idleClip: {fileID: 0}
-          attackClip: {fileID: 0}
-          attackEffectPrefabs: []
-          attackEffectOffset: {x: 0, y: 0, z: 0}
-          attackEffectScale: {x: 1, y: 1, z: 1}
-          isRanged: 0
-          maxHealth: 760
-          attack: 10
-          defense: 80
-          speed: 8
-          skills:
-          - id: enemy_coffin_shield_2000_once
-            displayName: "T\u1EA1o Khi\xEAn"
-            icon: {fileID: 0}
-            powerMultiplier: 1
-        - id: chapter_1_thu_lua_nho_4
+        - id: chapter_1_thu_lua_nho_3
           displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
           element: "H\u1ECFa"
           portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -26042,12 +26356,44 @@ MonoBehaviour:
             displayName: "L\u1EEDa Lan"
             icon: {fileID: 0}
             powerMultiplier: 1
+        - id: chapter_1_cat_xoay_cat_4
+          displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+          element: Phong
+          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
+          idleClip: {fileID: 0}
+          attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+          - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
+          isRanged: 0
+          maxHealth: 520
+          attack: 90
+          defense: 34
+          speed: 13
+          skills:
+          - id: enemy_sand_random_5_percent
+            displayName: "Lao T\u1EDBi"
+            icon: {fileID: 0}
+            powerMultiplier: 1
         boss:
           id: 
           displayName: 
           element: 
           portrait: {fileID: 0}
           battlefieldSprite: {fileID: 0}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs: []
@@ -41185,6 +41531,11 @@ MonoBehaviour:
         element: Phong
         portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -41207,6 +41558,11 @@ MonoBehaviour:
         element: "Th\u1EE7y"
         portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
         battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -41224,31 +41580,16 @@ MonoBehaviour:
           displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
           icon: {fileID: 0}
           powerMultiplier: 1
-      - id: chapter_1_quan_tai_khien_3
-        displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
-        element: "Th\u1EA3o"
-        portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
-        idleClip: {fileID: 0}
-        attackClip: {fileID: 0}
-        attackEffectPrefabs: []
-        attackEffectOffset: {x: 0, y: 0, z: 0}
-        attackEffectScale: {x: 1, y: 1, z: 1}
-        isRanged: 0
-        maxHealth: 760
-        attack: 10
-        defense: 80
-        speed: 8
-        skills:
-        - id: enemy_coffin_shield_2000_once
-          displayName: "T\u1EA1o Khi\xEAn"
-          icon: {fileID: 0}
-          powerMultiplier: 1
-      - id: chapter_1_thu_lua_nho_4
+      - id: chapter_1_thu_lua_nho_3
         displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
         element: "H\u1ECFa"
         portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
         battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -41266,12 +41607,44 @@ MonoBehaviour:
           displayName: "L\u1EEDa Lan"
           icon: {fileID: 0}
           powerMultiplier: 1
+      - id: chapter_1_cat_xoay_cat_4
+        displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+        element: Phong
+        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
+        idleClip: {fileID: 0}
+        attackClip: {fileID: 0}
+        attackEffectPrefabs:
+        - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+        - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+        attackEffectOffset: {x: 0, y: 0, z: 0}
+        attackEffectScale: {x: 1, y: 1, z: 1}
+        isRanged: 0
+        maxHealth: 520
+        attack: 90
+        defense: 34
+        speed: 13
+        skills:
+        - id: enemy_sand_random_5_percent
+          displayName: "Lao T\u1EDBi"
+          icon: {fileID: 0}
+          powerMultiplier: 1
       boss:
         id: 
         displayName: 
         element: 
         portrait: {fileID: 0}
         battlefieldSprite: {fileID: 0}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs: []
@@ -41295,6 +41668,11 @@ MonoBehaviour:
           element: 
           portrait: {fileID: 0}
           battlefieldSprite: {fileID: 0}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs: []
@@ -41316,6 +41694,11 @@ MonoBehaviour:
           element: Phong
           portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -41338,6 +41721,11 @@ MonoBehaviour:
           element: "Th\u1EE7y"
           portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -41355,31 +41743,16 @@ MonoBehaviour:
             displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
             icon: {fileID: 0}
             powerMultiplier: 1
-        - id: chapter_1_quan_tai_khien_3
-          displayName: "Quan T\xE0i H\u1ED9 V\u1EC7"
-          element: "Th\u1EA3o"
-          portrait: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: 30fcb8732de68ee46a404c88479cc7b7, type: 3}
-          idleClip: {fileID: 0}
-          attackClip: {fileID: 0}
-          attackEffectPrefabs: []
-          attackEffectOffset: {x: 0, y: 0, z: 0}
-          attackEffectScale: {x: 1, y: 1, z: 1}
-          isRanged: 0
-          maxHealth: 760
-          attack: 10
-          defense: 80
-          speed: 8
-          skills:
-          - id: enemy_coffin_shield_2000_once
-            displayName: "T\u1EA1o Khi\xEAn"
-            icon: {fileID: 0}
-            powerMultiplier: 1
-        - id: chapter_1_thu_lua_nho_4
+        - id: chapter_1_thu_lua_nho_3
           displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
           element: "H\u1ECFa"
           portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -41397,12 +41770,44 @@ MonoBehaviour:
             displayName: "L\u1EEDa Lan"
             icon: {fileID: 0}
             powerMultiplier: 1
+        - id: chapter_1_cat_xoay_cat_4
+          displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
+          element: Phong
+          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
+          idleClip: {fileID: 0}
+          attackClip: {fileID: 0}
+          attackEffectPrefabs:
+          - {fileID: 5880797563127281583, guid: 265d3a5ba69981a4698ceabcedf368b0, type: 3}
+          - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
+          attackEffectOffset: {x: 0, y: 0, z: 0}
+          attackEffectScale: {x: 1, y: 1, z: 1}
+          isRanged: 0
+          maxHealth: 520
+          attack: 90
+          defense: 34
+          speed: 13
+          skills:
+          - id: enemy_sand_random_5_percent
+            displayName: "Lao T\u1EDBi"
+            icon: {fileID: 0}
+            powerMultiplier: 1
         boss:
           id: 
           displayName: 
           element: 
           portrait: {fileID: 0}
           battlefieldSprite: {fileID: 0}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs: []
@@ -43461,6 +43866,11 @@ MonoBehaviour:
           element: 
           portrait: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -43483,6 +43893,11 @@ MonoBehaviour:
           element: 
           portrait: {fileID: 0}
           battlefieldSprite: {fileID: 0}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -43506,6 +43921,11 @@ MonoBehaviour:
           element: Phong
           portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -43528,6 +43948,11 @@ MonoBehaviour:
           element: "Th\u1EE7y"
           portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -43551,6 +43976,11 @@ MonoBehaviour:
           element: "L\u1ED7i"
           portrait: {fileID: 0}
           battlefieldSprite: {fileID: 0}
+          attackFrame1: {fileID: 0}
+          attackFrame2: {fileID: 0}
+          attackFrame3: {fileID: 0}
+          attackFrame4: {fileID: 0}
+          attackFrame5: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs: []
@@ -53985,6 +54415,11 @@ MonoBehaviour:
         element: 
         portrait: {fileID: 0}
         battlefieldSprite: {fileID: 0}
+        attackFrame1: {fileID: 0}
+        attackFrame2: {fileID: 0}
+        attackFrame3: {fileID: 0}
+        attackFrame4: {fileID: 0}
+        attackFrame5: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs: []
@@ -54000,3 +54435,4 @@ MonoBehaviour:
   resourceStages: []
   sanctumStages: []
   weaponStages: []
+  playModeStageGroups: []

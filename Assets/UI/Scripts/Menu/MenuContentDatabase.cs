@@ -27,6 +27,13 @@ namespace BES.UI.Menu
         public Sprite cardBackground;
         public Sprite fullBody;
         public Sprite chibi;
+        [Header("Battle Attack Animation (3 FPS)")]
+        [Tooltip("Gán đủ cả 5 frame để phát animation đánh. Thiếu một frame thì battle chỉ dùng ảnh Chibi đứng yên.")]
+        public Sprite attackFrame1;
+        public Sprite attackFrame2;
+        public Sprite attackFrame3;
+        public Sprite attackFrame4;
+        public Sprite attackFrame5;
         [Tooltip("Attack VFX prefabs tested/assigned for this character. Copied into battle units and played when attacking.")]
         public List<GameObject> attackEffectPrefabs = new();
         public Vector3 attackEffectOffset = Vector3.zero;
@@ -50,7 +57,35 @@ namespace BES.UI.Menu
         public int speed = 10;
     }
 
-    [Serializable] public class RewardEntry { public string id; public Sprite icon; public int amount = 1; public int rarity = 1; }
+    [Serializable]
+    public class RewardEntry
+    {
+        public string id;
+        public Sprite icon;
+        [Tooltip("Fallback amount for old data. Used when Min/Max Amount are not set.")]
+        public int amount = 1;
+        [Min(0)] public int minAmount = 0;
+        [Min(0)] public int maxAmount = 0;
+        [Range(0, 100)] public int dropChancePercent = 100;
+        public bool guaranteed = true;
+        public int rarity = 1;
+
+        public int RollAmount()
+        {
+            if (amount <= 0 && minAmount <= 0 && maxAmount <= 0)
+                return 0;
+            var min = minAmount > 0 ? minAmount : Mathf.Max(1, amount);
+            var max = maxAmount > 0 ? maxAmount : min;
+            if (max < min) max = min;
+            return UnityEngine.Random.Range(min, max + 1);
+        }
+
+        public bool ShouldDrop()
+        {
+            if (guaranteed) return true;
+            return UnityEngine.Random.Range(0, 100) < Mathf.Clamp(dropChancePercent, 0, 100);
+        }
+    }
 
     [Serializable]
     public class PartyAttributeRequirement
@@ -82,6 +117,16 @@ namespace BES.UI.Menu
         public BattleUnitDefinition boss;
         [Header("Optional Multi Phase Combat")]
         public List<BattlePhaseEntry> battlePhases = new();
+    }
+
+    [Serializable]
+    public class PlayModeStageGroup
+    {
+        public string id;
+        public string title;
+        [TextArea] public string description;
+        public Sprite icon;
+        public List<StageEntry> stages = new();
     }
 
     [Serializable]
@@ -162,6 +207,8 @@ namespace BES.UI.Menu
         public List<StageEntry> resourceStages = new();
         public List<StageEntry> sanctumStages = new();
         public List<StageEntry> weaponStages = new();
+        [Tooltip("Extra Play Mode groups for future modes. Add group 4+ here and point StageSelectionController/PlayMode buttons to its id.")]
+        public List<PlayModeStageGroup> playModeStageGroups = new();
 
         public void EnsureDefaultPlayModeStages()
         {
@@ -213,7 +260,36 @@ namespace BES.UI.Menu
         }
 
         static RewardEntry NewReward(string id, int amount, int rarity) =>
-            new RewardEntry { id = id, amount = Mathf.Max(1, amount), rarity = Mathf.Max(1, rarity) };
+            new RewardEntry
+            {
+                id = id,
+                amount = Mathf.Max(1, amount),
+                minAmount = Mathf.Max(1, amount),
+                maxAmount = Mathf.Max(1, amount),
+                dropChancePercent = 100,
+                guaranteed = true,
+                rarity = Mathf.Max(1, rarity)
+            };
+
+        public List<StageEntry> GetPlayModeStages(string groupId)
+        {
+            if (string.IsNullOrWhiteSpace(groupId))
+                return resourceStages;
+
+            if (groupId.Equals("resources", StringComparison.OrdinalIgnoreCase) ||
+                groupId.Equals("resource", StringComparison.OrdinalIgnoreCase))
+                return resourceStages;
+            if (groupId.Equals("sanctum", StringComparison.OrdinalIgnoreCase) ||
+                groupId.Equals("relics", StringComparison.OrdinalIgnoreCase) ||
+                groupId.Equals("sanctumRelics", StringComparison.OrdinalIgnoreCase))
+                return sanctumStages;
+            if (groupId.Equals("weapon", StringComparison.OrdinalIgnoreCase) ||
+                groupId.Equals("weaponBreakthrough", StringComparison.OrdinalIgnoreCase))
+                return weaponStages;
+
+            var group = playModeStageGroups?.Find(x => x != null && groupId.Equals(x.id, StringComparison.OrdinalIgnoreCase));
+            return group?.stages ?? new List<StageEntry>();
+        }
 
         static BattleUnitDefinition NewEnemy(string id, string displayName, int hp, int atk, int def, int spd)
         {

@@ -30,6 +30,8 @@ namespace BES.UI.Menu
     {
         public Button button;
         public MenuScreenId stageSelectionScreen = MenuScreenId.ResourceStages;
+        [Tooltip("Optional Play Mode stage group id. Use this for group 4+ or to reuse one StageSelection panel with different data.")]
+        public string stageGroupId;
         [Tooltip("Optional direct stage id. If filled, this skips stage selection and opens the Play Mode party screen.")]
         public string directStageId;
     }
@@ -119,10 +121,12 @@ namespace BES.UI.Menu
             if (!string.IsNullOrWhiteSpace(binding.directStageId))
             {
                 TurnBattleUI.ActiveStageId = binding.directStageId.Trim();
+                TurnBattleUI.ActivePlayModeStageGroupId = binding.stageGroupId?.Trim();
                 navigator?.Open(MenuScreenId.PlayParty);
                 return;
             }
 
+            StageSelectionController.OpenGroupOnNextEnable(binding.stageGroupId);
             navigator?.Open(binding.stageSelectionScreen);
         }
 

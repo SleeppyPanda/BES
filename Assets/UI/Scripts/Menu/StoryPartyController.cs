@@ -93,7 +93,9 @@ namespace BES.UI.Menu
                 var captured = character;
                 var button = Instantiate(characterButtonPrefab, rosterRoot);
                 var image = button.GetComponent<Image>();
-                if (image != null) image.sprite = character.portrait;
+                if (image != null) image.sprite = character.cardBackground;
+                var portrait = button.transform.Find("Portrait")?.GetComponent<Image>() ?? button.GetComponentInChildren<Image>(true);
+                if (portrait != null && portrait != image) portrait.sprite = CharacterChibiSprite(character);
                 var label = button.GetComponentInChildren<TMP_Text>();
                 if (label != null) label.text = character.displayName;
                 button.onClick.AddListener(() => AssignCharacter(captured));
@@ -122,7 +124,7 @@ namespace BES.UI.Menu
             {
                 var character = i < party.Count ? party[i] : null;
                 var slot = partySlots[i];
-                if (slot.portrait != null) { slot.portrait.enabled = character != null; slot.portrait.sprite = character?.portrait; }
+                if (slot.portrait != null) { slot.portrait.enabled = character != null; slot.portrait.sprite = CharacterChibiSprite(character); }
                 if (slot.elementIcon != null) { slot.elementIcon.enabled = character != null; slot.elementIcon.sprite = character?.elementIcon; }
                 if (slot.nameText != null) slot.nameText.text = character?.displayName ?? string.Empty;
                 if (slot.levelText != null) slot.levelText.text = character == null ? string.Empty : $"Lv. {CharacterProgressionState.GetLevel(character.id)}";
@@ -139,6 +141,14 @@ namespace BES.UI.Menu
             TurnBattleUI.SelectedPartyCharacterIds = ids;
             onPartyConfirmed?.Invoke(ids);
             navigator?.Open(MenuScreenId.Battle);
+        }
+
+        static Sprite CharacterChibiSprite(CharacterEntry character)
+        {
+            if (character == null) return null;
+            return character.chibi != null ? character.chibi :
+                   character.fullBody != null ? character.fullBody :
+                   character.portrait;
         }
 
         void OnEnable()

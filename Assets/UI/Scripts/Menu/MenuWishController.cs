@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using BES.Core;
 using BES.Gameplay;
+using BES.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,6 +49,10 @@ namespace BES.UI.Menu
         [SerializeField] MenuContentDatabase database;
         [SerializeField] InventorySystem inventory;
         [SerializeField] MenuHomeController homeController;
+        [Tooltip("Thư viện nhân vật dùng chung với Wish, nâng cấp, giao cảm, trang bị, vũ khí và tinh mệnh.")]
+        [SerializeField] CharacterCollectionPanel characterCollection;
+        [Tooltip("Bật nếu muốn sau khi claim nhân vật từ Wish thì mở thẳng trang thông tin nhân vật đó trong thư viện.")]
+        [SerializeField] bool openCharacterCollectionAfterClaim;
         [SerializeField] bool autoSyncCharacterRewardsFromDatabase = true;
         [SerializeField] List<MenuWishReward> rewards = new();
 
@@ -81,9 +86,9 @@ namespace BES.UI.Menu
         [SerializeField] List<WishResultCardView> resultCards = new();
         [SerializeField] Sprite fourStarGlow;
         [SerializeField] Sprite fiveStarGlow;
-        [Tooltip("Thời gian mỗi thẻ di chuyển từ ngoài màn hình vào vị trí đích. Giá trị lớn hơn = chậm hơn.")]
+        [Tooltip("Thư viện nhân vật dùng chung với Wish, nâng cấp, giao cảm, trang bị, vũ khí và tinh mệnh.")]
         [SerializeField, Min(.05f)] float cardFlyDuration = .85f;
-        [Tooltip("Khoảng nghỉ giữa thời điểm bắt đầu di chuyển của từng thẻ khi Roll x10.")]
+        [Tooltip("Khoáº£ng nghá»‰ giá»¯a thá»i Ä‘iá»ƒm báº¯t Ä‘áº§u di chuyá»ƒn cá»§a tá»«ng tháº» khi Roll x10.")]
         [SerializeField, Min(0f)] float cardStaggerDelay = .14f;
         [SerializeField] float cardSpawnDistance = 720f;
         [SerializeField] AnimationCurve cardEasing =
@@ -122,6 +127,7 @@ namespace BES.UI.Menu
         void Awake()
         {
             ResolveInventory();
+            ResolveCharacterCollection();
             SyncCharacterRewardsFromDatabase();
             selectedCurrency = initialCurrency;
             CacheTargetPositions();
@@ -160,6 +166,7 @@ namespace BES.UI.Menu
         void OnEnable()
         {
             ResolveInventory();
+            ResolveCharacterCollection();
             SyncCharacterRewardsFromDatabase();
             ImportMenuCurrenciesFromSave();
             RefreshCurrency();
@@ -197,9 +204,7 @@ namespace BES.UI.Menu
                     itemId = "wish_" + character.id,
                     displayName = string.IsNullOrWhiteSpace(character.displayName) ? character.id : character.displayName,
                     description = BuildWishDescription(character),
-                    icon = character.portrait != null ? character.portrait :
-                           character.fullBody != null ? character.fullBody :
-                           character.chibi,
+                    icon = CharacterWishSprite(character),
                     rarity = rarity,
                     weight = rarity >= 5 ? 4 : rarity == 4 ? 14 : 30,
                     amount = 1,
@@ -217,9 +222,9 @@ namespace BES.UI.Menu
             var parts = new List<string>();
             if (!string.IsNullOrWhiteSpace(character.description)) parts.Add(character.description);
             if (!string.IsNullOrWhiteSpace(character.faction)) parts.Add(character.faction);
-            if (!string.IsNullOrWhiteSpace(character.element)) parts.Add("Hệ: " + character.element);
-            if (!string.IsNullOrWhiteSpace(character.weaponType)) parts.Add("Vũ khí: " + character.weaponType);
-            if (!string.IsNullOrWhiteSpace(character.skillType)) parts.Add("Loại: " + character.skillType);
+            if (!string.IsNullOrWhiteSpace(character.element)) parts.Add("Há»‡: " + character.element);
+            if (!string.IsNullOrWhiteSpace(character.weaponType)) parts.Add("VÅ© khÃ­: " + character.weaponType);
+            if (!string.IsNullOrWhiteSpace(character.skillType)) parts.Add("Loáº¡i: " + character.skillType);
             if (!string.IsNullOrWhiteSpace(character.skillDescription)) parts.Add(character.skillDescription);
             return string.Join("\n", parts);
         }
@@ -258,17 +263,13 @@ namespace BES.UI.Menu
                 return;
             }
 
-            ResolveInventory();
             currentResults.Clear();
             for (var i = 0; i < count; i++)
             {
                 var reward = RollReward();
                 if (reward == null) continue;
                 currentResults.Add(reward);
-                if (reward.unlockAsCharacter)
-                    ApplyCharacterReward(reward);
-                else
-                    inventory?.AddItem(reward.itemId, reward.amount);
+                GrantWishReward(reward);
                 GachaPityState.Instance?.RegisterPull(reward.rarity);
             }
             GameManager.Instance?.SaveGame();
@@ -278,30 +279,28 @@ namespace BES.UI.Menu
         public void ClaimResults()
         {
             if (isAnimating) return;
+            OpenClaimedCharacterCollectionIfNeeded();
             ResetPresentation();
         }
 
         public void ShowCardDetails(int index)
         {
-            if (index < 0 || index >= currentResults.Count) return;
-            var reward = currentResults[index];
-            if (detailPanel != null) detailPanel.SetActive(true);
-            if (detailItemIcon != null)
-            {
-                var rewardIcon = IconForReward(reward);
-                detailItemIcon.sprite = rewardIcon;
-                detailItemIcon.enabled = rewardIcon != null;
-            }
-            if (detailNameText != null) detailNameText.text = reward.displayName;
-            if (detailDescriptionText != null) detailDescriptionText.text = reward.description;
-            if (detailRarityText != null) detailRarityText.text = $"{reward.rarity} ★";
-            if (detailCardBackground != null && index < resultCards.Count)
-                detailCardBackground.sprite = resultCards[index].cardBackground?.sprite;
+            if (detailPanel != null) detailPanel.SetActive(false);
         }
 
         public void HideCardDetails(int index)
         {
             if (detailPanel != null) detailPanel.SetActive(false);
+        }
+
+        public void OpenFocusedCharacterCollection()
+        {
+            ResolveCharacterCollection();
+            var focused = CharacterOwnership.FocusedCharacterId;
+            if (!string.IsNullOrWhiteSpace(focused))
+                characterCollection?.OpenCharacter(focused);
+            else
+                characterCollection?.OpenGallery();
         }
 
         IEnumerator RevealRoutine()
@@ -454,7 +453,7 @@ namespace BES.UI.Menu
 
                     if (is5StarChar && character.revealVideoClip != null)
                     {
-                        // 1.5a. Fade screen to black (tối dần)
+                        // 1.5a. Fade screen to black (tá»‘i dáº§n)
                         if (fadeImg != null)
                         {
                             fadeImg.gameObject.SetActive(true);
@@ -501,7 +500,7 @@ namespace BES.UI.Menu
                             yield return null;
                         }
 
-                        // 1.5c. Fade black screen to transparent (sáng dần ra video)
+                        // 1.5c. Fade black screen to transparent (sÃ¡ng dáº§n ra video)
                         if (fadeImg != null)
                         {
                             yield return FadeOverlay(fadeImg, 1f, 0f, 0.6f);
@@ -588,7 +587,7 @@ namespace BES.UI.Menu
             }
 
             claimButton?.gameObject.SetActive(true);
-            SetFeedback(visibleCardCount == 1 ? "WISH ×1 COMPLETE" : "WISH ×10 COMPLETE");
+            SetFeedback(visibleCardCount == 1 ? "WISH Ã—1 COMPLETE" : "WISH Ã—10 COMPLETE");
             isAnimating = false;
             RefreshCurrency();
         }
@@ -609,7 +608,7 @@ namespace BES.UI.Menu
                 view.itemIcon.enabled = rewardIcon != null;
             }
             if (view.itemNameText != null) view.itemNameText.text = reward.displayName;
-            if (view.rarityText != null) view.rarityText.text = $"{reward.rarity} ★";
+            if (view.rarityText != null) view.rarityText.text = $"{reward.rarity} â˜…";
         }
 
         MenuWishReward RollReward()
@@ -644,28 +643,82 @@ namespace BES.UI.Menu
                 var character = CharacterIdentity.FindEntry(database, CharacterIdFor(reward));
                 if (character != null)
                 {
-                    if (character.portrait != null) return character.portrait;
-                    if (character.fullBody != null) return character.fullBody;
-                    if (character.chibi != null) return character.chibi;
+                    return CharacterWishSprite(character);
                 }
             }
 
             return reward != null ? reward.icon : null;
         }
 
-        void ApplyCharacterReward(MenuWishReward reward)
+        static Sprite CharacterWishSprite(CharacterEntry character)
         {
-            var id = CharacterIdFor(reward);
-            var wasOwned = CharacterOwnership.Owns(id);
-            CharacterOwnership.Grant(id, reward.displayName);
+            if (character == null) return null;
+            return character.portrait != null ? character.portrait :
+                   character.chibi != null ? character.chibi :
+                   character.fullBody;
+        }
+
+        static bool IsWeaponReward(string itemId)
+        {
+            if (string.IsNullOrWhiteSpace(itemId))
+                return false;
+            var weaponDb = Resources.Load<WeaponDatabase>("Data/WeaponDatabase");
+#if UNITY_EDITOR
+            if (weaponDb == null)
+                weaponDb = UnityEditor.AssetDatabase.LoadAssetAtPath<WeaponDatabase>("Assets/_Project/Resources/Data/WeaponDatabase.asset");
+#endif
+            return weaponDb != null && weaponDb.FindExact(itemId) != null;
+        }
+
+        void GrantWishReward(MenuWishReward reward)
+        {
+            if (reward == null) return;
+
+            var rewardId = reward.unlockAsCharacter ? CharacterIdFor(reward) : reward.itemId;
+            var wasOwned = reward.unlockAsCharacter && CharacterOwnership.Owns(rewardId);
+            RewardGrantService.Grant(rewardId, Mathf.Max(1, reward.amount), reward.displayName);
+            if (reward.unlockAsCharacter)
+            {
+                CharacterOwnership.Focus(rewardId);
+                ResolveCharacterCollection();
+            }
             if (wasOwned)
             {
-                var definition = CharacterDatabaseLoader.Load()?.Get(id);
-                var amount = Mathf.Max(1, definition?.duplicateShardReward ?? 1);
-                CharacterProgressionState.AddDuplicateShards(id, amount);
+                var definition = CharacterDatabaseLoader.Load()?.Get(rewardId);
+                var amount = Mathf.Max(1, definition?.duplicateShardReward ?? 1) * Mathf.Max(1, reward.amount);
                 SetFeedback($"DUPLICATE: +{amount} CONSTELLATION SHARD");
             }
             GameEvents.RaisePartyChanged();
+        }
+
+        void OpenClaimedCharacterCollectionIfNeeded()
+        {
+            if (!openCharacterCollectionAfterClaim || currentResults.Count == 0)
+                return;
+
+            for (var i = currentResults.Count - 1; i >= 0; i--)
+            {
+                var reward = currentResults[i];
+                if (reward == null || !reward.unlockAsCharacter)
+                    continue;
+
+                var characterId = CharacterIdFor(reward);
+                if (string.IsNullOrWhiteSpace(characterId) || !CharacterOwnership.Owns(characterId))
+                    continue;
+
+                ResolveCharacterCollection();
+                CharacterOwnership.Focus(characterId);
+                characterCollection?.OpenCharacter(characterId);
+                return;
+            }
+        }
+
+        void ResolveCharacterCollection()
+        {
+            if (characterCollection != null) return;
+            characterCollection = GetComponentInParent<CharacterCollectionPanel>(true);
+            if (characterCollection != null) return;
+            characterCollection = FindAnyObjectByType<CharacterCollectionPanel>(FindObjectsInactive.Include);
         }
 
         static PartyRoster ResolveRoster()
@@ -689,7 +742,18 @@ namespace BES.UI.Menu
                 ? count == 1 ? singleGemCost : tenGemCost
                 : count == 1 ? singleCoinCost : tenCoinCost;
             if (entry == null || entry.amount < cost) return false;
-            entry.amount -= cost;
+            var wallet = PlayerWallet.Instance;
+            if (wallet != null)
+            {
+                var spent = selectedCurrency == WishCurrency.Gems
+                    ? wallet.TrySpendGems(cost)
+                    : wallet.TrySpendCoins(cost);
+                if (!spent) return false;
+            }
+            else
+            {
+                entry.amount -= cost;
+            }
             SaveMenuCurrencies();
             homeController?.Refresh();
             return true;

@@ -244,18 +244,10 @@ namespace BES.UI.Menu
             
             var newChapterIndex = Mathf.Clamp(index, 0, database.storyChapters.Count - 1);
 
-            // Save old chapter progress ONLY if we are actually switching chapters!
-            if (newChapterIndex != chapterIndex)
-            {
-                PlayerPrefs.SetString($"StoryActiveStageId_{chapterIndex}", currentStageId);
-                PlayerPrefs.Save();
-            }
-
             chapterIndex = newChapterIndex;
             ApplyStoryRuntime(chapterIndex);
 
-            // SaveData is the source of truth. PlayerPrefs from old tests can point
-            // to an outdated stage and skip the first story scene on a fresh run.
+            // SaveData is the source of truth so old test data cannot skip the first story scene.
             var save = GameManager.Instance?.Save?.Current;
             if (save != null &&
                 save.storyChapterIndex == chapterIndex &&
@@ -311,7 +303,6 @@ namespace BES.UI.Menu
                 rosterSortMode = StoryRosterSortMode.RequiredCharacter;
             ShowPhase(StoryPartyPhase.Selecting);
             if (characterSelectionPanel != null) characterSelectionPanel.transform.SetAsLastSibling();
-            EnsureDeployInventory();
         }
 
         void SetRosterSortMode(StoryRosterSortMode mode)
@@ -418,11 +409,13 @@ namespace BES.UI.Menu
 
         void EnsureDialogueUI()
         {
-            EnsureEditableDialogueUI();
             if (storyDialogueUI != null) return;
-            storyDialogueUI = FindAnyObjectByType<DialogueSequenceUI>(FindObjectsInactive.Include);
+            var existing = FindDeep(transform, "StoryDialogueUI");
+            if (existing != null)
+                storyDialogueUI = existing.GetComponent<DialogueSequenceUI>();
+
             if (storyDialogueUI == null)
-                storyDialogueUI = DialogueSequenceUI.CreateRuntimeOverlay("RuntimeStoryDialogueUI");
+                Debug.LogWarning("[BES] StoryModePanelController is missing storyDialogueUI. Assign the prefab StoryDialogueUI object in Unity.");
         }
 
         [ContextMenu("BES/Ensure Editable Story Dialogue UI")]
@@ -430,36 +423,19 @@ namespace BES.UI.Menu
         {
             if (storyDialogueUI == null)
             {
-                var existing = transform.Find("StoryDialogueUI");
+                var existing = FindDeep(transform, "StoryDialogueUI");
                 if (existing != null)
                     storyDialogueUI = existing.GetComponent<DialogueSequenceUI>();
             }
 
             if (storyDialogueUI == null && !Application.isPlaying)
             {
-#if UNITY_EDITOR
-                var prefabStage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
-                var editingInPrefabStage = prefabStage != null &&
-                                           prefabStage.prefabContentsRoot != null &&
-                                           (prefabStage.prefabContentsRoot == gameObject ||
-                                            transform.IsChildOf(prefabStage.prefabContentsRoot.transform));
-                if (UnityEditor.PrefabUtility.IsPartOfPrefabAsset(gameObject) && !editingInPrefabStage)
-                    return;
-#endif
-                var dialogueRoot = new GameObject("StoryDialogueUI", typeof(RectTransform));
-                dialogueRoot.transform.SetParent(transform, false);
-                var rect = dialogueRoot.GetComponent<RectTransform>();
-                rect.anchorMin = Vector2.zero;
-                rect.anchorMax = Vector2.one;
-                rect.offsetMin = Vector2.zero;
-                rect.offsetMax = Vector2.zero;
-                storyDialogueUI = dialogueRoot.AddComponent<DialogueSequenceUI>();
-                dialogueRoot.SetActive(false);
+                Debug.LogWarning("[BES] StoryDialogueUI is not present in the prefab. Create it in Unity and assign it to StoryModePanelController.storyDialogueUI.");
+                return;
             }
 
             if (storyDialogueUI != null && !Application.isPlaying)
             {
-                storyDialogueUI.EnsureRuntimeView();
                 storyDialogueUI.gameObject.SetActive(false);
 #if UNITY_EDITOR
                 UnityEditor.EditorUtility.SetDirty(storyDialogueUI);
@@ -530,10 +506,6 @@ namespace BES.UI.Menu
                 save.activeStoryStageId = CurrentStage()?.id ?? string.Empty;
             }
             GameManager.Instance?.SaveGame();
-
-            // Also save to PlayerPrefs persistently
-            PlayerPrefs.SetString($"StoryActiveStageId_{chapterIndex}", currentStageId);
-            PlayerPrefs.Save();
         }
 
         void SaveStoryState(StageEntry stage)
@@ -545,6 +517,7 @@ namespace BES.UI.Menu
             save.activeStoryStageId = stage?.id ?? string.Empty;
             save.activeBattleStageId = StageHasCombat(stage) ? stage?.id ?? string.Empty : string.Empty;
             save.activeBattleIsPlayMode = false;
+            save.activePlayModeStageGroupId = string.Empty;
             save.storyPartyCharacterIds = CurrentIds();
             GameManager.Instance?.SaveGame();
         }
@@ -589,9 +562,6 @@ namespace BES.UI.Menu
                         saveObj.storyStageIndex = 0;
                     }
                     GameManager.Instance?.SaveGame();
-                    
-                    PlayerPrefs.SetString($"StoryActiveStageId_{chapterIndex}", currentStageId);
-                    PlayerPrefs.Save();
 
                     chapterIntroPlayed = false;
                     TryPlayChapterIntro();
@@ -757,7 +727,7 @@ namespace BES.UI.Menu
                     card.button.image.sprite = character.cardBackground;
                 if (card.portrait != null)
                 {
-                    card.portrait.sprite = character.portrait;
+                    card.portrait.sprite = CharacterChibiSprite(character);
                     ForceVisible(card.portrait);
                 }
                 if (card.elementIcon != null)
@@ -925,7 +895,7 @@ namespace BES.UI.Menu
         {
             if (slot.portrait != null)
             {
-                slot.portrait.sprite = character?.portrait;
+                slot.portrait.sprite = CharacterChibiSprite(character);
                 slot.portrait.enabled = character != null;
                 if (character != null) ForceVisible(slot.portrait);
             }
@@ -972,6 +942,14 @@ namespace BES.UI.Menu
             image.enabled = true;
         }
 
+        static Sprite CharacterChibiSprite(CharacterEntry character)
+        {
+            if (character == null) return null;
+            return character.chibi != null ? character.chibi :
+                   character.fullBody != null ? character.fullBody :
+                   character.portrait;
+        }
+
         void NextChapter()
         {
             if (database == null || chapterIndex >= database.storyChapters.Count - 1) return;
@@ -1004,50 +982,12 @@ namespace BES.UI.Menu
 
         void EnsureDeployInventory()
         {
-            if (characterSelectionPanel == null) return;
-            var existing = characterSelectionPanel.transform.Find("DeployInventory");
-            if (existing != null) return;
-
-            var root = new GameObject("DeployInventory", typeof(RectTransform), typeof(Image));
-            root.transform.SetParent(characterSelectionPanel.transform, false);
-            var rect = root.GetComponent<RectTransform>();
-            rect.anchorMin = new Vector2(0.03f, 0.02f);
-            rect.anchorMax = new Vector2(0.42f, 0.22f);
-            rect.offsetMin = rect.offsetMax = Vector2.zero;
-            var background = root.GetComponent<Image>();
-            background.color = new Color(0.08f, 0.1f, 0.16f, 0.92f);
-
-            var title = new GameObject("Title", typeof(RectTransform), typeof(TextMeshProUGUI));
-            title.transform.SetParent(root.transform, false);
-            var titleRect = title.GetComponent<RectTransform>();
-            titleRect.anchorMin = new Vector2(0.04f, 0.72f);
-            titleRect.anchorMax = new Vector2(0.96f, 0.96f);
-            titleRect.offsetMin = titleRect.offsetMax = Vector2.zero;
-            var titleText = title.GetComponent<TextMeshProUGUI>();
-            titleText.text = "Kho đồ chiến đấu";
-            titleText.fontSize = 18;
-            titleText.color = Color.white;
-            titleText.raycastTarget = false;
-
-            var content = new GameObject("ItemRow", typeof(RectTransform), typeof(HorizontalLayoutGroup));
-            content.transform.SetParent(root.transform, false);
-            var contentRect = content.GetComponent<RectTransform>();
-            contentRect.anchorMin = new Vector2(0.04f, 0.08f);
-            contentRect.anchorMax = new Vector2(0.96f, 0.68f);
-            contentRect.offsetMin = contentRect.offsetMax = Vector2.zero;
-            var layout = content.GetComponent<HorizontalLayoutGroup>();
-            layout.spacing = 8f;
-            layout.childAlignment = TextAnchor.MiddleLeft;
-            layout.childControlHeight = true;
-            layout.childControlWidth = false;
-            layout.childForceExpandHeight = true;
-            layout.childForceExpandWidth = false;
+            // UI phải được tạo/gán sẵn trong Unity để tránh runtime làm reset layout prefab.
         }
 
         void RefreshDeployInventory()
         {
             if (characterSelectionPanel == null || phase != StoryPartyPhase.Selecting) return;
-            EnsureDeployInventory();
             var row = characterSelectionPanel.transform.Find("DeployInventory/ItemRow");
             if (row == null) return;
             foreach (Transform child in row) Destroy(child.gameObject);

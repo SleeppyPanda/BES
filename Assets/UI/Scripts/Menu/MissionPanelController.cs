@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using BES.Core;
+using BES.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -18,6 +20,8 @@ namespace BES.UI.Menu
         public Sprite expandedSprite;
         public Sprite claimAvailableSprite;
         public Sprite claimedSprite;
+        public string rewardId;
+        [Min(0)] public int rewardAmount = 1;
         public Vector2 normalSize = new(189f, 740f);
         public Vector2 expandedSize = new(343f, 944f);
         public bool claimed;
@@ -31,7 +35,6 @@ namespace BES.UI.Menu
         [SerializeField] float expandedYOffset;
         [SerializeField, Min(.01f)] float smoothTime = .11f;
         [SerializeField] bool saveClaimedState = true;
-        [SerializeField] string saveKeyPrefix = "BES.MissionClaimed.";
         [SerializeField] UnityEvent<string> onMissionClaimed;
 
         readonly List<Vector2> basePositions = new();
@@ -49,7 +52,7 @@ namespace BES.UI.Menu
                 var card = cards[i];
                 if (card == null) continue;
                 if (saveClaimedState && !string.IsNullOrWhiteSpace(card.missionId))
-                    card.claimed = PlayerPrefs.GetInt(saveKeyPrefix + card.missionId, 0) != 0;
+                    card.claimed = IsMissionClaimed(card.missionId);
                 card.claimButton?.onClick.AddListener(() => Claim(index));
                 RefreshClaimState(card);
             }
@@ -119,10 +122,10 @@ namespace BES.UI.Menu
             var card = cards[index];
             if (card == null || card.claimed) return;
             card.claimed = true;
+            RewardGrantService.Grant(card.rewardId, card.rewardAmount, card.missionId);
             if (saveClaimedState && !string.IsNullOrWhiteSpace(card.missionId))
             {
-                PlayerPrefs.SetInt(saveKeyPrefix + card.missionId, 1);
-                PlayerPrefs.Save();
+                SaveClaimedMission(card.missionId);
             }
             RefreshClaimState(card);
             onMissionClaimed?.Invoke(card.missionId);
@@ -196,6 +199,23 @@ namespace BES.UI.Menu
             for (var i = 0; i < cards.Count; i++)
                 if (cards[i]?.root != null)
                     cards[i].root.SetSiblingIndex(siblingIndices[i]);
+        }
+
+        bool IsMissionClaimed(string missionId)
+        {
+            var savedClaims = GameManager.Instance?.Save?.Current?.claimedMissionIds;
+            return savedClaims != null && savedClaims.Contains(missionId);
+        }
+
+        static void SaveClaimedMission(string missionId)
+        {
+            var save = GameManager.Instance?.Save?.Current;
+            if (save == null || string.IsNullOrWhiteSpace(missionId))
+                return;
+            save.claimedMissionIds ??= new List<string>();
+            if (!save.claimedMissionIds.Contains(missionId))
+                save.claimedMissionIds.Add(missionId);
+            GameManager.Instance?.SaveGame();
         }
     }
 }

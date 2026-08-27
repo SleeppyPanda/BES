@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BES.Core;
 using BES.Gameplay;
 using TMPro;
@@ -221,7 +221,7 @@ namespace BES.UI.Menu
             if (currentLevel >= levelCap)
             {
                 if (levelValue != null)
-                    levelValue.text = $"Cấp hiện tại: {currentLevel}/{levelCap}\nCần đột phá để tăng giới hạn";
+                    levelValue.text = $"Cáº¥p hiá»‡n táº¡i: {currentLevel}/{levelCap}\nCáº§n Ä‘á»™t phÃ¡ Ä‘á»ƒ tÄƒng giá»›i háº¡n";
                 return;
             }
 
@@ -247,14 +247,14 @@ namespace BES.UI.Menu
             if (inventory == null || inventory.GetCount(itemId) < 1)
             {
                 if (levelValue != null)
-                    levelValue.text = $"Cấp hiện tại: {currentLevel}/{levelCap}\nKhông đủ lọ EXP tương ứng!";
+                    levelValue.text = $"Cáº¥p hiá»‡n táº¡i: {currentLevel}/{levelCap}\nKhÃ´ng Ä‘á»§ lá» EXP tÆ°Æ¡ng á»©ng!";
                 return;
             }
 
             if (PlayerWallet.Instance == null || PlayerWallet.Instance.Coins < goldCost)
             {
                 if (levelValue != null)
-                    levelValue.text = $"Cấp hiện tại: {currentLevel}/{levelCap}\nKhông đủ Vàng để nâng cấp!";
+                    levelValue.text = $"Cáº¥p hiá»‡n táº¡i: {currentLevel}/{levelCap}\nKhÃ´ng Ä‘á»§ VÃ ng Ä‘á»ƒ nÃ¢ng cáº¥p!";
                 return;
             }
 
@@ -512,7 +512,7 @@ namespace BES.UI.Menu
             scroll.content = galleryContent;
             galleryCardTemplate = BuildGalleryCardTemplate(galleryContent);
             galleryCardTemplate.SetActive(false);
-            emptyLabel = AddText(galleryPage.transform, "EmptyGallery", "Chưa sở hữu nhân vật nào.\nHãy vào Rate Up để triệu hồi.", new Vector2(.34f, .4f), new Vector2(.88f, .6f), 30);
+            emptyLabel = AddText(galleryPage.transform, "EmptyGallery", "ChÆ°a sá»Ÿ há»¯u nhÃ¢n váº­t nÃ o.\nHÃ£y vÃ o Rate Up Ä‘á»ƒ triá»‡u há»“i.", new Vector2(.34f, .4f), new Vector2(.88f, .6f), 30);
         }
 
         void SetGallerySort(GallerySortMode mode)
@@ -531,7 +531,7 @@ namespace BES.UI.Menu
             detailDefenseText = AddText(detailPage.transform, "CharacterDefenseStatText", string.Empty, new Vector2(.66f, .48f), new Vector2(.94f, .53f), 25);
             detailSpeedText = AddText(detailPage.transform, "CharacterSpeedStatText", string.Empty, new Vector2(.66f, .43f), new Vector2(.94f, .48f), 25);
             detailDescription = AddText(detailPage.transform, "CharacterDescription", string.Empty, new Vector2(.66f, .23f), new Vector2(.94f, .41f), 22);
-            AddButton(detailPage.transform, "LevelButton", "NÂNG LEVEL", new Vector2(.70f, .12f), new Vector2(.90f, .20f), OpenLevel);
+            AddButton(detailPage.transform, "LevelButton", "NÃ‚NG LEVEL", new Vector2(.70f, .12f), new Vector2(.90f, .20f), OpenLevel);
         }
 
         void BuildLevelOverlay()
@@ -539,8 +539,8 @@ namespace BES.UI.Menu
             levelPortrait = AddImage(levelPage.transform, "LevelPortrait", new Vector2(.29f, .12f), new Vector2(.58f, .82f));
             levelName = AddText(levelPage.transform, "LevelCharacterName", string.Empty, new Vector2(.64f, .68f), new Vector2(.93f, .77f), 36);
             levelValue = AddText(levelPage.transform, "LevelValue", string.Empty, new Vector2(.64f, .48f), new Vector2(.93f, .66f), 28);
-            AddText(levelPage.transform, "LevelItemHint", "Vật phẩm nâng cấp được lấy từ Túi đồ", new Vector2(.64f, .28f), new Vector2(.93f, .42f), 22);
-            AddButton(levelPage.transform, "BackToDetail", "QUAY LẠI", new Vector2(.70f, .14f), new Vector2(.90f, .22f), () => ShowPage(detailPage));
+            AddText(levelPage.transform, "LevelItemHint", "Váº­t pháº©m nÃ¢ng cáº¥p Ä‘Æ°á»£c láº¥y tá»« TÃºi Ä‘á»“", new Vector2(.64f, .28f), new Vector2(.93f, .42f), 22);
+            AddButton(levelPage.transform, "BackToDetail", "QUAY Láº I", new Vector2(.70f, .14f), new Vector2(.90f, .22f), () => ShowPage(detailPage));
         }
 
         void RefreshGallery()
@@ -582,7 +582,7 @@ namespace BES.UI.Menu
                 selector.GetComponent<RectTransform>().sizeDelta = new Vector2(92f, 92f);
                 selector.GetComponent<LayoutElement>().preferredHeight = 92f;
                 var image = selector.GetComponent<Image>();
-                image.sprite = entry.portrait;
+                image.sprite = CharacterChibiSprite(entry);
                 image.preserveAspect = true;
                 image.color = id == selectedCharacterId ? Color.white : new Color(.68f, .68f, .68f, 1f);
                 selector.GetComponent<Button>().onClick.AddListener(() => SelectCharacter(id));
@@ -610,7 +610,7 @@ namespace BES.UI.Menu
             background.sprite = BackgroundFor(entry.rarity);
             background.color = Color.white;
             var portrait = FindDeep(card.transform, "Portrait")?.GetComponent<Image>();
-            if (portrait != null) { portrait.sprite = entry.portrait; portrait.preserveAspect = true; }
+            if (portrait != null) { portrait.sprite = CharacterChibiSprite(entry); portrait.preserveAspect = true; }
             var element = FindDeep(card.transform, "Element")?.GetComponent<Image>();
             if (element != null) { element.sprite = entry.elementIcon; element.enabled = entry.elementIcon != null; }
             var name = FindDeep(card.transform, "CharacterName")?.GetComponent<TMP_Text>();
@@ -650,18 +650,19 @@ namespace BES.UI.Menu
         {
             var entry = database?.FindCharacter(selectedCharacterId);
             if (entry == null) return;
-            if (detailPortrait != null) detailPortrait.sprite = entry.fullBody != null ? entry.fullBody : entry.portrait;
-            if (levelPortrait != null) levelPortrait.sprite = entry.fullBody != null ? entry.fullBody : entry.portrait;
+            if (detailPortrait != null) detailPortrait.sprite = CharacterFullBodySprite(entry);
+            if (levelPortrait != null) levelPortrait.sprite = CharacterFullBodySprite(entry);
             if (detailName != null) detailName.text = entry.displayName;
             var currentLevel = CharacterProgressionState.GetLevel(entry.id);
             var levelCap = CharacterProgressionState.GetLevelCap(entry.id);
+            var stats = CalculateDisplayStats(entry, currentLevel);
             SetText(detailLevelText, $"Cấp {currentLevel}/{levelCap}");
-            SetText(detailHealthText, $"HP  {entry.maxHealth}");
-            SetText(detailAttackText, $"Tấn công  {entry.attack}");
-            SetText(detailDefenseText, $"Phòng thủ  {entry.defense}");
-            SetText(detailSpeedText, $"Tốc độ  {entry.speed}");
+            SetText(detailHealthText, $"HP  {stats.health}");
+            SetText(detailAttackText, $"Tấn công  {stats.attack}");
+            SetText(detailDefenseText, $"Phòng thủ  {stats.defense}");
+            SetText(detailSpeedText, $"Tốc độ  {stats.speed}");
             if (legacyDetailStats != null)
-                legacyDetailStats.text = $"Cấp {currentLevel}/{levelCap}\nHP  {entry.maxHealth}\nTấn công  {entry.attack}\nPhòng thủ  {entry.defense}\nTốc độ  {entry.speed}";
+                legacyDetailStats.text = $"Cấp {currentLevel}/{levelCap}\nHP  {stats.health}\nTấn công  {stats.attack}\nPhòng thủ  {stats.defense}\nTốc độ  {stats.speed}";
             if (detailDescription != null) detailDescription.text = entry.description;
             if (levelName != null) levelName.text = entry.displayName;
             if (levelValue != null) levelValue.text = currentLevel >= levelCap && levelCap < CharacterProgressionState.AbsoluteMaxLevel
@@ -688,6 +689,32 @@ namespace BES.UI.Menu
             RefreshAffinity();
         }
 
+        static CharacterDisplayStats CalculateDisplayStats(CharacterEntry entry, int currentLevel)
+        {
+            var constellation = CharacterProgressionState.GetConstellation(entry.id);
+            var statScale = 1f + Mathf.Max(0, currentLevel - 1) * 0.055f + constellation * 0.035f;
+            var artifactCount = entry.equippedArtifacts?.Count ?? 0;
+            var artifactAttack = artifactCount * 6;
+            var artifactHealth = artifactCount * 35;
+            var weaponAttack = EquippedWeaponState.Instance != null ? EquippedWeaponState.Instance.GetDisplayAtk(entry.id) : 0;
+            var weaponBonus = EquippedWeaponState.Instance != null ? EquippedWeaponState.Instance.GetRuntimeBonus(entry.id) : new WeaponRuntimeBonus();
+
+            return new CharacterDisplayStats
+            {
+                health = Mathf.Max(1, Mathf.RoundToInt(entry.maxHealth * statScale * (1f + weaponBonus.healthPercent / 100f)) + artifactHealth + Mathf.RoundToInt(weaponBonus.healthFlat)),
+                attack = Mathf.Max(1, Mathf.RoundToInt(entry.attack * statScale * (1f + weaponBonus.attackPercent / 100f)) + weaponAttack + artifactAttack + Mathf.RoundToInt(weaponBonus.attackFlat)),
+                defense = Mathf.Max(0, Mathf.RoundToInt(entry.defense * statScale * (1f + weaponBonus.defensePercent / 100f)) + Mathf.RoundToInt(artifactAttack * .08f) + Mathf.RoundToInt(weaponBonus.defenseFlat)),
+                speed = Mathf.Max(1, entry.speed + Mathf.FloorToInt(Mathf.Max(0, currentLevel - 1) / 20f) + Mathf.RoundToInt(weaponBonus.speedFlat))
+            };
+        }
+
+        struct CharacterDisplayStats
+        {
+            public int health;
+            public int attack;
+            public int defense;
+            public int speed;
+        }
         void RefreshAffinity()
         {
             if (affinityPage == null || string.IsNullOrEmpty(selectedCharacterId)) return;
@@ -730,7 +757,7 @@ namespace BES.UI.Menu
                 }
             }
             var hint = FindDeep(affinityPage.transform, "AffinityGiftHint")?.GetComponent<TMP_Text>();
-            if (hint != null) hint.text = "Túi đồ chưa có quà giao cảm. Nhận từ Wish, nhiệm vụ hoặc kho đồ.";
+            if (hint != null) hint.text = "TÃºi Ä‘á»“ chÆ°a cÃ³ quÃ  giao cáº£m. Nháº­n tá»« Wish, nhiá»‡m vá»¥ hoáº·c kho Ä‘á»“.";
         }
 
         static void SetText(TMP_Text text, string value)
@@ -866,7 +893,7 @@ namespace BES.UI.Menu
                 starLayoutElement.preferredWidth = 24f;
                 starLayoutElement.preferredHeight = 24f;
             }
-            var characterName = AddText(card.transform, "CharacterName", "Tên nhân vật", new Vector2(.04f, .08f), new Vector2(.96f, .18f), 17);
+            var characterName = AddText(card.transform, "CharacterName", "TÃªn nhÃ¢n váº­t", new Vector2(.04f, .08f), new Vector2(.96f, .18f), 17);
             characterName.alignment = TextAlignmentOptions.Center;
             characterName.color = Color.white;
             var level = AddText(card.transform, "CharacterLevel", "Lv.1", new Vector2(.04f, 0f), new Vector2(.96f, .10f), 17);
@@ -931,14 +958,14 @@ namespace BES.UI.Menu
             weaponPageName.alignment = TextAlignmentOptions.MidlineLeft;
 
             // 5. Create stats text (ATK, HP, Level, Refinement)
-            weaponPageStats = AddText(weaponPageFrame.transform, "WeaponStatsText", "ATK: 0\nHP: 0\nLv. 1 / 80\nTinh luyện 1", new Vector2(.05f, .40f), new Vector2(.95f, .65f), 24);
+            weaponPageStats = AddText(weaponPageFrame.transform, "WeaponStatsText", "ATK: 0\nHP: 0\nLv. 1 / 80\nTinh luyá»‡n 1", new Vector2(.05f, .40f), new Vector2(.95f, .65f), 24);
             weaponPageStats.alignment = TextAlignmentOptions.TopLeft;
 
             // 6. Create description text
             weaponPageDesc = AddText(weaponPageFrame.transform, "WeaponDescText", "Weapon description and skill effect", new Vector2(.05f, .12f), new Vector2(.95f, .38f), 20);
             weaponPageDesc.alignment = TextAlignmentOptions.TopLeft;
 
-            // 7. Add buttons: "Thay đổi", "Tinh luyện", "Nâng cấp"
+            // 7. Add buttons: "Thay Ä‘á»•i", "Tinh luyá»‡n", "NÃ¢ng cáº¥p"
             AddSpriteButton(weaponPageFrame.transform, "WeaponChangeBtn", weaponChangeSprite, new Vector2(.05f, .02f), new Vector2(.32f, .09f), OpenWeaponList);
             AddSpriteButton(weaponPageFrame.transform, "WeaponRefineBtn", weaponRefineSprite, new Vector2(.36f, .02f), new Vector2(.63f, .09f), RefineEquippedWeapon);
             AddSpriteButton(weaponPageFrame.transform, "WeaponEnhanceBtn", weaponEnhanceSprite, new Vector2(.67f, .02f), new Vector2(.94f, .09f), EnhanceEquippedWeapon);
@@ -951,7 +978,7 @@ namespace BES.UI.Menu
             listBg.preserveAspect = false;
 
             // Title of selection list
-            AddText(weaponListPage.transform, "Title", "Chọn Vũ Khí", new Vector2(.05f, .88f), new Vector2(.95f, .97f), 26).alignment = TextAlignmentOptions.Center;
+            AddText(weaponListPage.transform, "Title", "Chá»n VÅ© KhÃ­", new Vector2(.05f, .88f), new Vector2(.95f, .97f), 26).alignment = TextAlignmentOptions.Center;
 
             // Scroll view for weapons
             var viewport = Rect("WeaponViewport", weaponListPage.transform, new Vector2(.05f, .05f), new Vector2(.95f, .85f));
@@ -994,13 +1021,13 @@ namespace BES.UI.Menu
 
             if (weaponPageStats != null)
             {
-                weaponPageStats.text = $"Tấn công: {displayAtk}\nHP tối đa: {activeWeapon.baseHp}\nCấp: {lvl} / {activeWeapon.maxLevel}\nTinh luyện: {refi}";
+                weaponPageStats.text = $"Táº¥n cÃ´ng: {displayAtk}\nHP tá»‘i Ä‘a: {activeWeapon.baseHp}\nCáº¥p: {lvl} / {activeWeapon.maxLevel}\nTinh luyá»‡n: {refi}";
             }
 
             if (weaponPageDesc != null)
             {
-                weaponPageDesc.text = $"<b>[Thuộc tính phụ]</b> {activeWeapon.subStatName}: +{currentSubStatValue:F1}%\n\n" +
-                    $"<b>[Kỹ năng]</b> {WeaponScreenUI.GetWeaponSkillDescription(activeWeapon.weaponId, refi)}";
+                weaponPageDesc.text = $"<b>[Thuá»™c tÃ­nh phá»¥]</b> {activeWeapon.subStatName}: +{currentSubStatValue:F1}%\n\n" +
+                    $"<b>[Ká»¹ nÄƒng]</b> {WeaponScreenUI.GetWeaponSkillDescription(activeWeapon.weaponId, refi)}";
             }
 
             // Load weapon icon sprite from ItemDatabase using weaponId
@@ -1039,14 +1066,16 @@ namespace BES.UI.Menu
             var weaponDb = Resources.Load<WeaponDatabase>("Data/WeaponDatabase");
             if (equipped == null || weaponDb == null) return;
 
-            foreach (var weaponId in equipped.OwnedWeaponIds)
+            foreach (var instance in equipped.OwnedWeaponInstances)
             {
-                var weapon = weaponDb.GetById(weaponId);
+                if (instance == null) continue;
+                var weaponId = instance.weaponId;
+                var weapon = weaponDb.FindExact(weaponId);
                 if (weapon == null) continue;
 
                 var itemDef = itemDb?.Get(weaponId);
 
-                var slot = new GameObject(weaponId, typeof(RectTransform), typeof(Image), typeof(Button));
+                var slot = new GameObject(instance.instanceId, typeof(RectTransform), typeof(Image), typeof(Button));
                 slot.transform.SetParent(grid, false);
                 slot.GetComponent<RectTransform>().sizeDelta = new Vector2(100f, 100f);
 
@@ -1061,7 +1090,7 @@ namespace BES.UI.Menu
                 iconImage.enabled = iconImage.sprite != null;
 
                 // Highlight if equipped
-                if (equipped.EquippedWeaponId == weaponId)
+                if (equipped.EquippedWeaponInstanceId == instance.instanceId)
                 {
                     var highlight = AddImage(slot.transform, "Highlight", new Vector2(-.05f, -.05f), new Vector2(1.05f, 1.05f));
                     highlight.color = new Color(0.95f, 0.78f, 0.28f, 0.5f);
@@ -1070,7 +1099,7 @@ namespace BES.UI.Menu
 
                 slot.GetComponent<Button>().onClick.AddListener(() =>
                 {
-                    equipped.Equip(weaponId);
+                    equipped.EquipInstance(instance.instanceId, selectedCharacterId);
                     weaponListPage.SetActive(false);
                     RefreshWeaponUI();
                     RefreshCharacter(); // refresh character stats like ATK
@@ -1098,5 +1127,22 @@ namespace BES.UI.Menu
             RefreshCharacter();
             GameManager.Instance?.SaveGame();
         }
+
+        static Sprite CharacterFullBodySprite(CharacterEntry entry)
+        {
+            if (entry == null) return null;
+            return entry.fullBody != null ? entry.fullBody :
+                   entry.chibi != null ? entry.chibi :
+                   entry.portrait;
+        }
+
+        static Sprite CharacterChibiSprite(CharacterEntry entry)
+        {
+            if (entry == null) return null;
+            return entry.chibi != null ? entry.chibi :
+                   entry.fullBody != null ? entry.fullBody :
+                   entry.portrait;
+        }
     }
 }
+

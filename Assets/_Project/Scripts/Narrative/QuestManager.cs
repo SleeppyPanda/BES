@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using BES.Core;
 using BES.Gameplay;
+using BES.UI;
 using UnityEngine;
 
 namespace BES.Narrative
@@ -161,7 +162,7 @@ namespace BES.Narrative
                 trackedQuestId = GetPrimaryActiveQuestId();
 
             if (!string.IsNullOrEmpty(quest.rewardItemId))
-                GameManager.Instance?.Inventory.AddItem(quest.rewardItemId, quest.rewardItemCount);
+                RewardGrantService.Grant(quest.rewardItemId, quest.rewardItemCount, quest.questTitle);
 
             if (!string.IsNullOrEmpty(quest.endingId))
                 currentEndingId = quest.endingId;

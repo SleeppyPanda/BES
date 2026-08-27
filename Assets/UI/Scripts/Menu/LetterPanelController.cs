@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using BES.Core;
+using BES.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,6 +17,8 @@ namespace BES.UI.Menu
         [TextArea(4, 10)] public string body;
         public Sprite senderPortrait;
         public Sprite rewardIcon;
+        [Tooltip("Id thật để cấp vào kho/tiền/vũ khí/nhân vật. Nếu để trống sẽ dùng Reward Name như bản cũ.")]
+        public string rewardId;
         public string rewardName;
         [Min(1)] public int rewardAmount = 1;
         public bool claimed;
@@ -33,7 +37,6 @@ namespace BES.UI.Menu
         [SerializeField] GameObject claimedState;
         [SerializeField] GameObject emptyState;
         [SerializeField] bool saveClaimedState = true;
-        [SerializeField] string saveKeyPrefix = "BES.LetterClaimed.";
         [SerializeField] UnityEvent<string> onLetterClaimed;
 
         int currentIndex;
@@ -78,10 +81,13 @@ namespace BES.UI.Menu
             if (letter == null || letter.claimed) return;
 
             letter.claimed = true;
+            RewardGrantService.Grant(
+                string.IsNullOrWhiteSpace(letter.rewardId) ? letter.rewardName : letter.rewardId,
+                letter.rewardAmount,
+                letter.rewardName);
             if (saveClaimedState && !string.IsNullOrWhiteSpace(letter.id))
             {
-                PlayerPrefs.SetInt(saveKeyPrefix + letter.id, 1);
-                PlayerPrefs.Save();
+                SaveClaimedLetter(letter.id);
             }
             onLetterClaimed?.Invoke(letter.id);
             Refresh();
@@ -122,11 +128,23 @@ namespace BES.UI.Menu
         void LoadClaimedStates()
         {
             if (!saveClaimedState) return;
+            var savedClaims = GameManager.Instance?.Save?.Current?.claimedLetterIds;
             foreach (var letter in letters)
             {
                 if (letter == null || string.IsNullOrWhiteSpace(letter.id)) continue;
-                letter.claimed = PlayerPrefs.GetInt(saveKeyPrefix + letter.id, 0) != 0;
+                letter.claimed = savedClaims != null && savedClaims.Contains(letter.id);
             }
+        }
+
+        static void SaveClaimedLetter(string letterId)
+        {
+            var save = GameManager.Instance?.Save?.Current;
+            if (save == null || string.IsNullOrWhiteSpace(letterId))
+                return;
+            save.claimedLetterIds ??= new List<string>();
+            if (!save.claimedLetterIds.Contains(letterId))
+                save.claimedLetterIds.Add(letterId);
+            GameManager.Instance?.SaveGame();
         }
     }
 }

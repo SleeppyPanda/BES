@@ -149,6 +149,7 @@ namespace BES.Gameplay
             if (!string.IsNullOrWhiteSpace(TurnBattleUI.ActiveStageId))
                 Current.activeBattleStageId = TurnBattleUI.ActiveStageId;
             Current.activeBattleIsPlayMode = TurnBattleUI.IsPlayModeBattle;
+            Current.activePlayModeStageGroupId = TurnBattleUI.ActivePlayModeStageGroupId;
             if (TurnBattleUI.SelectedPartyCharacterIds != null && TurnBattleUI.SelectedPartyCharacterIds.Count > 0)
                 Current.storyPartyCharacterIds = new List<string>(TurnBattleUI.SelectedPartyCharacterIds);
 
@@ -192,6 +193,7 @@ namespace BES.Gameplay
             if (!string.IsNullOrWhiteSpace(Current.activeBattleStageId))
                 TurnBattleUI.ActiveStageId = Current.activeBattleStageId;
             TurnBattleUI.IsPlayModeBattle = Current.activeBattleIsPlayMode;
+            TurnBattleUI.ActivePlayModeStageGroupId = Current.activePlayModeStageGroupId;
             if (Current.storyPartyCharacterIds != null && Current.storyPartyCharacterIds.Count > 0)
                 TurnBattleUI.SelectedPartyCharacterIds = new List<string>(Current.storyPartyCharacterIds);
 

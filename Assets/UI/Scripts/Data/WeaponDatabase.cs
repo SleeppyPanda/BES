@@ -18,5 +18,16 @@ namespace BES.UI
 
             return weapons.Count > 0 ? weapons[0] : null;
         }
+
+        public WeaponDefinition FindExact(string id)
+        {
+            foreach (var w in weapons)
+            {
+                if (w != null && w.weaponId == id)
+                    return w;
+            }
+
+            return null;
+        }
     }
 }

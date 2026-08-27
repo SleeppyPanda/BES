@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -108,7 +108,117 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Menkara_Attack_01
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 335
+        height: 724
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 928e8de18d67b81c0800000000000000
+      internalID: -4500372732024133591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Menkara_Attack_02
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 0
+        width: 370
+        height: 724
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3855db4dc671dcf0800000000000000
+      internalID: -229271481906538435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Menkara_Attack_03
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 0
+        width: 413
+        height: 724
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56b96ad2b0215f570800000000000000
+      internalID: 8499719710951512933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Menkara_Attack_04
+      rect:
+        serializedVersion: 2
+        x: 1118
+        y: 0
+        width: 445
+        height: 724
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52832e78b402552c0800000000000000
+      internalID: -4443609948556740571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Menkara_Attack_05
+      rect:
+        serializedVersion: 2
+        x: 1563
+        y: 0
+        width: 609
+        height: 724
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc224d1bdcaf176d0800000000000000
+      internalID: -2994336515865959731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -122,9 +232,14 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Menkara_Attack_01: -4500372732024133591
+      Menkara_Attack_02: -229271481906538435
+      Menkara_Attack_03: 8499719710951512933
+      Menkara_Attack_04: -4443609948556740571
+      Menkara_Attack_05: -2994336515865959731
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  userData: 
+  userData: menkara-battle-attack-v3
   assetBundleName: 
   assetBundleVariant: 

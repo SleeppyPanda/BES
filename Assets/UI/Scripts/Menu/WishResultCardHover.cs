@@ -33,18 +33,17 @@ namespace BES.UI.Menu
         {
             if (cardBackground != null && hoverSprite != null)
                 cardBackground.sprite = hoverSprite;
-            controller?.ShowCardDetails(cardIndex);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             if (cardBackground != null && normalSprite != null)
                 cardBackground.sprite = normalSprite;
-            controller?.HideCardDetails(cardIndex);
         }
 
-        public void OnPointerClick(PointerEventData eventData) =>
-            controller?.ShowCardDetails(cardIndex);
+        public void OnPointerClick(PointerEventData eventData)
+        {
+        }
 
         public void ResetVisual()
         {

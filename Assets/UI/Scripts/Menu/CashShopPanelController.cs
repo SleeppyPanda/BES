@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using BES.Core;
+using BES.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -69,6 +71,7 @@ namespace BES.UI.Menu
 
         void OnEnable()
         {
+            LoadPurchasedStates();
             mainTabGroup?.ShowImmediate(selectedMainTab);
             for (var i = 0; i < subTabGroups.Count; i++)
                 subTabGroups[i]?.ShowImmediate(subTabGroups[i].CurrentIndex);
@@ -143,13 +146,62 @@ namespace BES.UI.Menu
                 return;
             }
 
-            currency.amount -= item.price;
+            var wallet = PlayerWallet.Instance;
+            if (wallet != null)
+            {
+                var spent =
+                    string.Equals(item.currencyId, "gems", StringComparison.OrdinalIgnoreCase)
+                        ? wallet.TrySpendGems(item.price)
+                        : string.Equals(item.currencyId, "coins", StringComparison.OrdinalIgnoreCase)
+                            ? wallet.TrySpendCoins(item.price)
+                            : true;
+                if (!spent)
+                {
+                    if (feedbackText != null) feedbackText.text = "NOT ENOUGH CURRENCY";
+                    return;
+                }
+            }
+            if (wallet == null ||
+                (!string.Equals(item.currencyId, "gems", StringComparison.OrdinalIgnoreCase) &&
+                 !string.Equals(item.currencyId, "coins", StringComparison.OrdinalIgnoreCase)))
+            {
+                currency.amount -= item.price;
+            }
             item.purchased = true;
+            RewardGrantService.Grant(item.rewardId, item.rewardAmount, item.id);
+            SavePurchasedState(item);
             if (feedbackText != null)
                 feedbackText.text = $"PURCHASED {item.rewardId} x{item.rewardAmount}";
             onItemPurchased?.Invoke(item.id);
             homeController?.Refresh();
             Refresh();
+        }
+
+        void LoadPurchasedStates()
+        {
+            var purchased = GameManager.Instance?.Save?.Current?.purchasedShopItemIds;
+            if (purchased == null || purchased.Count == 0)
+                return;
+
+            foreach (var item in items)
+            {
+                if (item == null || string.IsNullOrWhiteSpace(item.id))
+                    continue;
+                item.purchased = purchased.Contains(item.id);
+            }
+        }
+
+        static void SavePurchasedState(ShopItemBinding item)
+        {
+            if (item == null || string.IsNullOrWhiteSpace(item.id))
+                return;
+            var save = GameManager.Instance?.Save?.Current;
+            if (save == null)
+                return;
+            save.purchasedShopItemIds ??= new List<string>();
+            if (!save.purchasedShopItemIds.Contains(item.id))
+                save.purchasedShopItemIds.Add(item.id);
+            GameManager.Instance?.SaveGame();
         }
     }
 }

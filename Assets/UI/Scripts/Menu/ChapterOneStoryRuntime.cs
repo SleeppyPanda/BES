@@ -576,9 +576,9 @@ namespace BES.UI.Menu
                     var matchesId = string.Equals(character.id?.Trim(), characterIdOrName, StringComparison.OrdinalIgnoreCase);
                     var matchesName = string.Equals(character.displayName?.Trim(), characterIdOrName, StringComparison.OrdinalIgnoreCase);
                     if (!matchesId && !matchesName) continue;
+                    if (character.chibi != null) return character.chibi;
                     if (character.fullBody != null) return character.fullBody;
                     if (character.portrait != null) return character.portrait;
-                    if (character.chibi != null) return character.chibi;
                 }
             }
             return fallback;
@@ -614,7 +614,7 @@ namespace BES.UI.Menu
             CombatBlock currentCombat = null;
             TriggerBlock currentTrigger = null;
             var checkpointNextBeat = false;
-            Sprite checkpointBackground = null;
+            var currentBackground = background;
 
             List<DialogueBeat> CurrentTarget()
             {
@@ -665,7 +665,9 @@ namespace BES.UI.Menu
                     else if (tag == "ck")
                     {
                         checkpointNextBeat = true;
-                        checkpointBackground = ResolveCheckpointBackground(note);
+                        var nextBackground = ResolveCheckpointBackground(note);
+                        if (nextBackground != null)
+                            currentBackground = nextBackground;
                         if (currentTrigger != null && ShouldEndTriggerAtCheckpoint(currentTrigger))
                         {
                             currentTrigger.endAction = string.IsNullOrWhiteSpace(currentTrigger.endAction)
@@ -723,7 +725,7 @@ namespace BES.UI.Menu
             void FlushSpeech()
             {
                 if (string.IsNullOrEmpty(pendingSpeaker) || speech.Length == 0) return;
-                var beat = CreateBeat(pendingSpeaker, speech.ToString(), false, background, profiles, leftFallback, rightFallback);
+                var beat = CreateBeat(pendingSpeaker, speech.ToString(), false, currentBackground, profiles, leftFallback, rightFallback);
                 ApplyCheckpointIfNeeded(beat);
                 CurrentTarget().Add(beat);
                 pendingSpeaker = null;
@@ -733,7 +735,7 @@ namespace BES.UI.Menu
             void FlushSceneText()
             {
                 if (sceneText.Length == 0) return;
-                var beat = CreateBeat(string.Empty, sceneText.ToString(), true, background, profiles, leftFallback, rightFallback);
+                var beat = CreateBeat(string.Empty, sceneText.ToString(), true, currentBackground, profiles, leftFallback, rightFallback);
                 ApplyCheckpointIfNeeded(beat);
                 CurrentTarget().Add(beat);
                 sceneText.Clear();
@@ -743,10 +745,7 @@ namespace BES.UI.Menu
             {
                 if (!checkpointNextBeat || beat == null) return;
                 beat.fadeToBlackCheckpoint = true;
-                if (checkpointBackground != null)
-                    beat.background = checkpointBackground;
                 checkpointNextBeat = false;
-                checkpointBackground = null;
             }
         }
 
@@ -864,8 +863,8 @@ namespace BES.UI.Menu
             {
                 id = !string.IsNullOrWhiteSpace(character?.id) ? character.id : fallbackId,
                 displayName = !string.IsNullOrWhiteSpace(character?.displayName) ? character.displayName : fallbackName,
-                portrait = character?.portrait,
-                battlefieldSprite = character?.chibi != null ? character.chibi : character?.portrait,
+                portrait = CharacterBattleSprite(character),
+                battlefieldSprite = CharacterBattleSprite(character),
                 attackEffectPrefabs = character?.attackEffectPrefabs != null ? new List<GameObject>(character.attackEffectPrefabs) : new List<GameObject>(),
                 attackEffectOffset = character?.attackEffectOffset ?? Vector3.zero,
                 attackEffectScale = character?.attackEffectScale ?? Vector3.one,
@@ -1230,6 +1229,14 @@ namespace BES.UI.Menu
             speaker = NormalizeSpeaker(speaker);
             if (string.IsNullOrWhiteSpace(speaker) || speaker == "???") return string.Empty;
             return speaker.Replace(" ", "_").ToLowerInvariant();
+        }
+
+        static Sprite CharacterBattleSprite(CharacterEntry character)
+        {
+            if (character == null) return null;
+            return character.chibi != null ? character.chibi :
+                   character.fullBody != null ? character.fullBody :
+                   character.portrait;
         }
 
         static string CleanLine(string line)

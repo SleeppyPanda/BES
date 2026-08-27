@@ -108,8 +108,11 @@ namespace BES.Gameplay
             if (EquippedWeaponState.Instance == null)
                 return false;
 
-            EquippedWeaponState.Instance.UnlockWeapon(weaponId);
-            EquippedWeaponState.Instance.Equip(weaponId);
+            var instance = EquippedWeaponState.Instance.AddWeaponInstance(weaponId);
+            if (instance == null)
+                return false;
+            EquippedWeaponState.Instance.EquipInstance(instance.instanceId);
+            RemoveItem(itemId, 1);
             GameManager.Instance?.SaveGame();
             return true;
         }

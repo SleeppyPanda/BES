@@ -18,6 +18,33 @@ namespace BES.Gameplay
     }
 
     [Serializable]
+    public class StringStringPair
+    {
+        public string key;
+        public string value;
+    }
+
+    [Serializable]
+    public class WeaponRandomStatSaveData
+    {
+        public int statType;
+        public string displayName;
+        public bool isPercent;
+        public float value;
+    }
+
+    [Serializable]
+    public class WeaponInstanceSaveData
+    {
+        public string instanceId;
+        public string weaponId;
+        public int level = 1;
+        public int experience;
+        public int refinement = 1;
+        public List<WeaponRandomStatSaveData> randomStats = new();
+    }
+
+    [Serializable]
     public class SaveData
     {
         public string saveVersion = "1.0";
@@ -39,6 +66,9 @@ namespace BES.Gameplay
         public List<StringIntPair> questStepProgress = new();
         public string equippedWeaponId = "weapon_iron_sword";
         public List<string> ownedWeaponIds = new();
+        public string equippedWeaponInstanceId = string.Empty;
+        public List<WeaponInstanceSaveData> ownedWeaponInstances = new();
+        public List<StringStringPair> characterEquippedWeaponInstanceIds = new();
         public int weaponLevel = 1;
         public int weaponExperience = 0;
         public int weaponRefinement = 1;
@@ -46,6 +76,9 @@ namespace BES.Gameplay
         public int coins = 99999;
         public int eventStreakDay;
         public List<int> eventClaimedDays = new();
+        public List<string> claimedLetterIds = new();
+        public List<string> claimedMissionIds = new();
+        public List<string> purchasedShopItemIds = new();
         public List<string> partySlotIds = new();
         public List<StringIntPair> partyHealth = new();
         public List<StringIntPair> partyMaxHealth = new();
@@ -62,6 +95,7 @@ namespace BES.Gameplay
         public List<string> storyPartyCharacterIds = new();
         public string activeBattleStageId = string.Empty;
         public bool activeBattleIsPlayMode;
+        public string activePlayModeStageGroupId = string.Empty;
         public string endingId = string.Empty;
         public int gachaPullsSinceFiveStar;
         public int gachaPullsSinceFiveStarWeapon;

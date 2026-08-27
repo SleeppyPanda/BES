@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using BES.Gameplay;
 using BES.Core;
+using BES.UI;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -30,6 +31,13 @@ namespace BES.UI.Menu
         public string element;
         public Sprite portrait;
         public Sprite battlefieldSprite;
+        [Header("5-frame attack (3 FPS)")]
+        [Tooltip("Phải gán đủ 5 frame. Nếu thiếu, battle giữ nguyên Battlefield Sprite.")]
+        public Sprite attackFrame1;
+        public Sprite attackFrame2;
+        public Sprite attackFrame3;
+        public Sprite attackFrame4;
+        public Sprite attackFrame5;
         public UIGifClip idleClip;
         public UIGifClip attackClip;
         public List<GameObject> attackEffectPrefabs = new();
@@ -157,6 +165,7 @@ namespace BES.UI.Menu
         [SerializeField] List<GameObject> extraHudRootsToHideDuringDialogue = new();
 
         public static string ActiveStageId;
+        public static string ActivePlayModeStageGroupId;
         public static List<string> SelectedPartyCharacterIds = new();
         public static bool IsPlayModeBattle;
 
@@ -267,6 +276,7 @@ namespace BES.UI.Menu
                 if (!string.IsNullOrWhiteSpace(stageId))
                     save.activeBattleStageId = stageId;
                 save.activeBattleIsPlayMode = IsPlayModeBattle;
+                save.activePlayModeStageGroupId = IsPlayModeBattle ? ActivePlayModeStageGroupId : string.Empty;
                 if (!IsPlayModeBattle && !string.IsNullOrWhiteSpace(stageId))
                 {
                     save.activeStoryStageId = stageId;
@@ -556,7 +566,7 @@ namespace BES.UI.Menu
             if (skillPanel != null) skillPanel.SetActive(true);
             for (var i = 0; i < skillButtons.Count; i++)
             {
-                var available = actor.definition.skills != null && i < actor.definition.skills.Count;
+                var available = i < 2 && actor.definition.skills != null && i < actor.definition.skills.Count;
                 if (skillButtons[i] != null) skillButtons[i].gameObject.SetActive(available);
                 if (!available) continue;
                 var skill = actor.definition.skills[i];
@@ -606,11 +616,15 @@ namespace BES.UI.Menu
                 yield break;
             }
 
+            Coroutine frameAttack = actor?.battlefieldImage != null && HasCompleteFrameAttack(actor.definition)
+                ? StartCoroutine(PlayFrameAttackOnce(actor))
+                : null;
+
             System.Action onStrike = () =>
             {
                 PlayAttackEffect(actor, target);
-                var raw = Mathf.RoundToInt(actor.definition.attack * (skill?.powerMultiplier ?? 1f) * ElementMultiplier(actor.definition, target.definition));
-                DamageUnit(target, Mathf.Max(1, raw - target.definition.defense));
+                var raw = Mathf.RoundToInt(EffectiveAttack(actor) * (skill?.powerMultiplier ?? 1f) * ElementMultiplier(actor.definition, target.definition));
+                DamageUnit(target, Mathf.Max(1, raw - EffectiveDefense(target)));
                 
                 if (target.gifPlayer != null && target.health == 0)
                 {
@@ -626,11 +640,11 @@ namespace BES.UI.Menu
             if (actor.definition.isRanged)
             {
                 // Ranged attack: play attack animation at spot
-                if (actor.gifPlayer != null && actor.definition.attackClip != null)
+                if (frameAttack == null && actor.gifPlayer != null && actor.definition.attackClip != null)
                 {
                     actor.gifPlayer.SetClip(actor.definition.attackClip, true);
                 }
-                else if (actor.animator != null)
+                else if (frameAttack == null && actor.animator != null)
                 {
                     actor.animator.SetTrigger(skillIndex == 0 ? "Attack" : "Skill");
                 }
@@ -639,10 +653,11 @@ namespace BES.UI.Menu
                 onStrike();
                 yield return ScaledWait(actionRecovery);
 
-                if (actor.gifPlayer != null && actor.definition.idleClip != null)
+                if (frameAttack == null && actor.gifPlayer != null && actor.definition.idleClip != null)
                 {
                     actor.gifPlayer.SetClip(actor.definition.idleClip, true);
                 }
+                if (frameAttack != null) yield return frameAttack;
             }
             else
             {
@@ -657,11 +672,11 @@ namespace BES.UI.Menu
                     var targetPos = targetRect.position + offset;
 
                     // Start attack GIF
-                    if (actor.gifPlayer != null && actor.definition.attackClip != null)
+                    if (frameAttack == null && actor.gifPlayer != null && actor.definition.attackClip != null)
                     {
                         actor.gifPlayer.SetClip(actor.definition.attackClip, true);
                     }
-                    else if (actor.animator != null)
+                    else if (frameAttack == null && actor.animator != null)
                     {
                         actor.animator.SetTrigger(skillIndex == 0 ? "Attack" : "Skill");
                     }
@@ -690,7 +705,7 @@ namespace BES.UI.Menu
                     yield return ScaledWait(actionRecovery);
 
                     // Switch back to idle GIF
-                    if (actor.gifPlayer != null && actor.definition.idleClip != null)
+                    if (frameAttack == null && actor.gifPlayer != null && actor.definition.idleClip != null)
                     {
                         actor.gifPlayer.SetClip(actor.definition.idleClip, true);
                     }
@@ -707,6 +722,7 @@ namespace BES.UI.Menu
                         yield return null;
                     }
                     actorRect.position = startPos;
+                    if (frameAttack != null) yield return frameAttack;
                 }
                 else
                 {
@@ -715,7 +731,42 @@ namespace BES.UI.Menu
                     yield return ScaledWait(actionWindup);
                     onStrike();
                     yield return ScaledWait(actionRecovery);
+                    if (frameAttack != null) yield return frameAttack;
                 }
+            }
+        }
+
+        static bool HasCompleteFrameAttack(BattleUnitDefinition definition)
+        {
+            return definition != null && definition.attackFrame1 != null && definition.attackFrame2 != null &&
+                   definition.attackFrame3 != null && definition.attackFrame4 != null && definition.attackFrame5 != null;
+        }
+
+        IEnumerator PlayFrameAttackOnce(BattleUnitView unit)
+        {
+            if (unit?.definition == null || unit.battlefieldImage == null) yield break;
+
+            var frames = new[]
+            {
+                unit.definition.attackFrame1, unit.definition.attackFrame2, unit.definition.attackFrame3,
+                unit.definition.attackFrame4, unit.definition.attackFrame5
+            };
+            int[] order = { 0, 1, 2, 3, 4, 3, 2, 1, 0 };
+
+            if (unit.gifPlayer != null) unit.gifPlayer.gameObject.SetActive(false);
+            unit.battlefieldImage.gameObject.SetActive(true);
+            foreach (var frameIndex in order)
+            {
+                unit.battlefieldImage.sprite = frames[frameIndex];
+                yield return ScaledWait(1f / 3f);
+            }
+
+            unit.battlefieldImage.sprite = unit.definition.battlefieldSprite;
+            if (unit.definition.idleClip != null && unit.gifPlayer != null)
+            {
+                unit.battlefieldImage.gameObject.SetActive(false);
+                unit.gifPlayer.gameObject.SetActive(true);
+                unit.gifPlayer.SetClip(unit.definition.idleClip, true);
             }
         }
 
@@ -997,7 +1048,38 @@ namespace BES.UI.Menu
         static BattleSkillDefinition GetSkill(BattleUnitView actor, int index)
         {
             if (actor?.definition?.skills == null || actor.definition.skills.Count == 0) return new BattleSkillDefinition();
-            return actor.definition.skills[Mathf.Clamp(index, 0, actor.definition.skills.Count - 1)];
+            return actor.definition.skills[Mathf.Clamp(index, 0, Mathf.Min(2, actor.definition.skills.Count) - 1)];
+        }
+
+        static int EffectiveAttack(BattleUnitView unit)
+        {
+            if (unit?.definition == null) return 1;
+            var value = unit.definition.attack;
+            foreach (var passive in ActivePassivesFor(unit))
+                value = Mathf.RoundToInt(value * Mathf.Max(0f, passive.attackMultiplier));
+            return Mathf.Max(1, value);
+        }
+
+        static int EffectiveDefense(BattleUnitView unit)
+        {
+            if (unit?.definition == null) return 0;
+            var value = unit.definition.defense;
+            foreach (var passive in ActivePassivesFor(unit))
+                value = Mathf.RoundToInt(value * Mathf.Max(0f, passive.defenseMultiplier));
+            return Mathf.Max(0, value);
+        }
+
+        static IEnumerable<CharacterSkillUnlock> ActivePassivesFor(BattleUnitView unit)
+        {
+            if (unit?.definition == null || string.IsNullOrWhiteSpace(unit.definition.id))
+                yield break;
+
+            var ratio = unit.definition.maxHealth > 0
+                ? unit.health / (float)unit.definition.maxHealth
+                : 1f;
+
+            foreach (var passive in CharacterProgressionState.GetActivePassives(unit.definition.id, ratio))
+                yield return passive;
         }
         List<string> ProcessCombatDrops()
         {
@@ -1012,36 +1094,44 @@ namespace BES.UI.Menu
                 return new List<string> { "+ 200 Vàng" };
             }
 
-            var inventory = GameManager.Instance?.Inventory;
-            var wallet = PlayerWallet.Instance;
             var rewardsList = new List<string>();
+            var grantedRewards = new List<GrantedRewardView>();
 
-            if (wallet != null)
+            var stageRewards = currentStage?.rewards;
+            if (stageRewards != null && stageRewards.Count > 0)
             {
-                wallet.AddCoins(1000);
-                rewardsList.Add("+ 1000 Vàng");
+                foreach (var reward in stageRewards)
+                {
+                    if (reward == null || string.IsNullOrWhiteSpace(reward.id) || !reward.ShouldDrop())
+                        continue;
+
+                    var amount = reward.RollAmount();
+                    if (amount <= 0)
+                        continue;
+                    if (!RewardGrantService.Grant(reward.id, amount, RewardDisplayName(reward.id)))
+                        continue;
+
+                    rewardsList.Add(FormatRewardText(reward, amount));
+                    if (amount > 0)
+                    {
+                        grantedRewards.Add(new GrantedRewardView
+                        {
+                            id = reward.id,
+                            displayName = RewardDisplayName(reward.id),
+                            icon = RewardIcon(reward),
+                            amount = amount,
+                            rarity = reward.rarity
+                        });
+                    }
+                }
             }
 
-            if (inventory != null)
-            {
-                inventory.AddItem("item_exp_green", 1);
-                rewardsList.Add("+ 1 Lọ EXP Xanh Lá (100%)");
-
-                if (UnityEngine.Random.Range(0, 100) < 50)
-                {
-                    inventory.AddItem("item_exp_blue", 1);
-                    rewardsList.Add("+ 1 Lọ EXP Xanh Dương (50%)");
-                }
-
-                if (UnityEngine.Random.Range(0, 100) < 5)
-                {
-                    inventory.AddItem("item_exp_gold", 1);
-                    rewardsList.Add("+ 1 Lọ EXP Vàng (5%)");
-                }
-            }
+            if (rewardsList.Count == 0)
+                rewardsList.Add("Không có vật phẩm rơi ra");
 
             if (winPanel != null)
             {
+                PopulateWinRewardSlots(winPanel, grantedRewards);
                 var texts = winPanel.GetComponentsInChildren<TMP_Text>(true);
                 foreach (var txt in texts)
                 {
@@ -1054,6 +1144,131 @@ namespace BES.UI.Menu
             }
 
             return rewardsList;
+        }
+
+        class GrantedRewardView
+        {
+            public string id;
+            public string displayName;
+            public Sprite icon;
+            public int amount;
+            public int rarity;
+        }
+
+        static bool IsCurrencyReward(string id)
+        {
+            return !string.IsNullOrWhiteSpace(id) && RewardGrantService.IsCurrency(id);
+        }
+
+        static string FormatRewardText(RewardEntry reward, int amount)
+        {
+            var chance = reward.guaranteed ? 100 : Mathf.Clamp(reward.dropChancePercent, 0, 100);
+            var name = RewardDisplayName(reward.id);
+            return $"+ {amount} {name} ({chance}%)";
+        }
+
+        static string RewardDisplayName(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id)) return "Reward";
+            if (RewardGrantService.IsCurrency(id))
+                return id.Equals("gems", StringComparison.OrdinalIgnoreCase) ||
+                       id.Equals("gem", StringComparison.OrdinalIgnoreCase) ||
+                       id.Equals("crystal", StringComparison.OrdinalIgnoreCase) ||
+                       id.Equals("ruby", StringComparison.OrdinalIgnoreCase)
+                    ? "Đá quý"
+                    : "Vàng";
+
+            var inventory = GameManager.Instance?.Inventory;
+            var definition = inventory?.GetDefinition(id);
+            if (definition != null && !string.IsNullOrWhiteSpace(definition.displayName))
+                return definition.displayName;
+
+            return id.Replace('_', ' ');
+        }
+
+        static Sprite RewardIcon(RewardEntry reward)
+        {
+            if (reward == null) return null;
+            if (reward.icon != null) return reward.icon;
+            if (IsCurrencyReward(reward.id)) return null;
+
+            var inventory = GameManager.Instance?.Inventory;
+            var definition = inventory?.GetDefinition(reward.id);
+            if (definition?.icon != null) return definition.icon;
+            return null;
+        }
+
+        static void PopulateWinRewardSlots(GameObject panel, List<GrantedRewardView> rewards)
+        {
+            if (panel == null) return;
+            var rewardSlots = FindRewardSlotRoots(panel);
+            if (rewardSlots.Count == 0) return;
+
+            for (var i = 0; i < rewardSlots.Count; i++)
+            {
+                var slot = rewardSlots[i];
+                var reward = rewards != null && i < rewards.Count ? rewards[i] : null;
+                var show = reward != null && reward.amount > 0;
+                slot.SetActive(show);
+                if (!show) continue;
+
+                var images = slot.GetComponentsInChildren<Image>(true);
+                foreach (var image in images)
+                {
+                    if (image == null || image.gameObject == slot) continue;
+                    if (image.name.IndexOf("icon", StringComparison.OrdinalIgnoreCase) < 0 &&
+                        image.name.IndexOf("item", StringComparison.OrdinalIgnoreCase) < 0 &&
+                        image.name.IndexOf("reward", StringComparison.OrdinalIgnoreCase) < 0)
+                        continue;
+
+                    image.sprite = reward.icon;
+                    image.enabled = reward.icon != null;
+                    break;
+                }
+
+                var texts = slot.GetComponentsInChildren<TMP_Text>(true);
+                foreach (var text in texts)
+                {
+                    if (text == null) continue;
+                    if (text.name.IndexOf("amount", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        text.name.IndexOf("count", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        text.name.IndexOf("quantity", StringComparison.OrdinalIgnoreCase) >= 0)
+                        text.text = reward.amount.ToString();
+                    else if (text.name.IndexOf("name", StringComparison.OrdinalIgnoreCase) >= 0)
+                        text.text = reward.displayName;
+                }
+            }
+        }
+
+        static List<GameObject> FindRewardSlotRoots(GameObject panel)
+        {
+            var result = new List<GameObject>();
+            var transforms = panel.GetComponentsInChildren<Transform>(true);
+            foreach (var transform in transforms)
+            {
+                if (transform == null || transform.gameObject == panel) continue;
+                var name = transform.name;
+                var isSlot =
+                    name.IndexOf("RewardSlot", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    name.IndexOf("LootSlot", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    name.IndexOf("ItemSlot", StringComparison.OrdinalIgnoreCase) >= 0;
+                if (!isSlot) continue;
+                if (transform.GetComponentInParent<ScrollRect>() != null) continue;
+                result.Add(transform.gameObject);
+            }
+            result.Sort((a, b) => string.Compare(a.name, b.name, StringComparison.OrdinalIgnoreCase));
+            return result;
+        }
+
+        static bool IsWeaponReward(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id)) return false;
+            var weaponDb = Resources.Load<WeaponDatabase>("Data/WeaponDatabase");
+#if UNITY_EDITOR
+            if (weaponDb == null)
+                weaponDb = AssetDatabase.LoadAssetAtPath<WeaponDatabase>("Assets/_Project/Resources/Data/WeaponDatabase.asset");
+#endif
+            return weaponDb != null && weaponDb.FindExact(id) != null;
         }
 
         void FinishTurn()
@@ -1142,6 +1357,7 @@ namespace BES.UI.Menu
             SaveBattleProgress();
             if (IsPlayModeBattle)
             {
+                StageSelectionController.OpenGroupOnNextEnable(ActivePlayModeStageGroupId);
                 navigator?.OpenAsRoot(MenuScreenId.ResourceStages);
             }
             else
@@ -1349,11 +1565,13 @@ namespace BES.UI.Menu
 
         void EnsureDialogueUI()
         {
-            EnsureEditableCombatDialogueUI();
             if (combatDialogueUI != null) return;
-            combatDialogueUI = FindAnyObjectByType<DialogueSequenceUI>(FindObjectsInactive.Include);
+            var existing = FindDeep(transform, "CombatDialogueUI");
+            if (existing != null)
+                combatDialogueUI = existing.GetComponent<DialogueSequenceUI>();
+
             if (combatDialogueUI == null)
-                combatDialogueUI = DialogueSequenceUI.CreateRuntimeOverlay("RuntimeCombatDialogueUI");
+                Debug.LogWarning("[BES] TurnBattleUI is missing combatDialogueUI. Assign the prefab CombatDialogueUI object in Unity.");
         }
 
         [ContextMenu("BES/Ensure Editable Combat Dialogue UI")]
@@ -1361,36 +1579,19 @@ namespace BES.UI.Menu
         {
             if (combatDialogueUI == null)
             {
-                var existing = transform.Find("CombatDialogueUI");
+                var existing = FindDeep(transform, "CombatDialogueUI");
                 if (existing != null)
                     combatDialogueUI = existing.GetComponent<DialogueSequenceUI>();
             }
 
             if (combatDialogueUI == null && !Application.isPlaying)
             {
-#if UNITY_EDITOR
-                var prefabStage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
-                var editingInPrefabStage = prefabStage != null &&
-                                           prefabStage.prefabContentsRoot != null &&
-                                           (prefabStage.prefabContentsRoot == gameObject ||
-                                            transform.IsChildOf(prefabStage.prefabContentsRoot.transform));
-                if (UnityEditor.PrefabUtility.IsPartOfPrefabAsset(gameObject) && !editingInPrefabStage)
-                    return;
-#endif
-                var dialogueRoot = new GameObject("CombatDialogueUI", typeof(RectTransform));
-                dialogueRoot.transform.SetParent(transform, false);
-                var rect = dialogueRoot.GetComponent<RectTransform>();
-                rect.anchorMin = Vector2.zero;
-                rect.anchorMax = Vector2.one;
-                rect.offsetMin = Vector2.zero;
-                rect.offsetMax = Vector2.zero;
-                combatDialogueUI = dialogueRoot.AddComponent<DialogueSequenceUI>();
-                dialogueRoot.SetActive(false);
+                Debug.LogWarning("[BES] CombatDialogueUI is not present in the prefab. Create it in Unity and assign it to TurnBattleUI.combatDialogueUI.");
+                return;
             }
 
             if (combatDialogueUI != null && !Application.isPlaying)
             {
-                combatDialogueUI.EnsureRuntimeView();
                 combatDialogueUI.gameObject.SetActive(false);
 #if UNITY_EDITOR
                 UnityEditor.EditorUtility.SetDirty(combatDialogueUI);
@@ -1546,6 +1747,20 @@ namespace BES.UI.Menu
             if (stage == null) stage = menuContentDatabase.resourceStages.Find(x => x.id == ActiveStageId);
             if (stage == null) stage = menuContentDatabase.sanctumStages.Find(x => x.id == ActiveStageId);
             if (stage == null) stage = menuContentDatabase.weaponStages.Find(x => x.id == ActiveStageId);
+            if (stage == null && menuContentDatabase.playModeStageGroups != null)
+            {
+                foreach (var group in menuContentDatabase.playModeStageGroups)
+                {
+                    if (group?.stages == null) continue;
+                    stage = group.stages.Find(x => x.id == ActiveStageId);
+                    if (stage != null)
+                    {
+                        if (string.IsNullOrWhiteSpace(ActivePlayModeStageGroupId))
+                            ActivePlayModeStageGroupId = group.id;
+                        break;
+                    }
+                }
+            }
 
             if (stage == null) return;
             currentStage = stage;
@@ -1660,7 +1875,8 @@ namespace BES.UI.Menu
             var constellationScale = 1f + Mathf.Clamp(constellation, 0, CharacterProgressionState.ConstellationCount) * 0.04f;
             var statScale = levelScale * constellationScale;
 
-            var weaponAttack = EquippedWeaponState.Instance?.GetDisplayAtk() ?? 0;
+            var weaponAttack = EquippedWeaponState.Instance?.GetDisplayAtk(character.id) ?? 0;
+            var weaponBonus = EquippedWeaponState.Instance?.GetRuntimeBonus(character.id) ?? new WeaponRuntimeBonus();
             var artifactAttack = 0;
             var artifactHealth = 0;
             var artifact = MetaProgressState.Instance?.GetEquippedArtifact();
@@ -1670,25 +1886,72 @@ namespace BES.UI.Menu
                 artifactHealth = artifact.hpBonus;
             }
 
+            var passiveHealthScale = 1f;
+            foreach (var passive in CharacterProgressionState.GetActivePassives(character.id, 1f))
+                passiveHealthScale *= Mathf.Max(0f, passive.healthMultiplier);
+
             var definition = new BattleUnitDefinition
             {
                 id = character.id,
                 displayName = character.displayName,
-                maxHealth = Mathf.Max(1, Mathf.RoundToInt(character.maxHealth * statScale) + artifactHealth),
-                attack = Mathf.Max(1, Mathf.RoundToInt(character.attack * statScale) + weaponAttack + artifactAttack),
-                defense = Mathf.Max(0, Mathf.RoundToInt(character.defense * statScale) + Mathf.RoundToInt(artifactAttack * 0.08f)),
-                speed = Mathf.Max(1, character.speed + Mathf.FloorToInt((level - 1) / 20f)),
+                maxHealth = Mathf.Max(1, Mathf.RoundToInt(character.maxHealth * statScale * passiveHealthScale * (1f + weaponBonus.healthPercent / 100f)) + artifactHealth + Mathf.RoundToInt(weaponBonus.healthFlat)),
+                attack = Mathf.Max(1, Mathf.RoundToInt(character.attack * statScale * (1f + weaponBonus.attackPercent / 100f)) + weaponAttack + artifactAttack),
+                defense = Mathf.Max(0, Mathf.RoundToInt(character.defense * statScale * (1f + weaponBonus.defensePercent / 100f)) + Mathf.RoundToInt(artifactAttack * 0.08f) + Mathf.RoundToInt(weaponBonus.defenseFlat)),
+                speed = Mathf.Max(1, character.speed + Mathf.FloorToInt((level - 1) / 20f) + Mathf.RoundToInt(weaponBonus.speedFlat)),
                 element = character.element,
-                portrait = character.portrait,
-                battlefieldSprite = character.chibi != null ? character.chibi : character.portrait,
+                portrait = CharacterChibiSprite(character),
+                battlefieldSprite = CharacterChibiSprite(character),
+                attackFrame1 = character.attackFrame1,
+                attackFrame2 = character.attackFrame2,
+                attackFrame3 = character.attackFrame3,
+                attackFrame4 = character.attackFrame4,
+                attackFrame5 = character.attackFrame5,
                 attackEffectPrefabs = character.attackEffectPrefabs != null ? new List<GameObject>(character.attackEffectPrefabs) : new List<GameObject>(),
                 attackEffectOffset = character.attackEffectOffset,
                 attackEffectScale = character.attackEffectScale == Vector3.zero ? Vector3.one : character.attackEffectScale,
                 isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa"),
-                skills = new List<BattleSkillDefinition> { new BattleSkillDefinition { id = "attack", displayName = "Tấn Công", powerMultiplier = 1f } }
+                skills = BuildTwoActiveSkills(character)
             };
 
             return definition;
+        }
+
+        static List<BattleSkillDefinition> BuildTwoActiveSkills(CharacterEntry character)
+        {
+            var skills = new List<BattleSkillDefinition>
+            {
+                new BattleSkillDefinition
+                {
+                    id = "attack",
+                    displayName = string.IsNullOrWhiteSpace(character.normalAttack) ? "Đánh Thường" : "Đánh Thường",
+                    powerMultiplier = 1f
+                },
+                new BattleSkillDefinition
+                {
+                    id = "skill",
+                    displayName = string.IsNullOrWhiteSpace(character.skillType) ? "Kỹ Năng" : character.skillType,
+                    powerMultiplier = SkillPowerMultiplier(character)
+                }
+            };
+
+            return skills;
+        }
+
+        static float SkillPowerMultiplier(CharacterEntry character)
+        {
+            var text = (character.skillDescription ?? string.Empty) + " " + (character.skillType ?? string.Empty);
+            var match = System.Text.RegularExpressions.Regex.Match(text, @"(\d+)\s*%");
+            if (match.Success && int.TryParse(match.Groups[1].Value, out var percent) && percent > 0)
+                return Mathf.Clamp(percent / 100f, 0.5f, 6f);
+            return 2f;
+        }
+
+        static Sprite CharacterChibiSprite(CharacterEntry character)
+        {
+            if (character == null) return null;
+            return character.chibi != null ? character.chibi :
+                   character.fullBody != null ? character.fullBody :
+                   character.portrait;
         }
 
         void ResetCombatDialogueTriggers()
@@ -1925,6 +2188,11 @@ namespace BES.UI.Menu
                 element = template.element,
                 portrait = template.portrait,
                 battlefieldSprite = template.battlefieldSprite,
+                attackFrame1 = template.attackFrame1,
+                attackFrame2 = template.attackFrame2,
+                attackFrame3 = template.attackFrame3,
+                attackFrame4 = template.attackFrame4,
+                attackFrame5 = template.attackFrame5,
                 idleClip = template.idleClip,
                 attackClip = template.attackClip,
                 attackEffectPrefabs = template.attackEffectPrefabs != null ? new List<GameObject>(template.attackEffectPrefabs) : new List<GameObject>(),
@@ -1976,6 +2244,11 @@ namespace BES.UI.Menu
             def.element = template.element;
             def.portrait = template.portrait;
             def.battlefieldSprite = template.battlefieldSprite;
+            def.attackFrame1 = template.attackFrame1;
+            def.attackFrame2 = template.attackFrame2;
+            def.attackFrame3 = template.attackFrame3;
+            def.attackFrame4 = template.attackFrame4;
+            def.attackFrame5 = template.attackFrame5;
             def.idleClip = template.idleClip;
             def.attackClip = template.attackClip;
             def.attackEffectPrefabs = template.attackEffectPrefabs != null ? new List<GameObject>(template.attackEffectPrefabs) : new List<GameObject>();

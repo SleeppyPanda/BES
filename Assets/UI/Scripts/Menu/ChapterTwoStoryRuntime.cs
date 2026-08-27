@@ -5,6 +5,9 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace BES.UI.Menu
 {
@@ -261,8 +264,8 @@ namespace BES.UI.Menu
                 id = !string.IsNullOrWhiteSpace(character?.id) ? character.id : fallbackId,
                 displayName = !string.IsNullOrWhiteSpace(character?.displayName) ? character.displayName : fallbackName,
                 element = !string.IsNullOrWhiteSpace(character?.element) ? character.element : "Phong",
-                portrait = character?.portrait,
-                battlefieldSprite = character?.chibi != null ? character.chibi : character?.portrait,
+                portrait = CharacterBattleSprite(character),
+                battlefieldSprite = CharacterBattleSprite(character),
                 maxHealth = Mathf.Max(1, character?.maxHealth ?? 620),
                 attack = Mathf.Max(1, character?.attack ?? 90),
                 defense = Mathf.Max(0, character?.defense ?? 42),
@@ -537,9 +540,9 @@ namespace BES.UI.Menu
                 Sprite charSprite = fallback;
                 if (dbChar != null)
                 {
-                    if (dbChar.fullBody != null) charSprite = dbChar.fullBody;
+                    if (dbChar.chibi != null) charSprite = dbChar.chibi;
+                    else if (dbChar.fullBody != null) charSprite = dbChar.fullBody;
                     else if (dbChar.portrait != null) charSprite = dbChar.portrait;
-                    else if (dbChar.chibi != null) charSprite = dbChar.chibi;
                 }
                 else
                 {
@@ -762,6 +765,8 @@ namespace BES.UI.Menu
             var speech = new StringBuilder();
             CombatBlock currentCombat = null;
             TriggerBlock currentTrigger = null;
+            var checkpointNextBeat = false;
+            var currentBackground = background;
 
             List<DialogueBeat> CurrentTarget()
             {
@@ -811,6 +816,10 @@ namespace BES.UI.Menu
                     }
                     else if (tag == "ck")
                     {
+                        checkpointNextBeat = true;
+                        var nextBackground = ResolveCheckpointBackground(note);
+                        if (nextBackground != null)
+                            currentBackground = nextBackground;
                         if (currentTrigger != null && ShouldEndTriggerAtCheckpoint(currentTrigger))
                         {
                             currentTrigger.endAction = string.IsNullOrWhiteSpace(currentTrigger.endAction)
@@ -858,7 +867,8 @@ namespace BES.UI.Menu
             void FlushSpeech()
             {
                 if (string.IsNullOrEmpty(pendingSpeaker) || speech.Length == 0) return;
-                var beat = CreateBeat(pendingSpeaker, speech.ToString(), false, background, profiles, leftFallback, rightFallback);
+                var beat = CreateBeat(pendingSpeaker, speech.ToString(), false, currentBackground, profiles, leftFallback, rightFallback);
+                ApplyCheckpointIfNeeded(beat);
                 CurrentTarget().Add(beat);
                 parsed.AllBeats.Add(beat);
                 pendingSpeaker = null;
@@ -868,11 +878,44 @@ namespace BES.UI.Menu
             void FlushSceneText()
             {
                 if (sceneText.Length == 0) return;
-                var beat = CreateBeat(string.Empty, sceneText.ToString(), true, background, profiles, leftFallback, rightFallback);
+                var beat = CreateBeat(string.Empty, sceneText.ToString(), true, currentBackground, profiles, leftFallback, rightFallback);
+                ApplyCheckpointIfNeeded(beat);
                 CurrentTarget().Add(beat);
                 parsed.AllBeats.Add(beat);
                 sceneText.Clear();
             }
+
+            void ApplyCheckpointIfNeeded(DialogueBeat beat)
+            {
+                if (!checkpointNextBeat || beat == null) return;
+                beat.fadeToBlackCheckpoint = true;
+                checkpointNextBeat = false;
+            }
+        }
+
+        static Sprite ResolveCheckpointBackground(string note)
+        {
+            if (string.IsNullOrWhiteSpace(note)) return null;
+            var path = note.Trim().Trim('"');
+#if UNITY_EDITOR
+            if (path.StartsWith("Assets/", StringComparison.OrdinalIgnoreCase))
+            {
+                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+                if (sprite != null) return sprite;
+                var assets = AssetDatabase.LoadAllAssetsAtPath(path);
+                foreach (var asset in assets)
+                    if (asset is Sprite found)
+                        return found;
+            }
+#endif
+            path = path.Replace("\\", "/");
+            const string resourcesPrefix = "Assets/Resources/";
+            if (path.StartsWith(resourcesPrefix, StringComparison.OrdinalIgnoreCase))
+                path = path.Substring(resourcesPrefix.Length);
+            var extension = Path.GetExtension(path);
+            if (!string.IsNullOrEmpty(extension))
+                path = path[..^extension.Length];
+            return Resources.Load<Sprite>(path);
         }
 
         static DialogueBeat CreateBeat(
@@ -970,6 +1013,14 @@ namespace BES.UI.Menu
             speaker = NormalizeSpeaker(speaker);
             if (string.IsNullOrWhiteSpace(speaker) || speaker == "???") return string.Empty;
             return speaker.Replace(" ", "_").ToLowerInvariant();
+        }
+
+        static Sprite CharacterBattleSprite(CharacterEntry character)
+        {
+            if (character == null) return null;
+            return character.chibi != null ? character.chibi :
+                   character.fullBody != null ? character.fullBody :
+                   character.portrait;
         }
 
         static string CleanLine(string line)

@@ -24,7 +24,7 @@ namespace BES.UI
         [SerializeField] CharacterPreviewRenderer previewRenderer;
 
         readonly List<GameObject> slotRows = new();
-        string selectedWeaponId;
+        string selectedWeaponInstanceId;
 
         void Awake()
         {
@@ -41,7 +41,7 @@ namespace BES.UI
 
         public override void Refresh()
         {
-            selectedWeaponId ??= EquippedWeaponState.Instance?.EquippedWeaponId;
+            selectedWeaponInstanceId ??= EquippedWeaponState.Instance?.EquippedWeaponInstanceId;
             RebuildGrid();
             RefreshDetails();
         }
@@ -55,12 +55,20 @@ namespace BES.UI
                 Object.Destroy(row);
             slotRows.Clear();
 
-            foreach (var weapon in database.weapons)
+            var equipped = EquippedWeaponState.Instance;
+            var instances = equipped?.OwnedWeaponInstances;
+            if (instances == null || instances.Count == 0)
+                return;
+
+            foreach (var instance in instances)
             {
+                if (instance == null)
+                    continue;
+                var weapon = database.FindExact(instance.weaponId);
                 if (weapon == null)
                     continue;
 
-                var go = new GameObject(weapon.weaponId);
+                var go = new GameObject(instance.instanceId);
                 go.transform.SetParent(gridContainer, false);
                 var img = go.AddComponent<Image>();
                 img.color = weapon.rarity switch
@@ -72,10 +80,10 @@ namespace BES.UI
                 var rect = go.GetComponent<RectTransform>();
                 rect.sizeDelta = new Vector2(80, 80);
                 var btn = go.AddComponent<Button>();
-                var captured = weapon.weaponId;
+                var captured = instance.instanceId;
                 btn.onClick.AddListener(() =>
                 {
-                    selectedWeaponId = captured;
+                    selectedWeaponInstanceId = captured;
                     RefreshDetails();
                 });
                 slotRows.Add(go);
@@ -96,16 +104,16 @@ namespace BES.UI
 
         void RefreshDetails()
         {
-            var weapon = database?.GetById(selectedWeaponId);
             var equipped = EquippedWeaponState.Instance;
-            if (weapon == null)
+            var instance = equipped?.GetWeaponInstance(selectedWeaponInstanceId) ?? equipped?.EquippedWeaponInstance;
+            var weapon = database?.FindExact(instance?.weaponId);
+            if (weapon == null || instance == null)
                 return;
 
             if (weaponNameText != null) weaponNameText.text = weapon.displayName;
 
-            var isEquipped = equipped != null && equipped.EquippedWeaponId == selectedWeaponId;
-            var lvl = isEquipped ? equipped.Level : 1;
-            var refi = isEquipped ? equipped.Refinement : 1;
+            var lvl = Mathf.Max(1, instance.level);
+            var refi = Mathf.Max(1, instance.refinement);
             var displayAtk = weapon.baseAtk + (lvl - 1) * 8 + refi * 12;
 
             var currentSubStatValue = weapon.subStatValue + (lvl - 1) * (weapon.subStatValue * 0.05f);
@@ -117,6 +125,9 @@ namespace BES.UI
                     $"<b>[Kỹ năng vũ khí - Tinh luyện {refi}]</b> {GetWeaponSkillDescription(weapon.weaponId, refi)}";
             }
 
+            if (weaponDescText != null && instance.randomStats != null && instance.randomStats.Count > 0)
+                weaponDescText.text += "\n\n<b>[Random Buff]</b>\n" + string.Join("\n", instance.randomStats.ConvertAll(FormatRandomStat));
+
             if (atkText != null) atkText.text = $"ATK {displayAtk}";
             if (hpText != null) hpText.text = $"HP {weapon.baseHp}";
             if (levelText != null) levelText.text = $"Lv. {lvl} / {Mathf.Min(weapon.maxLevel, 80)}";
@@ -125,10 +136,9 @@ namespace BES.UI
 
         void OnSwitch()
         {
-            if (EquippedWeaponState.Instance != null && !string.IsNullOrEmpty(selectedWeaponId))
+            if (EquippedWeaponState.Instance != null && !string.IsNullOrEmpty(selectedWeaponInstanceId))
             {
-                EquippedWeaponState.Instance.UnlockWeapon(selectedWeaponId);
-                EquippedWeaponState.Instance.Equip(selectedWeaponId);
+                EquippedWeaponState.Instance.EquipInstance(selectedWeaponInstanceId);
                 Core.GameManager.Instance?.SaveGame();
             }
             RefreshDetails();
@@ -145,6 +155,14 @@ namespace BES.UI
         {
             Hide();
             enhanceUI?.Show();
+        }
+
+        static string FormatRandomStat(WeaponRandomStatInstance stat)
+        {
+            if (stat == null) return string.Empty;
+            var name = string.IsNullOrWhiteSpace(stat.displayName) ? stat.statType.ToString() : stat.displayName;
+            var suffix = stat.isPercent ? "%" : string.Empty;
+            return $"+{stat.value:0.##}{suffix} {name}";
         }
     }
 }

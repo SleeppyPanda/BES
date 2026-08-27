@@ -228,20 +228,8 @@ namespace BES.UI.Menu
 
         public static DialogueSequenceUI CreateRuntimeOverlay(string objectName = "RuntimeStoryDialogueUI")
         {
-            var canvasGo = new GameObject(objectName, typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-            var canvas = canvasGo.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = 250;
-            var scaler = canvasGo.GetComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1920f, 1080f);
-            scaler.matchWidthOrHeight = 0.5f;
-
-            var ui = canvasGo.AddComponent<DialogueSequenceUI>();
-            ui.EnsureRuntimeView();
-            ui.WireControls();
-            canvasGo.SetActive(false);
-            return ui;
+            Debug.LogWarning("[BES] Runtime dialogue overlay creation is disabled. Create StoryDialogueUI/CombatDialogueUI inside the prefab and assign it in Unity.");
+            return null;
         }
 
         public void Play()
@@ -877,28 +865,23 @@ namespace BES.UI.Menu
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
 
-            background ??= CreateImage(transform, "Background", new Color(0f, 0f, 0f, 0.55f), Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            background ??= transform.Find("Background")?.GetComponent<Image>();
             if (checkpointFadeGroup == null)
             {
-                var fade = CreateImage(transform, "CheckpointFade", Color.black, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
-                checkpointFadeGroup = EnsureCanvasGroup(fade.gameObject);
-                checkpointFadeGroup.alpha = 0f;
-                checkpointFadeGroup.blocksRaycasts = false;
-                checkpointFadeGroup.gameObject.SetActive(false);
+                var fade = transform.Find("CheckpointFade");
+                checkpointFadeGroup = fade != null ? fade.GetComponent<CanvasGroup>() : null;
+                if (checkpointFadeGroup != null)
+                {
+                    checkpointFadeGroup.alpha = 0f;
+                    checkpointFadeGroup.blocksRaycasts = false;
+                    checkpointFadeGroup.gameObject.SetActive(false);
+                }
             }
-            if (leftCharacter == null)
-            {
-                leftCharacter = CreateImage(transform, "LeftCharacter", Color.white, new Vector2(0f, 0f), new Vector2(0.45f, 1f), new Vector2(80f, 0f), new Vector2(-80f, 0f));
-                leftCharacter.enabled = false;
-            }
-            if (rightCharacter == null)
-            {
-                rightCharacter = CreateImage(transform, "RightCharacter", Color.white, new Vector2(0.55f, 0f), new Vector2(1f, 1f), new Vector2(80f, 0f), new Vector2(-80f, 0f));
-                rightCharacter.enabled = false;
-            }
-            leftGroup ??= EnsureCanvasGroup(leftCharacter.gameObject);
-            rightGroup ??= EnsureCanvasGroup(rightCharacter.gameObject);
-            if (characterSlots.Count == 0) CreateDefaultCharacterSlots();
+            leftCharacter ??= transform.Find("LeftCharacter")?.GetComponent<Image>();
+            rightCharacter ??= transform.Find("RightCharacter")?.GetComponent<Image>();
+            leftGroup ??= leftCharacter != null ? leftCharacter.GetComponent<CanvasGroup>() : null;
+            rightGroup ??= rightCharacter != null ? rightCharacter.GetComponent<CanvasGroup>() : null;
+            if (characterSlots.Count == 0) CachePrefabCharacterSlots();
 
             // if (characterSlots.Count > 0)
             // {
@@ -907,46 +890,21 @@ namespace BES.UI.Menu
             // }
 
             var boxTransform = transform.Find("DialogueBox");
-            Image box;
-            if (boxTransform != null)
-            {
-                box = boxTransform.GetComponent<Image>();
-            }
-            else
-            {
-                box = CreateImage(transform, "DialogueBox", new Color(0.93f, 0.88f, 0.78f, 0.96f), new Vector2(0.18f, 0.06f), new Vector2(0.82f, 0.24f), Vector2.zero, Vector2.zero);
-            }
+            var box = boxTransform != null ? boxTransform.GetComponent<Image>() : null;
 
             var nameBoxTransform = transform.Find("NameBox");
-            Image nameBox;
-            if (nameBoxTransform != null)
-            {
-                nameBox = nameBoxTransform.GetComponent<Image>();
-            }
-            else
-            {
-                nameBox = CreateImage(transform, "NameBox", new Color(0.82f, 0.55f, 0.42f, 1f), new Vector2(0.21f, 0.22f), new Vector2(0.39f, 0.30f), Vector2.zero, Vector2.zero);
-            }
-            speakerNameRoot ??= nameBox.gameObject;
+            var nameBox = nameBoxTransform != null ? nameBoxTransform.GetComponent<Image>() : null;
+            speakerNameRoot ??= nameBox != null ? nameBox.gameObject : nameBoxTransform?.gameObject;
 
-            speakerText ??= nameBox.transform.Find("SpeakerText")?.GetComponent<TMP_Text>() ?? CreateText(nameBox.transform, "SpeakerText", "ALMA", 42f, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
-            bodyText ??= box.transform.Find("BodyText")?.GetComponent<TMP_Text>() ?? CreateText(box.transform, "BodyText", string.Empty, 26f, FontStyles.Normal, TextAlignmentOptions.MidlineLeft, new Color(0.22f, 0.15f, 0.1f, 1f));
-            var bodyRect = bodyText.rectTransform;
-            bodyRect.anchorMin = new Vector2(0.08f, 0.18f);
-            bodyRect.anchorMax = new Vector2(0.92f, 0.82f);
-            bodyRect.offsetMin = Vector2.zero;
-            bodyRect.offsetMax = Vector2.zero;
+            speakerText ??= nameBoxTransform != null ? nameBoxTransform.Find("SpeakerText")?.GetComponent<TMP_Text>() : null;
+            bodyText ??= boxTransform != null ? boxTransform.Find("BodyText")?.GetComponent<TMP_Text>() : null;
 
-            advanceButton ??= box.gameObject.GetComponent<Button>() ?? box.gameObject.AddComponent<Button>();
+            advanceButton ??= box != null ? box.gameObject.GetComponent<Button>() : null;
             
             var skipButtonTransform = transform.Find("SkipButton");
             if (skipButtonTransform != null)
             {
                 skipButton ??= skipButtonTransform.GetComponent<Button>();
-            }
-            else
-            {
-                skipButton ??= CreateButton(transform, "SkipButton", "Skip", new Vector2(0.88f, 0.90f), new Vector2(0.98f, 0.98f));
             }
 
             var skipConfirmationTransform = transform.Find("SkipConfirmation");
@@ -954,9 +912,33 @@ namespace BES.UI.Menu
             {
                 skipConfirmation ??= skipConfirmationTransform.gameObject;
             }
-            else
+
+            if (background == null || speakerText == null || bodyText == null || advanceButton == null)
+                Debug.LogWarning($"[BES] {name} is missing prefab dialogue references. Required: Background, DialogueBox/Button, DialogueBox/BodyText, NameBox/SpeakerText.");
+        }
+
+        void CachePrefabCharacterSlots()
+        {
+            characterSlots.Clear();
+            for (var i = 1; i <= 8; i++)
             {
-                skipConfirmation ??= CreateSkipConfirmation(transform);
+                var slot = transform.Find($"CharacterSlot{i}");
+                if (slot == null)
+                    continue;
+
+                var image = slot.GetComponent<Image>() ?? slot.GetComponentInChildren<Image>(true);
+                var group = slot.GetComponent<CanvasGroup>();
+                characterSlots.Add(new DialogueCharacterSlot
+                {
+                    characterId = string.Empty,
+                    image = image,
+                    group = group,
+                    root = slot.gameObject,
+                    inactiveAlpha = 0.35f,
+                    activeAlpha = 1f,
+                    inactiveScale = Vector3.one,
+                    activeScale = Vector3.one
+                });
             }
         }
 

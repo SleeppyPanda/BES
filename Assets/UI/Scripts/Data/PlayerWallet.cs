@@ -35,6 +35,7 @@ namespace BES.UI
                 return false;
 
             gems -= amount;
+            SyncMenuCurrency("gems", gems);
             WalletChanged?.Invoke();
             GameManager.Instance?.SaveGame();
             return true;
@@ -46,6 +47,7 @@ namespace BES.UI
                 return false;
 
             coins -= amount;
+            SyncMenuCurrency("coins", coins);
             WalletChanged?.Invoke();
             GameManager.Instance?.SaveGame();
             return true;
@@ -54,6 +56,7 @@ namespace BES.UI
         public void AddGems(int amount)
         {
             gems += amount;
+            SyncMenuCurrency("gems", gems);
             WalletChanged?.Invoke();
             GameManager.Instance?.SaveGame();
         }
@@ -61,6 +64,7 @@ namespace BES.UI
         public void AddCoins(int amount)
         {
             coins += amount;
+            SyncMenuCurrency("coins", coins);
             WalletChanged?.Invoke();
             GameManager.Instance?.SaveGame();
         }
@@ -69,6 +73,8 @@ namespace BES.UI
         {
             coins = 99999;
             gems = 1600;
+            SyncMenuCurrency("coins", coins);
+            SyncMenuCurrency("gems", gems);
             WalletChanged?.Invoke();
         }
 
@@ -86,7 +92,21 @@ namespace BES.UI
                 return;
             coins = data.coins > 0 ? data.coins : 99999;
             gems = data.gems > 0 ? data.gems : 1600;
+            SyncMenuCurrency("coins", coins);
+            SyncMenuCurrency("gems", gems);
             WalletChanged?.Invoke();
+        }
+
+        static void SyncMenuCurrency(string currencyId, int value)
+        {
+            var database = Resources.Load<Menu.MenuContentDatabase>("Data/MenuContentDatabase");
+#if UNITY_EDITOR
+            if (database == null)
+                database = UnityEditor.AssetDatabase.LoadAssetAtPath<Menu.MenuContentDatabase>("Assets/Scenes/MenuContentDatabase.asset");
+#endif
+            var entry = database?.currencies?.Find(x => x != null && x.id == currencyId);
+            if (entry != null)
+                entry.amount = Mathf.Max(0, value);
         }
     }
 }
