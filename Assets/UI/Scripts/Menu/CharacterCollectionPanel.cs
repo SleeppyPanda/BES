@@ -80,6 +80,11 @@ namespace BES.UI.Menu
         [SerializeField] TMP_Text detailAttackText;
         [SerializeField] TMP_Text detailDefenseText;
         [SerializeField] TMP_Text detailSpeedText;
+        [SerializeField] TMP_Text detailEnergyText;
+        [SerializeField] TMP_Text detailCritRateText;
+        [SerializeField] TMP_Text detailCritDamageText;
+        [SerializeField] TMP_Text detailElementText;
+        [SerializeField] TMP_Text detailRoleText;
         TMP_Text legacyDetailStats;
         TMP_Text detailDescription;
         TMP_Text levelName;
@@ -120,6 +125,7 @@ namespace BES.UI.Menu
         void Awake()
         {
             ResolveDatabase();
+            database?.NormalizeCharacterCombatDefaults();
             modal ??= GetComponent<SimpleModalPanel>();
             EnsureExistingUI();
             WireRuntimeButtons();
@@ -365,6 +371,11 @@ namespace BES.UI.Menu
             detailAttackText = FindText(existing, "CharacterAttackStatText", "AttackStatText", "InfoAttackText");
             detailDefenseText = FindText(existing, "CharacterDefenseStatText", "DefenseStatText", "InfoDefenseText");
             detailSpeedText = FindText(existing, "CharacterSpeedStatText", "SpeedStatText", "InfoSpeedText");
+            detailEnergyText = FindText(existing, "CharacterEnergyStatText", "EnergyStatText", "InfoEnergyText", "NapNangLuongText");
+            detailCritRateText = FindText(existing, "CharacterCritRateStatText", "CritRateStatText", "InfoCritRateText", "BaoKichText");
+            detailCritDamageText = FindText(existing, "CharacterCritDamageStatText", "CritDamageStatText", "InfoCritDamageText", "SatThuongBaoKichText");
+            detailElementText = FindText(existing, "CharacterElementText", "ElementText", "InfoElementText", "HeNhanVatText");
+            detailRoleText = FindText(existing, "CharacterRoleText", "RoleText", "InfoRoleText", "VaiTroText");
             legacyDetailStats = FindDeep(existing, "CharacterStats")?.GetComponent<TMP_Text>();
             detailDescription = FindDeep(existing, "CharacterDescription")?.GetComponent<TMP_Text>();
             levelName = FindDeep(existing, "LevelCharacterName")?.GetComponent<TMP_Text>();
@@ -394,6 +405,7 @@ namespace BES.UI.Menu
             detailPortrait = levelPortrait = null;
             detailName = detailDescription = levelName = levelValue = emptyLabel = selectedNameLabel = null;
             detailLevelText = detailHealthText = detailAttackText = detailDefenseText = detailSpeedText = legacyDetailStats = null;
+            detailEnergyText = detailCritRateText = detailCritDamageText = detailElementText = detailRoleText = null;
             selectedElementIcon = null;
             tabIndicator = null;
             for (var i = 0; i < informationEquipmentSlots.Length; i++)
@@ -746,6 +758,11 @@ namespace BES.UI.Menu
             SetText(detailAttackText, stats.attack.ToString());
             SetText(detailDefenseText, stats.defense.ToString());
             SetText(detailSpeedText, stats.speed.ToString());
+            SetText(detailEnergyText, $"{Mathf.Max(1, entry.energyTurns)} lượt");
+            SetText(detailCritRateText, $"{Mathf.RoundToInt(Mathf.Clamp01(entry.critRate) * 100f)}%");
+            SetText(detailCritDamageText, $"{Mathf.RoundToInt(Mathf.Max(1f, entry.critDamageMultiplier) * 100f)}%");
+            SetText(detailElementText, entry.element);
+            SetText(detailRoleText, entry.description);
             if (legacyDetailStats != null)
             {
                 legacyDetailStats.text = string.Empty;

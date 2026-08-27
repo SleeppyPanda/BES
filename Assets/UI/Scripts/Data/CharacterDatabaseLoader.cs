@@ -16,10 +16,12 @@ namespace BES.UI
 #if UNITY_EDITOR
             if (cached == null)
                 cached = UnityEditor.AssetDatabase.LoadAssetAtPath<CharacterDatabase>(
-                    "Assets/_Project/Resources/Data/CharacterDatabase.asset");
+                    "Assets/Resources/Data/CharacterDatabase.asset");
 #endif
             if (cached == null)
                 cached = CharacterDatabase.CreateRuntimeDefault();
+
+            cached.NormalizePlayableCharacterStats();
 
             return cached;
         }

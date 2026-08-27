@@ -54,6 +54,12 @@ namespace BES.UI.Menu
         [Tooltip("Bật nếu muốn sau khi claim nhân vật từ Wish thì mở thẳng trang thông tin nhân vật đó trong thư viện.")]
         [SerializeField] bool openCharacterCollectionAfterClaim;
         [SerializeField] bool autoSyncCharacterRewardsFromDatabase = true;
+        [Tooltip("Danh sách nhân vật được phép xuất hiện trong Wish. Để trống nếu muốn lấy toàn bộ playable từ database.")]
+        [SerializeField] List<string> wishCharacterPool = new()
+        {
+            "sahure", "rashad", "ramesses", "nefru", "nabir", "menkara",
+            "khepraen", "qasim", "elio", "bekhet", "aurelian"
+        };
         [SerializeField] List<MenuWishReward> rewards = new();
 
         [Header("Currency")]
@@ -192,10 +198,13 @@ namespace BES.UI.Menu
             if (!autoSyncCharacterRewardsFromDatabase || database?.characters == null || database.characters.Count == 0)
                 return;
 
+            database.NormalizeCharacterCombatDefaults();
             var synced = new List<MenuWishReward>();
             foreach (var character in database.characters)
             {
                 if (character == null || string.IsNullOrWhiteSpace(character.id) || !character.playable)
+                    continue;
+                if (!IsAllowedWishCharacter(character.id))
                     continue;
 
                 var rarity = Mathf.Clamp(character.rarity, 3, 5);
@@ -214,6 +223,19 @@ namespace BES.UI.Menu
 
             if (synced.Count > 0)
                 rewards = synced;
+        }
+
+        bool IsAllowedWishCharacter(string characterId)
+        {
+            if (wishCharacterPool == null || wishCharacterPool.Count == 0)
+                return true;
+
+            foreach (var allowed in wishCharacterPool)
+            {
+                if (CharacterIdentity.Same(allowed, characterId, database))
+                    return true;
+            }
+            return false;
         }
 
         static string BuildWishDescription(CharacterEntry character)

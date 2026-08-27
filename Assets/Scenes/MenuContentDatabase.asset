@@ -15,7 +15,7 @@ MonoBehaviour:
   currencies:
   - id: energy
     icon: {fileID: 21300000, guid: de2e85e038e78344188f5d5e15d1659c, type: 3}
-    amount: 0
+    amount: 22
   - id: gems
     icon: {fileID: 21300000, guid: 642780ad9c7b7174cae20a70a0ca5f98, type: 3}
     amount: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
       s\u1EBD t\u0103ng 50% ATK cho nh\xE2n v\u1EADt n\xE0y."
     portrait: {fileID: 21300000, guid: dcf1d0ff5118f914e9396d6bb0add014, type: 3}
     cardBackground: {fileID: 21300000, guid: 3c90b39722421fe428f87e29662196ad, type: 3}
-    fullBody: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
+    fullBody: {fileID: 21300000, guid: ba321a1f5ea6d8a4db8328f74cdb65d5, type: 3}
     chibi: {fileID: 21300000, guid: 3d3aa4f9133a9034cb545cd49aadb7b6, type: 3}
     attackFrame1: {fileID: 332582104, guid: a8692221ca8ac164eb9fb48402625310, type: 3}
     attackFrame2: {fileID: 764163011, guid: a8692221ca8ac164eb9fb48402625310, type: 3}
@@ -229,7 +229,7 @@ MonoBehaviour:
     passiveDescription: 
     portrait: {fileID: 21300000, guid: 11a006ec75953eb469498123abba3845, type: 3}
     cardBackground: {fileID: 21300000, guid: 4edf07b6e053fd949a4e8f4ac0f70e35, type: 3}
-    fullBody: {fileID: 0}
+    fullBody: {fileID: 21300000, guid: d6a3693a0230a00499675a57f8ca09ac, type: 3}
     chibi: {fileID: 21300000, guid: e8d85727b67cf0e49b5cc974a1dbddc9, type: 3}
     attackFrame1: {fileID: 1017227687, guid: 937c1b599b8a984418faa4c220fbae4d, type: 3}
     attackFrame2: {fileID: 86475114, guid: 937c1b599b8a984418faa4c220fbae4d, type: 3}
@@ -281,7 +281,7 @@ MonoBehaviour:
       l\u1EC7 50% \u0111\u1EE1 h\u1ED9 Elio 100% s\xE1t th\u01B0\u01A1ng."
     portrait: {fileID: 21300000, guid: a148c5fb8fee00945a14c23d33fc3af3, type: 3}
     cardBackground: {fileID: 21300000, guid: b61ca766324ac0b4d82b3bca5ceab21c, type: 3}
-    fullBody: {fileID: 0}
+    fullBody: {fileID: 21300000, guid: 8d33de7b6af5fa041871202aa1096350, type: 3}
     chibi: {fileID: 21300000, guid: f9553fa9985edf04a975bffe7536c921, type: 3}
     attackFrame1: {fileID: 1586747878, guid: 5b2589205d56d5e43bae35e78b3aa993, type: 3}
     attackFrame2: {fileID: 106865679, guid: 5b2589205d56d5e43bae35e78b3aa993, type: 3}
@@ -330,7 +330,7 @@ MonoBehaviour:
       DEF + 10% m\xE1u."
     portrait: {fileID: 21300000, guid: 9acf3e48afb151f46b760d4846c762db, type: 3}
     cardBackground: {fileID: 21300000, guid: 53f94f5952835fd4da4d7afbacd84624, type: 3}
-    fullBody: {fileID: 0}
+    fullBody: {fileID: 21300000, guid: 5e660eab12198374690cbfd98d420689, type: 3}
     chibi: {fileID: 21300000, guid: e9b47aa05a7cd6b4398af1533414e7db, type: 3}
     attackFrame1: {fileID: 274987413, guid: 024e61ce1507cbb4e8727bb8763d22bb, type: 3}
     attackFrame2: {fileID: -517118978, guid: 024e61ce1507cbb4e8727bb8763d22bb, type: 3}
@@ -379,8 +379,8 @@ MonoBehaviour:
       gi\u1EA3m 100% t\u1EA5n c\xF4ng. C\xF3 \u0111\u1ED3ng \u0111\u1ED9i h\u1EC7
       th\u1EE7y th\xEC t\u0103ng 20% HP."
     portrait: {fileID: 21300000, guid: d61bb5864533d4342bda1fec56caad82, type: 3}
-    cardBackground: {fileID: 21300000, guid: 049dfd20644f4be40a2a1c954e1dcd9a, type: 3}
-    fullBody: {fileID: 21300000, guid: af113dc2e52074146ab6caf3002a6122, type: 3}
+    cardBackground: {fileID: 21300000, guid: c1f4362c7bdb458409b78d6b035ab94a, type: 3}
+    fullBody: {fileID: 21300000, guid: 83d05699cd0968d4096708c5ab277d57, type: 3}
     chibi: {fileID: 21300000, guid: dc809c7badbc845488f1428d5bb1ae1e, type: 3}
     attackFrame1: {fileID: 469709115, guid: 744644455298c7746a8df9ef543d017b, type: 3}
     attackFrame2: {fileID: -1324949910, guid: 744644455298c7746a8df9ef543d017b, type: 3}
@@ -429,7 +429,7 @@ MonoBehaviour:
     passiveDescription: 
     portrait: {fileID: 21300000, guid: 678ccf429417bc640b0dbcf6a22e4f31, type: 3}
     cardBackground: {fileID: 21300000, guid: a77dbd5c852586648b421f056815e010, type: 3}
-    fullBody: {fileID: 0}
+    fullBody: {fileID: 21300000, guid: e3ad26001e914944c95cce3ab8c8f07b, type: 3}
     chibi: {fileID: 21300000, guid: c6ec6f82157332140af4d18326e6c224, type: 3}
     attackFrame1: {fileID: 337970568, guid: c3ae12b45f1059e48be03f039c01b462, type: 3}
     attackFrame2: {fileID: -1334702225, guid: c3ae12b45f1059e48be03f039c01b462, type: 3}
@@ -476,7 +476,7 @@ MonoBehaviour:
     passiveDescription: 
     portrait: {fileID: 21300000, guid: 909000007b6562947908df8e4de9c5b7, type: 3}
     cardBackground: {fileID: 21300000, guid: 20e401ae6d7f33048b3e18ba3e01e7b3, type: 3}
-    fullBody: {fileID: 0}
+    fullBody: {fileID: 21300000, guid: 1e6be91ec8066c34c92f9518e4d4cf39, type: 3}
     chibi: {fileID: 21300000, guid: 7f354c609b54670498e407b8a4297737, type: 3}
     attackFrame1: {fileID: 1877536551, guid: 59607c12bd9640644a6d5311c412b603, type: 3}
     attackFrame2: {fileID: -1962574516, guid: 59607c12bd9640644a6d5311c412b603, type: 3}
@@ -524,7 +524,7 @@ MonoBehaviour:
     passiveDescription: 
     portrait: {fileID: 21300000, guid: 1c849cebac0da6742920da8210075a03, type: 3}
     cardBackground: {fileID: 21300000, guid: c3cb20664d7b41a4fb017d9786b94a97, type: 3}
-    fullBody: {fileID: 0}
+    fullBody: {fileID: 21300000, guid: ba9b574af5a2c434aa1b027bc76f2731, type: 3}
     chibi: {fileID: 21300000, guid: 946b919618fad4a469ef3368f89991d3, type: 3}
     attackFrame1: {fileID: -1599742751, guid: b22831bbd1d92eb44b6516fb8b2ba0fa, type: 3}
     attackFrame2: {fileID: 492569146, guid: b22831bbd1d92eb44b6516fb8b2ba0fa, type: 3}
@@ -572,7 +572,7 @@ MonoBehaviour:
     passiveDescription: 
     portrait: {fileID: 21300000, guid: fa38a886514e0f044bfd8114efc6d63d, type: 3}
     cardBackground: {fileID: 21300000, guid: c1881ef9c49aaf847bc4fbe68ba83dd0, type: 3}
-    fullBody: {fileID: 0}
+    fullBody: {fileID: 21300000, guid: e4ffb70441e595e4b939a9678e27305e, type: 3}
     chibi: {fileID: 21300000, guid: 1e93b8c6d2d18964485f8981c63eb948, type: 3}
     attackFrame1: {fileID: -200147880, guid: e2f4de297e52a2f4cb5f902e3737e1c8, type: 3}
     attackFrame2: {fileID: -41760351, guid: e2f4de297e52a2f4cb5f902e3737e1c8, type: 3}
@@ -620,7 +620,7 @@ MonoBehaviour:
       \u0111\u01B0\u1EE3c gi\u1EA3m 30% s\xE1t th\u01B0\u01A1ng nh\u1EADn v\xE0o."
     portrait: {fileID: 21300000, guid: 13b2a3438b817124bb3a61f1a6a7593f, type: 3}
     cardBackground: {fileID: 21300000, guid: 9512eae1b79c3be4bb178a8a4b6acee7, type: 3}
-    fullBody: {fileID: 0}
+    fullBody: {fileID: 21300000, guid: f46cb45b97c13b84eaf100fa7409395a, type: 3}
     chibi: {fileID: 21300000, guid: ffa9692f0a836d145be2201874795e47, type: 3}
     attackFrame1: {fileID: -1599028258, guid: 092aed0bb00211c4e91fef6842dc8dc9, type: 3}
     attackFrame2: {fileID: -833643015, guid: 092aed0bb00211c4e91fef6842dc8dc9, type: 3}

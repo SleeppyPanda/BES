@@ -42,6 +42,8 @@ namespace BES.UI
         public float baseHealth = 100f;
         public float baseDefense = 5f;
         public float baseMana = 100f;
+        [Tooltip("Số lượt cần tích để dùng kỹ năng một lần trong battle/menu battle.")]
+        [Min(1)] public int energyTurns = 3;
         public float critRate = 0.1f;
         public float critDamage = 1.5f;
         public Sprite portrait;
@@ -122,6 +124,38 @@ namespace BES.UI
         }
 
         public IReadOnlyList<string> GetDefaultPartyIds() => defaultPartyIds;
+
+        void OnValidate()
+        {
+            NormalizePlayableCharacterStats();
+        }
+
+        public void NormalizePlayableCharacterStats()
+        {
+            if (characters == null) return;
+            foreach (var character in characters)
+            {
+                if (character == null || string.IsNullOrWhiteSpace(character.characterId))
+                    continue;
+
+                if (character.energyTurns <= 0)
+                    character.energyTurns = SuggestedEnergyTurns(character);
+                if (character.critRate <= 0f)
+                    character.critRate = character.rarity >= 5 ? .12f : character.rarity == 4 ? .10f : .08f;
+                if (character.critDamage < 1f)
+                    character.critDamage = character.rarity >= 5 ? 1.65f : character.rarity == 4 ? 1.5f : 1.35f;
+            }
+        }
+
+        static int SuggestedEnergyTurns(CharacterDefinition character)
+        {
+            var skill = character?.skill1Id?.ToLowerInvariant() ?? string.Empty;
+            if (skill.Contains("hồi") || skill.Contains("hoi") || skill.Contains("khi") || skill.Contains("khống") || skill.Contains("khong"))
+                return 3;
+            if (character != null && character.rarity >= 5)
+                return 3;
+            return 2;
+        }
 
         public int GetExperienceToNextLevel(int level)
         {

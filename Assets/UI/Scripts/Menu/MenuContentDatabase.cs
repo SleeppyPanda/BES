@@ -34,6 +34,11 @@ namespace BES.UI.Menu
         public Sprite attackFrame3;
         public Sprite attackFrame4;
         public Sprite attackFrame5;
+        [Header("Battle Skill Icons")]
+        [Tooltip("Icon cho nút Đánh thường trong battle. Nếu trống sẽ dùng Element Icon hoặc icon mặc định của nút.")]
+        public Sprite normalAttackIcon;
+        [Tooltip("Icon cho nút Kỹ năng trong battle. Nếu trống sẽ dùng Element Icon hoặc icon mặc định của nút.")]
+        public Sprite skillIcon;
         [Tooltip("Attack VFX prefabs tested/assigned for this character. Copied into battle units and played when attacking.")]
         public List<GameObject> attackEffectPrefabs = new();
         public Vector3 attackEffectOffset = Vector3.zero;
@@ -55,6 +60,13 @@ namespace BES.UI.Menu
         public int attack = 10;
         public int defense = 5;
         public int speed = 10;
+        [Header("Advanced Combat Stats")]
+        [Tooltip("Số lượt cần tích để dùng kỹ năng một lần.")]
+        [Min(1)] public int energyTurns = 3;
+        [Tooltip("Tỷ lệ bạo kích. 0.1 = 10%.")]
+        [Range(0f, 1f)] public float critRate = 0.1f;
+        [Tooltip("Hệ số sát thương khi bạo kích. 1.5 = 150%.")]
+        [Min(1f)] public float critDamageMultiplier = 1.5f;
     }
 
     [Serializable]
@@ -209,6 +221,104 @@ namespace BES.UI.Menu
         public List<StageEntry> weaponStages = new();
         [Tooltip("Extra Play Mode groups for future modes. Add group 4+ here and point StageSelectionController/PlayMode buttons to its id.")]
         public List<PlayModeStageGroup> playModeStageGroups = new();
+
+        void OnValidate()
+        {
+            NormalizeCharacterCombatDefaults();
+        }
+
+        public void NormalizeCharacterCombatDefaults()
+        {
+            if (characters == null) return;
+            foreach (var character in characters)
+                NormalizeCharacterCombatDefaults(character);
+        }
+
+        static void NormalizeCharacterCombatDefaults(CharacterEntry character)
+        {
+            if (character == null || !character.playable) return;
+
+            var rarity = Mathf.Clamp(character.rarity, 3, 5);
+            if (character.energyTurns <= 0)
+                character.energyTurns = SuggestedEnergyTurns(character);
+            if (character.critRate <= 0f)
+                character.critRate = rarity >= 5 ? 0.12f : rarity == 4 ? 0.10f : 0.08f;
+            if (character.critDamageMultiplier < 1f)
+                character.critDamageMultiplier = rarity >= 5 ? 1.65f : rarity == 4 ? 1.5f : 1.35f;
+
+            if (character.combatPower <= 0)
+                character.combatPower = Mathf.RoundToInt(character.attack * 8f + character.maxHealth * .7f + character.defense * 6f + character.speed * 25f);
+
+#if UNITY_EDITOR
+            AssignDefaultAttackEffects(character);
+#endif
+        }
+
+        static int SuggestedEnergyTurns(CharacterEntry character)
+        {
+            var text = ((character.skillType ?? string.Empty) + " " + (character.skillDescription ?? string.Empty)).ToLowerInvariant();
+            if (text.Contains("hồi") || text.Contains("khiên") || text.Contains("khống"))
+                return 3;
+            if (text.Contains("450") || text.Contains("300"))
+                return 4;
+            return character.rarity >= 5 ? 3 : 2;
+        }
+
+#if UNITY_EDITOR
+        static void AssignDefaultAttackEffects(CharacterEntry character)
+        {
+            if (character.attackEffectPrefabs != null && character.attackEffectPrefabs.Count > 0)
+                return;
+
+            var paths = DefaultAttackEffectPaths(character.element);
+            if (paths == null || paths.Length == 0)
+                return;
+
+            character.attackEffectPrefabs ??= new List<GameObject>();
+            foreach (var path in paths)
+            {
+                var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (prefab != null && !character.attackEffectPrefabs.Contains(prefab))
+                    character.attackEffectPrefabs.Add(prefab);
+            }
+        }
+
+        static string[] DefaultAttackEffectPaths(string element)
+        {
+            element = element?.ToLowerInvariant() ?? string.Empty;
+            if (element.Contains("hỏa") || element.Contains("hoa") || element.Contains("fire"))
+                return new[]
+                {
+                    "Assets/JMO Assets/Cartoon FX Remaster/CFXR Prefabs/Fire/CFXR3 Hit Fire B (Air).prefab",
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Explosion_2_Bomb_Red.prefab"
+                };
+            if (element.Contains("thủy") || element.Contains("thuy") || element.Contains("water") || element.Contains("ice"))
+                return new[]
+                {
+                    "Assets/JMO Assets/Cartoon FX Remaster/CFXR Prefabs/Ice/CFXR3 Hit Ice B (Air).prefab",
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Explosion_2_Bomb_Blue.prefab"
+                };
+            if (element.Contains("lôi") || element.Contains("loi") || element.Contains("lightning") || element.Contains("electric"))
+                return new[]
+                {
+                    "Assets/JMO Assets/Cartoon FX Remaster/CFXR Prefabs/Electric/CFXR3 Hit Electric C (Air).prefab",
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Explosion_2_Zap.prefab"
+                };
+            if (element.Contains("thảo") || element.Contains("thao") || element.Contains("grass"))
+                return new[]
+                {
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Battle_Effect_Green.prefab",
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Explosion_2_Bomb_Green.prefab"
+                };
+            if (element.Contains("phong") || element.Contains("wind"))
+                return new[]
+                {
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Battle_Effect_White.prefab",
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Explosion_1_Woa_Yellow.prefab"
+                };
+            return new[] { "Assets/CartoonVFX9x/Comic_FX/Prefabs/Battle_Effect_Yellow.prefab" };
+        }
+#endif
 
         public void EnsureDefaultPlayModeStages()
         {

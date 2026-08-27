@@ -38,6 +38,9 @@ namespace BES.UI.Menu
         public Sprite attackFrame3;
         public Sprite attackFrame4;
         public Sprite attackFrame5;
+        [Header("Skill Button Icons")]
+        public Sprite normalAttackIcon;
+        public Sprite skillIcon;
         public UIGifClip idleClip;
         public UIGifClip attackClip;
         public List<GameObject> attackEffectPrefabs = new();
@@ -48,6 +51,9 @@ namespace BES.UI.Menu
         [Min(1)] public int attack = 20;
         [Min(0)] public int defense = 5;
         [Min(1)] public int speed = 10;
+        [Min(1)] public int energyTurns = 3;
+        [Range(0f, 1f)] public float critRate = 0.1f;
+        [Min(1f)] public float critDamageMultiplier = 1.5f;
         public List<BattleSkillDefinition> skills = new();
     }
 
@@ -69,6 +75,7 @@ namespace BES.UI.Menu
         [NonSerialized] public int shield;
         [NonSerialized] public bool usedOneShotSkill;
         [NonSerialized] public int attackEffectCursor;
+        [NonSerialized] public int skillEnergy;
         [NonSerialized] public bool isPlayer;
         [NonSerialized] public int setupIndex;
         public bool IsAlive => health > 0;
@@ -513,7 +520,7 @@ namespace BES.UI.Menu
                 var unit = team[i]; if (unit == null || unit.definition == null) continue;
                 if (unit.root != null && !unit.root.activeSelf) continue;
                 SetUnitVisualsActive(unit, true);
-                unit.isPlayer = isPlayer; unit.setupIndex = i; unit.health = unit.definition.maxHealth; unit.shield = 0; unit.usedOneShotSkill = false; unit.attackEffectCursor = 0;
+                unit.isPlayer = isPlayer; unit.setupIndex = i; unit.health = unit.definition.maxHealth; unit.shield = 0; unit.usedOneShotSkill = false; unit.attackEffectCursor = 0; unit.skillEnergy = 0;
 
                 if (unit.gifPlayer == null && unit.root != null)
                 {
@@ -587,8 +594,20 @@ namespace BES.UI.Menu
                 if (skillButtons[i] != null) skillButtons[i].gameObject.SetActive(available);
                 if (!available) continue;
                 var skill = actor.definition.skills[i];
-                if (i < skillIcons.Count && skillIcons[i] != null) skillIcons[i].sprite = skill.icon;
-                if (i < skillLabels.Count && skillLabels[i] != null) skillLabels[i].text = skill.displayName;
+                var hasEnergy = i == 0 || actor.skillEnergy >= Mathf.Max(1, actor.definition.energyTurns);
+                if (skillButtons[i] != null) skillButtons[i].interactable = hasEnergy;
+                if (i < skillIcons.Count && skillIcons[i] != null)
+                {
+                    var icon = i == 0 ? actor.definition.normalAttackIcon : actor.definition.skillIcon;
+                    skillIcons[i].sprite = icon != null ? icon : skill.icon;
+                    skillIcons[i].enabled = skillIcons[i].sprite != null;
+                }
+                if (i < skillLabels.Count && skillLabels[i] != null)
+                {
+                    skillLabels[i].text = i == 1 && !hasEnergy
+                        ? $"{skill.displayName} {actor.skillEnergy}/{Mathf.Max(1, actor.definition.energyTurns)}"
+                        : skill.displayName;
+                }
             }
             SetEnemyTargeting(false);
         }
@@ -598,6 +617,12 @@ namespace BES.UI.Menu
         {
             if (paused || resolving || currentActor == null || !currentActor.isPlayer) return;
             if (currentActor.definition.skills == null || skillIndex < 0 || skillIndex >= currentActor.definition.skills.Count) return;
+            if (skillIndex == 1 && currentActor.skillEnergy < Mathf.Max(1, currentActor.definition.energyTurns))
+            {
+                if (selectionHintText != null) selectionHintText.text = $"KỸ NĂNG CHƯA ĐỦ NẠP {currentActor.skillEnergy}/{Mathf.Max(1, currentActor.definition.energyTurns)}";
+                ShowSkills(currentActor);
+                return;
+            }
             selectedSkillIndex = skillIndex; SetEnemyTargeting(true);
             if (selectionHintText != null) selectionHintText.text = "SELECT AN ENEMY";
         }
@@ -613,9 +638,26 @@ namespace BES.UI.Menu
         {
             resolving = true; yield return ScaledWait(actionRecovery);
             var target = LowestHealthAlive(allies); if (target != null) yield return PerformAction(currentActor, target, 0);
+            AdvanceSkillEnergy(currentActor, 0);
             FinishTurn();
         }
-        IEnumerator ResolveAction(BattleUnitView actor, BattleUnitView target, int skillIndex) { resolving = true; HideSkills(); yield return PerformAction(actor, target, skillIndex); FinishTurn(); }
+        IEnumerator ResolveAction(BattleUnitView actor, BattleUnitView target, int skillIndex)
+        {
+            resolving = true;
+            HideSkills();
+            yield return PerformAction(actor, target, skillIndex);
+            AdvanceSkillEnergy(actor, skillIndex);
+            FinishTurn();
+        }
+
+        static void AdvanceSkillEnergy(BattleUnitView actor, int skillIndex)
+        {
+            if (actor?.definition == null) return;
+            var required = Mathf.Max(1, actor.definition.energyTurns);
+            actor.skillEnergy = skillIndex == 1
+                ? 0
+                : Mathf.Min(required, actor.skillEnergy + 1);
+        }
         IEnumerator PerformAction(BattleUnitView actor, BattleUnitView target, int skillIndex)
         {
             var skill = GetSkill(actor, skillIndex);
@@ -642,6 +684,10 @@ namespace BES.UI.Menu
             {
                 PlayAttackEffect(actor, target);
                 var raw = Mathf.RoundToInt(EffectiveAttack(actor) * (skill?.powerMultiplier ?? 1f) * ElementMultiplier(actor.definition, target.definition));
+                var isCrit = UnityEngine.Random.value < Mathf.Clamp01(actor.definition.critRate);
+                if (isCrit)
+                    raw = Mathf.RoundToInt(raw * Mathf.Max(1f, actor.definition.critDamageMultiplier));
+                LogBattle($"DamageRoll actor='{UnitName(actor)}' target='{UnitName(target)}' raw={raw} crit={isCrit} critRate={actor.definition.critRate:P0} critDamage={actor.definition.critDamageMultiplier:P0}");
                 DamageUnit(target, Mathf.Max(1, raw - EffectiveDefense(target)));
                 
                 if (target.gifPlayer != null && target.health == 0)
@@ -1949,10 +1995,15 @@ namespace BES.UI.Menu
                 attackFrame3 = character.attackFrame3,
                 attackFrame4 = character.attackFrame4,
                 attackFrame5 = character.attackFrame5,
+                normalAttackIcon = character.normalAttackIcon != null ? character.normalAttackIcon : character.elementIcon,
+                skillIcon = character.skillIcon != null ? character.skillIcon : character.elementIcon,
                 attackEffectPrefabs = character.attackEffectPrefabs != null ? new List<GameObject>(character.attackEffectPrefabs) : new List<GameObject>(),
                 attackEffectOffset = character.attackEffectOffset,
                 attackEffectScale = character.attackEffectScale == Vector3.zero ? Vector3.one : character.attackEffectScale,
                 isRanged = character.attributes.Contains("Ranged") || character.attributes.Contains("tầm xa"),
+                energyTurns = Mathf.Max(1, character.energyTurns),
+                critRate = Mathf.Clamp01(character.critRate + weaponBonus.critRatePercent / 100f),
+                critDamageMultiplier = Mathf.Max(1f, character.critDamageMultiplier + weaponBonus.critDamagePercent / 100f),
                 skills = BuildTwoActiveSkills(character)
             };
 
@@ -1967,12 +2018,14 @@ namespace BES.UI.Menu
                 {
                     id = "attack",
                     displayName = string.IsNullOrWhiteSpace(character.normalAttack) ? "Đánh Thường" : "Đánh Thường",
+                    icon = character.normalAttackIcon != null ? character.normalAttackIcon : character.elementIcon,
                     powerMultiplier = 1f
                 },
                 new BattleSkillDefinition
                 {
                     id = "skill",
                     displayName = string.IsNullOrWhiteSpace(character.skillType) ? "Kỹ Năng" : character.skillType,
+                    icon = character.skillIcon != null ? character.skillIcon : character.elementIcon,
                     powerMultiplier = SkillPowerMultiplier(character)
                 }
             };
@@ -2274,6 +2327,8 @@ namespace BES.UI.Menu
                 attackFrame3 = template.attackFrame3,
                 attackFrame4 = template.attackFrame4,
                 attackFrame5 = template.attackFrame5,
+                normalAttackIcon = template.normalAttackIcon,
+                skillIcon = template.skillIcon,
                 idleClip = template.idleClip,
                 attackClip = template.attackClip,
                 attackEffectPrefabs = template.attackEffectPrefabs != null ? new List<GameObject>(template.attackEffectPrefabs) : new List<GameObject>(),
@@ -2284,6 +2339,9 @@ namespace BES.UI.Menu
                 attack = template.attack,
                 defense = template.defense,
                 speed = template.speed,
+                energyTurns = Mathf.Max(1, template.energyTurns),
+                critRate = Mathf.Clamp01(template.critRate),
+                critDamageMultiplier = Mathf.Max(1f, template.critDamageMultiplier),
                 skills = template.skills != null ? new List<BattleSkillDefinition>(template.skills) : new List<BattleSkillDefinition>()
             };
         }
@@ -2330,6 +2388,8 @@ namespace BES.UI.Menu
             def.attackFrame3 = template.attackFrame3;
             def.attackFrame4 = template.attackFrame4;
             def.attackFrame5 = template.attackFrame5;
+            def.normalAttackIcon = template.normalAttackIcon;
+            def.skillIcon = template.skillIcon;
             def.idleClip = template.idleClip;
             def.attackClip = template.attackClip;
             def.attackEffectPrefabs = template.attackEffectPrefabs != null ? new List<GameObject>(template.attackEffectPrefabs) : new List<GameObject>();
@@ -2342,6 +2402,9 @@ namespace BES.UI.Menu
             def.attack = Mathf.RoundToInt(template.attack * scale);
             def.defense = Mathf.RoundToInt(template.defense * scale);
             def.speed = template.speed;
+            def.energyTurns = Mathf.Max(1, template.energyTurns);
+            def.critRate = Mathf.Clamp01(template.critRate);
+            def.critDamageMultiplier = Mathf.Max(1f, template.critDamageMultiplier);
             def.skills = new List<BattleSkillDefinition>(template.skills);
             return def;
         }

@@ -124,6 +124,12 @@ namespace BES.UI
             Register("elio", "elio");
             Register("hero_02", "sahure");
             Register("sahure", "sahure");
+            Register("ramess", "ramesses");
+            Register("ramesses", "ramesses");
+            Register("menraka", "menkara");
+            Register("menkara", "menkara");
+            Register("qasim", "kasim");
+            Register("kasim", "kasim");
             Register("hero_03", "luna");
             Register("luna", "luna");
             Register("hero_04", "sol");
