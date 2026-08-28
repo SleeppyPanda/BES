@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/menuhub.unity
     guid: 31b6465ac3d877e499eb56c2e5206138
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BES_Island_GameReady.unity
     guid: 04611c323de50f74a87bef14a8a6c3e0
   m_configObjects:

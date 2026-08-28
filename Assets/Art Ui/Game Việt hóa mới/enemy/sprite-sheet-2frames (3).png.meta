@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,7 +108,51 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: sprite-sheet-2frames (3)_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 0
+        width: 1057
+        height: 1166
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35553e8177f2f6e4994266d03e083074
+      internalID: -1926481434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sprite-sheet-2frames (3)_2
+      rect:
+        serializedVersion: 2
+        x: 1073
+        y: 0
+        width: 1089
+        height: 1166
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc1d55dbd28da3c4c883f719e4b9f1bb
+      internalID: -1551794084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -121,8 +165,25 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
-    nameFileIdTable: {}
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      sprite-sheet-2frames (3)_0: -1926481434
+      sprite-sheet-2frames (3)_1: -83130045
+      sprite-sheet-2frames (3)_10: -1249329407
+      sprite-sheet-2frames (3)_11: -692580082
+      sprite-sheet-2frames (3)_12: 1672554460
+      sprite-sheet-2frames (3)_13: 1455177177
+      sprite-sheet-2frames (3)_14: 1710188498
+      sprite-sheet-2frames (3)_2: -1551794084
+      sprite-sheet-2frames (3)_3: -582554598
+      sprite-sheet-2frames (3)_4: -51990006
+      sprite-sheet-2frames (3)_5: -24248365
+      sprite-sheet-2frames (3)_6: -798081245
+      sprite-sheet-2frames (3)_7: -1975714228
+      sprite-sheet-2frames (3)_8: 1644456608
+      sprite-sheet-2frames (3)_9: -1324775702
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

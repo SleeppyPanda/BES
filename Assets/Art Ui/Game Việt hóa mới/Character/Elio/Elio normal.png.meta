@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a5c0bac58492b414183ff4ea86eed8dc
+guid: 3b795b84c3e3b9f4890b82d5d2ec0533
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -37,13 +37,13 @@ TextureImporter:
     filterMode: 1
     aniso: 1
     mipBias: 0
-    wrapU: 0
-    wrapV: 0
+    wrapU: 1
+    wrapV: 1
     wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,51 +108,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: sprite-sheet-2frames (5)_0
-      rect:
-        serializedVersion: 2
-        x: 76
-        y: 188
-        width: 2649
-        height: 1264
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4dfd4416067836c409beca777f7f670c
-      internalID: 1013598979
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sprite-sheet-2frames (5)_2
-      rect:
-        serializedVersion: 2
-        x: 3034
-        y: 136
-        width: 2198
-        height: 1319
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b4eba1ed13091384f9fda67f56f1df52
-      internalID: -1362048192
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     customData: 
     physicsShape: []
@@ -165,24 +121,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
-    nameFileIdTable:
-      sprite-sheet-2frames (5)_0: 1013598979
-      sprite-sheet-2frames (5)_1: 820587356
-      sprite-sheet-2frames (5)_10: -1001009274
-      sprite-sheet-2frames (5)_11: -1274655366
-      sprite-sheet-2frames (5)_12: -789940386
-      sprite-sheet-2frames (5)_13: -375572729
-      sprite-sheet-2frames (5)_2: -1362048192
-      sprite-sheet-2frames (5)_3: -2076117233
-      sprite-sheet-2frames (5)_4: 584158774
-      sprite-sheet-2frames (5)_5: 757812957
-      sprite-sheet-2frames (5)_6: 765235532
-      sprite-sheet-2frames (5)_7: 1344724940
-      sprite-sheet-2frames (5)_8: -1852495613
-      sprite-sheet-2frames (5)_9: -2035444552
+      entries: []
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

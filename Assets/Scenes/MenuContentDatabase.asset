@@ -18,7 +18,7 @@ MonoBehaviour:
     amount: 22
   - id: gems
     icon: {fileID: 21300000, guid: 642780ad9c7b7174cae20a70a0ca5f98, type: 3}
-    amount: 0
+    amount: 666666
   - id: coins
     icon: {fileID: 21300000, guid: 57fe28cdfe9856c4d814d8eae4c7d5c0, type: 3}
     amount: 99999
@@ -52,6 +52,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -72,6 +74,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: tinh_linh
     displayName: Tinh Linh
     description: 
@@ -92,6 +97,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -112,6 +119,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: elio
     displayName: Elio
     description: "Ho\xE0ng t\u1EED"
@@ -135,6 +145,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 85936460, guid: a8692221ca8ac164eb9fb48402625310, type: 3}
     attackFrame4: {fileID: -597954433, guid: a8692221ca8ac164eb9fb48402625310, type: 3}
     attackFrame5: {fileID: -1421458495, guid: a8692221ca8ac164eb9fb48402625310, type: 3}
+    normalAttackIcon: {fileID: 21300000, guid: 3b795b84c3e3b9f4890b82d5d2ec0533, type: 3}
+    skillIcon: {fileID: 21300000, guid: 33315c04fbbaaa245aab52c06f81b6f2, type: 3}
     attackEffectPrefabs:
     - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
     - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
@@ -162,6 +174,9 @@ MonoBehaviour:
     attack: 145
     defense: 58
     speed: 12
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: aurelian
     displayName: Aurelian
     description: "H\u1ECFa th\u1EA7n \u0111\u01B0\u01A1ng nhi\u1EC7m"
@@ -186,6 +201,8 @@ MonoBehaviour:
     attackFrame3: {fileID: -21819537, guid: b7ec12efcc5fdb84c842266afbee6c14, type: 3}
     attackFrame4: {fileID: -2116402200, guid: b7ec12efcc5fdb84c842266afbee6c14, type: 3}
     attackFrame5: {fileID: 1179236951, guid: b7ec12efcc5fdb84c842266afbee6c14, type: 3}
+    normalAttackIcon: {fileID: 21300000, guid: 517163e8a61e8784c81cd9100824e433, type: 3}
+    skillIcon: {fileID: 21300000, guid: 7a7c03639786a7a4f9c479432b449412, type: 3}
     attackEffectPrefabs:
     - {fileID: 6263782476919498309, guid: 1fd2749f2a4056446881dce86ed70c39, type: 3}
     - {fileID: 8367907410985086596, guid: 0b493b97a8e419d46903c1b023460740, type: 3}
@@ -212,6 +229,9 @@ MonoBehaviour:
     attack: 136
     defense: 76
     speed: 10
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: khepraen
     displayName: Khepraen
     description: "Th\u1EA7y gi\xE1o ho\xE0ng t\u1ED9c"
@@ -236,6 +256,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 617246371, guid: 937c1b599b8a984418faa4c220fbae4d, type: 3}
     attackFrame4: {fileID: 1945756768, guid: 937c1b599b8a984418faa4c220fbae4d, type: 3}
     attackFrame5: {fileID: 232996115, guid: 937c1b599b8a984418faa4c220fbae4d, type: 3}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs:
     - {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
     - {fileID: 6520436353736122353, guid: 117624082503aad42847c41c2da7e8da, type: 3}
@@ -263,6 +285,9 @@ MonoBehaviour:
     attack: 104
     defense: 56
     speed: 11
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: rashad
     displayName: Rashad
     description: "H\u1EA7u c\u1EADn ki\xEAm b\u1EA1n th\xE2n c\u1EE7a Elio"
@@ -288,7 +313,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 2028725851, guid: 5b2589205d56d5e43bae35e78b3aa993, type: 3}
     attackFrame4: {fileID: 461080375, guid: 5b2589205d56d5e43bae35e78b3aa993, type: 3}
     attackFrame5: {fileID: 1820097714, guid: 5b2589205d56d5e43bae35e78b3aa993, type: 3}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
+    - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 21300000, guid: 9b881b3b16fb50a4e9bbe9eecd6ffc1d, type: 3}
@@ -313,6 +342,9 @@ MonoBehaviour:
     attack: 118
     defense: 48
     speed: 14
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: nabir
     displayName: Nabir
     description: "Th\u01B0\u01A1ng nh\xE2n trong th\xE0nh ph\u1ED1"
@@ -337,7 +369,11 @@ MonoBehaviour:
     attackFrame3: {fileID: -580476028, guid: 024e61ce1507cbb4e8727bb8763d22bb, type: 3}
     attackFrame4: {fileID: 631699260, guid: 024e61ce1507cbb4e8727bb8763d22bb, type: 3}
     attackFrame5: {fileID: 908068953, guid: 024e61ce1507cbb4e8727bb8763d22bb, type: 3}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 5299686486652448870, guid: fcfc3df8194a1044ebb8fcd0a6bc5be1, type: 3}
+    - {fileID: 6111780402021197910, guid: 6c3f332676c9b7146a16b045cf9a680a, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 21300000, guid: 6477b0695e7fcf04d9fcee306771e903, type: 3}
@@ -363,6 +399,9 @@ MonoBehaviour:
     attack: 86
     defense: 82
     speed: 9
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: sahure
     displayName: Sahure
     description: "T\u01B0 t\u1EBF ho\xE0ng gia \u0111\u01B0\u01A1ng nhi\u1EC7m"
@@ -387,7 +426,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 153057635, guid: 744644455298c7746a8df9ef543d017b, type: 3}
     attackFrame4: {fileID: -398616790, guid: 744644455298c7746a8df9ef543d017b, type: 3}
     attackFrame5: {fileID: 677374669, guid: 744644455298c7746a8df9ef543d017b, type: 3}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+    - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 21300000, guid: 7b57521889bbf7f479e4efd95f2d7541, type: 3}
@@ -413,6 +456,9 @@ MonoBehaviour:
     attack: 88
     defense: 82
     speed: 10
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: menkara
     displayName: Menkara
     description: "Ng\u01B0\u1EDDi qu\u1EA3n l\xFD kho s\xE1ch ho\xE0ng gia"
@@ -436,7 +482,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 425009568, guid: c3ae12b45f1059e48be03f039c01b462, type: 3}
     attackFrame4: {fileID: -1457680828, guid: c3ae12b45f1059e48be03f039c01b462, type: 3}
     attackFrame5: {fileID: 24296062, guid: c3ae12b45f1059e48be03f039c01b462, type: 3}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+    - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 21300000, guid: 7b57521889bbf7f479e4efd95f2d7541, type: 3}
@@ -460,6 +510,9 @@ MonoBehaviour:
     attack: 112
     defense: 44
     speed: 13
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: ramesses
     displayName: Ramesses
     description: "\u0110\u1ED9i tr\u01B0\u1EDFng h\u1ED9 v\u1EC7 ho\xE0ng gia"
@@ -483,7 +536,11 @@ MonoBehaviour:
     attackFrame3: {fileID: -1491851166, guid: 59607c12bd9640644a6d5311c412b603, type: 3}
     attackFrame4: {fileID: 1466025233, guid: 59607c12bd9640644a6d5311c412b603, type: 3}
     attackFrame5: {fileID: 1817286605, guid: 59607c12bd9640644a6d5311c412b603, type: 3}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+    - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 21300000, guid: 6947fb0cb2eb77c4aa44b74235a60c24, type: 3}
@@ -508,6 +565,9 @@ MonoBehaviour:
     attack: 142
     defense: 72
     speed: 11
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: kasim
     displayName: Kasim
     description: "\u0110\u1ED9i ph\xF3 h\u1ED9 v\u1EC7 ho\xE0ng gia"
@@ -531,7 +591,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 1554377852, guid: b22831bbd1d92eb44b6516fb8b2ba0fa, type: 3}
     attackFrame4: {fileID: 1453065172, guid: b22831bbd1d92eb44b6516fb8b2ba0fa, type: 3}
     attackFrame5: {fileID: 855866431, guid: b22831bbd1d92eb44b6516fb8b2ba0fa, type: 3}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
+    - {fileID: 575319445162951685, guid: b7e5061752aa1fa48b86d205d34abf7f, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 21300000, guid: d0b977daf5eac5641af5a7941e32ba6f, type: 3}
@@ -557,6 +621,9 @@ MonoBehaviour:
     attack: 126
     defense: 40
     speed: 15
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: bekhet
     displayName: Bekhet
     description: "Th\u1EE3 r\xE8n"
@@ -579,7 +646,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 1995404724, guid: e2f4de297e52a2f4cb5f902e3737e1c8, type: 3}
     attackFrame4: {fileID: 650002759, guid: e2f4de297e52a2f4cb5f902e3737e1c8, type: 3}
     attackFrame5: {fileID: -1871587461, guid: e2f4de297e52a2f4cb5f902e3737e1c8, type: 3}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+    - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 21300000, guid: 6947fb0cb2eb77c4aa44b74235a60c24, type: 3}
@@ -604,6 +675,9 @@ MonoBehaviour:
     attack: 92
     defense: 84
     speed: 8
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: nefru
     displayName: Nefru
     description: "H\u1ECDc tr\xF2 c\u1EE7a Sahure"
@@ -627,7 +701,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 585926281, guid: 092aed0bb00211c4e91fef6842dc8dc9, type: 3}
     attackFrame4: {fileID: -834345504, guid: 092aed0bb00211c4e91fef6842dc8dc9, type: 3}
     attackFrame5: {fileID: 558448643, guid: 092aed0bb00211c4e91fef6842dc8dc9, type: 3}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+    - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 21300000, guid: 7b57521889bbf7f479e4efd95f2d7541, type: 3}
@@ -653,6 +731,9 @@ MonoBehaviour:
     attack: 76
     defense: 44
     speed: 14
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: mireya
     displayName: Mireya
     description: "Phong th\u1EA7n hi\u1EC7n t\u1EA1i \u2013 em g\xE1i Nayel"
@@ -678,7 +759,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
+    - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -704,6 +789,9 @@ MonoBehaviour:
     attack: 82
     defense: 42
     speed: 13
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: soraya
     displayName: Soraya
     description: "V\u1EE3 Nayel \u2013 m\u1EB9 Seyran"
@@ -724,6 +812,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -744,6 +834,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: lila
     displayName: Lila
     description: "Con g\xE1i tr\u01B0\u1EDFng \u0111o\xE0n Rihara, ho\u1EA1t b\xE1t,
@@ -768,7 +861,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
+    - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -792,6 +889,9 @@ MonoBehaviour:
     attack: 100
     defense: 34
     speed: 15
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: seyran
     displayName: Seyran
     description: "T\u1EADp s\u1EF1 t\u01B0 t\u1EBF Talvera, con g\xE1i Nayel, mang
@@ -814,7 +914,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
+    - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -840,6 +944,9 @@ MonoBehaviour:
     attack: 72
     defense: 52
     speed: 11
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: kaivan
     displayName: Kaivan
     description: "Chi\u1EBFn binh, cung th\u1EE7 xu\u1EA5t s\u1EAFc c\u1EE7a Talvera"
@@ -863,7 +970,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+    - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -888,6 +999,9 @@ MonoBehaviour:
     attack: 104
     defense: 36
     speed: 13
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: nayel
     displayName: Nayel
     description: "Th\u1EE7 l\u0129nh T\u1ED9c B\xE3o Gi\xF3, m\u1ED9t n\u1EEDa Th\u1EA7n
@@ -914,7 +1028,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
+    - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -939,6 +1057,9 @@ MonoBehaviour:
     attack: 118
     defense: 62
     speed: 12
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: zareen
     displayName: Zareen
     description: "M\u1EB9 Lila \u2013 Th\u1EA7n n\u1EEF"
@@ -961,7 +1082,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
+    - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -986,6 +1111,9 @@ MonoBehaviour:
     attack: 70
     defense: 66
     speed: 10
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: farzan
     displayName: Farzan
     description: "Cha Lila \u2013 tr\u01B0\u1EDFng \u0111o\xE0n th\u01B0\u01A1ng
@@ -1007,6 +1135,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1029,6 +1159,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: temir
     displayName: Temir
     description: "Ch\xFA c\u1EE7a Lila"
@@ -1049,6 +1182,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1071,6 +1206,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: ilyen
     displayName: Ilyen
     description: "Thi\u1EBFu ni\xEAn t\u1ED9c c\xF3 c\xE1nh"
@@ -1093,7 +1231,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
+    - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -1117,6 +1259,9 @@ MonoBehaviour:
     attack: 96
     defense: 36
     speed: 14
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: eiren
     displayName: Eiren
     description: "Tinh linh song sinh th\u1EE9 nh\u1EA5t"
@@ -1137,6 +1282,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1157,6 +1304,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: neris
     displayName: Neris
     description: "Tinh linh song sinh th\u1EE9 hai"
@@ -1177,6 +1327,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1197,6 +1349,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: veyrun
     displayName: Veyrun
     description: "Phong th\u1EA7n ti\u1EC1n nhi\u1EC7m"
@@ -1217,6 +1372,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1239,6 +1396,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: kharzek
     displayName: Kharzek
     description: "C\u1EADn v\u1EC7 Qu\u1EF7 V\u01B0\u01A1ng"
@@ -1259,6 +1419,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1279,6 +1441,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: vorash
     displayName: Vorash
     description: "Linh th\xFA B\xE3o T\u1ED1"
@@ -1299,6 +1464,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1321,6 +1488,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: lyrienne
     displayName: Lyrienne
     description: "Th\u1EE7y th\u1EA7n c\u1EE7a Sylmeria"
@@ -1346,7 +1516,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+    - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -1372,6 +1546,9 @@ MonoBehaviour:
     attack: 78
     defense: 76
     speed: 9
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: caelith
     displayName: Caelith
     description: "M\u1ED9c th\u1EA7n c\u1EE7a Neravelle"
@@ -1399,7 +1576,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 5299686486652448870, guid: fcfc3df8194a1044ebb8fcd0a6bc5be1, type: 3}
+    - {fileID: 6111780402021197910, guid: 6c3f332676c9b7146a16b045cf9a680a, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -1424,6 +1605,9 @@ MonoBehaviour:
     attack: 82
     defense: 64
     speed: 10
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: asterion
     displayName: Asterion
     description: "T\u1EC3 t\u01B0\u1EDBng; \u0111\u1EE9ng \u0111\u1EA7u H\u1ED9i
@@ -1447,6 +1631,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1467,6 +1653,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: elymara
     displayName: Elymara
     description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch gia \u0111\xECnh,
@@ -1488,6 +1677,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1508,6 +1699,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: thalerys
     displayName: Thalerys
     description: "\u0110\u1EA1i Ngh\u1ECB Quan cai qu\u1EA3n bi\u1EC3n c\u1EA3, s\xF4i
@@ -1533,7 +1727,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+    - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -1559,6 +1757,9 @@ MonoBehaviour:
     attack: 112
     defense: 58
     speed: 11
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: chloriane
     displayName: Chloriane
     description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch m\xF9a m\xE0ng,
@@ -1580,6 +1781,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1600,6 +1803,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: sophyra
     displayName: Sophyra
     description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch gi\xE1o d\u1EE5c,
@@ -1621,6 +1827,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1641,6 +1849,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: elythios
     displayName: Elythios
     description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch y h\u1ECDc, \xE2m
@@ -1664,7 +1875,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
+    - {fileID: 4062496106243499295, guid: 304da8401b8ea6849b9f5f96f0f6eb57, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -1690,6 +1905,9 @@ MonoBehaviour:
     attack: 68
     defense: 58
     speed: 13
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: nythera
     displayName: Nythera
     description: "\u0110\u1EA1i Ngh\u1ECB Quan b\u1EA3o v\u1EC7 thi\xEAn nhi\xEAn
@@ -1721,7 +1939,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 5299686486652448870, guid: fcfc3df8194a1044ebb8fcd0a6bc5be1, type: 3}
+    - {fileID: 6111780402021197910, guid: 6c3f332676c9b7146a16b045cf9a680a, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -1747,6 +1969,9 @@ MonoBehaviour:
     attack: 78
     defense: 50
     speed: 12
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: dravion
     displayName: Dravion
     description: "\u0110\u1EA1i Ngh\u1ECB Quan: ch\u1EC9 huy qu\xE2n \u0111\u1ED9i
@@ -1768,6 +1993,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1788,6 +2015,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: kallistra
     displayName: Kallistra
     description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch ngh\u1EC7 thu\u1EADt,
@@ -1815,7 +2045,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
+    - {fileID: 575319445162951685, guid: b7e5061752aa1fa48b86d205d34abf7f, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -1841,6 +2075,9 @@ MonoBehaviour:
     attack: 92
     defense: 42
     speed: 14
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: tekharos
     displayName: Tekharos
     description: "\u0110\u1EA1i Ngh\u1ECB Quan qu\u1EA3n l\xFD ki\u1EBFn tr\xFAc,
@@ -1866,7 +2103,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
+    - {fileID: 575319445162951685, guid: b7e5061752aa1fa48b86d205d34abf7f, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -1890,6 +2131,9 @@ MonoBehaviour:
     attack: 108
     defense: 58
     speed: 11
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: dromerys
     displayName: Dromerys
     description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch th\u01B0\u01A1ng
@@ -1911,6 +2155,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -1931,6 +2177,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: oikestia
     displayName: Oikestia
     description: "\u0110\u1EA1i Ngh\u1ECB Quan ph\u1EE5 tr\xE1ch d\xE2n sinh, c\u1ED9ng
@@ -1955,7 +2204,11 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
-    attackEffectPrefabs: []
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
+    attackEffectPrefabs:
+    - {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
+    - {fileID: 575319445162951685, guid: b7e5061752aa1fa48b86d205d34abf7f, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
     elementIcon: {fileID: 0}
@@ -1980,6 +2233,9 @@ MonoBehaviour:
     attack: 96
     defense: 46
     speed: 12
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   - id: thalor
     displayName: Thalor
     description: "C\u1EADn v\u1EC7 c\u1EE7a Qu\u1EF7 V\u01B0\u01A1ng; k\u1EBB \u0111\u1EE9ng
@@ -2001,6 +2257,8 @@ MonoBehaviour:
     attackFrame3: {fileID: 0}
     attackFrame4: {fileID: 0}
     attackFrame5: {fileID: 0}
+    normalAttackIcon: {fileID: 0}
+    skillIcon: {fileID: 0}
     attackEffectPrefabs: []
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
@@ -2021,6 +2279,9 @@ MonoBehaviour:
     attack: 1
     defense: 0
     speed: 1
+    energyTurns: 3
+    critRate: 0.1
+    critDamageMultiplier: 1.5
   storyChapters:
   - id: chapter_1
     title: "Ch\u01B0\u01A1ng 1 - Ng\u1ECDn L\u1EEDa D\u01B0\u1EDBi M\u1EB7t Tr\u1EDDi
@@ -5693,13 +5954,15 @@ MonoBehaviour:
       - id: chapter_1_cat_xoay_cat_1
         displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
         element: Phong
-        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -5712,6 +5975,9 @@ MonoBehaviour:
         attack: 90
         defense: 34
         speed: 13
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_sand_random_5_percent
           displayName: "Lao T\u1EDBi"
@@ -5720,13 +5986,15 @@ MonoBehaviour:
       - id: chapter_1_lua_linh_hon_2
         displayName: "L\u1EEDa Linh H\u1ED3n"
         element: "Th\u1EE7y"
-        portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -5739,6 +6007,9 @@ MonoBehaviour:
         attack: 12
         defense: 45
         speed: 9
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_blue_heal_20_percent
           displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
@@ -5747,13 +6018,15 @@ MonoBehaviour:
       - id: chapter_1_thu_lua_nho_3
         displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
         element: "H\u1ECFa"
-        portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -5766,6 +6039,9 @@ MonoBehaviour:
         attack: 82
         defense: 30
         speed: 12
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_fire_aoe_5_percent
           displayName: "L\u1EEDa Lan"
@@ -5774,13 +6050,15 @@ MonoBehaviour:
       - id: chapter_1_cat_xoay_cat_4
         displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
         element: Phong
-        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -5793,6 +6071,9 @@ MonoBehaviour:
         attack: 90
         defense: 34
         speed: 13
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_sand_random_5_percent
           displayName: "Lao T\u1EDBi"
@@ -5802,16 +6083,20 @@ MonoBehaviour:
         id: 
         displayName: 
         element: 
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
-        attackEffectPrefabs: []
+        attackEffectPrefabs:
+        - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+        - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
         attackEffectOffset: {x: 0, y: 0, z: 0}
         attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
@@ -5819,6 +6104,9 @@ MonoBehaviour:
         attack: 20
         defense: 5
         speed: 10
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills: []
       battlePhases:
       - id: chapter_1_scene_1_phase_1
@@ -5839,6 +6127,8 @@ MonoBehaviour:
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -5851,6 +6141,9 @@ MonoBehaviour:
           attack: 145
           defense: 5
           speed: 10
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: attack
             displayName: "T\u1EA5n C\xF4ng"
@@ -5860,13 +6153,15 @@ MonoBehaviour:
         - id: chapter_1_cat_xoay_cat_1
           displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
           element: Phong
-          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -5879,6 +6174,9 @@ MonoBehaviour:
           attack: 90
           defense: 34
           speed: 13
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_sand_random_5_percent
             displayName: "Lao T\u1EDBi"
@@ -5887,13 +6185,15 @@ MonoBehaviour:
         - id: chapter_1_lua_linh_hon_2
           displayName: "L\u1EEDa Linh H\u1ED3n"
           element: "Th\u1EE7y"
-          portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -5906,6 +6206,9 @@ MonoBehaviour:
           attack: 12
           defense: 45
           speed: 9
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_blue_heal_20_percent
             displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
@@ -5914,13 +6217,15 @@ MonoBehaviour:
         - id: chapter_1_thu_lua_nho_3
           displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
           element: "H\u1ECFa"
-          portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -5933,6 +6238,9 @@ MonoBehaviour:
           attack: 82
           defense: 30
           speed: 12
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_fire_aoe_5_percent
             displayName: "L\u1EEDa Lan"
@@ -5941,13 +6249,15 @@ MonoBehaviour:
         - id: chapter_1_cat_xoay_cat_4
           displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
           element: Phong
-          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -5960,6 +6270,9 @@ MonoBehaviour:
           attack: 90
           defense: 34
           speed: 13
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_sand_random_5_percent
             displayName: "Lao T\u1EDBi"
@@ -5969,16 +6282,20 @@ MonoBehaviour:
           id: 
           displayName: 
           element: 
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
-          attackEffectPrefabs: []
+          attackEffectPrefabs:
+          - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+          - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
           attackEffectOffset: {x: 0, y: 0, z: 0}
           attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
@@ -5986,6 +6303,9 @@ MonoBehaviour:
           attack: 20
           defense: 5
           speed: 10
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills: []
         combatDialogueTriggers:
         - id: chapter_1_scene_1_phase_1_trigger_1
@@ -11368,16 +11688,20 @@ MonoBehaviour:
         id: 
         displayName: 
         element: 
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
-        attackEffectPrefabs: []
+        attackEffectPrefabs:
+        - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+        - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
         attackEffectOffset: {x: 0, y: 0, z: 0}
         attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
@@ -11385,6 +11709,9 @@ MonoBehaviour:
         attack: 20
         defense: 5
         speed: 10
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills: []
       battlePhases: []
     - id: chapter_1_stage_3
@@ -16939,16 +17266,20 @@ MonoBehaviour:
         id: 
         displayName: 
         element: 
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
-        attackEffectPrefabs: []
+        attackEffectPrefabs:
+        - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+        - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
         attackEffectOffset: {x: 0, y: 0, z: 0}
         attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
@@ -16956,6 +17287,9 @@ MonoBehaviour:
         attack: 20
         defense: 5
         speed: 10
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills: []
       battlePhases: []
     - id: chapter_1_stage_4
@@ -24865,16 +25199,20 @@ MonoBehaviour:
         id: 
         displayName: 
         element: 
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
-        attackEffectPrefabs: []
+        attackEffectPrefabs:
+        - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+        - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
         attackEffectOffset: {x: 0, y: 0, z: 0}
         attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
@@ -24882,6 +25220,9 @@ MonoBehaviour:
         attack: 20
         defense: 5
         speed: 10
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills: []
       battlePhases: []
     - id: chapter_1_stage_5
@@ -26113,13 +26454,15 @@ MonoBehaviour:
       - id: chapter_1_cat_xoay_cat_1
         displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
         element: Phong
-        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -26132,6 +26475,9 @@ MonoBehaviour:
         attack: 90
         defense: 34
         speed: 13
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_sand_random_5_percent
           displayName: "Lao T\u1EDBi"
@@ -26140,13 +26486,15 @@ MonoBehaviour:
       - id: chapter_1_lua_linh_hon_2
         displayName: "L\u1EEDa Linh H\u1ED3n"
         element: "Th\u1EE7y"
-        portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -26159,6 +26507,9 @@ MonoBehaviour:
         attack: 12
         defense: 45
         speed: 9
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_blue_heal_20_percent
           displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
@@ -26167,13 +26518,15 @@ MonoBehaviour:
       - id: chapter_1_thu_lua_nho_3
         displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
         element: "H\u1ECFa"
-        portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -26186,6 +26539,9 @@ MonoBehaviour:
         attack: 82
         defense: 30
         speed: 12
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_fire_aoe_5_percent
           displayName: "L\u1EEDa Lan"
@@ -26194,13 +26550,15 @@ MonoBehaviour:
       - id: chapter_1_cat_xoay_cat_4
         displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
         element: Phong
-        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -26213,6 +26571,9 @@ MonoBehaviour:
         attack: 90
         defense: 34
         speed: 13
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_sand_random_5_percent
           displayName: "Lao T\u1EDBi"
@@ -26222,16 +26583,20 @@ MonoBehaviour:
         id: 
         displayName: 
         element: 
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
-        attackEffectPrefabs: []
+        attackEffectPrefabs:
+        - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+        - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
         attackEffectOffset: {x: 0, y: 0, z: 0}
         attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
@@ -26239,6 +26604,9 @@ MonoBehaviour:
         attack: 20
         defense: 5
         speed: 10
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills: []
       battlePhases:
       - id: chapter_1_scene_1_phase_1
@@ -26257,6 +26625,8 @@ MonoBehaviour:
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -26269,6 +26639,9 @@ MonoBehaviour:
           attack: 145
           defense: 5
           speed: 10
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: attack
             displayName: "T\u1EA5n C\xF4ng"
@@ -26278,13 +26651,15 @@ MonoBehaviour:
         - id: chapter_1_cat_xoay_cat_1
           displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
           element: Phong
-          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -26297,6 +26672,9 @@ MonoBehaviour:
           attack: 90
           defense: 34
           speed: 13
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_sand_random_5_percent
             displayName: "Lao T\u1EDBi"
@@ -26305,13 +26683,15 @@ MonoBehaviour:
         - id: chapter_1_lua_linh_hon_2
           displayName: "L\u1EEDa Linh H\u1ED3n"
           element: "Th\u1EE7y"
-          portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -26324,6 +26704,9 @@ MonoBehaviour:
           attack: 12
           defense: 45
           speed: 9
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_blue_heal_20_percent
             displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
@@ -26332,13 +26715,15 @@ MonoBehaviour:
         - id: chapter_1_thu_lua_nho_3
           displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
           element: "H\u1ECFa"
-          portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -26351,6 +26736,9 @@ MonoBehaviour:
           attack: 82
           defense: 30
           speed: 12
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_fire_aoe_5_percent
             displayName: "L\u1EEDa Lan"
@@ -26359,13 +26747,15 @@ MonoBehaviour:
         - id: chapter_1_cat_xoay_cat_4
           displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
           element: Phong
-          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -26378,6 +26768,9 @@ MonoBehaviour:
           attack: 90
           defense: 34
           speed: 13
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_sand_random_5_percent
             displayName: "Lao T\u1EDBi"
@@ -26387,16 +26780,20 @@ MonoBehaviour:
           id: 
           displayName: 
           element: 
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
-          attackEffectPrefabs: []
+          attackEffectPrefabs:
+          - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+          - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
           attackEffectOffset: {x: 0, y: 0, z: 0}
           attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
@@ -26404,6 +26801,9 @@ MonoBehaviour:
           attack: 20
           defense: 5
           speed: 10
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills: []
         combatDialogueTriggers:
         - id: chapter_1_scene_1_phase_1_trigger_1
@@ -41529,13 +41929,15 @@ MonoBehaviour:
       - id: chapter_1_cat_xoay_cat_1
         displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
         element: Phong
-        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -41548,6 +41950,9 @@ MonoBehaviour:
         attack: 90
         defense: 34
         speed: 13
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_sand_random_5_percent
           displayName: "Lao T\u1EDBi"
@@ -41556,13 +41961,15 @@ MonoBehaviour:
       - id: chapter_1_lua_linh_hon_2
         displayName: "L\u1EEDa Linh H\u1ED3n"
         element: "Th\u1EE7y"
-        portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+        attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -41575,6 +41982,9 @@ MonoBehaviour:
         attack: 12
         defense: 45
         speed: 9
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_blue_heal_20_percent
           displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
@@ -41583,13 +41993,15 @@ MonoBehaviour:
       - id: chapter_1_thu_lua_nho_3
         displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
         element: "H\u1ECFa"
-        portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+        attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -41602,6 +42014,9 @@ MonoBehaviour:
         attack: 82
         defense: 30
         speed: 12
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_fire_aoe_5_percent
           displayName: "L\u1EEDa Lan"
@@ -41610,13 +42025,15 @@ MonoBehaviour:
       - id: chapter_1_cat_xoay_cat_4
         displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
         element: Phong
-        portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
         attackEffectPrefabs:
@@ -41629,6 +42046,9 @@ MonoBehaviour:
         attack: 90
         defense: 34
         speed: 13
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills:
         - id: enemy_sand_random_5_percent
           displayName: "Lao T\u1EDBi"
@@ -41638,16 +42058,20 @@ MonoBehaviour:
         id: 
         displayName: 
         element: 
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
-        attackEffectPrefabs: []
+        attackEffectPrefabs:
+        - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+        - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
         attackEffectOffset: {x: 0, y: 0, z: 0}
         attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
@@ -41655,6 +42079,9 @@ MonoBehaviour:
         attack: 20
         defense: 5
         speed: 10
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills: []
       battlePhases:
       - id: chapter_1_scene_1_phase_1
@@ -41673,6 +42100,8 @@ MonoBehaviour:
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs: []
@@ -41683,6 +42112,9 @@ MonoBehaviour:
           attack: 1
           defense: 5
           speed: 10
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: attack
             displayName: "T\u1EA5n C\xF4ng"
@@ -41692,13 +42124,15 @@ MonoBehaviour:
         - id: chapter_1_cat_xoay_cat_1
           displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
           element: Phong
-          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -41711,6 +42145,9 @@ MonoBehaviour:
           attack: 90
           defense: 34
           speed: 13
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_sand_random_5_percent
             displayName: "Lao T\u1EDBi"
@@ -41719,13 +42156,15 @@ MonoBehaviour:
         - id: chapter_1_lua_linh_hon_2
           displayName: "L\u1EEDa Linh H\u1ED3n"
           element: "Th\u1EE7y"
-          portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -41738,6 +42177,9 @@ MonoBehaviour:
           attack: 12
           defense: 45
           speed: 9
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_blue_heal_20_percent
             displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
@@ -41746,13 +42188,15 @@ MonoBehaviour:
         - id: chapter_1_thu_lua_nho_3
           displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
           element: "H\u1ECFa"
-          portrait: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+          attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -41765,6 +42209,9 @@ MonoBehaviour:
           attack: 82
           defense: 30
           speed: 12
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_fire_aoe_5_percent
             displayName: "L\u1EEDa Lan"
@@ -41773,13 +42220,15 @@ MonoBehaviour:
         - id: chapter_1_cat_xoay_cat_4
           displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
           element: Phong
-          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -41792,6 +42241,9 @@ MonoBehaviour:
           attack: 90
           defense: 34
           speed: 13
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_sand_random_5_percent
             displayName: "Lao T\u1EDBi"
@@ -41801,16 +42253,20 @@ MonoBehaviour:
           id: 
           displayName: 
           element: 
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
-          attackEffectPrefabs: []
+          attackEffectPrefabs:
+          - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+          - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
           attackEffectOffset: {x: 0, y: 0, z: 0}
           attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
@@ -41818,6 +42274,9 @@ MonoBehaviour:
           attack: 20
           defense: 5
           speed: 10
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills: []
         combatDialogueTriggers:
         - id: chapter_1_scene_1_phase_1_start
@@ -43871,6 +44330,8 @@ MonoBehaviour:
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -43883,6 +44344,9 @@ MonoBehaviour:
           attack: 145
           defense: 5
           speed: 10
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: attack
             displayName: "T\u1EA5n C\xF4ng"
@@ -43898,6 +44362,8 @@ MonoBehaviour:
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -43910,6 +44376,9 @@ MonoBehaviour:
           attack: 104
           defense: 5
           speed: 10
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: attack
             displayName: "T\u1EA5n C\xF4ng"
@@ -43919,13 +44388,15 @@ MonoBehaviour:
         - id: chapter_1_cat_xoay_cat_1
           displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
           element: Phong
-          portrait: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -43938,6 +44409,9 @@ MonoBehaviour:
           attack: 90
           defense: 34
           speed: 13
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_sand_random_5_percent
             displayName: "Lao T\u1EDBi"
@@ -43946,13 +44420,15 @@ MonoBehaviour:
         - id: chapter_1_lua_linh_hon_2
           displayName: "L\u1EEDa Linh H\u1ED3n"
           element: "Th\u1EE7y"
-          portrait: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-          battlefieldSprite: {fileID: 21300000, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+          attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
           attackEffectPrefabs:
@@ -43965,6 +44441,9 @@ MonoBehaviour:
           attack: 12
           defense: 45
           speed: 9
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: enemy_blue_heal_20_percent
             displayName: "H\u1ED3i M\xE1u \u0110\u1ED3ng \u0110\u1ED9i"
@@ -43974,16 +44453,20 @@ MonoBehaviour:
           id: nephkar
           displayName: Nephkar
           element: "L\u1ED7i"
-          portrait: {fileID: 0}
-          battlefieldSprite: {fileID: 0}
-          attackFrame1: {fileID: 0}
-          attackFrame2: {fileID: 0}
+          portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+          attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
           attackFrame3: {fileID: 0}
           attackFrame4: {fileID: 0}
           attackFrame5: {fileID: 0}
+          normalAttackIcon: {fileID: 0}
+          skillIcon: {fileID: 0}
           idleClip: {fileID: 0}
           attackClip: {fileID: 0}
-          attackEffectPrefabs: []
+          attackEffectPrefabs:
+          - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+          - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
           attackEffectOffset: {x: 0, y: 0, z: 0}
           attackEffectScale: {x: 1, y: 1, z: 1}
           isRanged: 0
@@ -43991,6 +44474,9 @@ MonoBehaviour:
           attack: 32
           defense: 120
           speed: 11
+          energyTurns: 3
+          critRate: 0.1
+          critDamageMultiplier: 1.5
           skills:
           - id: summon
             displayName: "Tri\u1EC7u H\u1ED3i"
@@ -54413,16 +54899,20 @@ MonoBehaviour:
         id: 
         displayName: 
         element: 
-        portrait: {fileID: 0}
-        battlefieldSprite: {fileID: 0}
-        attackFrame1: {fileID: 0}
-        attackFrame2: {fileID: 0}
+        portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+        attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
         attackFrame3: {fileID: 0}
         attackFrame4: {fileID: 0}
         attackFrame5: {fileID: 0}
+        normalAttackIcon: {fileID: 0}
+        skillIcon: {fileID: 0}
         idleClip: {fileID: 0}
         attackClip: {fileID: 0}
-        attackEffectPrefabs: []
+        attackEffectPrefabs:
+        - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+        - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
         attackEffectOffset: {x: 0, y: 0, z: 0}
         attackEffectScale: {x: 1, y: 1, z: 1}
         isRanged: 0
@@ -54430,6 +54920,9 @@ MonoBehaviour:
         attack: 20
         defense: 5
         speed: 10
+        energyTurns: 3
+        critRate: 0.1
+        critDamageMultiplier: 1.5
         skills: []
       battlePhases: []
   resourceStages:
@@ -54458,23 +54951,30 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
-      attackEffectScale: {x: 0, y: 0, z: 0}
+      attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
       maxHealth: 0
       attack: 0
       defense: 0
       speed: 0
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   - id: 
@@ -54502,23 +55002,30 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
-      attackEffectScale: {x: 0, y: 0, z: 0}
+      attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
       maxHealth: 0
       attack: 0
       defense: 0
       speed: 0
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   - id: 
@@ -54546,23 +55053,30 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
-      attackEffectScale: {x: 0, y: 0, z: 0}
+      attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
       maxHealth: 0
       attack: 0
       defense: 0
       speed: 0
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   - id: 
@@ -54590,23 +55104,30 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
-      attackEffectScale: {x: 0, y: 0, z: 0}
+      attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
       maxHealth: 0
       attack: 0
       defense: 0
       speed: 0
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   sanctumStages:
@@ -54651,16 +55172,20 @@ MonoBehaviour:
     - id: sand_wisp_guard
       displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
       element: "Th\u1EE7y"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -54668,6 +55193,9 @@ MonoBehaviour:
       attack: 112
       defense: 44
       speed: 13
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -54676,16 +55204,20 @@ MonoBehaviour:
     - id: fire_wisp_elite
       displayName: "L\u1EEDa Linh H\u1ED3n"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+      - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -54693,6 +55225,9 @@ MonoBehaviour:
       attack: 14
       defense: 54
       speed: 9
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -54701,16 +55236,20 @@ MonoBehaviour:
     - id: flame_beast
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -54718,6 +55257,9 @@ MonoBehaviour:
       attack: 96
       defense: 34
       speed: 14
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -54727,16 +55269,20 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -54744,6 +55290,9 @@ MonoBehaviour:
       attack: 20
       defense: 5
       speed: 10
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   - id: play_sanctum_01
@@ -54787,16 +55336,20 @@ MonoBehaviour:
     - id: sand_wisp_guard
       displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
       element: "Th\u1EE7y"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -54804,6 +55357,9 @@ MonoBehaviour:
       attack: 112
       defense: 44
       speed: 13
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -54812,16 +55368,20 @@ MonoBehaviour:
     - id: fire_wisp_elite
       displayName: "L\u1EEDa Linh H\u1ED3n"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+      - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -54829,6 +55389,9 @@ MonoBehaviour:
       attack: 14
       defense: 54
       speed: 9
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -54837,16 +55400,20 @@ MonoBehaviour:
     - id: flame_beast
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -54854,6 +55421,9 @@ MonoBehaviour:
       attack: 96
       defense: 34
       speed: 14
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -54863,16 +55433,20 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -54880,6 +55454,9 @@ MonoBehaviour:
       attack: 20
       defense: 5
       speed: 10
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   - id: play_sanctum_01
@@ -54923,16 +55500,20 @@ MonoBehaviour:
     - id: sand_wisp_guard
       displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
       element: "Th\u1EE7y"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -54940,6 +55521,9 @@ MonoBehaviour:
       attack: 112
       defense: 44
       speed: 13
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -54948,16 +55532,20 @@ MonoBehaviour:
     - id: fire_wisp_elite
       displayName: "L\u1EEDa Linh H\u1ED3n"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+      - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -54965,6 +55553,9 @@ MonoBehaviour:
       attack: 14
       defense: 54
       speed: 9
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -54973,16 +55564,20 @@ MonoBehaviour:
     - id: flame_beast
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -54990,6 +55585,9 @@ MonoBehaviour:
       attack: 96
       defense: 34
       speed: 14
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -54999,16 +55597,20 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55016,6 +55618,9 @@ MonoBehaviour:
       attack: 20
       defense: 5
       speed: 10
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   - id: play_sanctum_01
@@ -55059,16 +55664,20 @@ MonoBehaviour:
     - id: sand_wisp_guard
       displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
       element: "Th\u1EE7y"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55076,6 +55685,9 @@ MonoBehaviour:
       attack: 112
       defense: 44
       speed: 13
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55084,16 +55696,20 @@ MonoBehaviour:
     - id: fire_wisp_elite
       displayName: "L\u1EEDa Linh H\u1ED3n"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+      - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55101,6 +55717,9 @@ MonoBehaviour:
       attack: 14
       defense: 54
       speed: 9
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55109,16 +55728,20 @@ MonoBehaviour:
     - id: flame_beast
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55126,6 +55749,9 @@ MonoBehaviour:
       attack: 96
       defense: 34
       speed: 14
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55135,16 +55761,20 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55152,6 +55782,9 @@ MonoBehaviour:
       attack: 20
       defense: 5
       speed: 10
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   weaponStages:
@@ -55196,16 +55829,20 @@ MonoBehaviour:
     - id: flame_beast_a
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55213,6 +55850,9 @@ MonoBehaviour:
       attack: 108
       defense: 38
       speed: 15
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55221,16 +55861,20 @@ MonoBehaviour:
     - id: flame_beast_b
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55238,6 +55882,9 @@ MonoBehaviour:
       attack: 108
       defense: 38
       speed: 15
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55246,16 +55893,20 @@ MonoBehaviour:
     - id: sand_wisp_elite
       displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
       element: "Th\u1EE7y"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55263,6 +55914,9 @@ MonoBehaviour:
       attack: 112
       defense: 44
       speed: 13
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55271,16 +55925,20 @@ MonoBehaviour:
     - id: fire_wisp_support
       displayName: "L\u1EEDa Linh H\u1ED3n"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+      - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55288,6 +55946,9 @@ MonoBehaviour:
       attack: 14
       defense: 54
       speed: 9
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55297,16 +55958,20 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55314,6 +55979,9 @@ MonoBehaviour:
       attack: 20
       defense: 5
       speed: 10
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   - id: play_weapon_01
@@ -55357,16 +56025,20 @@ MonoBehaviour:
     - id: flame_beast_a
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55374,6 +56046,9 @@ MonoBehaviour:
       attack: 108
       defense: 38
       speed: 15
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55382,16 +56057,20 @@ MonoBehaviour:
     - id: flame_beast_b
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55399,6 +56078,9 @@ MonoBehaviour:
       attack: 108
       defense: 38
       speed: 15
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55407,16 +56089,20 @@ MonoBehaviour:
     - id: sand_wisp_elite
       displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
       element: "Th\u1EE7y"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55424,6 +56110,9 @@ MonoBehaviour:
       attack: 112
       defense: 44
       speed: 13
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55432,16 +56121,20 @@ MonoBehaviour:
     - id: fire_wisp_support
       displayName: "L\u1EEDa Linh H\u1ED3n"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+      - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55449,6 +56142,9 @@ MonoBehaviour:
       attack: 14
       defense: 54
       speed: 9
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55458,16 +56154,20 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55475,6 +56175,9 @@ MonoBehaviour:
       attack: 20
       defense: 5
       speed: 10
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   - id: play_weapon_01
@@ -55518,16 +56221,20 @@ MonoBehaviour:
     - id: flame_beast_a
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55535,6 +56242,9 @@ MonoBehaviour:
       attack: 108
       defense: 38
       speed: 15
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55543,16 +56253,20 @@ MonoBehaviour:
     - id: flame_beast_b
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55560,6 +56274,9 @@ MonoBehaviour:
       attack: 108
       defense: 38
       speed: 15
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55568,16 +56285,20 @@ MonoBehaviour:
     - id: sand_wisp_elite
       displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
       element: "Th\u1EE7y"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55585,6 +56306,9 @@ MonoBehaviour:
       attack: 112
       defense: 44
       speed: 13
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55593,16 +56317,20 @@ MonoBehaviour:
     - id: fire_wisp_support
       displayName: "L\u1EEDa Linh H\u1ED3n"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+      - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55610,6 +56338,9 @@ MonoBehaviour:
       attack: 14
       defense: 54
       speed: 9
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55619,16 +56350,20 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55636,6 +56371,9 @@ MonoBehaviour:
       attack: 20
       defense: 5
       speed: 10
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   - id: play_weapon_01
@@ -55679,16 +56417,20 @@ MonoBehaviour:
     - id: flame_beast_a
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55696,6 +56438,9 @@ MonoBehaviour:
       attack: 108
       defense: 38
       speed: 15
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55704,16 +56449,20 @@ MonoBehaviour:
     - id: flame_beast_b
       displayName: "Th\xFA L\u1EEDa Nh\u1ECF"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      battlefieldSprite: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame1: {fileID: 1013598979, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
+      attackFrame2: {fileID: -1362048192, guid: a5c0bac58492b414183ff4ea86eed8dc, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
+      - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55721,6 +56470,9 @@ MonoBehaviour:
       attack: 108
       defense: 38
       speed: 15
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55729,16 +56481,20 @@ MonoBehaviour:
     - id: sand_wisp_elite
       displayName: "C\xE1t Xo\xE1y Sa M\u1EA1c"
       element: "Th\u1EE7y"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55746,6 +56502,9 @@ MonoBehaviour:
       attack: 112
       defense: 44
       speed: 13
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55754,16 +56513,20 @@ MonoBehaviour:
     - id: fire_wisp_support
       displayName: "L\u1EEDa Linh H\u1ED3n"
       element: "H\u1ECFa"
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      battlefieldSprite: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame1: {fileID: -1926481434, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
+      attackFrame2: {fileID: -1551794084, guid: c26a9accdf772194981166d9891ea5fe, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 5112403345868107898, guid: 6f34ef0d986e9db4199cf75805f79753, type: 3}
+      - {fileID: 2584144885890085385, guid: 0cce6157f975eee4dbb229fa00f63747, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55771,6 +56534,9 @@ MonoBehaviour:
       attack: 14
       defense: 54
       speed: 9
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills:
       - id: attack
         displayName: "T\u1EA5n C\xF4ng"
@@ -55780,16 +56546,20 @@ MonoBehaviour:
       id: 
       displayName: 
       element: 
-      portrait: {fileID: 0}
-      battlefieldSprite: {fileID: 0}
-      attackFrame1: {fileID: 0}
-      attackFrame2: {fileID: 0}
+      portrait: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      battlefieldSprite: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame1: {fileID: 1747389258, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
+      attackFrame2: {fileID: 373547249, guid: 709d7405dc904694b8721031aa6f68c1, type: 3}
       attackFrame3: {fileID: 0}
       attackFrame4: {fileID: 0}
       attackFrame5: {fileID: 0}
+      normalAttackIcon: {fileID: 0}
+      skillIcon: {fileID: 0}
       idleClip: {fileID: 0}
       attackClip: {fileID: 0}
-      attackEffectPrefabs: []
+      attackEffectPrefabs:
+      - {fileID: 7207109987891872099, guid: d1dcc4bfbc6000944b2cfb0dd422a8e0, type: 3}
+      - {fileID: 4250298743439401460, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
       attackEffectOffset: {x: 0, y: 0, z: 0}
       attackEffectScale: {x: 1, y: 1, z: 1}
       isRanged: 0
@@ -55797,6 +56567,9 @@ MonoBehaviour:
       attack: 20
       defense: 5
       speed: 10
+      energyTurns: 3
+      critRate: 0.1
+      critDamageMultiplier: 1.5
       skills: []
     battlePhases: []
   playModeStageGroups: []

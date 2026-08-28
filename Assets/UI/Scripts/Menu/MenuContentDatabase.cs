@@ -225,6 +225,7 @@ namespace BES.UI.Menu
         void OnValidate()
         {
             NormalizeCharacterCombatDefaults();
+            NormalizeEnemyCombatDefaults();
         }
 
         public void NormalizeCharacterCombatDefaults()
@@ -232,6 +233,7 @@ namespace BES.UI.Menu
             if (characters == null) return;
             foreach (var character in characters)
                 NormalizeCharacterCombatDefaults(character);
+            NormalizeEnemyCombatDefaults();
         }
 
         static void NormalizeCharacterCombatDefaults(CharacterEntry character)
@@ -320,6 +322,145 @@ namespace BES.UI.Menu
         }
 #endif
 
+        public void NormalizeEnemyCombatDefaults()
+        {
+#if UNITY_EDITOR
+            NormalizeEnemyCombatDefaults(storyChapters);
+            NormalizeEnemyCombatDefaults(resourceStages);
+            NormalizeEnemyCombatDefaults(sanctumStages);
+            NormalizeEnemyCombatDefaults(weaponStages);
+            if (playModeStageGroups != null)
+            {
+                foreach (var group in playModeStageGroups)
+                    NormalizeEnemyCombatDefaults(group?.stages);
+            }
+#endif
+        }
+
+#if UNITY_EDITOR
+        static void NormalizeEnemyCombatDefaults(List<StoryChapterEntry> chapters)
+        {
+            if (chapters == null) return;
+            foreach (var chapter in chapters)
+                NormalizeEnemyCombatDefaults(chapter?.stages);
+        }
+
+        static void NormalizeEnemyCombatDefaults(List<StageEntry> stages)
+        {
+            if (stages == null) return;
+            foreach (var stage in stages)
+            {
+                if (stage == null) continue;
+                NormalizeEnemyCombatDefaults(stage.enemies);
+                NormalizeEnemyCombatDefaults(stage.boss);
+                if (stage.battlePhases == null) continue;
+                foreach (var phase in stage.battlePhases)
+                {
+                    if (phase == null) continue;
+                    NormalizeEnemyCombatDefaults(phase.enemies);
+                    NormalizeEnemyCombatDefaults(phase.boss);
+                }
+            }
+        }
+
+        static void NormalizeEnemyCombatDefaults(List<BattleUnitDefinition> enemies)
+        {
+            if (enemies == null) return;
+            foreach (var enemy in enemies)
+                NormalizeEnemyCombatDefaults(enemy);
+        }
+
+        static void NormalizeEnemyCombatDefaults(BattleUnitDefinition enemy)
+        {
+            if (enemy == null) return;
+
+            var sprites = DefaultEnemySprites(enemy.id, enemy.displayName);
+            if (sprites.Count > 0)
+            {
+                if (enemy.battlefieldSprite == null)
+                    enemy.battlefieldSprite = sprites[0];
+                if (enemy.portrait == null)
+                    enemy.portrait = sprites[0];
+                if (enemy.attackFrame1 == null)
+                    enemy.attackFrame1 = sprites[0];
+                if (enemy.attackFrame2 == null && sprites.Count > 1)
+                    enemy.attackFrame2 = sprites[1];
+            }
+
+            if (enemy.attackEffectPrefabs == null || enemy.attackEffectPrefabs.Count == 0)
+            {
+                enemy.attackEffectPrefabs = new List<GameObject>();
+                foreach (var path in DefaultEnemyAttackEffectPaths(enemy.id, enemy.displayName, enemy.element))
+                {
+                    var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                    if (prefab != null && !enemy.attackEffectPrefabs.Contains(prefab))
+                        enemy.attackEffectPrefabs.Add(prefab);
+                }
+            }
+
+            if (enemy.attackEffectScale == Vector3.zero)
+                enemy.attackEffectScale = Vector3.one;
+        }
+
+        static List<Sprite> DefaultEnemySprites(string id, string displayName)
+        {
+            var key = ((id ?? string.Empty) + " " + (displayName ?? string.Empty)).ToLowerInvariant();
+            var path = "Assets/Art Ui/Game Việt hóa mới/enemy/sprite-sheet-2frames (2).png";
+            if (key.Contains("fire") || key.Contains("flame") || key.Contains("lửa") || key.Contains("lua") || key.Contains("thú lửa"))
+                path = "Assets/Art Ui/Game Việt hóa mới/enemy/sprite-sheet-2frames (5).png";
+            if (key.Contains("blue") || key.Contains("wisp") || key.Contains("linh hồn") || key.Contains("linh hon"))
+                path = "Assets/Art Ui/Game Việt hóa mới/enemy/sprite-sheet-2frames (3).png";
+            if (key.Contains("coffin") || key.Contains("sarcophagus") || key.Contains("quan tài") || key.Contains("quan tai"))
+                path = "Assets/Art Ui/Game Việt hóa mới/enemy/sprite-sheet-2frames (4).png";
+            if (key.Contains("sand") || key.Contains("cát") || key.Contains("cat") || key.Contains("xoáy") || key.Contains("xoay"))
+                path = "Assets/Art Ui/Game Việt hóa mới/enemy/sprite-sheet-2frames (2).png";
+
+            var assets = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(path);
+            var sprites = new List<Sprite>();
+            foreach (var asset in assets)
+                if (asset is Sprite sprite)
+                    sprites.Add(sprite);
+            sprites.Sort((a, b) => string.Compare(a.name, b.name, StringComparison.OrdinalIgnoreCase));
+            if (sprites.Count > 2)
+                sprites.RemoveRange(2, sprites.Count - 2);
+            return sprites;
+        }
+
+        static string[] DefaultEnemyAttackEffectPaths(string id, string displayName, string element)
+        {
+            var key = ((id ?? string.Empty) + " " + (displayName ?? string.Empty) + " " + (element ?? string.Empty)).ToLowerInvariant();
+            if (key.Contains("sand") || key.Contains("cát") || key.Contains("cat") || key.Contains("xoáy") || key.Contains("xoay"))
+                return new[]
+                {
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Battle_Effect_Yellow.prefab",
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Battle_Effect_White.prefab"
+                };
+            if (key.Contains("coffin") || key.Contains("sarcophagus") || key.Contains("quan tài") || key.Contains("quan tai"))
+                return new[]
+                {
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Battle_Effect_Yellow.prefab",
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Explosion_1_Woa_Yellow.prefab"
+                };
+            if (key.Contains("blue") || key.Contains("wisp") || key.Contains("linh hồn") || key.Contains("linh hon") || key.Contains("thủy") || key.Contains("thuy"))
+                return new[]
+                {
+                    "Assets/JMO Assets/Cartoon FX Remaster/CFXR Prefabs/Ice/CFXR3 Hit Ice B (Air).prefab",
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Explosion_2_Bomb_Blue.prefab"
+                };
+            if (key.Contains("fire") || key.Contains("flame") || key.Contains("lửa") || key.Contains("lua") || key.Contains("hỏa") || key.Contains("hoa"))
+                return new[]
+                {
+                    "Assets/JMO Assets/Cartoon FX Remaster/CFXR Prefabs/Fire/CFXR3 Hit Fire B (Air).prefab",
+                    "Assets/CartoonVFX9x/Comic_FX/Prefabs/Explosion_2_Bomb_Red.prefab"
+                };
+            return new[]
+            {
+                "Assets/CartoonVFX9x/Comic_FX/Prefabs/Battle_Effect_Yellow.prefab",
+                "Assets/CartoonVFX9x/Comic_FX/Prefabs/Battle_Effect_White.prefab"
+            };
+        }
+#endif
+
         public void EnsureDefaultPlayModeStages()
         {
             if (resourceStages == null) resourceStages = new List<StageEntry>();
@@ -350,6 +491,8 @@ namespace BES.UI.Menu
                     NewEnemy("flame_beast_b", "Thú Lửa Nhỏ", 620, 108, 38, 15),
                     NewEnemy("sand_wisp_elite", "Cát Xoáy Sa Mạc", 680, 112, 44, 13),
                     NewEnemy("fire_wisp_support", "Lửa Linh Hồn", 720, 14, 54, 9)));
+
+            NormalizeEnemyCombatDefaults();
         }
 
         static StageEntry CreateDefaultStage(string id, string title, string description, int level, RewardEntry rewardA, RewardEntry rewardB, params BattleUnitDefinition[] enemies)

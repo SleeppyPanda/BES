@@ -630,7 +630,7 @@ namespace BES.UI.Menu
                 view.itemIcon.enabled = rewardIcon != null;
             }
             if (view.itemNameText != null) view.itemNameText.text = reward.displayName;
-            if (view.rarityText != null) view.rarityText.text = $"{reward.rarity} â˜…";
+            if (view.rarityText != null) view.rarityText.text = $"{reward.rarity}★";
         }
 
         MenuWishReward RollReward()

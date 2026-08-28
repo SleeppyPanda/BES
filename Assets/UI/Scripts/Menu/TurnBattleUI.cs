@@ -825,26 +825,26 @@ namespace BES.UI.Menu
 
         static bool HasCompleteFrameAttack(BattleUnitDefinition definition)
         {
-            return definition != null && definition.attackFrame1 != null && definition.attackFrame2 != null &&
-                   definition.attackFrame3 != null && definition.attackFrame4 != null && definition.attackFrame5 != null;
+            return GetAttackFrames(definition).Count >= 2;
         }
 
         IEnumerator PlayFrameAttackOnce(BattleUnitView unit)
         {
             if (unit?.definition == null || unit.battlefieldImage == null) yield break;
 
-            var frames = new[]
-            {
-                unit.definition.attackFrame1, unit.definition.attackFrame2, unit.definition.attackFrame3,
-                unit.definition.attackFrame4, unit.definition.attackFrame5
-            };
-            int[] order = { 0, 1, 2, 3, 4, 3, 2, 1, 0 };
+            var frames = GetAttackFrames(unit.definition);
+            if (frames.Count < 2) yield break;
 
             if (unit.gifPlayer != null) unit.gifPlayer.gameObject.SetActive(false);
             unit.battlefieldImage.gameObject.SetActive(true);
-            foreach (var frameIndex in order)
+            for (var i = 0; i < frames.Count; i++)
             {
-                unit.battlefieldImage.sprite = frames[frameIndex];
+                unit.battlefieldImage.sprite = frames[i];
+                yield return ScaledWait(1f / 3f);
+            }
+            for (var i = frames.Count - 2; i >= 0; i--)
+            {
+                unit.battlefieldImage.sprite = frames[i];
                 yield return ScaledWait(1f / 3f);
             }
 
@@ -855,6 +855,18 @@ namespace BES.UI.Menu
                 unit.gifPlayer.gameObject.SetActive(true);
                 unit.gifPlayer.SetClip(unit.definition.idleClip, true);
             }
+        }
+
+        static List<Sprite> GetAttackFrames(BattleUnitDefinition definition)
+        {
+            var frames = new List<Sprite>(5);
+            if (definition == null) return frames;
+            if (definition.attackFrame1 != null) frames.Add(definition.attackFrame1);
+            if (definition.attackFrame2 != null) frames.Add(definition.attackFrame2);
+            if (definition.attackFrame3 != null) frames.Add(definition.attackFrame3);
+            if (definition.attackFrame4 != null) frames.Add(definition.attackFrame4);
+            if (definition.attackFrame5 != null) frames.Add(definition.attackFrame5);
+            return frames;
         }
 
         void PlayAttackEffect(BattleUnitView actor, BattleUnitView target)
@@ -1842,6 +1854,7 @@ namespace BES.UI.Menu
             menuContentDatabase = ChapterOneStoryRuntime.Apply(menuContentDatabase);
             if (ActiveStageId.StartsWith("chapter_2_", StringComparison.OrdinalIgnoreCase))
                 menuContentDatabase = ChapterTwoStoryRuntime.Apply(menuContentDatabase);
+            menuContentDatabase.NormalizeEnemyCombatDefaults();
 
             currentStage = null;
             StageEntry stage = null;
