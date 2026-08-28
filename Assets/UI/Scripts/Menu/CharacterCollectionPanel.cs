@@ -582,7 +582,7 @@ namespace BES.UI.Menu
             RefreshCharacterSelectors();
             if (galleryContent == null) return;
             generatedCards.Clear();
-            var owned = new List<CharacterEntry>(CharacterOwnership.GetOwnedEntries(database));
+            var owned = GetDisplayCharacters();
             owned.Sort((a, b) => SortValue(b).CompareTo(SortValue(a)));
             PopulateExistingCharacterSlots(galleryContent, owned, true);
             if (emptyLabel != null) emptyLabel.gameObject.SetActive(owned.Count == 0);
@@ -604,9 +604,22 @@ namespace BES.UI.Menu
             if (characterSelectorContent == null) return;
             generatedSelectors.Clear();
 
-            var owned = new List<CharacterEntry>(CharacterOwnership.GetOwnedEntries(database));
+            var owned = GetDisplayCharacters();
             owned.Sort((a, b) => SortValue(b).CompareTo(SortValue(a)));
             PopulateExistingCharacterSlots(characterSelectorContent, owned, false);
+        }
+
+        List<CharacterEntry> GetDisplayCharacters()
+        {
+            ResolveDatabase();
+            var owned = new List<CharacterEntry>(CharacterOwnership.GetOwnedEntries(database));
+            if (owned.Count > 0 || database?.characters == null)
+                return owned;
+
+            foreach (var entry in database.characters)
+                if (entry != null && entry.playable)
+                    owned.Add(entry);
+            return owned;
         }
 
         void PopulateExistingCharacterSlots(RectTransform parent, IReadOnlyList<CharacterEntry> owned, bool galleryStyle)
@@ -690,7 +703,7 @@ namespace BES.UI.Menu
         void SelectCharacter(string characterId)
         {
             ResolveDatabase();
-            if (!CharacterOwnership.Owns(characterId) || database?.FindCharacter(characterId) == null) return;
+            if (database?.FindCharacter(characterId) == null) return;
             selectedCharacterId = CharacterIdentity.Canonical(characterId, database);
             CharacterOwnership.Focus(selectedCharacterId);
             RefreshCharacter();

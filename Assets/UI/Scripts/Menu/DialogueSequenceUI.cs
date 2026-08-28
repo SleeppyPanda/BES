@@ -325,6 +325,7 @@ namespace BES.UI.Menu
         {
             if (beat == null) return true;
             if (!string.IsNullOrWhiteSpace(beat.text)) return false;
+            if (beat.background != null || beat.fadeToBlackCheckpoint) return false;
 
             return (beat.castActions == null || beat.castActions.Count == 0) &&
                    (beat.characterPlacements == null || beat.characterPlacements.Count == 0) &&
@@ -404,6 +405,7 @@ namespace BES.UI.Menu
             if (beat.characterPlacements == null || beat.characterPlacements.Count == 0)
                 ApplyLayout(beat);
 
+            var explicitSlots = ExplicitVisualSlots(beat);
             for (var i = 0; i < characterSlots.Count; i++)
             {
                 var slot = characterSlots[i];
@@ -418,10 +420,34 @@ namespace BES.UI.Menu
                     continue;
                 }
 
+                if (explicitSlots.Count > 0 && !explicitSlots.Contains(i))
+                {
+                    SetSlotVisible(slot, false, true);
+                    continue;
+                }
+
                 var active = !string.IsNullOrWhiteSpace(beat.speaker) && i == activeIndex;
                 var alphaDefault = active ? slot.activeAlpha : slot.inactiveAlpha;
                 ApplySlotState(slot, alphaDefault, active ? slot.activeScale : slot.inactiveScale);
             }
+        }
+
+        static HashSet<int> ExplicitVisualSlots(DialogueBeat beat)
+        {
+            var result = new HashSet<int>();
+            if (beat?.characterPlacements != null)
+            {
+                foreach (var placement in beat.characterPlacements)
+                    if (placement != null && placement.slotIndex >= 0)
+                        result.Add(placement.slotIndex);
+            }
+            if (beat?.characterVisuals != null)
+            {
+                foreach (var visual in beat.characterVisuals)
+                    if (visual != null && visual.slotIndex >= 0)
+                        result.Add(visual.slotIndex);
+            }
+            return result;
         }
 
         DialogueCharacterVisualOverride ResolveVisualOverride(DialogueBeat beat, int slotIndex, DialogueCharacterSlot slot)

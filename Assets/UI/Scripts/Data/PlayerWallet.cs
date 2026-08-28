@@ -10,7 +10,7 @@ namespace BES.UI
         public static PlayerWallet Instance { get; private set; }
 
         [SerializeField] int coins = 99999;
-        [SerializeField] int gems = 1600;
+        [SerializeField] int gems = 99999;
 
         public int Coins => coins;
         public int Gems => gems;
@@ -72,7 +72,7 @@ namespace BES.UI
         public void LoadDefaults()
         {
             coins = 99999;
-            gems = 1600;
+            gems = 99999;
             SyncMenuCurrency("coins", coins);
             SyncMenuCurrency("gems", gems);
             WalletChanged?.Invoke();
@@ -91,7 +91,7 @@ namespace BES.UI
             if (data == null)
                 return;
             coins = data.coins > 0 ? data.coins : 99999;
-            gems = data.gems > 0 ? data.gems : 1600;
+            gems = data.gems > 0 ? Mathf.Max(data.gems, 99999) : 99999;
             SyncMenuCurrency("coins", coins);
             SyncMenuCurrency("gems", gems);
             WalletChanged?.Invoke();

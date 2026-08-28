@@ -224,12 +224,26 @@ namespace BES.UI.Menu
 
         void OnValidate()
         {
+            NormalizeCurrencyDefaults();
             NormalizeCharacterCombatDefaults();
             NormalizeEnemyCombatDefaults();
         }
 
+        public void NormalizeCurrencyDefaults()
+        {
+            if (currencies == null) return;
+            foreach (var currency in currencies)
+            {
+                if (currency == null || string.IsNullOrWhiteSpace(currency.id)) continue;
+                if (currency.id.Equals("gems", StringComparison.OrdinalIgnoreCase) ||
+                    currency.id.Equals("gem", StringComparison.OrdinalIgnoreCase))
+                    currency.amount = Mathf.Max(currency.amount, 99999);
+            }
+        }
+
         public void NormalizeCharacterCombatDefaults()
         {
+            NormalizeCurrencyDefaults();
             if (characters == null) return;
             foreach (var character in characters)
                 NormalizeCharacterCombatDefaults(character);

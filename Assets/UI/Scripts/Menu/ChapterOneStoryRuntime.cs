@@ -372,23 +372,23 @@ namespace BES.UI.Menu
         {
             var profiles = new Dictionary<string, RuntimeCharacterProfile>(StringComparer.OrdinalIgnoreCase);
 
-            Add("Lunen", "Lunen", "lunen", leftFallback, true);
-            Add("Tinh Linh", "Tinh Linh", "tinh_linh", rightFallback, false);
-            Add("???", "???", "elio_unknown", ResolveCharacterSprite(database, "Elio", rightFallback), false);
+            Add("Lunen", "Lunen", "lunen", leftFallback, true, 0);
+            Add("Tinh Linh", "Tinh Linh", "tinh_linh", rightFallback, true, 1);
+            Add("???", "???", "elio_unknown", ResolveCharacterSprite(database, "Elio", rightFallback), false, 3);
 
-            AddFromDatabase("Elio", false);
-            AddFromDatabase("Sahure", false);
+            AddFromDatabase("Elio", false, 3);
+            AddFromDatabase("Sahure", false, 3);
 
-            Add("Rashad", "Rashad", "rashad", rightFallback, false);
-            Add("Aurelian", "Aurelian", "aurelian", rightFallback, false);
-            Add("Nefru", "Nefru", "nefru", rightFallback, false);
-            Add("Bekhet", "Bekhet", "bekhet", rightFallback, false);
-            Add("Menkara", "Menkara", "menkara", rightFallback, false);
-            Add("Nephkar", "Nephkar", "nephkar", rightFallback, false);
-            Add("Khepraen", "Khepraen", "khepraen", rightFallback, false);
-            Add("Ramesses", "Ramesses", "ramesses", rightFallback, false);
-            Add("Kasim", "Kasim", "kasim", rightFallback, false);
-            Add("Vezkara", "Vezkara", "vezkara", rightFallback, false);
+            Add("Rashad", "Rashad", "rashad", rightFallback, false, 3);
+            Add("Aurelian", "Aurelian", "aurelian", rightFallback, false, 3);
+            Add("Nefru", "Nefru", "nefru", rightFallback, false, 3);
+            Add("Bekhet", "Bekhet", "bekhet", rightFallback, false, 3);
+            Add("Menkara", "Menkara", "menkara", rightFallback, false, 3);
+            Add("Nephkar", "Nephkar", "nephkar", rightFallback, false, 3);
+            Add("Khepraen", "Khepraen", "khepraen", rightFallback, false, 3);
+            Add("Ramesses", "Ramesses", "ramesses", rightFallback, false, 3);
+            Add("Kasim", "Kasim", "kasim", rightFallback, false, 3);
+            Add("Vezkara", "Vezkara", "vezkara", rightFallback, false, 3);
 
             if (castConfig?.characterProfiles != null)
             {
@@ -411,13 +411,13 @@ namespace BES.UI.Menu
 
             return profiles;
 
-            void AddFromDatabase(string speaker, bool leftSide)
+            void AddFromDatabase(string speaker, bool leftSide, int defaultSlotIndex)
             {
                 Add(speaker, speaker, ResolveDatabaseCharacterId(database, speaker, NormalizeCharacterId(speaker)),
-                    ResolveCharacterSprite(database, speaker, leftSide ? leftFallback : rightFallback), leftSide);
+                    ResolveCharacterSprite(database, speaker, leftSide ? leftFallback : rightFallback), leftSide, defaultSlotIndex);
             }
 
-            void Add(string speaker, string displayName, string id, Sprite sprite, bool leftSide)
+            void Add(string speaker, string displayName, string id, Sprite sprite, bool leftSide, int defaultSlotIndex)
             {
                 profiles[NormalizeSpeaker(speaker)] = new RuntimeCharacterProfile
                 {
@@ -425,7 +425,7 @@ namespace BES.UI.Menu
                     displayName = displayName,
                     sprite = sprite,
                     leftSide = leftSide,
-                    defaultSlotIndex = -1,
+                    defaultSlotIndex = defaultSlotIndex,
                     defaultDimWhenNotSpeaking = true
                 };
             }
@@ -1157,6 +1157,11 @@ namespace BES.UI.Menu
             Sprite rightFallback)
         {
             profiles ??= new Dictionary<string, RuntimeCharacterProfile>(StringComparer.OrdinalIgnoreCase);
+            var normalizedSpeaker = NormalizeSpeaker(speaker);
+            var multiSpeakers = SplitMultiSpeakers(normalizedSpeaker);
+            if (!isSceneText && multiSpeakers.Count > 1)
+                return CreateMultiSpeakerBeat(normalizedSpeaker, text, background, profiles);
+
             profiles.TryGetValue(NormalizeSpeaker(speaker), out var profile);
             profile ??= new RuntimeCharacterProfile
             {
@@ -1169,13 +1174,13 @@ namespace BES.UI.Menu
             isSceneText = isSceneText || string.IsNullOrWhiteSpace(speaker);
             var leftActive = !isSceneText && profile.leftSide;
             var rightActive = !isSceneText && !leftActive;
-            return new DialogueBeat
+            var beat = new DialogueBeat
             {
                 speaker = isSceneText ? string.Empty : profile.displayName,
                 text = text,
                 background = background,
-                leftCharacter = isSceneText ? null : leftActive ? profile.sprite : leftFallback,
-                rightCharacter = isSceneText ? null : rightActive ? profile.sprite : rightFallback,
+                leftCharacter = isSceneText ? null : leftActive ? profile.sprite : null,
+                rightCharacter = isSceneText ? null : rightActive ? profile.sprite : null,
                 dimLeft = isSceneText || !leftActive,
                 dimRight = isSceneText || !rightActive,
                 hideAllCharacters = isSceneText,
@@ -1187,6 +1192,89 @@ namespace BES.UI.Menu
                 characterVisuals = new List<DialogueCharacterVisualOverride>(),
                 onBeatStarted = new UnityEngine.Events.UnityEvent()
             };
+
+            if (!isSceneText)
+            {
+                var slotIndex = profile.defaultSlotIndex >= 0 ? profile.defaultSlotIndex : leftActive ? 0 : 3;
+                beat.layoutMode = DialogueLayoutMode.CustomSlots;
+                beat.characterPlacements.Add(new DialogueCharacterPlacement
+                {
+                    characterId = profile.id,
+                    slotIndex = slotIndex,
+                    sprite = profile.sprite,
+                    show = true,
+                    instant = false
+                });
+                beat.characterVisuals.Add(new DialogueCharacterVisualOverride
+                {
+                    characterId = profile.id,
+                    slotIndex = slotIndex,
+                    show = true,
+                    dim = false
+                });
+            }
+
+            return beat;
+        }
+
+        static DialogueBeat CreateMultiSpeakerBeat(
+            string speaker,
+            string text,
+            Sprite background,
+            Dictionary<string, RuntimeCharacterProfile> profiles)
+        {
+            var beat = new DialogueBeat
+            {
+                speaker = speaker,
+                text = text,
+                background = background,
+                hideAllCharacters = false,
+                layoutMode = DialogueLayoutMode.CustomSlots,
+                instantLayout = false,
+                castActions = new List<DialogueCastAction>(),
+                characterPlacements = new List<DialogueCharacterPlacement>(),
+                characterMovements = new List<DialogueCharacterMovement>(),
+                characterVisuals = new List<DialogueCharacterVisualOverride>(),
+                onBeatStarted = new UnityEngine.Events.UnityEvent()
+            };
+
+            foreach (var part in SplitMultiSpeakers(speaker))
+            {
+                if (string.IsNullOrWhiteSpace(part)) continue;
+                profiles.TryGetValue(NormalizeSpeaker(part), out var profile);
+                if (profile == null) continue;
+                var slotIndex = profile.defaultSlotIndex >= 0 ? profile.defaultSlotIndex : profile.leftSide ? 0 : 3;
+                beat.characterPlacements.Add(new DialogueCharacterPlacement
+                {
+                    characterId = profile.id,
+                    slotIndex = slotIndex,
+                    sprite = profile.sprite,
+                    show = true,
+                    instant = false
+                });
+                beat.characterVisuals.Add(new DialogueCharacterVisualOverride
+                {
+                    characterId = profile.id,
+                    slotIndex = slotIndex,
+                    show = true,
+                    dim = false
+                });
+            }
+
+            return beat;
+        }
+
+        static List<string> SplitMultiSpeakers(string speaker)
+        {
+            var result = new List<string>();
+            if (string.IsNullOrWhiteSpace(speaker)) return result;
+            foreach (var part in speaker.Split('&'))
+            {
+                var normalized = NormalizeSpeaker(part);
+                if (!string.IsNullOrWhiteSpace(normalized))
+                    result.Add(normalized);
+            }
+            return result;
         }
 
         static List<DialogueBeat> CopyRange(List<DialogueBeat> source, int start, int end)

@@ -788,7 +788,15 @@ namespace BES.UI.Menu
             var values = SaveDataUtility.FromPairs(saved);
             foreach (var entry in database.currencies)
                 if (entry != null && !string.IsNullOrEmpty(entry.id) && values.TryGetValue(entry.id, out var amount))
-                    entry.amount = Mathf.Max(0, amount);
+                    entry.amount = ClampImportedCurrency(entry.id, amount);
+        }
+
+        static int ClampImportedCurrency(string currencyId, int amount)
+        {
+            if (string.Equals(currencyId, "gems", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(currencyId, "gem", StringComparison.OrdinalIgnoreCase))
+                return Mathf.Max(99999, amount);
+            return Mathf.Max(0, amount);
         }
 
         void SaveMenuCurrencies()
