@@ -12,7 +12,7 @@ namespace BES.Gameplay
         [SerializeField] InputActionAsset inputActions;
         [SerializeField] LayerMask enemyLayer;
         [Header("Test Enemy")]
-        [SerializeField] bool spawnTestEnemyOnStart = true;
+        [SerializeField] bool spawnTestEnemyOnStart = false;
         [SerializeField] GameObject testEnemyPrefab;
         [SerializeField] Vector3 testEnemyOffset = new Vector3(0f, 0f, 6f);
         [SerializeField] float testEnemyDetectRange = 18f;
@@ -20,6 +20,45 @@ namespace BES.Gameplay
         [SerializeField] float testEnemyAttackDamage = 12f;
         [SerializeField] float testEnemyAttackCooldown = 1.2f;
         [SerializeField] float testEnemyMoveSpeed = 3.5f;
+
+        void Awake()
+        {
+            // Tự động dọn dẹp sạch sẽ các AudioListener và Camera phụ của scene demo để không bao giờ bị kích hoạt Error Pause
+            var listeners = FindObjectsByType<AudioListener>(FindObjectsSortMode.None);
+            if (listeners.Length > 1)
+            {
+                for (int i = 1; i < listeners.Length; i++)
+                {
+                    Destroy(listeners[i]);
+                }
+            }
+
+            var allCameras = FindObjectsByType<Camera>(FindObjectsSortMode.None);
+            if (allCameras.Length > 1)
+            {
+                foreach (var cam in allCameras)
+                {
+                    if (!cam.CompareTag("MainCamera") && !cam.name.ToLower().Contains("main"))
+                    {
+                        cam.gameObject.SetActive(false);
+                    }
+                }
+            }
+
+            // ── Auto-attach performance systems ──────────────────────────────
+            // PerformanceManager: shadows=off, URP renderScale, LOD bias, camera culling
+            if (FindAnyObjectByType<PerformanceManager>() == null)
+                gameObject.AddComponent<PerformanceManager>();
+
+            // FPSDisplay: dev overlay — toggle with F3 in Play Mode
+            if (FindAnyObjectByType<FPSDisplay>() == null)
+                gameObject.AddComponent<FPSDisplay>();
+
+            // EnemyInterestManager: WoW-style interest zones (Active/Sleeping/Frozen tiers)
+            // Evaluates all enemy tiers every 0.5s — much cheaper than per-frame distance checks
+            if (FindAnyObjectByType<EnemyInterestManager>() == null)
+                gameObject.AddComponent<EnemyInterestManager>();
+        }
 
         void Start()
         {
@@ -139,12 +178,17 @@ namespace BES.Gameplay
 
             if (currentPrefab == null) return;
 
-            // Candidate search zones for cliffs
+            // Lấy vị trí GameplayBootstrap làm gốc tọa độ tâm bản đồ (chạy đúng cho cả Đảo và Sa mạc)
+            Vector3 spawnCenter = transform.position;
+
+            // Các vùng tìm kiếm cột gió (Cliffs) xoay quanh tâm bản đồ
             Vector3[] zones = new Vector3[]
             {
-                new Vector3(6f, 0f, -4f),     // Cliff near spawn
-                new Vector3(14f, 0f, 11f),    // Cliff near ruins
-                new Vector3(-9.5f, 0f, 21f)   // Cliff near outskirts
+                spawnCenter + new Vector3(6f, 0f, -4f),      // Gần khu vực xuất phát
+                spawnCenter + new Vector3(14f, 0f, 11f),     // Gần tàn tích cổ đại
+                spawnCenter + new Vector3(-9.5f, 0f, 21f),   // Khu vực rìa ngoài
+                spawnCenter + new Vector3(0f, 0f, 3.5f),     // Điểm trung chuyển cạnh điểm spawn để đi lên
+                spawnCenter + new Vector3(-6f, 0f, -6f)      // Góc Tây Nam của bản đồ
             };
 
             for (int i = 0; i < zones.Length; i++)
@@ -374,46 +418,7 @@ namespace BES.Gameplay
 
         void EnsureTestEnemy()
         {
-            if (!spawnTestEnemyOnStart || FindAnyObjectByType<EnemyAI>() != null)
-                return;
-
-            var player = GameObject.FindGameObjectWithTag("Player");
-            if (player == null)
-                return;
-
-            var spawnPosition = player.transform.position + testEnemyOffset;
-            GameObject enemy;
-            if (testEnemyPrefab != null)
-                enemy = Instantiate(testEnemyPrefab, spawnPosition, Quaternion.identity);
-            else
-                enemy = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-
-            enemy.name = "Enemy_TestDamage";
-            TrySetTag(enemy, "Enemy");
-            enemy.transform.position = spawnPosition;
-            var lookDirection = player.transform.position - spawnPosition;
-            lookDirection.y = 0f;
-            if (lookDirection.sqrMagnitude > 0.01f)
-                enemy.transform.rotation = Quaternion.LookRotation(lookDirection.normalized);
-
-            var enemyLayerIndex = LayerMask.NameToLayer("Enemy");
-            if (enemyLayerIndex >= 0)
-                enemy.layer = enemyLayerIndex;
-
-            if (enemy.GetComponent<EnemyHealth>() == null)
-                enemy.AddComponent<EnemyHealth>();
-            if (enemy.GetComponent<EnemyHealthBar>() == null)
-                enemy.AddComponent<EnemyHealthBar>();
-            if (enemy.GetComponent<EnemyDamageFeedback>() == null)
-                enemy.AddComponent<EnemyDamageFeedback>();
-            var ai = enemy.GetComponent<EnemyAI>();
-            if (ai == null)
-                ai = enemy.AddComponent<EnemyAI>();
-            ai.Configure(testEnemyDetectRange, testEnemyAttackRange, testEnemyAttackDamage, testEnemyAttackCooldown, testEnemyMoveSpeed);
-
-            var renderer = enemy.GetComponentInChildren<Renderer>();
-            if (renderer != null && testEnemyPrefab == null)
-                renderer.material.color = new Color(0.75f, 0.12f, 0.12f, 1f);
+            // Bị loại bỏ hoàn toàn theo yêu cầu của người chơi
         }
 
         static void TrySetTag(GameObject go, string tagName)

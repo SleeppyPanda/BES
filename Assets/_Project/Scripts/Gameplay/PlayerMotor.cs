@@ -40,28 +40,51 @@ namespace BES.Gameplay
                 cameraTransform = cam.transform;
         }
 
-        Animator animator;
+        Animator animator;                 // Cached once — never searched per frame
+        bool animatorCached;               // Guard flag so we only search once
+
+        /// <summary>
+        /// Call this from PartyCharacterVisualSwitcher whenever the active visual
+        /// character model changes so PlayerMotor re-caches the correct Animator.
+        /// </summary>
+        public void InvalidateAnimatorCache()
+        {
+            animator = null;
+            animatorCached = false;
+        }
 
         void Update()
         {
+            if (cameraTransform == null && Camera.main != null)
+            {
+                cameraTransform = Camera.main.transform;
+            }
+
             isGrounded = controller.isGrounded;
             if (isGrounded && velocity.y < 0f)
-                velocity.y = -2f;
+            {
+                // Firm downward stick force so player feet stay glued to terrain/stairs
+                velocity.y = -8f;
+            }
 
-            HandleMovement();
+            HandleMovementAndGravity();
             HandleJump();
-            ApplyGravity();
             UpdateAnimator();
         }
 
         void UpdateAnimator()
         {
-            // Always find the animator on the active visual child (skipping the root GameObject itself to avoid dummy animators)
-            animator = null;
-            foreach (Transform child in transform)
+            // Cache the Animator ONCE (or after InvalidateAnimatorCache() is called)
+            // Previous version: foreach + GetComponentInChildren EVERY FRAME = CPU waste
+            if (!animatorCached)
             {
-                animator = child.GetComponentInChildren<Animator>(true);
-                if (animator != null) break;
+                animator = null;
+                foreach (Transform child in transform)
+                {
+                    animator = child.GetComponentInChildren<Animator>(true);
+                    if (animator != null) break;
+                }
+                animatorCached = true;
             }
 
             if (animator != null && animator.isActiveAndEnabled && animator.runtimeAnimatorController != null)
@@ -79,23 +102,19 @@ namespace BES.Gameplay
                 
                 // Smoothly interpolate the animator speed parameter to prevent instant snapping
                 float currentSpeed = animator.GetFloat("Speed");
-                float newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, 12f * Time.deltaTime);
+                float newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, 14f * Time.deltaTime);
                 animator.SetFloat("Speed", newSpeed);
-
-                // Temporary professional debug logging
-                if (Time.frameCount % 30 == 0)
-                {
-                    var clipInfo = animator.GetCurrentAnimatorClipInfo(0);
-                    string clipName = clipInfo.Length > 0 ? clipInfo[0].clip.name : "None";
-                    Debug.Log($"[BES Debug] Speed Param: {newSpeed:F2}, Target Speed: {targetSpeed:F2}, Active Clip: {clipName}");
-                }
             }
         }
 
-        void HandleMovement()
+        void HandleMovementAndGravity()
         {
             if (GameplayInputGate.IsMovementBlocked)
+            {
+                velocity.y += gravity * Time.deltaTime;
+                controller.Move(velocity * Time.deltaTime);
                 return;
+            }
 
             var moveInput = input != null ? input.Move : Vector2.zero;
             if (moveInput.sqrMagnitude < 0.001f)
@@ -119,13 +138,19 @@ namespace BES.Gameplay
             if (IsSprinting)
                 stamina?.SpendPerSecond();
 
-            controller.Move(moveDir.normalized * (speed * Time.deltaTime));
-
+            // Rotate player toward move direction
             if (moveDir.sqrMagnitude > 0.01f)
             {
                 var targetRotation = Quaternion.LookRotation(moveDir);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
+
+            // Apply gravity
+            velocity.y += gravity * Time.deltaTime;
+
+            // Single unified Move call combines horizontal translation and vertical gravity
+            Vector3 motion = (moveDir.normalized * speed + velocity) * Time.deltaTime;
+            controller.Move(motion);
         }
 
         void HandleJump()
@@ -139,13 +164,10 @@ namespace BES.Gameplay
                 jumpPressed = keyboard.spaceKey.wasPressedThisFrame;
 
             if (jumpPressed && isGrounded)
+            {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-
-        void ApplyGravity()
-        {
-            velocity.y += gravity * Time.deltaTime;
-            controller.Move(velocity * Time.deltaTime);
+                isGrounded = false;
+            }
         }
 
         public void ApplyExternalForce(Vector3 force)

@@ -432,6 +432,8 @@ namespace BES.EditorTools
                 collider.height = modelHeight;
                 collider.center = new Vector3(0f, modelHeight * 0.5f, 0f);
                 collider.radius = modelRadius;
+                collider.isTrigger = true;
+
 
                 var agent = root.AddComponent<NavMeshAgent>();
                 agent.radius = modelRadius;
@@ -444,7 +446,6 @@ namespace BES.EditorTools
                 root.AddComponent<EnemyHealth>();
                 root.AddComponent<EnemyHealthBar>();
                 root.AddComponent<EnemyDamageFeedback>();
-                root.AddComponent<BES.Gameplay.MeshyMonsterRuntimeWatcher>();
                 root.AddComponent<RootMotionFixer>();
                 var ai = root.AddComponent<EnemyAI>();
                 ai.SetAnimatorController(controller);

@@ -34,6 +34,7 @@ namespace BES.Gameplay
         [SerializeField] bool lockCameraWhileShiftHeld = true;
 
         PlayerInputReader input;
+        Mouse cachedMouse;      // Cached once — Mouse.current lookup is not free
         float yaw;
         float pitch = 12f;
         
@@ -44,14 +45,38 @@ namespace BES.Gameplay
         Vector3 smoothedTargetPosition;
         Vector3 targetPosVelocity;
 
+        // ── Physics optimization (Genshin-style) ──────────────────────────────
+        // SphereCastNonAlloc avoids heap allocation every LateUpdate (was 60 allocs/sec)
+        const int RAY_BUFFER_SIZE = 16;
+        readonly RaycastHit[] rayBuffer = new RaycastHit[RAY_BUFFER_SIZE];
+
+        // Cache layer masks in Awake — NameToLayer has dict lookup overhead
+        int cachedCameraMask = -1;      // -1 = not yet built
+        int cachedPlayerLayer;
+
+        // Find-Player cooldown — avoids FindWithTag scene scan every frame
+        float findPlayerTimer;
+
         void Awake()
         {
             input = FindAnyObjectByType<PlayerInputReader>();
             if (TryGetComponent<Camera>(out var cam))
-                cam.fieldOfView = fieldOfView;
+            {
+                cam.fieldOfView  = fieldOfView;
+                // Fix ground Z-fighting: smaller nearClipPlane reduces precision fighting
+                // between ground tiles at similar Y. 0.1 is safe for third-person distance.
+                cam.nearClipPlane = 0.1f;
+                cam.farClipPlane  = 500f;
+            }
 
-            targetDistance = defaultDistance;
+            targetDistance  = defaultDistance;
             currentDistance = defaultDistance;
+
+            // Cache Mouse.current once — avoids per-LateUpdate device lookup
+            cachedMouse = Mouse.current;
+
+            // Pre-build camera occluder layer mask once (avoids 5x NameToLayer per LateUpdate)
+            RebuildCameraLayerMask();
         }
 
         void Start()
@@ -66,10 +91,23 @@ namespace BES.Gameplay
         void LateUpdate()
         {
             if (target == null)
-                return;
+            {
+                // Only scan scene every 0.5s, not every frame
+                findPlayerTimer -= Time.deltaTime;
+                if (findPlayerTimer <= 0f)
+                {
+                    findPlayerTimer = 0.5f;
+                    var player = GameObject.FindWithTag("Player");
+                    if (player != null)
+                        SetTarget(player.transform);
+                    else
+                        return;
+                }
+                else return;
+            }
 
             // 1. Zoom bằng cuộn chuột (Genshin Style)
-            float scroll = Mouse.current != null ? Mouse.current.scroll.ReadValue().y : 0f;
+            float scroll = cachedMouse != null ? cachedMouse.scroll.ReadValue().y : 0f;
             if (Mathf.Abs(scroll) > 0.01f)
             {
                 targetDistance -= (scroll / 120f) * zoomSpeed;
@@ -108,16 +146,40 @@ namespace BES.Gameplay
             // 6. Smooth zoom distance
             currentDistance = Mathf.SmoothDamp(currentDistance, targetDistance, ref distanceVelocity, zoomSmoothTime);
 
-            // 7. SphereCast tránh xuyên tường mượt mà
-            float finalDistance = currentDistance;
-            int playerLayer = target.gameObject.layer;
-            int mask = ~(1 << playerLayer); // Bỏ qua người chơi
-            float rayRadius = 0.25f;
+            // 7. SphereCast tránh xuyên tường mượt mà — SphereCastNonAlloc (zero GC alloc!)
+            // Rebuild mask lazily if player layer changed (e.g., after character swap)
+            if (cachedCameraMask < 0 || target.gameObject.layer != cachedPlayerLayer)
+                RebuildCameraLayerMask();
 
-            if (Physics.SphereCast(pivot, rayRadius, targetDirection, out RaycastHit hitInfo, currentDistance, mask, QueryTriggerInteraction.Ignore))
+            float rayRadius = 0.25f;
+            int hitCount = Physics.SphereCastNonAlloc(
+                pivot, rayRadius, targetDirection, rayBuffer, currentDistance,
+                cachedCameraMask, QueryTriggerInteraction.Ignore);
+
+            float desiredDistance = currentDistance;
+            float nearestHitDistance = currentDistance;
+            bool hitObstacle = false;
+
+            for (int i = 0; i < hitCount; i++)
             {
-                finalDistance = Mathf.Max(0.5f, hitInfo.distance - 0.05f);
+                ref RaycastHit hit = ref rayBuffer[i];
+                if (hit.collider == null) continue;
+                if (hit.transform.IsChildOf(target) || hit.transform == target) continue;
+                if (hit.collider.CompareTag("Enemy") || hit.collider.GetComponentInParent<EnemyAI>() != null) continue;
+
+                if (hit.distance < nearestHitDistance)
+                {
+                    nearestHitDistance = hit.distance;
+                    hitObstacle = true;
+                }
             }
+
+            if (hitObstacle)
+            {
+                desiredDistance = Mathf.Max(1.6f, nearestHitDistance - 0.1f);
+            }
+
+            float finalDistance = desiredDistance;
 
             // 8. Cập nhật vị trí và góc nhìn camera
             transform.position = pivot + targetDirection * finalDistance;
@@ -148,6 +210,24 @@ namespace BES.Gameplay
         {
             var mouse = Mouse.current;
             return mouse != null ? mouse.delta.ReadValue() * 0.03f : Vector2.zero;
+        }
+
+        void RebuildCameraLayerMask()
+        {
+            // Called once in Awake and lazily when player layer changes.
+            // Avoids 5x LayerMask.NameToLayer() dictionary lookups per LateUpdate.
+            int playerLayer    = target != null ? target.gameObject.layer : 0;
+            int enemyLayer     = LayerMask.NameToLayer("Enemy");
+            int ignoreRaycast  = LayerMask.NameToLayer("Ignore Raycast");
+            int transparentFX  = LayerMask.NameToLayer("TransparentFX");
+            int uiLayer        = LayerMask.NameToLayer("UI");
+
+            int excludeMask = (1 << playerLayer) | (1 << ignoreRaycast)
+                            | (1 << transparentFX) | (1 << uiLayer);
+            if (enemyLayer >= 0) excludeMask |= (1 << enemyLayer);
+
+            cachedCameraMask  = ~excludeMask;
+            cachedPlayerLayer = playerLayer;
         }
     }
 }

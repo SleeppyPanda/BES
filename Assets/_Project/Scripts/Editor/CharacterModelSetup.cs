@@ -202,26 +202,40 @@ namespace BES.EditorTools
 
             // Load clips from acolyte FBX files
             string acolyteFolder = "Assets/MeshyImports/Meshy_AI_Gilded_Shadow_Acolyte_biped";
+            string oasisFolder = "Assets/MeshyImports/Meshy_AI_Sandstone_Oasis_Guard_biped/Meshy_AI_Sandstone_Oasis_Guard_biped";
             
-            // Load standing Idle clip from Alina.fbx as the shared idle animation
-            var alinaAssets = AssetDatabase.LoadAllAssetsAtPath("Assets/Model character/Alina.fbx");
-            AnimationClip idleClip = alinaAssets.OfType<AnimationClip>().FirstOrDefault(c => !c.name.StartsWith("__"));
+            // Configure Oasis FBXs as Humanoid so we can use the standing ready idle clip
+            if (Directory.Exists(oasisFolder))
+            {
+                var oasisFiles = Directory.GetFiles(oasisFolder, "*.fbx", SearchOption.AllDirectories);
+                foreach (var f in oasisFiles)
+                {
+                    ConfigureHumanoidRig(f.Replace('\\', '/'));
+                }
+            }
+
+            // Load standing Idle clip (Step_Back or Show_Both_Arm_Muscles) or fallback to procedural Standing Idle
+            AnimationClip idleClip = LoadClipFromFBX($"{oasisFolder}/Meshy_AI_Sandstone_Oasis_Guard_biped_Animation_Step_Back_frame_rate_60.fbx");
+            if (idleClip == null)
+            {
+                idleClip = LoadClipFromFBX($"{oasisFolder}/Meshy_AI_Sandstone_Oasis_Guard_biped_Animation_Show_Both_Arm_Muscles_frame_rate_60.fbx");
+            }
+            if (idleClip == null)
+            {
+                idleClip = CreateStandingIdleClip();
+            }
 
             AnimationClip walkClip = LoadClipFromFBX($"{acolyteFolder}/Meshy_AI_Gilded_Shadow_Acolyte_biped_Animation_Walking_frame_rate_60.fbx");
             AnimationClip runClip = LoadClipFromFBX($"{acolyteFolder}/Meshy_AI_Gilded_Shadow_Acolyte_biped_Animation_Running_frame_rate_60.fbx");
             AnimationClip dyingClip = LoadClipFromFBX($"{acolyteFolder}/Meshy_AI_Gilded_Shadow_Acolyte_biped_Animation_dying_backwards_frame_rate_60.fbx");
 
-            // Fallback
-            if (idleClip == null)
-            {
-                idleClip = alinaAssets.OfType<AnimationClip>().FirstOrDefault(c => !c.name.StartsWith("__"));
-            }
             if (walkClip == null) walkClip = idleClip;
             if (runClip == null) runClip = walkClip;
             if (dyingClip == null) dyingClip = idleClip;
 
             var idleState = rootStateMachine.AddState("Idle");
             idleState.motion = idleClip;
+            idleState.speed = 1.0f;
 
             var walkState = rootStateMachine.AddState("Walk");
             walkState.motion = walkClip;
@@ -242,33 +256,61 @@ namespace BES.EditorTools
             var idleToWalk = idleState.AddTransition(walkState);
             idleToWalk.AddCondition(AnimatorConditionMode.Greater, 0.1f, "Speed");
             idleToWalk.hasExitTime = false;
-            idleToWalk.duration = 0.25f;
+            idleToWalk.duration = 0.2f;
 
             var walkToIdle = walkState.AddTransition(idleState);
             walkToIdle.AddCondition(AnimatorConditionMode.Less, 0.1f, "Speed");
             walkToIdle.hasExitTime = false;
-            walkToIdle.duration = 0.25f;
+            walkToIdle.duration = 0.2f;
 
             // Transitions: Walk <-> Run
             var walkToRun = walkState.AddTransition(runState);
             walkToRun.AddCondition(AnimatorConditionMode.Greater, 4.5f, "Speed");
             walkToRun.hasExitTime = false;
-            walkToRun.duration = 0.25f;
+            walkToRun.duration = 0.2f;
 
             var runToWalk = runState.AddTransition(walkState);
             runToWalk.AddCondition(AnimatorConditionMode.Less, 4.5f, "Speed");
             runToWalk.AddCondition(AnimatorConditionMode.Greater, 0.1f, "Speed");
             runToWalk.hasExitTime = false;
-            runToWalk.duration = 0.25f;
+            runToWalk.duration = 0.2f;
 
             var runToIdle = runState.AddTransition(idleState);
             runToIdle.AddCondition(AnimatorConditionMode.Less, 0.1f, "Speed");
             runToIdle.hasExitTime = false;
-            runToIdle.duration = 0.25f;
+            runToIdle.duration = 0.2f;
 
             EditorUtility.SetDirty(controller);
             AssetDatabase.SaveAssets();
             return controller;
+        }
+
+        static AnimationClip CreateStandingIdleClip()
+        {
+            string animFolder = "Assets/_Project/Animations";
+            EnsureFolder(animFolder);
+            string clipPath = animFolder + "/Player_Humanoid_Idle.anim";
+
+            var clip = AssetDatabase.LoadAssetAtPath<AnimationClip>(clipPath);
+            if (clip == null)
+            {
+                clip = new AnimationClip();
+                AssetDatabase.CreateAsset(clip, clipPath);
+            }
+            clip.ClearCurves();
+            clip.name = "Player_Humanoid_Idle";
+            clip.wrapMode = WrapMode.Loop;
+
+            var breathCurve = new AnimationCurve(
+                new Keyframe(0f, 0f, 0f, 0f),
+                new Keyframe(1.0f, 0.012f, 0f, 0f),
+                new Keyframe(2.0f, 0f, 0f, 0f)
+            );
+            clip.SetCurve("Armature/Hips/Spine/Chest", typeof(Transform), "m_LocalPosition.y", breathCurve);
+
+            EditorUtility.SetDirty(clip);
+            AssetDatabase.SaveAssets();
+            return clip;
         }
 
         static AnimationClip LoadClipFromFBX(string fbxPath)
@@ -310,9 +352,10 @@ namespace BES.EditorTools
             AnimationClip customRun = LoadClipFromFBX($"{fbxFolder}/{runFile}");
             AnimationClip customDying = LoadClipFromFBX($"{fbxFolder}/{dyingFile}");
 
-            // Load base clips from Gilded Shadow Acolyte files (which are used in the baseController)
+            string oasisFolder = "Assets/MeshyImports/Meshy_AI_Sandstone_Oasis_Guard_biped/Meshy_AI_Sandstone_Oasis_Guard_biped";
             string acolyteFolder = "Assets/MeshyImports/Meshy_AI_Gilded_Shadow_Acolyte_biped";
-            AnimationClip baseIdle = LoadClipFromFBX($"{acolyteFolder}/Meshy_AI_Gilded_Shadow_Acolyte_biped_Animation_Standard_Forward_Charge_inplace_frame_rate_60.fbx");
+
+            AnimationClip baseIdle = LoadClipFromFBX($"{oasisFolder}/Meshy_AI_Sandstone_Oasis_Guard_biped_Animation_Step_Back_frame_rate_60.fbx") ?? CreateStandingIdleClip();
             AnimationClip baseWalk = LoadClipFromFBX($"{acolyteFolder}/Meshy_AI_Gilded_Shadow_Acolyte_biped_Animation_Walking_frame_rate_60.fbx");
             AnimationClip baseRun = LoadClipFromFBX($"{acolyteFolder}/Meshy_AI_Gilded_Shadow_Acolyte_biped_Animation_Running_frame_rate_60.fbx");
             AnimationClip baseDying = LoadClipFromFBX($"{acolyteFolder}/Meshy_AI_Gilded_Shadow_Acolyte_biped_Animation_dying_backwards_frame_rate_60.fbx");

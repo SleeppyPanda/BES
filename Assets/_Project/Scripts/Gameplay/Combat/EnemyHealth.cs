@@ -47,11 +47,27 @@ namespace BES.Gameplay
                 Die();
         }
 
+        public void ResetHealth()
+        {
+            currentHealth = maxHealth;
+            OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        }
+
         void Die()
         {
             GameEvents.RaiseEnemyDefeated(EnemyId);
             CombatManager.Instance?.RegisterKill(gameObject.name, experienceReward);
-            Destroy(gameObject, 0.1f);
+            
+            // Return to pool if available, otherwise fallback to destroy
+            if (EnemyObjectPool.Instance != null)
+            {
+                EnemyObjectPool.Instance.Return(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject, 0.1f);
+            }
         }
     }
 }
+

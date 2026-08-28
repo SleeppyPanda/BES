@@ -29,6 +29,12 @@ namespace BES.Gameplay
         float catchUpFill = 1f;
         float visibilityTimer;
 
+        // ── Performance: throttle billboard updates ───────────────────────────
+        // Camera lookup is cached to avoid Camera.main (FindObjectOfType) overhead.
+        // Billboard rotation only runs when health bar is visible.
+        float cameraRefreshTimer;
+        const float CAMERA_REFRESH_INTERVAL = 2f; // Refresh Camera.main ref every 2s
+
         void Awake()
         {
             enemyHealth = GetComponent<EnemyHealth>();
@@ -186,15 +192,28 @@ namespace BES.Gameplay
 
         void Update()
         {
-            if (mainCamera == null)
+            // ── Fast-exit: skip all logic when health bar is invisible ────────
+            // This is the WoW Interest Management principle applied to UI:
+            // don't tick invisible UI elements every frame.
+            bool isVisible = canvasGroup != null && canvasGroup.alpha > 0.001f;
+            bool timerRunning = visibilityTimer > 0f;
+
+            if (!isVisible && !timerRunning)
+                return; // Zero work for hidden health bars
+
+            // ── Cache Camera.main periodically (avoid FindObjectOfType overhead) ──
+            cameraRefreshTimer -= Time.deltaTime;
+            if (mainCamera == null || cameraRefreshTimer <= 0f)
             {
                 mainCamera = Camera.main;
+                cameraRefreshTimer = CAMERA_REFRESH_INTERVAL;
             }
 
-            if (canvas != null && mainCamera != null)
+            // Billboard: face the camera (only when visible)
+            if (canvas != null && mainCamera != null && isVisible)
             {
-                // Face the camera
-                canvas.transform.rotation = Quaternion.LookRotation(canvas.transform.position - mainCamera.transform.position);
+                canvas.transform.rotation = Quaternion.LookRotation(
+                    canvas.transform.position - mainCamera.transform.position);
             }
 
             // Smoothly catch up the yellow lag bar

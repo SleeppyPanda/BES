@@ -623,17 +623,35 @@ namespace BES.Editor
             UIAnchorPresets.ApplyTopNavRegion(rect);
             var nav = go.AddComponent<HudNavBarUI>();
 
+            var exitHub = BESUIEditorUtils.CreateIconButton(go.transform, "ExitHubBtn", manifest?.settingsIcon, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing * 5f, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
             var evt = BESUIEditorUtils.CreateIconButton(go.transform, "EventBtn", manifest?.navEvent, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing * 4f, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
             var battlePass = BESUIEditorUtils.CreateIconButton(go.transform, "BattlePassBtn", manifest?.navBattlePass ?? manifest?.navTeam, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing * 3f, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
             var wish = BESUIEditorUtils.CreateIconButton(go.transform, "WishBtn", manifest?.navWish, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing * 2f, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
             var bag = BESUIEditorUtils.CreateIconButton(go.transform, "BagBtn", manifest?.navBag ?? manifest?.navInventory, new Vector2(HUDLayoutTokens.NavRightMostX - HUDLayoutTokens.NavIconSpacing, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
             var personal = BESUIEditorUtils.CreateIconButton(go.transform, "PersonalBtn", manifest?.navPersonal ?? manifest?.navCharacter, new Vector2(HUDLayoutTokens.NavRightMostX, 0f), new Vector2(HUDLayoutTokens.NavIconSize, HUDLayoutTokens.NavIconSize));
 
+            // Đặt các nút điều hướng neo chính xác ở bên phải của thanh điều hướng cha
+            ConfigureNavButton(exitHub.GetComponent<RectTransform>());
+            ConfigureNavButton(evt.GetComponent<RectTransform>());
+            ConfigureNavButton(battlePass.GetComponent<RectTransform>());
+            ConfigureNavButton(wish.GetComponent<RectTransform>());
+            ConfigureNavButton(bag.GetComponent<RectTransform>());
+            ConfigureNavButton(personal.GetComponent<RectTransform>());
+
             BESUIEditorUtils.SetPrivateField(nav, "wishButton", wish);
             BESUIEditorUtils.SetPrivateField(nav, "eventButton", evt);
             BESUIEditorUtils.SetPrivateField(nav, "battlePassButton", battlePass);
             BESUIEditorUtils.SetPrivateField(nav, "bagButton", bag);
             BESUIEditorUtils.SetPrivateField(nav, "personalButton", personal);
+            BESUIEditorUtils.SetPrivateField(nav, "exitHubButton", exitHub);
+        }
+
+        static void ConfigureNavButton(RectTransform r)
+        {
+            if (r == null) return;
+            r.anchorMin = new Vector2(1f, 0.5f);
+            r.anchorMax = new Vector2(1f, 0.5f);
+            r.pivot = new Vector2(1f, 0.5f);
         }
 
         static void BuildPartyStrip(Transform parent, HUDSpriteManifest manifest)

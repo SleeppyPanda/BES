@@ -592,7 +592,7 @@ Transform:
   m_GameObject: {fileID: 4729215998307139338}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.012534171, y: 0.20789528, z: -0.08404866}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 96.861855, y: 96.861855, z: 96.861855}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -891,7 +891,6 @@ GameObject:
   - component: {fileID: 5866769219133276547}
   - component: {fileID: 8276788286929177654}
   - component: {fileID: 4429050644618811052}
-  - component: {fileID: 7105154210176209532}
   - component: {fileID: 5082162563318429110}
   m_Layer: 8
   m_Name: Enemy_BabyMonster
@@ -931,14 +930,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.35
-  m_Height: 1.1
+  m_Radius: 0.45
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.55, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &8466275642925663851
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -948,16 +947,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 7867031871070699838}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.35
+  m_Radius: 0.45
   m_Speed: 3.5
   m_Acceleration: 12
   avoidancePriority: 50
   m_AngularSpeed: 720
-  m_StoppingDistance: 1.2
+  m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.1
+  m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -1012,18 +1011,6 @@ MonoBehaviour:
   normalColor: {r: 0.75, g: 0.12, b: 0.12, a: 1}
   hitColor: {r: 1, g: 0.95, b: 0.25, a: 1}
   critColor: {r: 1, g: 0.35, b: 0.05, a: 1}
---- !u!114 &7105154210176209532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7867031871070699838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1239b384669abbc4992a47ac167dcad8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.RootMotionFixer
 --- !u!114 &5082162563318429110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1036,11 +1023,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b513a83c706c12743a4df56d807090aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BES.Gameplay.EnemyAI
-  detectRange: 12
+  detectRange: 14
   attackRange: 1.8
   attackDamage: 6
   attackCooldown: 1.2
-  patrolSpeed: 1.75
+  patrolSpeed: 1.8
   chaseSpeed: 3.5
   patrolRadius: 10
   patrolWaitMin: 1.5

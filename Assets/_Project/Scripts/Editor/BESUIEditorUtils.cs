@@ -199,8 +199,8 @@ namespace BES.Editor
             fillArea.transform.SetParent(go.transform, false);
             var fillAreaRect = fillArea.AddComponent<RectTransform>();
             UIAnchorPresets.StretchFull(fillAreaRect);
-            fillAreaRect.offsetMin = new Vector2(4, 4);
-            fillAreaRect.offsetMax = new Vector2(-4, -4);
+            fillAreaRect.offsetMin = new Vector2(1f, 1f);
+            fillAreaRect.offsetMax = new Vector2(-1f, -1f);
 
             var fill = new GameObject("Fill");
             fill.transform.SetParent(fillArea.transform, false);
