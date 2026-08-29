@@ -30,6 +30,7 @@ namespace BES.UI.Menu
         public string displayName;
         public string element;
         public Sprite portrait;
+        public Sprite cardBackground;
         public Sprite battlefieldSprite;
         [Header("5-frame attack (3 FPS)")]
         [Tooltip("Phải gán đủ 5 frame. Nếu thiếu, battle giữ nguyên Battlefield Sprite.")]
@@ -186,6 +187,8 @@ namespace BES.UI.Menu
         int round;
         int selectedSkillIndex = -1;
         BattleUnitView currentActor;
+        static readonly Vector3 ActiveAllyCardScale = new(.9f, .9f, .9f);
+        static readonly Vector3 InactiveAllyCardScale = new(.8f, .8f, .8f);
         bool resolving;
         bool autoMode;
         bool paused;
@@ -540,11 +543,11 @@ namespace BES.UI.Menu
                     if (unit.battlefieldImage != null)
                     {
                         unit.battlefieldImage.gameObject.SetActive(true);
-                        unit.battlefieldImage.sprite = unit.definition.battlefieldSprite;
+                        ApplyNativeBattlefieldSprite(unit.battlefieldImage, unit.definition.battlefieldSprite);
                     }
                 }
 
-                if (unit.portrait != null) unit.portrait.sprite = unit.definition.portrait;
+                ApplyAllyCardBackground(unit);
                 RefreshUnit(unit);
             }
         }
@@ -839,16 +842,16 @@ namespace BES.UI.Menu
             unit.battlefieldImage.gameObject.SetActive(true);
             for (var i = 0; i < frames.Count; i++)
             {
-                unit.battlefieldImage.sprite = frames[i];
+                ApplyNativeBattlefieldSprite(unit.battlefieldImage, frames[i]);
                 yield return ScaledWait(1f / 3f);
             }
             for (var i = frames.Count - 2; i >= 0; i--)
             {
-                unit.battlefieldImage.sprite = frames[i];
+                ApplyNativeBattlefieldSprite(unit.battlefieldImage, frames[i]);
                 yield return ScaledWait(1f / 3f);
             }
 
-            unit.battlefieldImage.sprite = unit.definition.battlefieldSprite;
+            ApplyNativeBattlefieldSprite(unit.battlefieldImage, unit.definition.battlefieldSprite);
             if (unit.definition.idleClip != null && unit.gifPlayer != null)
             {
                 unit.battlefieldImage.gameObject.SetActive(false);
@@ -867,6 +870,13 @@ namespace BES.UI.Menu
             if (definition.attackFrame4 != null) frames.Add(definition.attackFrame4);
             if (definition.attackFrame5 != null) frames.Add(definition.attackFrame5);
             return frames;
+        }
+
+        static void ApplyNativeBattlefieldSprite(Image image, Sprite sprite)
+        {
+            if (image == null) return;
+            image.sprite = sprite;
+            image.enabled = sprite != null;
         }
 
         void PlayAttackEffect(BattleUnitView actor, BattleUnitView target)
@@ -1715,6 +1725,7 @@ namespace BES.UI.Menu
                 if (entry.playerMarker != null) entry.playerMarker.SetActive(unit.isPlayer);
                 if (entry.enemyMarker != null) entry.enemyMarker.SetActive(!unit.isPlayer);
             }
+            RefreshAllyCardTurnScale();
         }
 
         void BuildTurnOrderPreview(bool battleFinished)
@@ -1758,6 +1769,26 @@ namespace BES.UI.Menu
             if (unit.healthText != null)
                 unit.healthText.text = unit.shield > 0 ? $"{unit.health}/{unit.definition.maxHealth} +{unit.shield}" : $"{unit.health}/{unit.definition.maxHealth}";
             if (unit.battlefieldImage != null) unit.battlefieldImage.color = Color.white;
+            ApplyAllyCardBackground(unit);
+        }
+
+        static void ApplyAllyCardBackground(BattleUnitView unit)
+        {
+            if (unit?.portrait == null || unit.definition == null) return;
+            var sprite = unit.definition.cardBackground != null ? unit.definition.cardBackground : unit.definition.portrait;
+            unit.portrait.sprite = sprite;
+            unit.portrait.enabled = sprite != null;
+            unit.portrait.preserveAspect = false;
+        }
+
+        void RefreshAllyCardTurnScale()
+        {
+            foreach (var ally in allies)
+            {
+                if (ally?.root == null) continue;
+                var active = currentActor != null && currentActor == ally && IsBattleActive(ally);
+                ally.root.transform.localScale = active ? ActiveAllyCardScale : InactiveAllyCardScale;
+            }
         }
 
         static void SetUnitVisualsActive(BattleUnitView unit, bool active)
@@ -2025,6 +2056,7 @@ namespace BES.UI.Menu
                 speed = Mathf.Max(1, character.speed + Mathf.FloorToInt((level - 1) / 20f) + Mathf.RoundToInt(weaponBonus.speedFlat)),
                 element = character.element,
                 portrait = CharacterChibiSprite(character),
+                cardBackground = character.cardBackground,
                 battlefieldSprite = CharacterChibiSprite(character),
                 attackFrame1 = character.attackFrame1,
                 attackFrame2 = character.attackFrame2,
@@ -2357,6 +2389,7 @@ namespace BES.UI.Menu
                 displayName = template.displayName,
                 element = template.element,
                 portrait = template.portrait,
+                cardBackground = template.cardBackground,
                 battlefieldSprite = template.battlefieldSprite,
                 attackFrame1 = template.attackFrame1,
                 attackFrame2 = template.attackFrame2,
@@ -2418,6 +2451,7 @@ namespace BES.UI.Menu
             def.displayName = template.displayName;
             def.element = template.element;
             def.portrait = template.portrait;
+            def.cardBackground = template.cardBackground;
             def.battlefieldSprite = template.battlefieldSprite;
             def.attackFrame1 = template.attackFrame1;
             def.attackFrame2 = template.attackFrame2;

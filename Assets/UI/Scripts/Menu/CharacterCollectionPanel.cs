@@ -69,8 +69,12 @@ namespace BES.UI.Menu
         [Header("Owned character selector")]
         [SerializeField] RectTransform characterSelectorContent;
         [SerializeField] Vector2 selectorCardSize = new Vector2(92f, 92f);
+        [SerializeField] Vector3 selectedSelectorScale = Vector3.one;
+        [SerializeField] Vector3 unselectedSelectorScale = new Vector3(.8f, .8f, .8f);
+        [SerializeField] bool debugOwnedCharacterSelector;
         RectTransform galleryContent;
         GameObject galleryCardTemplate;
+        GameObject characterSelectorTemplate;
         Image detailPortrait;
         Image levelPortrait;
         TMP_Text detailName;
@@ -174,6 +178,7 @@ namespace BES.UI.Menu
             CharacterOwnership.Focus(selectedCharacterId);
             RefreshCharacter();
             RefreshCharacterSelectors();
+            RefreshGallerySelectionState();
             ShowPage(detailPage);
             modal?.Open();
         }
@@ -360,9 +365,12 @@ namespace BES.UI.Menu
             galleryContent = FindDeep(existing, "OwnedCharacterContent") as RectTransform;
             galleryCardTemplate = FindDeep(existing, "CharacterCardTemplate")?.gameObject;
             characterSelectorContent ??= FindDeep(existing, "OwnedCharacterSelector") as RectTransform;
+            characterSelectorContent ??= FindDeep(existing, "characterSelectorContent") as RectTransform;
+            characterSelectorContent ??= FindDeep(existing, "CharacterSelectorContent") as RectTransform;
             characterSelectorContent ??= FindDeep(existing, "OwnedCharacterList") as RectTransform;
             characterSelectorContent ??= FindDeep(existing, "CharacterOwnedList") as RectTransform;
             characterSelectorContent ??= FindDeep(existing, "CharacterList") as RectTransform;
+            characterSelectorTemplate = FindChildTemplate(characterSelectorContent);
             detailPortrait = FindDeep(existing, "SelectedPortrait")?.GetComponent<Image>();
             levelPortrait = FindDeep(existing, "LevelPortrait")?.GetComponent<Image>();
             detailName = FindDeep(existing, "CharacterName")?.GetComponent<TMP_Text>();
@@ -581,10 +589,10 @@ namespace BES.UI.Menu
             ResolveDatabase();
             RefreshCharacterSelectors();
             if (galleryContent == null) return;
-            generatedCards.Clear();
+            ClearGenerated(generatedCards);
             var owned = GetDisplayCharacters();
             owned.Sort((a, b) => SortValue(b).CompareTo(SortValue(a)));
-            PopulateExistingCharacterSlots(galleryContent, owned, true);
+            PopulateDynamicCharacterSlots(galleryContent, galleryCardTemplate, owned, true, generatedCards);
             if (emptyLabel != null) emptyLabel.gameObject.SetActive(owned.Count == 0);
         }
 
@@ -602,23 +610,21 @@ namespace BES.UI.Menu
         {
             ResolveDatabase();
             if (characterSelectorContent == null) return;
-            generatedSelectors.Clear();
+            ClearGenerated(generatedSelectors);
 
             var owned = GetDisplayCharacters();
             owned.Sort((a, b) => SortValue(b).CompareTo(SortValue(a)));
-            PopulateExistingCharacterSlots(characterSelectorContent, owned, false);
+            characterSelectorTemplate ??= FindChildTemplate(characterSelectorContent);
+            ClearDynamicChildren(characterSelectorContent, characterSelectorTemplate);
+            PopulateDynamicCharacterSlots(characterSelectorContent, characterSelectorTemplate, owned, false, generatedSelectors);
+            if (debugOwnedCharacterSelector)
+                Debug.Log($"[BES] CharacterPage OwnedCharacterSelector owned={owned.Count} rendered={generatedSelectors.Count} template={(characterSelectorTemplate != null ? characterSelectorTemplate.name : "null")} selected='{selectedCharacterId}'");
         }
 
         List<CharacterEntry> GetDisplayCharacters()
         {
             ResolveDatabase();
             var owned = new List<CharacterEntry>(CharacterOwnership.GetOwnedEntries(database));
-            if (owned.Count > 0 || database?.characters == null)
-                return owned;
-
-            foreach (var entry in database.characters)
-                if (entry != null && entry.playable)
-                    owned.Add(entry);
             return owned;
         }
 
@@ -645,6 +651,66 @@ namespace BES.UI.Menu
             }
         }
 
+        void PopulateDynamicCharacterSlots(RectTransform parent, GameObject template, IReadOnlyList<CharacterEntry> owned, bool galleryStyle, List<GameObject> generated)
+        {
+            if (parent == null || owned == null) return;
+
+            if (template == null)
+            {
+                PopulateExistingCharacterSlots(parent, owned, galleryStyle);
+                return;
+            }
+
+            HideStaticSiblings(parent, template);
+            template.SetActive(false);
+            for (var i = 0; i < owned.Count; i++)
+            {
+                var entry = owned[i];
+                if (entry == null) continue;
+
+                var slot = Instantiate(template, parent);
+                slot.name = entry.id;
+                slot.SetActive(true);
+                PopulateCharacterSlot(slot, entry, galleryStyle);
+                generated?.Add(slot);
+            }
+        }
+
+        static void HideStaticSiblings(RectTransform parent, GameObject template)
+        {
+            if (parent == null) return;
+            foreach (Transform child in parent)
+            {
+                if (child == null || child.gameObject == template) continue;
+                child.gameObject.SetActive(false);
+            }
+        }
+
+        static GameObject FindChildTemplate(RectTransform parent)
+        {
+            if (parent == null) return null;
+            foreach (Transform child in parent)
+            {
+                if (child == null) continue;
+                if (child.name.IndexOf("Template", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                    return child.gameObject;
+            }
+            return parent.childCount > 0 ? parent.GetChild(0).gameObject : null;
+        }
+
+        static void ClearGenerated(List<GameObject> generated)
+        {
+            if (generated == null) return;
+            for (var i = generated.Count - 1; i >= 0; i--)
+            {
+                var item = generated[i];
+                if (item == null) continue;
+                if (Application.isPlaying) Destroy(item);
+                else DestroyImmediate(item);
+            }
+            generated.Clear();
+        }
+
         void PopulateCharacterSlot(GameObject slotObject, CharacterEntry entry, bool galleryStyle)
         {
             if (slotObject == null || entry == null) return;
@@ -653,18 +719,30 @@ namespace BES.UI.Menu
             slotObject.name = id;
 
             var background = slotObject.GetComponent<Image>();
+            var cardBackground = CardBackgroundFor(entry);
+            var isSelected = CharacterIdentity.Same(id, selectedCharacterId, database);
             if (background != null)
             {
-                if (galleryStyle)
-                    background.sprite = BackgroundFor(entry.rarity);
-                background.color = id == selectedCharacterId ? Color.white : new Color(.68f, .68f, .68f, 1f);
+                background.sprite = cardBackground;
+                background.color = Color.white;
             }
 
-            var portrait = FindDeep(slotObject.transform, "Portrait")?.GetComponent<Image>()
-                ?? FindDeep(slotObject.transform, "CharacterPortrait")?.GetComponent<Image>()
-                ?? FindDeep(slotObject.transform, "Icon")?.GetComponent<Image>()
-                ?? slotObject.GetComponent<Image>();
-            if (portrait != null)
+            var cardBackgroundImage = FindDeep(slotObject.transform, "BG")?.GetComponent<Image>()
+                ?? FindDeep(slotObject.transform, "CardBackground")?.GetComponent<Image>()
+                ?? FindDeep(slotObject.transform, "AssignablePortrait")?.GetComponent<Image>()
+                ?? FindDeep(slotObject.transform, "Portrait")?.GetComponent<Image>();
+            if (cardBackgroundImage != null)
+            {
+                cardBackgroundImage.sprite = cardBackground;
+                cardBackgroundImage.preserveAspect = false;
+                cardBackgroundImage.color = Color.white;
+                cardBackgroundImage.enabled = cardBackgroundImage.sprite != null;
+            }
+
+            var portrait = FindDeep(slotObject.transform, "CharacterPortrait")?.GetComponent<Image>()
+                ?? FindDeep(slotObject.transform, "Chibi")?.GetComponent<Image>()
+                ?? FindDeep(slotObject.transform, "Icon")?.GetComponent<Image>();
+            if (portrait != null && portrait != cardBackgroundImage)
             {
                 portrait.sprite = CharacterChibiSprite(entry);
                 portrait.preserveAspect = true;
@@ -688,6 +766,17 @@ namespace BES.UI.Menu
                 ?? FindDeep(slotObject.transform, "Level")?.GetComponent<TMP_Text>();
             if (level != null) level.text = $"Lv.{CharacterProgressionState.GetLevel(entry.id)}";
 
+            var selectedState = FindDeep(slotObject.transform, "SelectedState")?.gameObject
+                ?? FindDeep(slotObject.transform, "Selected")?.gameObject;
+            if (selectedState != null)
+                selectedState.SetActive(isSelected);
+
+            if (!galleryStyle)
+            {
+                slotObject.transform.localScale = isSelected ? selectedSelectorScale : unselectedSelectorScale;
+                ApplySelectorLayoutSize(slotObject, isSelected);
+            }
+
             var button = slotObject.GetComponent<Button>() ?? slotObject.GetComponentInChildren<Button>(true);
             if (button != null)
             {
@@ -708,6 +797,47 @@ namespace BES.UI.Menu
             CharacterOwnership.Focus(selectedCharacterId);
             RefreshCharacter();
             RefreshCharacterSelectors();
+            RefreshGallerySelectionState();
+        }
+
+        void RefreshGallerySelectionState()
+        {
+            foreach (var card in generatedCards)
+            {
+                if (card == null) continue;
+                var selectedState = FindDeep(card.transform, "SelectedState")?.gameObject
+                    ?? FindDeep(card.transform, "Selected")?.gameObject;
+                if (selectedState != null)
+                    selectedState.SetActive(CharacterIdentity.Same(card.name, selectedCharacterId, database));
+            }
+        }
+
+        void ApplySelectorLayoutSize(GameObject slotObject, bool isSelected)
+        {
+            if (slotObject == null) return;
+            var rect = slotObject.GetComponent<RectTransform>();
+            if (rect == null) return;
+
+            var scale = isSelected ? selectedSelectorScale : unselectedSelectorScale;
+            var layout = slotObject.GetComponent<LayoutElement>() ?? slotObject.AddComponent<LayoutElement>();
+            layout.preferredWidth = Mathf.Max(1f, rect.sizeDelta.x * Mathf.Abs(scale.x));
+            layout.preferredHeight = Mathf.Max(1f, rect.sizeDelta.y * Mathf.Abs(scale.y));
+        }
+
+        static void ClearDynamicChildren(RectTransform parent, GameObject template)
+        {
+            if (parent == null) return;
+            for (var i = parent.childCount - 1; i >= 0; i--)
+            {
+                var child = parent.GetChild(i);
+                if (child == null || child.gameObject == template)
+                    continue;
+                if (child.name.IndexOf("Template", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                    continue;
+
+                if (Application.isPlaying) Destroy(child.gameObject);
+                else DestroyImmediate(child.gameObject);
+            }
         }
 
         void BuildCard(CharacterEntry entry)
@@ -717,10 +847,13 @@ namespace BES.UI.Menu
             card.name = entry.id;
             card.SetActive(true);
             var background = card.GetComponent<Image>();
-            background.sprite = BackgroundFor(entry.rarity);
-            background.color = Color.white;
+            if (background != null)
+            {
+                background.sprite = CardBackgroundFor(entry);
+                background.color = Color.white;
+            }
             var portrait = FindDeep(card.transform, "Portrait")?.GetComponent<Image>();
-            if (portrait != null) { portrait.sprite = CharacterChibiSprite(entry); portrait.preserveAspect = true; }
+            if (portrait != null) { portrait.sprite = CardBackgroundFor(entry); portrait.preserveAspect = false; }
             var element = FindDeep(card.transform, "Element")?.GetComponent<Image>();
             if (element != null) { element.sprite = entry.elementIcon; element.enabled = entry.elementIcon != null; }
             var name = FindDeep(card.transform, "CharacterName")?.GetComponent<TMP_Text>();
@@ -735,8 +868,16 @@ namespace BES.UI.Menu
             }
             if (name != null) name.text = entry.displayName;
             if (level != null) level.text = $"Lv.{CharacterProgressionState.GetLevel(entry.id)}";
-            card.GetComponent<Button>().onClick.AddListener(() => OpenCharacter(entry.id));
+            var button = card.GetComponent<Button>() ?? card.AddComponent<Button>();
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => OpenCharacter(entry.id));
             generatedCards.Add(card);
+        }
+
+        Sprite CardBackgroundFor(CharacterEntry entry)
+        {
+            if (entry == null) return null;
+            return entry.cardBackground != null ? entry.cardBackground : BackgroundFor(entry.rarity);
         }
 
         Sprite BackgroundFor(int rarity)

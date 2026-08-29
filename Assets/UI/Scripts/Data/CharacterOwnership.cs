@@ -41,7 +41,7 @@ namespace BES.UI
         public static IReadOnlyList<CharacterEntry> GetOwnedEntries(MenuContentDatabase menuDatabase)
         {
             var owned = new List<CharacterEntry>();
-            var seen = new HashSet<string>();
+            var seen = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
             var roster = ResolveRoster();
             if (roster == null)
                 return owned;
@@ -54,7 +54,31 @@ namespace BES.UI
                 owned.Add(entry);
             }
 
+            AddOwnedEntriesFromInventoryTokens(menuDatabase, owned, seen);
             return owned;
+        }
+
+        static void AddOwnedEntriesFromInventoryTokens(MenuContentDatabase menuDatabase, List<CharacterEntry> owned, HashSet<string> seen)
+        {
+            var inventory = GameManager.Instance?.Inventory;
+            if (inventory == null || menuDatabase?.characters == null)
+                return;
+
+            foreach (var character in menuDatabase.characters)
+            {
+                if (character == null || string.IsNullOrWhiteSpace(character.id))
+                    continue;
+
+                var tokenId = InventoryTokenId(character.id);
+                if (string.IsNullOrEmpty(tokenId) || inventory.GetCount(tokenId) <= 0)
+                    continue;
+
+                var entry = CharacterIdentity.FindEntry(menuDatabase, character.id);
+                if (entry == null || !seen.Add(entry.id))
+                    continue;
+
+                owned.Add(entry);
+            }
         }
 
         public static string ResolveOwnedId(string requested, MenuContentDatabase menuDatabase)
