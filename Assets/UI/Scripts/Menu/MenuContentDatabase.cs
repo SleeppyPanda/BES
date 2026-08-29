@@ -224,6 +224,7 @@ namespace BES.UI.Menu
 
         void OnValidate()
         {
+            EnsureDefaultPlayModeStages();
             NormalizeCurrencyDefaults();
             NormalizeCharacterCombatDefaults();
             NormalizeEnemyCombatDefaults();
@@ -480,6 +481,7 @@ namespace BES.UI.Menu
             if (resourceStages == null) resourceStages = new List<StageEntry>();
             if (sanctumStages == null) sanctumStages = new List<StageEntry>();
             if (weaponStages == null) weaponStages = new List<StageEntry>();
+            if (playModeStageGroups == null) playModeStageGroups = new List<PlayModeStageGroup>();
 
             if (resourceStages.Count == 0)
                 resourceStages.Add(CreateDefaultStage("play_resource_01", "Đường Cát Tài Nguyên", "Ải luyện tài nguyên cơ bản, phù hợp để test đội hình.", 1,
@@ -506,7 +508,145 @@ namespace BES.UI.Menu
                     NewEnemy("sand_wisp_elite", "Cát Xoáy Sa Mạc", 680, 112, 44, 13),
                     NewEnemy("fire_wisp_support", "Lửa Linh Hồn", 720, 14, 54, 9)));
 
+            EnsureResonanceSanctumPlayModeStages();
+            EnsureDivineRemnantPlayModeStages();
+            EnsureFuturePlayModeGroups();
             NormalizeEnemyCombatDefaults();
+        }
+
+        void EnsureFuturePlayModeGroups()
+        {
+            EnsurePlayModeStageGroup(
+                "arena_of_lost_echoes",
+                "Arena of Lost Echoes",
+                "Nhóm Play Mode Content_1_Arena of Lost Echoes. Thêm các tab phụ/map sau trong Unity.");
+            EnsurePlayModeStageGroup(
+                "rift_of_the_hunt",
+                "Rift of the Hunt",
+                "Nhóm Play Mode Content_2_Rift of the Hunt. Thêm các tab phụ/map sau trong Unity.");
+        }
+
+        void EnsureResonanceSanctumPlayModeStages()
+        {
+            var lostEchoes = EnsurePlayModeStageGroup(
+                "resonance_sanctum_lost_echoes",
+                "Sanctum of Lost Echoes",
+                "Nhóm ải thánh tích. UI map nằm dưới Content_0_Resonance Sanctum/TabList_0_Sanctum of Lost Echoes.");
+            EnsurePlayModeStage(lostEchoes, CreatePlayModeStage(
+                "LostEchoAchievement_1", "Tuyệt Vực Tàn Chiếu", "Ải Lost Echoes 1. Reward UI lấy từ relicslot_00-03, nút vào trận là EnergyCostBg.", "resonance_sanctum_lost_echoes", 3, 30,
+                NewRewards("lost_echo_relic_1", "lost_echo_relic_2", "lost_echo_relic_3", "lost_echo_relic_4"),
+                NewEnemy("sand_wisp_lost_echo_1a", "Cát Xoáy Sa Mạc", 760, 118, 52, 14),
+                NewEnemy("fire_wisp_lost_echo_1b", "Lửa Linh Hồn", 700, 24, 58, 10),
+                NewEnemy("flame_beast_lost_echo_1c", "Thú Lửa Nhỏ", 660, 110, 42, 15)));
+            EnsurePlayModeStage(lostEchoes, CreatePlayModeStage(
+                "LostEchoAchievement_2", "Dư Âm Tàn Khắc", "Ải Lost Echoes 2. Reward UI lấy từ relicslot_00-03, nút vào trận là EnergyCostBg.", "resonance_sanctum_lost_echoes", 5, 30,
+                NewRewards("lost_echo_relic_5", "lost_echo_relic_6", "lost_echo_relic_7", "lost_echo_relic_8"),
+                NewEnemy("sand_wisp_lost_echo_2a", "Cát Xoáy Sa Mạc", 900, 140, 66, 15),
+                NewEnemy("flame_beast_lost_echo_2b", "Thú Lửa Nhỏ", 760, 132, 50, 16),
+                NewEnemy("fire_wisp_lost_echo_2c", "Lửa Linh Hồn", 820, 30, 70, 10)));
+            EnsurePlayModeStage(lostEchoes, CreatePlayModeStage(
+                "LostEchoAchievement_3", "Xích Minh Đế Chủ", "Ải Lost Echoes 3. Reward UI lấy từ relicslot_00-03, nút vào trận là EnergyCostBg.", "resonance_sanctum_lost_echoes", 8, 30,
+                NewRewards("lost_echo_relic_9", "lost_echo_relic_10", "lost_echo_relic_11", "lost_echo_relic_12"),
+                NewEnemy("sand_wisp_lost_echo_3a", "Cát Xoáy Sa Mạc", 1080, 166, 82, 15),
+                NewEnemy("sand_wisp_lost_echo_3b", "Cát Xoáy Sa Mạc", 1080, 166, 82, 15),
+                NewEnemy("flame_beast_lost_echo_3c", "Thú Lửa Nhỏ", 920, 158, 64, 17)));
+            EnsurePlayModeStage(lostEchoes, CreatePlayModeStage(
+                "LostEchoAchievement_4", "Thánh Trì Vĩnh Mộc", "Ải Lost Echoes 4. Reward UI lấy từ relicslot_00-03, nút vào trận là EnergyCostBg.", "resonance_sanctum_lost_echoes", 10, 30,
+                NewRewards("lost_echo_relic_13", "lost_echo_relic_14", "lost_echo_relic_15", "lost_echo_relic_16"),
+                NewEnemy("flame_beast_lost_echo_4a", "Thú Lửa Nhỏ", 1060, 184, 74, 18),
+                NewEnemy("sand_wisp_lost_echo_4b", "Cát Xoáy Sa Mạc", 1240, 186, 96, 16),
+                NewEnemy("fire_wisp_lost_echo_4c", "Lửa Linh Hồn", 1120, 40, 98, 11)));
+
+            var ascension = EnsurePlayModeStageGroup(
+                "resonance_sanctum_ascension",
+                "Sanctum of Ascension",
+                "Nhóm ải đột phá nhân vật. UI map nằm dưới TabList_1_Sanctum of Ascension.");
+            EnsureNumberedDomainStages(ascension, "ascensionDomain_", 4, "Đột Phá Nhân Vật", "ascension_material", 4, 30, "resonance_sanctum_ascension");
+
+            var insight = EnsurePlayModeStageGroup(
+                "resonance_sanctum_insight",
+                "Sanctum of Insight",
+                "Nhóm ải nâng cấp kỹ năng. UI map nằm dưới TabList_2_Sanctum of Insight.");
+            EnsureNumberedDomainStages(insight, "insightDomain_", 3, "Minh Triết Lý Luận", "insight_scroll", 4, 30, "resonance_sanctum_insight");
+
+            var forging = EnsurePlayModeStageGroup(
+                "resonance_sanctum_forging",
+                "Sanctum of Forging",
+                "Nhóm ải đột phá vũ khí. UI map nằm dưới TabList_3_Sanctum of Forging.");
+            EnsureNumberedDomainStages(forging, "AssignableListEntry_", 4, "Đột Phá Vũ Khí", "forging_material", 4, 30, "resonance_sanctum_forging", zeroBasedIds: true);
+        }
+
+        void EnsureDivineRemnantPlayModeStages()
+        {
+            var divineRemnant = EnsurePlayModeStageGroup(
+                "divine_remnant",
+                "Divine Remnant",
+                "Nhóm ải Divine Remnant. UI map nằm dưới Content_3_Divine Remnant.");
+            EnsurePlayModeStage(divineRemnant, CreatePlayModeStage(
+                "EnemySection_1", "Di Tích Thần Vị", "Ải Divine Remnant 1. Reward UI lấy từ DropSlot_00-02, nút vào trận là PlayButton.", "divine_remnant", 12, 20,
+                NewRewards("divine_remnant_core", "divine_remnant_fragment", "coins"),
+                NewEnemy("sand_wisp_divine_1a", "Cát Xoáy Sa Mạc", 1320, 190, 106, 16),
+                NewEnemy("flame_beast_divine_1b", "Thú Lửa Nhỏ", 1180, 196, 84, 18),
+                NewEnemy("fire_wisp_divine_1c", "Lửa Linh Hồn", 1240, 48, 112, 11)));
+        }
+
+        void EnsureNumberedDomainStages(PlayModeStageGroup group, string idPrefix, int count, string titlePrefix, string rewardPrefix, int rewardCount, int energyCost, string playModeType, bool zeroBasedIds = false)
+        {
+            for (var i = 0; i < count; i++)
+            {
+                var displayIndex = i + 1;
+                var idIndex = zeroBasedIds ? i : displayIndex;
+                EnsurePlayModeStage(group, CreatePlayModeStage(
+                    $"{idPrefix}{idIndex}",
+                    $"{titlePrefix} {displayIndex}",
+                    $"{titlePrefix} {displayIndex}. Reward UI lấy từ bg/RewardSlot_00-03, nút vào trận là EnterButton.",
+                    playModeType,
+                    2 + displayIndex * 2,
+                    energyCost,
+                    NewRewards(rewardPrefix, displayIndex, rewardCount),
+                    NewEnemy($"sand_wisp_{rewardPrefix}_{displayIndex}_a", "Cát Xoáy Sa Mạc", 640 + displayIndex * 180, 96 + displayIndex * 24, 40 + displayIndex * 14, 13 + displayIndex / 2),
+                    NewEnemy($"flame_beast_{rewardPrefix}_{displayIndex}_b", "Thú Lửa Nhỏ", 560 + displayIndex * 160, 92 + displayIndex * 25, 34 + displayIndex * 12, 14 + displayIndex),
+                    NewEnemy($"fire_wisp_{rewardPrefix}_{displayIndex}_c", "Lửa Linh Hồn", 620 + displayIndex * 170, 18 + displayIndex * 5, 46 + displayIndex * 15, 9 + displayIndex / 2)));
+            }
+        }
+
+        PlayModeStageGroup EnsurePlayModeStageGroup(string id, string title, string description)
+        {
+            var group = playModeStageGroups.Find(x => x != null && id.Equals(x.id, StringComparison.OrdinalIgnoreCase));
+            if (group != null) return group;
+            group = new PlayModeStageGroup
+            {
+                id = id,
+                title = title,
+                description = description,
+                stages = new List<StageEntry>()
+            };
+            playModeStageGroups.Add(group);
+            return group;
+        }
+
+        static void EnsurePlayModeStage(PlayModeStageGroup group, StageEntry stage)
+        {
+            if (group == null || stage == null || string.IsNullOrWhiteSpace(stage.id)) return;
+            group.stages ??= new List<StageEntry>();
+            if (group.stages.Exists(x => x != null && stage.id.Equals(x.id, StringComparison.OrdinalIgnoreCase)))
+                return;
+            group.stages.Add(stage);
+        }
+
+        static StageEntry CreatePlayModeStage(string id, string title, string description, string playModeType, int level, int energyCost, List<RewardEntry> rewards, params BattleUnitDefinition[] enemies)
+        {
+            return new StageEntry
+            {
+                id = id,
+                title = title,
+                playModeType = playModeType,
+                description = description,
+                energyCost = Mathf.Max(0, energyCost),
+                enemyLevel = Mathf.Max(1, level),
+                rewards = rewards ?? new List<RewardEntry>(),
+                enemies = new List<BattleUnitDefinition>(enemies ?? Array.Empty<BattleUnitDefinition>())
+            };
         }
 
         static StageEntry CreateDefaultStage(string id, string title, string description, int level, RewardEntry rewardA, RewardEntry rewardB, params BattleUnitDefinition[] enemies)
@@ -538,10 +678,43 @@ namespace BES.UI.Menu
                 rarity = Mathf.Max(1, rarity)
             };
 
+        static List<RewardEntry> NewRewards(params string[] ids)
+        {
+            var rewards = new List<RewardEntry>();
+            if (ids == null) return rewards;
+            for (var i = 0; i < ids.Length; i++)
+            {
+                if (string.IsNullOrWhiteSpace(ids[i])) continue;
+                rewards.Add(NewReward(ids[i], ids[i].Equals("coins", StringComparison.OrdinalIgnoreCase) ? 1000 : 1, Mathf.Clamp(i + 2, 2, 5)));
+            }
+            return rewards;
+        }
+
+        static List<RewardEntry> NewRewards(string rewardPrefix, int stageIndex, int count)
+        {
+            var rewards = new List<RewardEntry>();
+            for (var i = 0; i < count; i++)
+            {
+                var rewardId = $"{rewardPrefix}_{stageIndex}_{i + 1}";
+                rewards.Add(new RewardEntry
+                {
+                    id = rewardId,
+                    amount = 1,
+                    minAmount = 1,
+                    maxAmount = stageIndex >= 3 ? 2 : 1,
+                    dropChancePercent = i == 0 ? 100 : Mathf.Clamp(80 - i * 10, 35, 100),
+                    guaranteed = i == 0,
+                    rarity = Mathf.Clamp(stageIndex + i, 2, 5)
+                });
+            }
+            return rewards;
+        }
+
         public List<StageEntry> GetPlayModeStages(string groupId)
         {
             if (string.IsNullOrWhiteSpace(groupId))
                 return resourceStages;
+            groupId = NormalizePlayModeStageGroupId(groupId);
 
             if (groupId.Equals("resources", StringComparison.OrdinalIgnoreCase) ||
                 groupId.Equals("resource", StringComparison.OrdinalIgnoreCase))
@@ -556,6 +729,26 @@ namespace BES.UI.Menu
 
             var group = playModeStageGroups?.Find(x => x != null && groupId.Equals(x.id, StringComparison.OrdinalIgnoreCase));
             return group?.stages ?? new List<StageEntry>();
+        }
+
+        static string NormalizePlayModeStageGroupId(string groupId)
+        {
+            var value = groupId?.Trim() ?? string.Empty;
+            if (value.Equals("TabList_0_Sanctum of Lost Echoes", StringComparison.OrdinalIgnoreCase))
+                return "resonance_sanctum_lost_echoes";
+            if (value.Equals("TabList_1_Sanctum of Ascension", StringComparison.OrdinalIgnoreCase))
+                return "resonance_sanctum_ascension";
+            if (value.Equals("TabList_2_Sanctum of Insight", StringComparison.OrdinalIgnoreCase))
+                return "resonance_sanctum_insight";
+            if (value.Equals("TabList_3_Sanctum of Forging", StringComparison.OrdinalIgnoreCase))
+                return "resonance_sanctum_forging";
+            if (value.Equals("Content_1_Arena of Lost Echoes", StringComparison.OrdinalIgnoreCase))
+                return "arena_of_lost_echoes";
+            if (value.Equals("Content_2_Rift of the Hunt", StringComparison.OrdinalIgnoreCase))
+                return "rift_of_the_hunt";
+            if (value.Equals("Content_3_Divine Remnant", StringComparison.OrdinalIgnoreCase))
+                return "divine_remnant";
+            return value;
         }
 
         static BattleUnitDefinition NewEnemy(string id, string displayName, int hp, int atk, int def, int spd)
