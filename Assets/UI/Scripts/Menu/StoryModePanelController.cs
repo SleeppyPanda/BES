@@ -58,6 +58,8 @@ namespace BES.UI.Menu
 
         [Header("Before selection")]
         [SerializeField] Button openSelectionButton;
+        [Tooltip("Optional direct buttons for each party slot. Element 0 opens slot 0, Element 1 opens slot 1, etc.")]
+        [SerializeField] List<Button> openSelectionButtonsBySlot = new();
         [SerializeField] Button beforeBackButton;
         [SerializeField] List<StoryPartySlotBinding> beforeSlots = new();
         [SerializeField] List<StoryRequirementImageBinding> storyRequirements = new();
@@ -163,6 +165,7 @@ namespace BES.UI.Menu
         {
             AutoResolveStorySelectionButtons();
             Add(openSelectionButton, OpenFirstAvailableSlot);
+            BindOpenSelectionButtonsBySlot();
             Add(beforeBackButton, BackToHome);
             Add(selectionBackButton, CloseCharacterSelection);
             Add(confirmPartyButton, ConfirmParty);
@@ -231,6 +234,16 @@ namespace BES.UI.Menu
         static void Add(Button button, UnityAction action)
         {
             if (button != null) button.onClick.AddListener(action);
+        }
+
+        void BindOpenSelectionButtonsBySlot()
+        {
+            if (openSelectionButtonsBySlot == null) return;
+            for (var i = 0; i < openSelectionButtonsBySlot.Count; i++)
+            {
+                var index = i;
+                Add(openSelectionButtonsBySlot[i], () => OpenCharacterSelection(index));
+            }
         }
 
         void BindSlotSelection(List<StoryPartySlotBinding> slots)

@@ -49,11 +49,6 @@ namespace BES.UI.Menu
         void OpenInternal(MenuScreenId id, bool rememberCurrent)
         {
             var next = screens.Find(x => x.id == id);
-            if ((next == null || next.panel == null) && id == MenuScreenId.PlayParty)
-            {
-                OpenInternal(MenuScreenId.StoryParty, rememberCurrent);
-                return;
-            }
             if (next == null || next.panel == null) return;
             var previous = screens.Find(x => x.id == current);
             if (previous?.panel != null && previous.panel.activeSelf)
@@ -109,7 +104,7 @@ namespace BES.UI.Menu
                 MenuScreenId.Battle => new[] { "BattlePanel", "battlePanel" },
                 MenuScreenId.Home => new[] { "HomePanel", "Home" },
                 MenuScreenId.StoryParty => new[] { "StoryPartyPanel", "StoryModePanel", "StoryPanel" },
-                MenuScreenId.PlayParty => new[] { "PlayPartyPanel", "PlayTeamSetupPanel", "StoryPartyPanel", "StoryModePanel" },
+                MenuScreenId.PlayParty => new[] { "PlayPartyPanel", "PlayTeamSetupPanel", "PrebattlePanel" },
                 MenuScreenId.ResourceStages => new[] { "ResourceStagesPanel", "ResourcePanel" },
                 MenuScreenId.SanctumRelics => new[] { "SanctumRelicsPanel", "SanctumPanel" },
                 MenuScreenId.WeaponBreakthrough => new[] { "WeaponBreakthroughPanel", "WeaponPanel" },
