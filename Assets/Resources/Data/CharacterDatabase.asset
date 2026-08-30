@@ -22,9 +22,10 @@ MonoBehaviour:
     baseHealth: 820
     baseDefense: 58
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
-    portrait: {fileID: 21300000, guid: ffce85d4411b99c47833aae9524bce7a, type: 3}
+    portrait: {fileID: 21300000, guid: dcf1d0ff5118f914e9396d6bb0add014, type: 3}
     gameplayPrefab: {fileID: 3218744023434491208, guid: 6e0da288d7ebf444cb70460bcd825904, type: 3}
     testVisualColor: {r: 1, g: 1, b: 1, a: 1}
     testVisualScale: {x: 1, y: 1, z: 1}
@@ -46,9 +47,10 @@ MonoBehaviour:
     baseHealth: 900
     baseDefense: 76
     baseMana: 100
+    energyTurns: 3
     critRate: 0.2
     critDamage: 1.5
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: a7412a44a4b8ac24e9849d0345ed615c, type: 3}
     gameplayPrefab: {fileID: 1970393570675979354, guid: 029686aed7f24e141b878851f14f03e0, type: 3}
     testVisualColor: {r: 1, g: 1, b: 1, a: 1}
     testVisualScale: {x: 1, y: 1, z: 1}
@@ -70,9 +72,10 @@ MonoBehaviour:
     baseHealth: 650
     baseDefense: 56
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: 11a006ec75953eb469498123abba3845, type: 3}
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 1, g: 1, b: 1, a: 1}
     testVisualScale: {x: 1, y: 1, z: 1}
@@ -94,9 +97,10 @@ MonoBehaviour:
     baseHealth: 680
     baseDefense: 48
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: a148c5fb8fee00945a14c23d33fc3af3, type: 3}
     gameplayPrefab: {fileID: 8466623282687227903, guid: a504d53c223b0ef4594da011b6c4857e, type: 3}
     testVisualColor: {r: 1, g: 1, b: 1, a: 1}
     testVisualScale: {x: 1, y: 1, z: 1}
@@ -118,9 +122,10 @@ MonoBehaviour:
     baseHealth: 760
     baseDefense: 82
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: 9acf3e48afb151f46b760d4846c762db, type: 3}
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 1, g: 1, b: 1, a: 1}
     testVisualScale: {x: 1, y: 1, z: 1}
@@ -142,9 +147,10 @@ MonoBehaviour:
     baseHealth: 960
     baseDefense: 82
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
-    portrait: {fileID: 21300000, guid: af113dc2e52074146ab6caf3002a6122, type: 3}
+    portrait: {fileID: 21300000, guid: d61bb5864533d4342bda1fec56caad82, type: 3}
     gameplayPrefab: {fileID: 3438290509365907671, guid: b239ffd8b127ff142ac22af4f09debf7, type: 3}
     testVisualColor: {r: 1, g: 1, b: 1, a: 1}
     testVisualScale: {x: 1, y: 1, z: 1}
@@ -166,9 +172,10 @@ MonoBehaviour:
     baseHealth: 620
     baseDefense: 44
     baseMana: 100
+    energyTurns: 3
     critRate: 0.2
     critDamage: 1.5
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: 678ccf429417bc640b0dbcf6a22e4f31, type: 3}
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 1, g: 1, b: 1, a: 1}
     testVisualScale: {x: 1, y: 1, z: 1}
@@ -190,9 +197,10 @@ MonoBehaviour:
     baseHealth: 880
     baseDefense: 72
     baseMana: 100
+    energyTurns: 3
     critRate: 0.2
     critDamage: 1.5
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: 909000007b6562947908df8e4de9c5b7, type: 3}
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 1, g: 1, b: 1, a: 1}
     testVisualScale: {x: 1, y: 1, z: 1}
@@ -214,6 +222,7 @@ MonoBehaviour:
     baseHealth: 590
     baseDefense: 40
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -238,9 +247,10 @@ MonoBehaviour:
     baseHealth: 780
     baseDefense: 84
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: fa38a886514e0f044bfd8114efc6d63d, type: 3}
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 1, g: 1, b: 1, a: 1}
     testVisualScale: {x: 1, y: 1, z: 1}
@@ -262,9 +272,10 @@ MonoBehaviour:
     baseHealth: 610
     baseDefense: 44
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
-    portrait: {fileID: 0}
+    portrait: {fileID: 21300000, guid: 13b2a3438b817124bb3a61f1a6a7593f, type: 3}
     gameplayPrefab: {fileID: 0}
     testVisualColor: {r: 1, g: 1, b: 1, a: 1}
     testVisualScale: {x: 1, y: 1, z: 1}
@@ -286,6 +297,7 @@ MonoBehaviour:
     baseHealth: 520
     baseDefense: 42
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -310,6 +322,7 @@ MonoBehaviour:
     baseHealth: 500
     baseDefense: 34
     baseMana: 100
+    energyTurns: 3
     critRate: 0.2
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -334,6 +347,7 @@ MonoBehaviour:
     baseHealth: 560
     baseDefense: 52
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -358,6 +372,7 @@ MonoBehaviour:
     baseHealth: 520
     baseDefense: 36
     baseMana: 100
+    energyTurns: 3
     critRate: 0.2
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -382,6 +397,7 @@ MonoBehaviour:
     baseHealth: 760
     baseDefense: 62
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -406,6 +422,7 @@ MonoBehaviour:
     baseHealth: 640
     baseDefense: 66
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -430,6 +447,7 @@ MonoBehaviour:
     baseHealth: 510
     baseDefense: 36
     baseMana: 100
+    energyTurns: 3
     critRate: 0.2
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -454,6 +472,7 @@ MonoBehaviour:
     baseHealth: 740
     baseDefense: 76
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -478,6 +497,7 @@ MonoBehaviour:
     baseHealth: 660
     baseDefense: 64
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -502,6 +522,7 @@ MonoBehaviour:
     baseHealth: 730
     baseDefense: 58
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -526,6 +547,7 @@ MonoBehaviour:
     baseHealth: 660
     baseDefense: 58
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -550,6 +572,7 @@ MonoBehaviour:
     baseHealth: 640
     baseDefense: 50
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -574,6 +597,7 @@ MonoBehaviour:
     baseHealth: 560
     baseDefense: 42
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -598,6 +622,7 @@ MonoBehaviour:
     baseHealth: 720
     baseDefense: 58
     baseMana: 100
+    energyTurns: 3
     critRate: 0.2
     critDamage: 1.5
     portrait: {fileID: 0}
@@ -622,6 +647,7 @@ MonoBehaviour:
     baseHealth: 640
     baseDefense: 46
     baseMana: 100
+    energyTurns: 3
     critRate: 0.1
     critDamage: 1.5
     portrait: {fileID: 0}
