@@ -48,9 +48,9 @@ namespace BES.Gameplay
     public class SaveData
     {
         public string saveVersion = "1.0";
-        public float playerHealth = 100f;
-        public float playerMana = 100f;
-        public float playerStamina = 100f;
+        public float playerHealth = -1f;
+        public float playerMana = -1f;
+        public float playerStamina = -1f;
         public string currentRegionId = "region_creation_city";
         public float playerPosX;
         public float playerPosY;

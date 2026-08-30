@@ -1,0 +1,1672 @@
+HIGH-LEVEL CODEBASE SUMMARY
+===========================
+
+=== MODULE: JMO Assets/Cartoon FX Remaster/CFXR Assets/Editor ===
+=============================================================
+
+  Namespace: CartoonFX
+  --------------------
+    - [class] ExpressionParser
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ExpressionParser.cs
+
+    - [class] Token
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ExpressionParser.cs
+
+    - [enum] TokenType
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ExpressionParser.cs
+
+    - [class] Expression
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ExpressionParser.cs
+
+    - [class] ExpressionLeaf : Expression
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ExpressionParser.cs
+
+    - [class] ExpressionAnd : Expression
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ExpressionParser.cs
+
+    - [class] ExpressionOr : Expression
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ExpressionParser.cs
+
+    - [class] ExpressionNot : Expression
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ExpressionParser.cs
+
+    - [class] MaterialInspector : ShaderGUI
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+
+    - [class] MaterialToggleNoKeywordDrawer : MaterialPropertyDrawer
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+      Desc: Same as Toggle drawer, but doesn't set any keyword This will avoid adding unnecessary shader keyword to the project
+
+    - [class] MaterialKeywordEnumNoPrefixDrawer : MaterialPropertyDrawer
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+      Desc: Same as KeywordEnum drawer, but uses the keyword supplied as is rather than adding a prefix to them
+
+    - [class] GUICommand
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+
+    - [class] GC_Separator : GUICommand
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+
+    - [class] GC_SeparatorDouble : GUICommand
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+
+    - [class] GC_Space : GUICommand
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+
+    - [class] GC_HelpBox : GUICommand
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+
+    - [class] GC_Header : GUICommand
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+
+    - [class] GC_Label : GUICommand
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+
+    - [class] GC_IfKeyword : GUICommand
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+
+    - [class] GC_EndIf : GUICommand
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+
+    - [class] GC_IfProperty : GUICommand
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_MaterialInspector.cs
+
+    - [class] Styles
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_Styles.cs
+
+  Namespace: CustomShaderImporter
+  -------------------------------
+    - [class] CFXR_ShaderPostProcessor : AssetPostprocessor
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ShaderPostProcessor.cs
+
+  Namespace: Inspector
+  --------------------
+    - [class] Utils
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ShaderImporter.cs
+
+    - [class] CFXR_ShaderImporter : ScriptedImporter
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ShaderImporter.cs
+
+    - [enum] RenderPipeline
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ShaderImporter.cs
+
+    - [enum] ComparisonOperator
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ShaderImporter.cs
+
+    - [class] TCP2ShaderImporter_Editor : Editor
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Editor\CFXR_ShaderImporter.cs
+
+
+################################################################################
+
+=== MODULE: JMO Assets/Cartoon FX Remaster/CFXR Assets/Scripts ===
+==============================================================
+
+  Namespace: CartoonFX
+  --------------------
+    - [class] CFXR_Effect : MonoBehaviour
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_Effect.CameraShake.cs
+
+    - [class] CameraShake
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_Effect.CameraShake.cs
+
+    - [enum] ShakeSpace
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_Effect.CameraShake.cs
+
+    - [class] CFXR_Effect : MonoBehaviour
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_Effect.cs
+
+    - [enum] ClearBehavior
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_Effect.cs
+
+    - [class] AnimatedLight
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_Effect.cs
+
+    - [class] AnimatedLightDrawer : PropertyDrawer
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_Effect.cs
+
+    - [class] CFXR_Effect_Editor : Editor
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_Effect.cs
+
+    - [class] CFXR_EmissionBySurface : MonoBehaviour
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_EmissionBySurface.cs
+
+    - [class] CFXR_EmissionBySurface_Editor : Editor
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_EmissionBySurface.cs
+
+    - [class] CFXR_ParticleText : MonoBehaviour
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_ParticleText.cs
+
+    - [class] ParticleTextEditor : Editor
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_ParticleText.cs
+
+    - [class] CFXR_ParticleTextFontAsset : ScriptableObject
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_ParticleTextFontAsset.cs
+
+    - [enum] LetterCase
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_ParticleTextFontAsset.cs
+
+    - [class] Kerning
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_ParticleTextFontAsset.cs
+
+    - [class] ParticleTextFontAssetEditor : Editor
+      File: Assets\JMO Assets\Cartoon FX Remaster\CFXR Assets\Scripts\CFXR_ParticleTextFontAsset.cs
+
+
+################################################################################
+
+=== MODULE: JMO Assets/Cartoon FX Remaster/Demo Assets ===
+======================================================
+
+  Namespace: CartoonFX
+  --------------------
+    - [class] CFXR_Demo : MonoBehaviour
+      File: Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\CFXR_Demo.cs
+
+    - [class] ButtonsPressed
+      File: Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\CFXR_Demo.cs
+
+    - [class] CFXR_Demo_Rotate : MonoBehaviour
+      File: Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\CFXR_Demo_Rotate.cs
+
+    - [class] CFXR_Demo_Translate : MonoBehaviour
+      File: Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\CFXR_Demo_Translate.cs
+
+
+################################################################################
+
+=== MODULE: JMO Assets/Cartoon FX Remaster/Demo Assets/Kino Bloom ===
+=================================================================
+
+  Namespace: Kino
+  ---------------
+    - [class] Bloom : MonoBehaviour
+      File: Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Bloom.cs
+
+
+################################################################################
+
+=== MODULE: JMO Assets/Cartoon FX Remaster/Demo Assets/Kino Bloom/Editor ===
+========================================================================
+
+  Namespace: Kino
+  ---------------
+    - [class] BloomEditor : Editor
+      File: Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Editor\BloomEditor.cs
+
+    - [class] BloomGraphDrawer
+      File: Assets\JMO Assets\Cartoon FX Remaster\Demo Assets\Kino Bloom\Editor\BloomGraphDrawer.cs
+      Desc: Class used for drawing the brightness response curve
+
+
+################################################################################
+
+=== MODULE: JMO Assets/Welcome Screen ===
+=====================================
+
+  Namespace: CartoonFX
+  --------------------
+    - [class] CFXR_WelcomeScreen : EditorWindow
+      File: Assets\JMO Assets\Welcome Screen\CFXR_WelcomeScreen.cs
+
+
+################################################################################
+
+=== MODULE: Map/AureDevGames/Water Stylized Shader Orto & Perspective Camera/Scripts ===
+====================================================================================
+
+  Namespace: WaterStylizedShader
+  ------------------------------
+    - [class] FloatingObject : MonoBehaviour
+      File: Assets\Map\AureDevGames\Water Stylized Shader Orto & Perspective Camera\Scripts\FloatingObject.cs
+
+
+################################################################################
+
+=== MODULE: Map/AureDevGames/Water Stylized Shader Orto & Perspective Camera/kMirrors/Editor ===
+============================================================================================
+
+  Namespace: kTools.Mirrors.Editor
+  --------------------------------
+    - [class] MirrorEditor : Editor
+      File: Assets\Map\AureDevGames\Water Stylized Shader Orto & Perspective Camera\kMirrors\Editor\MirrorEditor.cs
+
+    - [struct] Styles
+      File: Assets\Map\AureDevGames\Water Stylized Shader Orto & Perspective Camera\kMirrors\Editor\MirrorEditor.cs
+
+    - [struct] PropertyNames
+      File: Assets\Map\AureDevGames\Water Stylized Shader Orto & Perspective Camera\kMirrors\Editor\MirrorEditor.cs
+
+
+################################################################################
+
+=== MODULE: Map/AureDevGames/Water Stylized Shader Orto & Perspective Camera/kMirrors/Runtime ===
+=============================================================================================
+
+  Namespace: kTools.Mirrors
+  -------------------------
+    - [class] Mirror : MonoBehaviour
+      File: Assets\Map\AureDevGames\Water Stylized Shader Orto & Perspective Camera\kMirrors\Runtime\Mirror.cs
+      Desc: <summary> Mirror Object component. </summary>
+
+    - [enum] MirrorCameraOverride
+      File: Assets\Map\AureDevGames\Water Stylized Shader Orto & Perspective Camera\kMirrors\Runtime\Mirror.cs
+      Desc: <summary> Camera override enumeration for Mirror properties <summary>
+
+    - [enum] OutputScope
+      File: Assets\Map\AureDevGames\Water Stylized Shader Orto & Perspective Camera\kMirrors\Runtime\Mirror.cs
+      Desc: <summary> Scope enumeration for Mirror output destination <summary>
+
+
+################################################################################
+
+=== MODULE: Map/Bublisher/3D Stylized Animated Dogs Kit/Scripts ===
+===============================================================
+
+  Namespace: DemoKitStylizedAnimatedDogs
+  --------------------------------------
+    - [class] AnimationButton : MonoBehaviour
+      File: Assets\Map\Bublisher\3D Stylized Animated Dogs Kit\Scripts\AnimationButton.cs
+
+    - [class] DemoController : MonoBehaviour
+      File: Assets\Map\Bublisher\3D Stylized Animated Dogs Kit\Scripts\DemoController.cs
+
+
+################################################################################
+
+=== MODULE: Map/Editor ===
+======================
+
+  Namespace: Global
+  -----------------
+    - [class] BESIslandMapPreviewRenderer
+      File: Assets\Map\Editor\BESIslandMapPreviewRenderer.cs
+
+    - [class] BESIslandSceneGenerator
+      File: Assets\Map\Editor\BESIslandSceneGenerator.cs
+
+
+################################################################################
+
+=== MODULE: Map/Environment ===
+===========================
+
+  Namespace: BES.Environment
+  --------------------------
+    - [class] BESDayNightCycle : MonoBehaviour
+      File: Assets\Map\Environment\BESDayNightCycle.cs
+
+    - [class] BESFlyingBirds : MonoBehaviour
+      File: Assets\Map\Environment\BESFlyingBirds.cs
+
+
+################################################################################
+
+=== MODULE: Map/FullOpaqueFire/Script ===
+=====================================
+
+  Namespace: YourNamespace
+  ------------------------
+    - [class] VFX_FireController : MonoBehaviour
+      File: Assets\Map\FullOpaqueFire\Script\VFX_FireController.cs
+
+
+################################################################################
+
+=== MODULE: Map/Interactions ===
+============================
+
+  Namespace: BES.Interactions
+  ---------------------------
+    - [enum] BESInteractionType
+      File: Assets\Map\Interactions\BESInteractionZone.cs
+
+    - [class] BESInteractionZone : MonoBehaviour
+      File: Assets\Map\Interactions\BESInteractionZone.cs
+
+
+################################################################################
+
+=== MODULE: Map/NPC ===
+===================
+
+  Namespace: BES.NPC
+  ------------------
+    - [enum] BESNpcRole
+      File: Assets\Map\NPC\BESNpcMarker.cs
+
+    - [class] BESNpcMarker : MonoBehaviour
+      File: Assets\Map\NPC\BESNpcMarker.cs
+
+
+################################################################################
+
+=== MODULE: Map/NamuFX/_SharedAssets/Scripts ===
+============================================
+
+  Namespace: Global
+  -----------------
+    - [class] Viewer : MonoBehaviour
+      File: Assets\Map\NamuFX\_SharedAssets\Scripts\Viewer.cs
+
+
+################################################################################
+
+=== MODULE: Map/Stylized 3D Animated Chests – FREE Demo/Resources/Demo ===
+======================================================================
+
+  Namespace: Stylized_3D_Chests_Pack___Animated_Collection.Resources.Demo
+  -----------------------------------------------------------------------
+    - [class] DemoManager : MonoBehaviour
+      File: Assets\Map\Stylized 3D Animated Chests – FREE Demo\Resources\Demo\DemoManager.cs
+
+
+################################################################################
+
+=== MODULE: TutorialInfo/Scripts ===
+================================
+
+  Namespace: Global
+  -----------------
+    - [class] Readme : ScriptableObject
+      File: Assets\TutorialInfo\Scripts\Readme.cs
+
+    - [class] Section
+      File: Assets\TutorialInfo\Scripts\Readme.cs
+
+
+################################################################################
+
+=== MODULE: TutorialInfo/Scripts/Editor ===
+=======================================
+
+  Namespace: Global
+  -----------------
+    - [class] ReadmeEditor : Editor
+      File: Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs
+
+
+################################################################################
+
+=== MODULE: UI/Editor ===
+=====================
+
+  Namespace: BES.EditorTools
+  --------------------------
+    - [class] BagPanelMigration
+      File: Assets\UI\Editor\BagPanelMigration.cs
+
+    - [class] BattleArtAssignmentMigration
+      File: Assets\UI\Editor\BattleArtAssignmentMigration.cs
+
+    - [class] BattleHealthFillMigration
+      File: Assets\UI\Editor\BattleHealthFillMigration.cs
+
+    - [class] BattlePlayerFieldMigration
+      File: Assets\UI\Editor\BattlePlayerFieldMigration.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [class] BattleUnitTemplateSync
+      File: Assets\UI\Editor\BattleUnitTemplateSync.cs
+
+    - [struct] RectPosition
+      File: Assets\UI\Editor\BattleUnitTemplateSync.cs
+
+    - [struct] RectPlacement
+      File: Assets\UI\Editor\BattleUnitTemplateSync.cs
+
+    - [struct] RectLayout
+      File: Assets\UI\Editor\BattleUnitTemplateSync.cs
+
+    - [class] BattleVictoryAndStoryProgressMigration
+      File: Assets\UI\Editor\BattleVictoryAndStoryProgressMigration.cs
+
+    - [class] BESMenuHubBuilder
+      File: Assets\UI\Editor\BESMenuHubBuilder.cs
+
+    - [class] CashShopItemTemplateSync
+      File: Assets\UI\Editor\CashShopItemTemplateSync.cs
+
+    - [class] CashShopNavigationRepairMigration
+      File: Assets\UI\Editor\CashShopNavigationRepairMigration.cs
+
+    - [class] CashShopPanelMigration
+      File: Assets\UI\Editor\CashShopPanelMigration.cs
+
+    - [struct] CurrencyParts
+      File: Assets\UI\Editor\CashShopPanelMigration.cs
+
+    - [struct] ItemParts
+      File: Assets\UI\Editor\CashShopPanelMigration.cs
+
+    - [class] CashShopSubtabPerformanceMigration
+      File: Assets\UI\Editor\CashShopSubtabPerformanceMigration.cs
+
+    - [class] CashShopSwipeViewportMigration
+      File: Assets\UI\Editor\CashShopSwipeViewportMigration.cs
+      Desc: <summary> Assigns clipping only to real content frames. Header, currency, tab buttons and indicators remain outside their sub-content masks.
+
+    - [class] CashShopViewportMaskRepair
+      File: Assets\UI\Editor\CashShopViewportMaskRepair.cs
+      Desc: <summary> Removes clipping masks accidentally added to shop navigation containers. Those containers preserve manually-authored child coordinates and are not
+
+    - [class] CashShopZeroScaleRepair
+      File: Assets\UI\Editor\CashShopZeroScaleRepair.cs
+      Desc: <summary> Repairs RectTransforms that were collapsed while shop children were reparented into the new sub-tab hierarchy. Position, anchors and size are
+
+    - [class] ChapterOneStoryDatabaseImporter
+      File: Assets\UI\Editor\ChapterOneStoryDatabaseImporter.cs
+
+    - [class] ChapterTwoStoryDatabaseImporter
+      File: Assets\UI\Editor\ChapterTwoStoryDatabaseImporter.cs
+
+    - [class] CharacterInfoDatabaseImporter
+      File: Assets\UI\Editor\CharacterInfoDatabaseImporter.cs
+
+    - [class] CharacterRecord
+      File: Assets\UI\Editor\CharacterInfoDatabaseImporter.cs
+
+    - [class] CharacterInfoAssetPostprocessor : AssetPostprocessor
+      File: Assets\UI\Editor\CharacterInfoDatabaseImporter.cs
+
+    - [class] CurrencyLayoutMigration
+      File: Assets\UI\Editor\CurrencyLayoutMigration.cs
+
+    - [class] HomeModeSwitcherViewportMigration
+      File: Assets\UI\Editor\HomeModeSwitcherViewportMigration.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [class] LetterPanelMigration
+      File: Assets\UI\Editor\LetterPanelMigration.cs
+
+    - [class] MenuHubInventoryRuntimeMigration
+      File: Assets\UI\Editor\MenuHubInventoryRuntimeMigration.cs
+
+    - [class] MissionPanelMigration
+      File: Assets\UI\Editor\MissionPanelMigration.cs
+
+    - [class] PlayModeContentLayoutMigration
+      File: Assets\UI\Editor\PlayModeContentLayoutMigration.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [class] PlayModePanelMigration
+      File: Assets\UI\Editor\PlayModePanelMigration.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [class] PlayModeTabBehaviorMigration
+      File: Assets\UI\Editor\PlayModeTabBehaviorMigration.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [class] ResonanceContentMigration
+      File: Assets\UI\Editor\ResonanceContentMigration.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [class] StoryModePanelMigration
+      File: Assets\UI\Editor\StoryModePanelMigration.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [struct] PhaseParts
+      File: Assets\UI\Editor\StoryModePanelMigration.cs
+
+    - [struct] SlotParts
+      File: Assets\UI\Editor\StoryModePanelMigration.cs
+
+    - [struct] RosterParts
+      File: Assets\UI\Editor\StoryModePanelMigration.cs
+
+    - [class] StoryPartySlotEmptyImageMigration
+      File: Assets\UI\Editor\StoryPartySlotEmptyImageMigration.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [class] StoryRequirementMigration
+      File: Assets\UI\Editor\StoryRequirementMigration.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [class] StoryRosterScrollAndProgressMigration
+      File: Assets\UI\Editor\StoryRosterScrollAndProgressMigration.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [class] TurnBattlePanelMigration
+      File: Assets\UI\Editor\TurnBattlePanelMigration.cs
+
+    - [struct] UnitParts
+      File: Assets\UI\Editor\TurnBattlePanelMigration.cs
+
+    - [struct] OrderParts
+      File: Assets\UI\Editor\TurnBattlePanelMigration.cs
+
+    - [class] UnusedPanelCleanup
+      File: Assets\UI\Editor\UnusedPanelCleanup.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [class] WishAndInventoryVisualMigration
+      File: Assets\UI\Editor\WishAndInventoryVisualMigration.cs
+
+  Namespace: BES.UI.Editor
+  ------------------------
+    - [class] CharacterCollectionMigration
+      File: Assets\UI\Editor\CharacterCollectionMigration.cs
+
+    - [class] FixProjectAssets
+      File: Assets\UI\Editor\FixProjectAssets.cs
+
+    - [class] OptimizeGachaVideos
+      File: Assets\UI\Editor\OptimizeGachaVideos.cs
+
+    - [class] RebuildAuthUIOnCompile
+      File: Assets\UI\Editor\RebuildAuthUIOnCompile.cs
+      Desc: Auto-run disabled: manual UI edits must not be overwritten on editor refresh.
+
+    - [class] VietnameseTMPFontAssetGenerator
+      File: Assets\UI\Editor\VietnameseTMPFontAssetGenerator.cs
+
+    - [struct] FontBuildRequest
+      File: Assets\UI\Editor\VietnameseTMPFontAssetGenerator.cs
+
+
+################################################################################
+
+=== MODULE: UI/Scripts ===
+======================
+
+  Namespace: BES.UI
+  -----------------
+    - [class] ArtifactsUI : UIScreenBase
+      File: Assets\UI\Scripts\ArtifactsUI.cs
+
+    - [class] AuthManager : MonoBehaviour
+      File: Assets\UI\Scripts\AuthManager.cs
+
+    - [class] FirebaseSignUpRequest
+      File: Assets\UI\Scripts\AuthManager.cs
+
+    - [class] FirebaseSignInRequest
+      File: Assets\UI\Scripts\AuthManager.cs
+
+    - [class] FirebaseAnonymousRequest
+      File: Assets\UI\Scripts\AuthManager.cs
+
+    - [class] FirebaseUpdateProfileRequest
+      File: Assets\UI\Scripts\AuthManager.cs
+
+    - [class] FirebaseResetRequest
+      File: Assets\UI\Scripts\AuthManager.cs
+
+    - [class] FirebaseErrorContainer
+      File: Assets\UI\Scripts\AuthManager.cs
+
+    - [class] FirebaseError
+      File: Assets\UI\Scripts\AuthManager.cs
+
+    - [class] FirebaseResponse
+      File: Assets\UI\Scripts\AuthManager.cs
+
+    - [class] BattlePassUI : UIScreenBase
+      File: Assets\UI\Scripts\BattlePassUI.cs
+
+    - [class] CharacterPreviewRenderer : MonoBehaviour
+      File: Assets\UI\Scripts\CharacterPreviewRenderer.cs
+
+    - [class] CharacterProfileUI : MonoBehaviour
+      File: Assets\UI\Scripts\CharacterProfileUI.cs
+
+    - [class] ChatBoxUI : MonoBehaviour
+      File: Assets\UI\Scripts\ChatBoxUI.cs
+
+    - [class] ChatEnterWidget : MonoBehaviour
+      File: Assets\UI\Scripts\ChatEnterWidget.cs
+      Desc: <summary> Chat bubble + Enter pill — góc trái dưới theo Main play.png. </summary>
+
+    - [class] DialogueUI : MonoBehaviour
+      File: Assets\UI\Scripts\DialogueUI.cs
+
+    - [class] EquipmentUI : MonoBehaviour
+      File: Assets\UI\Scripts\EquipmentUI.cs
+
+    - [class] EventUI : UIScreenBase
+      File: Assets\UI\Scripts\EventUI.cs
+
+    - [class] FreeLayoutSliderFill : MonoBehaviour
+      File: Assets\UI\Scripts\FreeLayoutSliderFill.cs
+
+    - [class] GachaCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+      File: Assets\UI\Scripts\GachaCardUI.cs
+
+    - [class] GameMapUI : MonoBehaviour
+      File: Assets\UI\Scripts\GameMapUI.cs
+
+    - [class] TeleportMarkerConfig
+      File: Assets\UI\Scripts\GameMapUI.cs
+
+    - [class] GameplayHudLayout : MonoBehaviour
+      File: Assets\UI\Scripts\GameplayHudLayout.cs
+      Desc: <summary> Applies HUD sprite manifest and anchors at runtime for older prefabs. </summary>
+
+    - [class] HUDController : MonoBehaviour
+      File: Assets\UI\Scripts\HUDController.cs
+
+    - [class] HudCornerButtonsUI : MonoBehaviour
+      File: Assets\UI\Scripts\HudCornerButtonsUI.cs
+
+    - [class] HudNavBarUI : MonoBehaviour
+      File: Assets\UI\Scripts\HudNavBarUI.cs
+
+    - [class] InteractPromptUI : MonoBehaviour
+      File: Assets\UI\Scripts\InteractPromptUI.cs
+
+    - [class] InventoryUI : MonoBehaviour
+      File: Assets\UI\Scripts\InventoryUI.cs
+
+    - [class] LoadingScreenUI : UIScreenBase
+      File: Assets\UI\Scripts\LoadingScreenUI.cs
+
+    - [class] MainMenuController : MonoBehaviour
+      File: Assets\UI\Scripts\MainMenuController.cs
+
+    - [class] MainMenuLayout
+      File: Assets\UI\Scripts\MainMenuLayout.cs
+
+    - [class] MiniMapUI : MonoBehaviour
+      File: Assets\UI\Scripts\MiniMapUI.cs
+
+    - [class] PartyStripUI : MonoBehaviour
+      File: Assets\UI\Scripts\PartyStripUI.cs
+
+    - [class] PlayerProfileUI : UIScreenBase
+      File: Assets\UI\Scripts\PlayerProfileUI.cs
+
+    - [enum] AuthMode
+      File: Assets\UI\Scripts\PlayerProfileUI.cs
+
+    - [class] QuestCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+      File: Assets\UI\Scripts\QuestCardUI.cs
+
+    - [class] QuestLogUI : MonoBehaviour
+      File: Assets\UI\Scripts\QuestLogUI.cs
+
+    - [class] QuestRewardItemUI : MonoBehaviour
+      File: Assets\UI\Scripts\QuestRewardItemUI.cs
+
+    - [class] QuestTrackerUI : MonoBehaviour
+      File: Assets\UI\Scripts\QuestTrackerUI.cs
+
+    - [class] ServerPickerUI : UIScreenBase
+      File: Assets\UI\Scripts\ServerPickerUI.cs
+
+    - [class] AudioManager : MonoBehaviour
+      File: Assets\UI\Scripts\SettingsUI.cs
+
+    - [class] SettingsUI : UIScreenBase
+      File: Assets\UI\Scripts\SettingsUI.cs
+
+    - [class] SkillBarDriver : MonoBehaviour
+      File: Assets\UI\Scripts\SkillBarDriver.cs
+
+    - [class] SkillBarUI : MonoBehaviour
+      File: Assets\UI\Scripts\SkillBarUI.cs
+
+    - [class] TeamSetupUI : UIScreenBase
+      File: Assets\UI\Scripts\TeamSetupUI.cs
+
+    - [class] BESUIHelper
+      File: Assets\UI\Scripts\TeamSetupUI.cs
+
+    - [class] UICanvasFit : MonoBehaviour
+      File: Assets\UI\Scripts\UICanvasFit.cs
+      Desc: <summary> Keeps the UI authored against a fixed 1920x1080 frame. </summary>
+
+    - [class] UINavigationController : MonoBehaviour
+      File: Assets\UI\Scripts\UINavigationController.cs
+
+    - [class] UIRootController : MonoBehaviour
+      File: Assets\UI\Scripts\UIRootController.cs
+
+    - [class] UIScreenBackground : MonoBehaviour
+      File: Assets\UI\Scripts\UIScreenBackground.cs
+      Desc: <summary> Gắn mockup PNG đúng màn hình lúc runtime (kể cả prefab cũ chưa gán sprite). </summary>
+
+    - [class] UIScreenBackgroundBootstrap : MonoBehaviour
+      File: Assets\UI\Scripts\UIScreenBackgroundBootstrap.cs
+      Desc: <summary> Gắn mockup cho overlay/meta/modal panels. Không dùng full-screen Main play trên gameplay HUD. </summary>
+
+    - [class] WeaponEnhanceUI : UIScreenBase
+      File: Assets\UI\Scripts\WeaponEnhanceUI.cs
+
+    - [class] WeaponRankUpUI : UIScreenBase
+      File: Assets\UI\Scripts\WeaponRankUpUI.cs
+
+    - [class] WeaponRefineUI : UIScreenBase
+      File: Assets\UI\Scripts\WeaponRefineUI.cs
+
+    - [class] WeaponScreenUI : UIScreenBase
+      File: Assets\UI\Scripts\WeaponScreenUI.cs
+
+    - [class] WishUI : UIScreenBase
+      File: Assets\UI\Scripts\WishUI.cs
+
+    - [enum] CurrencyMode
+      File: Assets\UI\Scripts\WishUI.cs
+
+
+################################################################################
+
+=== MODULE: UI/Scripts/Atoms ===
+============================
+
+  Namespace: BES.UI
+  -----------------
+    - [class] UIDayCheckInSlot : MonoBehaviour
+      File: Assets\UI\Scripts\Atoms\UIDayCheckInSlot.cs
+
+    - [class] UIMapMarker : MonoBehaviour
+      File: Assets\UI\Scripts\Atoms\UIMapMarker.cs
+
+    - [class] UIServerOption : MonoBehaviour
+      File: Assets\UI\Scripts\Atoms\UIServerOption.cs
+
+    - [class] UISettingsRow : MonoBehaviour
+      File: Assets\UI\Scripts\Atoms\UISettingsRow.cs
+
+    - [class] UITeamSlot : MonoBehaviour
+      File: Assets\UI\Scripts\Atoms\UITeamSlot.cs
+
+    - [class] UIWeaponSlot : MonoBehaviour
+      File: Assets\UI\Scripts\Atoms\UIWeaponSlot.cs
+
+
+################################################################################
+
+=== MODULE: UI/Scripts/Core ===
+===========================
+
+  Namespace: BES.UI
+  -----------------
+    - [class] ChatEnterWidgets
+      File: Assets\UI\Scripts\Core\ChatEnterWidgets.cs
+
+    - [class] HUDLayoutTokens
+      File: Assets\UI\Scripts\Core\HUDLayoutTokens.cs
+      Desc: <summary> Tọa độ HUD đo từ Main play.png @ 1920×1080 — không dùng full-screen mockup. </summary>
+
+    - [class] HUDPrimitiveStyles
+      File: Assets\UI\Scripts\Core\HUDPrimitiveStyles.cs
+      Desc: <summary> Màu và panel runtime cho gameplay HUD — không dùng mockup slice full-screen. </summary>
+
+    - [class] TopLeftHudWidgets
+      File: Assets\UI\Scripts\Core\TopLeftHudWidgets.cs
+      Desc: <summary> Minimap + quest + portrait chip theo Main play.png. </summary>
+
+    - [class] UIAnchorPresets
+      File: Assets\UI\Scripts\Core\UIAnchorPresets.cs
+
+    - [class] UIAssetPaths
+      File: Assets\UI\Scripts\Core\UIAssetPaths.cs
+
+    - [class] UIScreenBase : MonoBehaviour
+      File: Assets\UI\Scripts\Core\UIScreenBase.cs
+
+    - [enum] UIScreenId
+      File: Assets\UI\Scripts\Core\UIScreenLayoutRegistry.cs
+
+    - [class] UIScreenLayoutRegistry
+      File: Assets\UI\Scripts\Core\UIScreenLayoutRegistry.cs
+      Desc: <summary> Runtime layout fallback for older prefabs — mirrors editor anchor presets. </summary>
+
+    - [class] UITheme : ScriptableObject
+      File: Assets\UI\Scripts\Core\UITheme.cs
+
+  Namespace: BES.UI.Fonts
+  -----------------------
+    - [class] GameFontApplier : MonoBehaviour
+      File: Assets\UI\Scripts\Core\GameFontApplier.cs
+
+
+################################################################################
+
+=== MODULE: UI/Scripts/Data ===
+===========================
+
+  Namespace: BES.UI
+  -----------------
+    - [class] ArtifactDatabase : ScriptableObject
+      File: Assets\UI\Scripts\Data\ArtifactDatabase.cs
+
+    - [class] ArtifactDefinition : ScriptableObject
+      File: Assets\UI\Scripts\Data\ArtifactDefinition.cs
+
+    - [enum] CharacterSkillType
+      File: Assets\UI\Scripts\Data\CharacterDatabase.cs
+
+    - [enum] PassiveSkillCondition
+      File: Assets\UI\Scripts\Data\CharacterDatabase.cs
+
+    - [class] CharacterSkillUnlock
+      File: Assets\UI\Scripts\Data\CharacterDatabase.cs
+
+    - [class] CharacterBreakthroughTier
+      File: Assets\UI\Scripts\Data\CharacterDatabase.cs
+
+    - [class] CharacterDefinition
+      File: Assets\UI\Scripts\Data\CharacterDatabase.cs
+
+    - [class] CharacterDatabase : ScriptableObject
+      File: Assets\UI\Scripts\Data\CharacterDatabase.cs
+
+    - [class] CharacterDatabaseLoader
+      File: Assets\UI\Scripts\Data\CharacterDatabaseLoader.cs
+
+    - [class] CharacterPortraitManifest : ScriptableObject
+      File: Assets\UI\Scripts\Data\CharacterPortraitManifest.cs
+
+    - [class] CharacterPortraitManifestLoader
+      File: Assets\UI\Scripts\Data\CharacterPortraitManifestLoader.cs
+
+    - [class] CharacterProgressionState
+      File: Assets\UI\Scripts\Data\CharacterProgressionState.cs
+
+    - [class] EquippedWeaponState : MonoBehaviour
+      File: Assets\UI\Scripts\Data\EquippedWeaponState.cs
+
+    - [class] EventDefinition : ScriptableObject
+      File: Assets\UI\Scripts\Data\EventDefinition.cs
+
+    - [enum] GachaRewardType
+      File: Assets\UI\Scripts\Data\GachaBannerDefinition.cs
+
+    - [class] GachaDropEntry
+      File: Assets\UI\Scripts\Data\GachaBannerDefinition.cs
+
+    - [class] GachaBannerDefinition : ScriptableObject
+      File: Assets\UI\Scripts\Data\GachaBannerDefinition.cs
+
+    - [class] GachaPityState : MonoBehaviour
+      File: Assets\UI\Scripts\Data\GachaPityState.cs
+
+    - [class] GachaRewardService
+      File: Assets\UI\Scripts\Data\GachaRewardService.cs
+
+    - [class] HUDSpriteManifest : ScriptableObject
+      File: Assets\UI\Scripts\Data\HUDSpriteManifest.cs
+
+    - [class] HUDSpriteManifestLoader
+      File: Assets\UI\Scripts\Data\HUDSpriteManifestLoader.cs
+
+    - [class] PartyMemberSlot
+      File: Assets\UI\Scripts\Data\PartyRoster.cs
+
+    - [class] PartyRoster : MonoBehaviour
+      File: Assets\UI\Scripts\Data\PartyRoster.cs
+
+    - [class] PlayerWallet : MonoBehaviour
+      File: Assets\UI\Scripts\Data\PlayerWallet.cs
+
+    - [enum] UIScreenBackgroundId
+      File: Assets\UI\Scripts\Data\UIScreenBackgroundManifest.cs
+
+    - [class] UIScreenBackgroundManifest : ScriptableObject
+      File: Assets\UI\Scripts\Data\UIScreenBackgroundManifest.cs
+
+    - [class] UIScreenBackgroundManifestLoader
+      File: Assets\UI\Scripts\Data\UIScreenBackgroundManifestLoader.cs
+
+    - [class] WeaponDatabase : ScriptableObject
+      File: Assets\UI\Scripts\Data\WeaponDatabase.cs
+
+    - [enum] ItemRarity
+      File: Assets\UI\Scripts\Data\WeaponDefinition.cs
+
+    - [class] WeaponDefinition : ScriptableObject
+      File: Assets\UI\Scripts\Data\WeaponDefinition.cs
+
+    - [class] WeaponUpgradeCosts
+      File: Assets\UI\Scripts\Data\WeaponUpgradeCosts.cs
+
+
+################################################################################
+
+=== MODULE: UI/Scripts/Menu ===
+===========================
+
+  Namespace: BES.UI.Menu
+  ----------------------
+    - [enum] BagCategory
+      File: Assets\UI\Scripts\Menu\BagPanelController.cs
+
+    - [class] BagSlotView
+      File: Assets\UI\Scripts\Menu\BagPanelController.cs
+
+    - [class] BagCategoryButton
+      File: Assets\UI\Scripts\Menu\BagPanelController.cs
+
+    - [class] BagPanelController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\BagPanelController.cs
+
+    - [class] ShopCurrencyView
+      File: Assets\UI\Scripts\Menu\CashShopPanelController.cs
+
+    - [class] ShopItemBinding
+      File: Assets\UI\Scripts\Menu\CashShopPanelController.cs
+
+    - [class] CashShopPanelController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\CashShopPanelController.cs
+
+    - [class] ChapterOneStoryCastConfig : ScriptableObject
+      File: Assets\UI\Scripts\Menu\ChapterOneStoryCastConfig.cs
+
+    - [class] ChapterOneCharacterProfile
+      File: Assets\UI\Scripts\Menu\ChapterOneStoryCastConfig.cs
+
+    - [class] ChapterOneBeatCastOverride
+      File: Assets\UI\Scripts\Menu\ChapterOneStoryCastConfig.cs
+
+    - [class] ChapterOneBeatCharacterState
+      File: Assets\UI\Scripts\Menu\ChapterOneStoryCastConfig.cs
+
+    - [class] ChapterOneStoryRuntime
+      File: Assets\UI\Scripts\Menu\ChapterOneStoryRuntime.cs
+
+    - [class] RuntimeCharacterProfile
+      File: Assets\UI\Scripts\Menu\ChapterOneStoryRuntime.cs
+
+    - [class] ParsedStory
+      File: Assets\UI\Scripts\Menu\ChapterOneStoryRuntime.cs
+
+    - [class] CombatBlock
+      File: Assets\UI\Scripts\Menu\ChapterOneStoryRuntime.cs
+
+    - [class] TriggerBlock
+      File: Assets\UI\Scripts\Menu\ChapterOneStoryRuntime.cs
+
+    - [class] ChapterTwoStoryRuntime
+      File: Assets\UI\Scripts\Menu\ChapterTwoStoryRuntime.cs
+
+    - [class] RuntimeCharacterProfile
+      File: Assets\UI\Scripts\Menu\ChapterTwoStoryRuntime.cs
+
+    - [class] ParsedStory
+      File: Assets\UI\Scripts\Menu\ChapterTwoStoryRuntime.cs
+
+    - [class] CombatBlock
+      File: Assets\UI\Scripts\Menu\ChapterTwoStoryRuntime.cs
+
+    - [class] TriggerBlock
+      File: Assets\UI\Scripts\Menu\ChapterTwoStoryRuntime.cs
+
+    - [enum] GallerySortMode
+      File: Assets\UI\Scripts\Menu\CharacterCollectionPanel.cs
+
+    - [class] GalleryRarityBackground
+      File: Assets\UI\Scripts\Menu\CharacterCollectionPanel.cs
+
+    - [class] CharacterCollectionPanel : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\CharacterCollectionPanel.cs
+
+    - [enum] CharacterCollectionDestination
+      File: Assets\UI\Scripts\Menu\CharacterCollectionPanel.cs
+
+    - [class] CurrencyVisibilityController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\CurrencyVisibilityController.cs
+      Desc: <summary> Controls which shared MenuHub currencies belong to the visible screen without changing their authored RectTransform values.
+
+    - [enum] DialogueLayoutMode
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [enum] DialogueCastActionType
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [class] DialogueCastAction
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [class] DialogueCharacterPlacement
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [class] DialogueMovementPoint
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [class] DialogueCharacterMovement
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [class] DialogueCharacterVisualOverride
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [class] DialogueBeat
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [class] DialogueSequence
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [class] DialogueSequenceUI : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [class] DialogueCharacterSlot
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [class] DialogueCharacterPose
+      File: Assets\UI\Scripts\Menu\DialogueSequenceUI.cs
+
+    - [class] DiscoverableRelicSlot : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\DiscoverableRelicSlot.cs
+
+    - [enum] RemnantSectionLayout
+      File: Assets\UI\Scripts\Menu\DivineRemnantCarousel.cs
+
+    - [class] DivineRemnantSectionView
+      File: Assets\UI\Scripts\Menu\DivineRemnantCarousel.cs
+
+    - [class] DivineRemnantCarousel : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\DivineRemnantCarousel.cs
+
+    - [enum] HomeMode
+      File: Assets\UI\Scripts\Menu\HomeModeSwitcher.cs
+
+    - [class] HomeModeSwitcher : MonoBehaviour, IInitializePotentialDragHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+      File: Assets\UI\Scripts\Menu\HomeModeSwitcher.cs
+
+    - [class] HoverSpriteButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
+      File: Assets\UI\Scripts\Menu\HoverSpriteButton.cs
+
+    - [class] LetterEntry
+      File: Assets\UI\Scripts\Menu\LetterPanelController.cs
+
+    - [class] LetterPanelController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\LetterPanelController.cs
+
+    - [class] LostEchoAchievementEntry : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\LostEchoAchievementEntry.cs
+
+    - [enum] MenuScreenId
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [class] CurrencyEntry
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [class] CharacterEntry
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [class] RewardEntry
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [class] PartyAttributeRequirement
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [class] StageEntry
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [class] StoryChapterEntry
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [enum] CombatDialogueTriggerType
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [enum] CombatTriggerActionType
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [class] BattlePhaseEntry
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [class] CombatDialogueTrigger
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [class] MenuContentDatabase : ScriptableObject
+      File: Assets\UI\Scripts\Menu\MenuContentDatabase.cs
+
+    - [class] HomeButtonAction
+      File: Assets\UI\Scripts\Menu\MenuHomeController.cs
+
+    - [class] HomeCurrencyView
+      File: Assets\UI\Scripts\Menu\MenuHomeController.cs
+
+    - [class] MenuHomeController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\MenuHomeController.cs
+
+    - [class] MenuScreenBinding
+      File: Assets\UI\Scripts\Menu\MenuNavigator.cs
+
+    - [class] MenuNavigator : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\MenuNavigator.cs
+
+    - [enum] WishCurrency
+      File: Assets\UI\Scripts\Menu\MenuWishController.cs
+
+    - [class] MenuWishReward
+      File: Assets\UI\Scripts\Menu\MenuWishController.cs
+
+    - [class] WishResultCardView
+      File: Assets\UI\Scripts\Menu\MenuWishController.cs
+
+    - [class] MenuWishController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\MenuWishController.cs
+
+    - [class] MissionHoverCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+      File: Assets\UI\Scripts\Menu\MissionHoverCard.cs
+
+    - [class] MissionCardBinding
+      File: Assets\UI\Scripts\Menu\MissionPanelController.cs
+
+    - [class] MissionPanelController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\MissionPanelController.cs
+
+    - [class] PlayModeLaunchButton : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\PlayModeLaunchButton.cs
+
+    - [enum] PlayModeTab
+      File: Assets\UI\Scripts\Menu\PlayModePanelController.cs
+
+    - [class] PlayModeTabBinding
+      File: Assets\UI\Scripts\Menu\PlayModePanelController.cs
+
+    - [class] PlayModeBattleButtonBinding
+      File: Assets\UI\Scripts\Menu\PlayModePanelController.cs
+
+    - [class] PlayModePanelController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\PlayModePanelController.cs
+
+    - [class] ResonanceSubTabBinding
+      File: Assets\UI\Scripts\Menu\ResonanceSubTabController.cs
+
+    - [class] ResonanceSubTabController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\ResonanceSubTabController.cs
+
+    - [class] RiftStageCardView : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\RiftStageCardView.cs
+
+    - [class] SanctumDomainEntry : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\SanctumDomainEntry.cs
+
+    - [class] ShopTabOpenButton : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\ShopTabOpenButton.cs
+
+    - [class] SimpleModalPanel : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\SimpleModalPanel.cs
+
+    - [class] SmoothTabGroup : MonoBehaviour, 
+      File: Assets\UI\Scripts\Menu\SmoothTabGroup.cs
+
+    - [class] SpriteFrameAnimator : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\SpriteFrameAnimator.cs
+
+    - [enum] StageCollection
+      File: Assets\UI\Scripts\Menu\StageSelectionController.cs
+
+    - [class] StageSelectionController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\StageSelectionController.cs
+
+    - [class] StoryCastConfig : ScriptableObject
+      File: Assets\UI\Scripts\Menu\StoryCastConfig.cs
+
+    - [class] ChapterCastConfig
+      File: Assets\UI\Scripts\Menu\StoryCastConfig.cs
+
+    - [class] StoryCharacterProfile
+      File: Assets\UI\Scripts\Menu\StoryCastConfig.cs
+
+    - [class] StoryBeatCastOverride
+      File: Assets\UI\Scripts\Menu\StoryCastConfig.cs
+
+    - [class] StoryBeatCharacterState
+      File: Assets\UI\Scripts\Menu\StoryCastConfig.cs
+
+    - [enum] StoryPartyPhase
+      File: Assets\UI\Scripts\Menu\StoryModePanelController.cs
+
+    - [enum] StoryRosterSortMode
+      File: Assets\UI\Scripts\Menu\StoryModePanelController.cs
+
+    - [class] StoryPartySlotBinding
+      File: Assets\UI\Scripts\Menu\StoryModePanelController.cs
+
+    - [class] StoryRosterCardBinding
+      File: Assets\UI\Scripts\Menu\StoryModePanelController.cs
+
+    - [class] StoryRequirementImageBinding
+      File: Assets\UI\Scripts\Menu\StoryModePanelController.cs
+
+    - [class] StoryModePanelController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\StoryModePanelController.cs
+
+    - [class] PartySlotView
+      File: Assets\UI\Scripts\Menu\StoryPartyController.cs
+
+    - [class] StoryPartyController : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\StoryPartyController.cs
+
+    - [class] StorySelectionSortFilterUI : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\StorySelectionSortFilterUI.cs
+
+    - [class] BattleSkillDefinition
+      File: Assets\UI\Scripts\Menu\TurnBattleUI.cs
+
+    - [class] BattleUnitDefinition
+      File: Assets\UI\Scripts\Menu\TurnBattleUI.cs
+
+    - [class] BattleUnitView
+      File: Assets\UI\Scripts\Menu\TurnBattleUI.cs
+
+    - [class] TurnOrderEntryView
+      File: Assets\UI\Scripts\Menu\TurnBattleUI.cs
+
+    - [class] TurnBattleUI : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\TurnBattleUI.cs
+
+    - [class] UIGifClip : ScriptableObject
+      File: Assets\UI\Scripts\Menu\UIGifClip.cs
+
+    - [class] UIGifPlayer : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\UIGifPlayer.cs
+
+    - [class] UIPanelTransition : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\UIPanelTransition.cs
+
+    - [class] UIVideoPlayer : MonoBehaviour
+      File: Assets\UI\Scripts\Menu\UIVideoPlayer.cs
+
+    - [class] WishResultCardHover : MonoBehaviour, 
+      File: Assets\UI\Scripts\Menu\WishResultCardHover.cs
+
+
+################################################################################
+
+=== MODULE: _Project/Scripts/AI ===
+===============================
+
+  Namespace: BES.Gameplay
+  -----------------------
+    - [enum] EnemyState
+      File: Assets\_Project\Scripts\AI\EnemyAI.cs
+
+    - [class] EnemyAI : MonoBehaviour
+      File: Assets\_Project\Scripts\AI\EnemyAI.cs
+
+
+################################################################################
+
+=== MODULE: _Project/Scripts/Core ===
+=================================
+
+  Namespace: BES.Core
+  -------------------
+    - [class] Bootstrapper
+      File: Assets\_Project\Scripts\Core\Bootstrapper.cs
+
+    - [class] GameEvents
+      File: Assets\_Project\Scripts\Core\GameEvents.cs
+
+    - [class] GameManager : MonoBehaviour
+      File: Assets\_Project\Scripts\Core\GameManager.cs
+
+    - [class] PerformanceSettings : MonoBehaviour
+      File: Assets\_Project\Scripts\Core\PerformanceSettings.cs
+
+    - [class] RuntimeResourceLoader : MonoBehaviour
+      File: Assets\_Project\Scripts\Core\RuntimeResourceLoader.cs
+
+    - [class] SceneLoader : MonoBehaviour
+      File: Assets\_Project\Scripts\Core\SceneLoader.cs
+
+    - [class] SceneNames
+      File: Assets\_Project\Scripts\Core\SceneNames.cs
+
+
+################################################################################
+
+=== MODULE: _Project/Scripts/Editor ===
+===================================
+
+  Namespace: BES.Editor
+  ---------------------
+    - [class] BESLoadingSceneBuilder
+      File: Assets\_Project\Scripts\Editor\BESLoadingSceneBuilder.cs
+
+    - [class] BESProjectFix
+      File: Assets\_Project\Scripts\Editor\BESProjectFix.cs
+
+    - [class] BESProjectSetup
+      File: Assets\_Project\Scripts\Editor\BESProjectSetup.cs
+
+    - [class] BESUIAssetImporter
+      File: Assets\_Project\Scripts\Editor\BESUIAssetImporter.cs
+
+    - [class] BESUIAtomBuilder
+      File: Assets\_Project\Scripts\Editor\BESUIAtomBuilder.cs
+
+    - [class] BESUIDataSetup
+      File: Assets\_Project\Scripts\Editor\BESUIDataSetup.cs
+
+    - [class] BESUIEditorUtils
+      File: Assets\_Project\Scripts\Editor\BESUIEditorUtils.cs
+
+    - [class] BESUIHudAutoSuggest
+      File: Assets\_Project\Scripts\Editor\BESUIHudAutoSuggest.cs
+
+    - [class] BESUIHudMapper : EditorWindow
+      File: Assets\_Project\Scripts\Editor\BESUIHudMapper.cs
+
+    - [class] BESUIPrefabBuilder
+      File: Assets\_Project\Scripts\Editor\BESUIPrefabBuilder.cs
+
+    - [class] BESUIScreenBackgroundSetup
+      File: Assets\_Project\Scripts\Editor\BESUIScreenBackgroundSetup.cs
+
+  Namespace: BES.EditorTools
+  --------------------------
+    - [class] DesertMapBuilder
+      File: Assets\_Project\Scripts\Editor\DesertMapBuilder.cs
+
+    - [class] DesertMapSetup
+      File: Assets\_Project\Scripts\Editor\DesertMapSetup.cs
+
+    - [class] ImportedBabyMonsterInstaller
+      File: Assets\_Project\Scripts\Editor\ImportedBabyMonsterInstaller.cs
+
+    - [class] ImportedMeshyMonsterInstaller
+      File: Assets\_Project\Scripts\Editor\ImportedMeshyMonsterInstaller.cs
+
+    - [class] ImportedMonsterSpawnInstaller
+      File: Assets\_Project\Scripts\Editor\ImportedMonsterSpawnInstaller.cs
+
+
+################################################################################
+
+=== MODULE: _Project/Scripts/Gameplay ===
+=====================================
+
+  Namespace: BES.Gameplay
+  -----------------------
+    - [class] GameplayInputGate
+      File: Assets\_Project\Scripts\Gameplay\GameplayInputGate.cs
+
+    - [class] GameplaySceneBootstrap : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\GameplaySceneBootstrap.cs
+
+    - [class] MeshyMonsterRuntimeWatcher : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\MeshyMonsterRuntimeWatcher.cs
+
+    - [class] OpenWorldSliceValidator : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\OpenWorldSliceValidator.cs
+      Desc: <summary> Runtime QA checklist cho vertical slice Genshin-like (log-only). </summary>
+
+    - [class] PartyCharacterVisualSwitcher : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\PartyCharacterVisualSwitcher.cs
+
+    - [class] PartySwapController : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\PartySwapController.cs
+      Desc: <summary> Đổi nhân vật active bằng phím 1–4 (Genshin-style party swap). </summary>
+
+    - [class] PlayerBuildStats : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\PlayerBuildStats.cs
+      Desc: <summary> Tổng hợp stat từ nhân vật active, vũ khí và artifact — áp vào PlayerStats. </summary>
+
+    - [class] PlayerInputReader : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\PlayerInputReader.cs
+
+    - [class] PlayerMotor : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\PlayerMotor.cs
+
+    - [class] PlayerStats : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\PlayerStats.cs
+
+    - [class] StaminaSystem : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\StaminaSystem.cs
+
+    - [class] ThirdPersonCamera : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\ThirdPersonCamera.cs
+      Desc: <summary> Góc nhìn third-person theo layout Main play.png — nhân vật ở giữa, camera hơi cao và xa. </summary>
+
+
+################################################################################
+
+=== MODULE: _Project/Scripts/Gameplay/Combat ===
+============================================
+
+  Namespace: BES.Gameplay
+  -----------------------
+    - [class] BasicAttackController : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Combat\BasicAttackController.cs
+
+    - [class] BossController : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Combat\BossController.cs
+
+    - [enum] BossPhase
+      File: Assets\_Project\Scripts\Gameplay\Combat\BossController.cs
+
+    - [struct] CharacterAttackMove
+      File: Assets\_Project\Scripts\Gameplay\Combat\CharacterCombatProfile.cs
+
+    - [struct] CharacterAttackProfile
+      File: Assets\_Project\Scripts\Gameplay\Combat\CharacterCombatProfile.cs
+
+    - [class] CharacterCombatProfile
+      File: Assets\_Project\Scripts\Gameplay\Combat\CharacterCombatProfile.cs
+
+    - [class] CombatManager : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Combat\CombatManager.cs
+
+    - [class] CombatVfx
+      File: Assets\_Project\Scripts\Gameplay\Combat\CombatVfx.cs
+
+    - [class] CombatVfxLifetime : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Combat\CombatVfx.cs
+
+    - [class] DamageCalculator
+      File: Assets\_Project\Scripts\Gameplay\Combat\DamageCalculator.cs
+
+    - [class] DodgeController : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Combat\DodgeController.cs
+
+    - [class] EnemyDamageFeedback : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Combat\EnemyDamageFeedback.cs
+
+    - [class] EnemyHealth : MonoBehaviour, IDamageable
+      File: Assets\_Project\Scripts\Gameplay\Combat\EnemyHealth.cs
+
+    - [class] EnemyHealthBar : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Combat\EnemyHealthBar.cs
+
+    - [interface] IDamageable
+      File: Assets\_Project\Scripts\Gameplay\Combat\IDamageable.cs
+
+    - [struct] DamageInfo
+      File: Assets\_Project\Scripts\Gameplay\Combat\IDamageable.cs
+
+    - [class] SkillController : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Combat\SkillController.cs
+
+    - [class] SkillDefinition
+      File: Assets\_Project\Scripts\Gameplay\Combat\SkillController.cs
+
+    - [class] WorldDamagePopup : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Combat\WorldDamagePopup.cs
+
+
+################################################################################
+
+=== MODULE: _Project/Scripts/Gameplay/Inventory ===
+===============================================
+
+  Namespace: BES.Gameplay
+  -----------------------
+    - [class] InventorySystem : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Inventory\InventorySystem.cs
+
+    - [class] ItemDatabase : ScriptableObject
+      File: Assets\_Project\Scripts\Gameplay\Inventory\ItemDatabase.cs
+
+    - [class] ItemDefinition : ScriptableObject
+      File: Assets\_Project\Scripts\Gameplay\Inventory\ItemDefinition.cs
+
+    - [enum] ItemType
+      File: Assets\_Project\Scripts\Gameplay\Inventory\ItemDefinition.cs
+
+
+################################################################################
+
+=== MODULE: _Project/Scripts/Gameplay/Save ===
+==========================================
+
+  Namespace: BES.Gameplay
+  -----------------------
+    - [class] GameAutoSave : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Save\GameAutoSave.cs
+
+    - [class] MetaProgressState : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Save\MetaProgressState.cs
+
+    - [class] StringIntPair
+      File: Assets\_Project\Scripts\Gameplay\Save\SaveData.cs
+
+    - [class] StringListPair
+      File: Assets\_Project\Scripts\Gameplay\Save\SaveData.cs
+
+    - [class] SaveData
+      File: Assets\_Project\Scripts\Gameplay\Save\SaveData.cs
+
+    - [class] SaveDataUtility
+      File: Assets\_Project\Scripts\Gameplay\Save\SaveSystem.cs
+
+    - [class] SaveSystem : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\Save\SaveSystem.cs
+
+
+################################################################################
+
+=== MODULE: _Project/Scripts/Gameplay/World ===
+===========================================
+
+  Namespace: BES.Gameplay
+  -----------------------
+    - [class] Collectible : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\World\Collectible.cs
+
+    - [class] EnemySpawnRegion : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\World\EnemySpawnRegion.cs
+
+    - [class] TeleportPoint : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\World\TeleportPoint.cs
+
+    - [class] TeleportService
+      File: Assets\_Project\Scripts\Gameplay\World\TeleportService.cs
+
+    - [class] WorldIntegrationManager : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\World\WorldIntegrationManager.cs
+
+    - [class] WorldRegion : MonoBehaviour
+      File: Assets\_Project\Scripts\Gameplay\World\WorldRegion.cs
+
+
+################################################################################
+
+=== MODULE: _Project/Scripts/Narrative ===
+======================================
+
+  Namespace: BES.Narrative
+  ------------------------
+    - [class] AIDialogueService : MonoBehaviour
+      File: Assets\_Project\Scripts\Narrative\AIDialogueService.cs
+
+    - [class] ChatCompletionRequest
+      File: Assets\_Project\Scripts\Narrative\AIDialogueService.cs
+
+    - [class] ChatMessage
+      File: Assets\_Project\Scripts\Narrative\AIDialogueService.cs
+
+    - [class] ChatCompletionResponse
+      File: Assets\_Project\Scripts\Narrative\AIDialogueService.cs
+
+    - [class] ChatChoice
+      File: Assets\_Project\Scripts\Narrative\AIDialogueService.cs
+
+    - [class] ChatError
+      File: Assets\_Project\Scripts\Narrative\AIDialogueService.cs
+
+    - [class] GameManagerRelationships
+      File: Assets\_Project\Scripts\Narrative\AIDialogueService.cs
+
+    - [class] DialogueNode : ScriptableObject
+      File: Assets\_Project\Scripts\Narrative\DialogueNode.cs
+
+    - [class] DialogueChoice
+      File: Assets\_Project\Scripts\Narrative\DialogueNode.cs
+
+    - [class] DialogueSystem : MonoBehaviour
+      File: Assets\_Project\Scripts\Narrative\DialogueSystem.cs
+
+    - [class] NPCInteractable : MonoBehaviour
+      File: Assets\_Project\Scripts\Narrative\NPCInteractable.cs
+
+    - [class] NPCMemoryStore
+      File: Assets\_Project\Scripts\Narrative\NPCMemoryStore.cs
+
+    - [class] QuestDatabase : ScriptableObject
+      File: Assets\_Project\Scripts\Narrative\QuestDatabase.cs
+
+    - [enum] QuestType
+      File: Assets\_Project\Scripts\Narrative\QuestDefinition.cs
+
+    - [enum] QuestStepType
+      File: Assets\_Project\Scripts\Narrative\QuestDefinition.cs
+
+    - [class] QuestStep
+      File: Assets\_Project\Scripts\Narrative\QuestDefinition.cs
+
+    - [class] QuestDefinition : ScriptableObject
+      File: Assets\_Project\Scripts\Narrative\QuestDefinition.cs
+
+    - [class] QuestManager : MonoBehaviour
+      File: Assets\_Project\Scripts\Narrative\QuestManager.cs
+
+    - [class] QuestMarker : MonoBehaviour
+      File: Assets\_Project\Scripts\Narrative\QuestMarker.cs
+
+    - [class] QuestObjectiveTracker : MonoBehaviour
+      File: Assets\_Project\Scripts\Narrative\QuestObjectiveTracker.cs
+
+    - [class] RelationshipSystem : MonoBehaviour
+      File: Assets\_Project\Scripts\Narrative\RelationshipSystem.cs
+
+
+################################################################################
+
+=== MODULE: _Project/Tests ===
+==========================
+
+  Namespace: BES.Tests
+  --------------------
+    - [class] AuthSystemTest : MonoBehaviour
+      File: Assets\_Project\Tests\AuthSystemTest.cs
+
+    - [class] ProgressionSystemTest : MonoBehaviour
+      File: Assets\_Project\Tests\ProgressionSystemTest.cs
+
+
+################################################################################
+
+=== MODULE: ai.meshy/Editor/Script ===
+==================================
+
+  Namespace: Global
+  -----------------
+    - [enum] RenderPipeline
+      File: Assets\ai.meshy\Editor\Script\MeshyBridgeWindow.cs
+
+    - [class] MeshyBridgeWindow : EditorWindow
+      File: Assets\ai.meshy\Editor\Script\MeshyBridgeWindow.cs
+
+    - [class] MeshTransfer
+      File: Assets\ai.meshy\Editor\Script\MeshyBridgeWindow.cs
+
+    - [class] ImportResponseData
+      File: Assets\ai.meshy\Editor\Script\MeshyBridgeWindow.cs
+
+    - [class] ImportRequestData
+      File: Assets\ai.meshy\Editor\Script\MeshyBridgeWindow.cs
+
+    - [class] StatusResponseData
+      File: Assets\ai.meshy\Editor\Script\MeshyBridgeWindow.cs
+
+    - [class] MeshyTextureSet
+      File: Assets\ai.meshy\Editor\Script\MeshyBridgeWindow.cs
+      Desc: <summary>Local source paths of the model's per-channel textures (found in the import dir).</summary>
+
+
+################################################################################
+

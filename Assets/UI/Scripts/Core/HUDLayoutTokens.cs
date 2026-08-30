@@ -22,7 +22,7 @@ namespace BES.UI
         public static readonly Vector2 QuestTrackerSize = new(420f, 72f);
         public static readonly Vector2 QuestTrackerPos = new(20f, -188f);
 
-        public static readonly Vector2 NavBarSize = new(400f, 56f);
+        public static readonly Vector2 NavBarSize = new(500f, 56f);
         public static readonly Vector2 NavBarInset = new(-20f, -20f);
         public const float NavIconSize = 48f;
         public const float NavIconSpacing = 58f;

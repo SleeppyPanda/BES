@@ -65,53 +65,56 @@ namespace BES.UI
             {
                 var member = roster.GetSlot(i);
                 var isActive = i == roster.ActiveCharacterIndex;
+                bool hasMember = member != null && member.isUnlocked && !string.IsNullOrEmpty(member.characterId);
 
+                // Dưới góc độ thiết kế chuyên nghiệp, ẩn các slot trống không có nhân vật
                 if (slotRoots != null && i < slotRoots.Length && slotRoots[i] != null)
+                {
+                    slotRoots[i].gameObject.SetActive(hasMember);
                     slotRoots[i].localScale = isActive ? Vector3.one * activeScale : Vector3.one;
+                }
 
                 if (slotNumbers != null && i < slotNumbers.Length && slotNumbers[i] != null)
                 {
+                    slotNumbers[i].gameObject.SetActive(hasMember);
                     slotNumbers[i].text = (i + 1).ToString();
                     slotNumbers[i].color = isActive ? new Color(1f, 0.92f, 0.55f) : new Color(1f, 1f, 1f, 0.85f);
                 }
 
+                if (!hasMember) continue;
+
                 if (slotNames != null && i < slotNames.Length && slotNames[i] != null)
                 {
-                    var definition = member != null ? roster.GetCharacterDefinition(member.characterId) : null;
+                    var definition = roster.GetCharacterDefinition(member.characterId);
                     var displayName = !string.IsNullOrEmpty(definition?.displayName)
                         ? definition.displayName
                         : member?.displayName;
-                    slotNames[i].text = member != null && member.isUnlocked && !string.IsNullOrEmpty(displayName)
-                        ? displayName
-                        : "Character name";
+                    slotNames[i].text = displayName;
                     slotNames[i].color = isActive ? new Color(0.95f, 0.9f, 0.65f) : Color.white;
                 }
 
                 if (portraits != null && i < portraits.Length && portraits[i] != null)
                 {
-                    if (member != null && member.isUnlocked && !string.IsNullOrEmpty(member.characterId))
-                    {
-                        var definition = roster.GetCharacterDefinition(member.characterId);
-                        var sprite = definition?.portrait != null
-                            ? definition.portrait
-                            : portraitManifest?.GetPortrait(member.characterId);
-                        portraits[i].sprite = sprite;
-                        portraits[i].preserveAspect = true;
-                        portraits[i].color = isActive ? new Color(1f, 0.95f, 0.7f) : Color.white;
-                    }
-                    else
-                    {
-                        portraits[i].sprite = null;
-                        portraits[i].color = new Color(0.3f, 0.3f, 0.35f, 0.5f);
-                    }
+                    var definition = roster.GetCharacterDefinition(member.characterId);
+                    var sprite = definition?.portrait != null
+                        ? definition.portrait
+                        : portraitManifest?.GetPortrait(member.characterId);
+                    portraits[i].sprite = sprite;
+                    portraits[i].preserveAspect = true;
+                    portraits[i].color = isActive ? new Color(1f, 0.95f, 0.7f) : Color.white;
                 }
 
                 if (slotFrames != null && i < slotFrames.Length && slotFrames[i] != null)
                 {
-                    slotFrames[i].color = isActive ? new Color(1f, 0.92f, 0.55f) : Color.white;
+                    // Thiết lập màu tối trong suốt tinh tế thay vì màu trắng bệch thô kệch
+                    slotFrames[i].color = isActive ? new Color(0.12f, 0.14f, 0.2f, 0.85f) : new Color(0.04f, 0.05f, 0.08f, 0.6f);
+                    
                     var ring = slotFrames[i].transform.Find("ActiveRing")?.GetComponent<Image>();
                     if (ring != null)
-                        ring.color = isActive ? new Color(1f, 0.92f, 0.55f, 0.95f) : new Color(1f, 0.92f, 0.55f, 0f);
+                    {
+                        // Vành hào quang vàng bao quanh ảnh đại diện khi active
+                        ring.color = isActive ? new Color(1f, 0.82f, 0.35f, 1f) : new Color(0f, 0f, 0f, 0f);
+                    }
                 }
 
                 if (healthBars != null && i < healthBars.Length && healthBars[i] != null)
@@ -119,7 +122,7 @@ namespace BES.UI
                     roster.GetSlotHealth(i, out var currentHealth, out var maxHealth);
                     healthBars[i].maxValue = maxHealth;
                     healthBars[i].value = currentHealth;
-                    healthBars[i].gameObject.SetActive(member != null && member.isUnlocked);
+                    healthBars[i].gameObject.SetActive(true);
                 }
             }
         }

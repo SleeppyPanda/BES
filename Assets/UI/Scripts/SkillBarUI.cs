@@ -87,7 +87,7 @@ namespace BES.UI
                 skillIcons[index].raycastTarget = unlocked;
             }
             if (keyLabels != null && index >= 0 && index < keyLabels.Length && keyLabels[index] != null)
-                keyLabels[index].text = unlocked ? DefaultKeyHints[index] : "LOCK";
+                keyLabels[index].text = unlocked ? DefaultKeyHints[index] : "";
         }
 
         public void ApplyCharacterSkillIcons()

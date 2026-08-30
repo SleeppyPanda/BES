@@ -34,6 +34,19 @@ namespace BES.Gameplay
             ApplyActiveCharacter();
         }
 
+        void Start()
+        {
+            ApplyActiveCharacter();
+        }
+
+        void Update()
+        {
+            if (activeVisual == null && PartyRoster.Instance?.ActiveCharacter != null)
+            {
+                ApplyActiveCharacter();
+            }
+        }
+
         void OnDisable() => GameEvents.OnPartyChanged -= ApplyActiveCharacter;
 
         public void ApplyActiveCharacter()

@@ -21,10 +21,6 @@ namespace BES.UI
         {
             HideLegacyChild("ManaBar");
             HideLegacyChild("LevelText");
-            healthFillImage = ResolveFillImage(healthFillImage, healthBar);
-            staminaFillImage = ResolveFillImage(staminaFillImage, staminaBar);
-            ConfigureFillImage(healthFillImage);
-            ConfigureFillImage(staminaFillImage);
         }
 
         void OnEnable()
@@ -42,6 +38,12 @@ namespace BES.UI
         void Start()
         {
             var player = GameObject.FindGameObjectWithTag("Player");
+            if (player == null)
+            {
+                var motor = FindAnyObjectByType<PlayerMotor>();
+                if (motor != null) player = motor.gameObject;
+            }
+
             if (player != null)
             {
                 if (player.TryGetComponent<PlayerStats>(out var stats))
@@ -54,7 +56,11 @@ namespace BES.UI
 
         void UpdateHealth(float current, float max)
         {
-            SetFillAmount(healthFillImage, current, max);
+            if (healthBar != null)
+            {
+                healthBar.maxValue = max;
+                healthBar.value = current;
+            }
 
             if (hpValueText != null)
                 hpValueText.text = $"{Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
@@ -62,7 +68,11 @@ namespace BES.UI
 
         void UpdateStamina(float current, float max)
         {
-            SetFillAmount(staminaFillImage, current, max);
+            if (staminaBar != null)
+            {
+                staminaBar.maxValue = max;
+                staminaBar.value = current;
+            }
 
             if (staminaValueText != null)
                 staminaValueText.text = $"{Mathf.CeilToInt(current)}/{Mathf.CeilToInt(max)}";
@@ -79,34 +89,6 @@ namespace BES.UI
             var child = transform.Find(childName);
             if (child != null)
                 child.gameObject.SetActive(false);
-        }
-
-        static Image ResolveFillImage(Image assignedImage, Slider slider)
-        {
-            if (assignedImage != null)
-                return assignedImage;
-
-            return slider != null && slider.fillRect != null
-                ? slider.fillRect.GetComponent<Image>()
-                : null;
-        }
-
-        static void ConfigureFillImage(Image fillImage)
-        {
-            if (fillImage == null)
-                return;
-
-            fillImage.type = Image.Type.Filled;
-            fillImage.fillMethod = Image.FillMethod.Horizontal;
-            fillImage.fillOrigin = (int)Image.OriginHorizontal.Left;
-        }
-
-        static void SetFillAmount(Image fillImage, float current, float max)
-        {
-            if (fillImage == null)
-                return;
-
-            fillImage.fillAmount = max > 0f ? Mathf.Clamp01(current / max) : 0f;
         }
     }
 }

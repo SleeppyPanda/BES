@@ -40,21 +40,81 @@ namespace BES.Gameplay
                 cameraTransform = cam.transform;
         }
 
-        void Update()
-        {
-            isGrounded = controller.isGrounded;
-            if (isGrounded && velocity.y < 0f)
-                velocity.y = -2f;
+        Animator animator;                 // Cached once — never searched per frame
+        bool animatorCached;               // Guard flag so we only search once
 
-            HandleMovement();
-            HandleJump();
-            ApplyGravity();
+        /// <summary>
+        /// Call this from PartyCharacterVisualSwitcher whenever the active visual
+        /// character model changes so PlayerMotor re-caches the correct Animator.
+        /// </summary>
+        public void InvalidateAnimatorCache()
+        {
+            animator = null;
+            animatorCached = false;
         }
 
-        void HandleMovement()
+        void Update()
+        {
+            if (cameraTransform == null && Camera.main != null)
+            {
+                cameraTransform = Camera.main.transform;
+            }
+
+            isGrounded = controller.isGrounded;
+            if (isGrounded && velocity.y < 0f)
+            {
+                // Firm downward stick force so player feet stay glued to terrain/stairs
+                velocity.y = -8f;
+            }
+
+            HandleMovementAndGravity();
+            HandleJump();
+            UpdateAnimator();
+        }
+
+        void UpdateAnimator()
+        {
+            // Cache the Animator ONCE (or after InvalidateAnimatorCache() is called)
+            // Previous version: foreach + GetComponentInChildren EVERY FRAME = CPU waste
+            if (!animatorCached)
+            {
+                animator = null;
+                foreach (Transform child in transform)
+                {
+                    animator = child.GetComponentInChildren<Animator>(true);
+                    if (animator != null) break;
+                }
+                animatorCached = true;
+            }
+
+            if (animator != null && animator.isActiveAndEnabled && animator.runtimeAnimatorController != null)
+            {
+                // Set speed based on input movement to ensure stable animation transitions (no physics noise/jitter)
+                var moveInput = input != null ? input.Move : Vector2.zero;
+                if (moveInput.sqrMagnitude < 0.001f)
+                    moveInput = ReadKeyboardMove();
+
+                float targetSpeed = 0f;
+                if (moveInput.sqrMagnitude > 0.01f)
+                {
+                    targetSpeed = IsSprinting ? sprintSpeed : walkSpeed;
+                }
+                
+                // Smoothly interpolate the animator speed parameter to prevent instant snapping
+                float currentSpeed = animator.GetFloat("Speed");
+                float newSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, 14f * Time.deltaTime);
+                animator.SetFloat("Speed", newSpeed);
+            }
+        }
+
+        void HandleMovementAndGravity()
         {
             if (GameplayInputGate.IsMovementBlocked)
+            {
+                velocity.y += gravity * Time.deltaTime;
+                controller.Move(velocity * Time.deltaTime);
                 return;
+            }
 
             var moveInput = input != null ? input.Move : Vector2.zero;
             if (moveInput.sqrMagnitude < 0.001f)
@@ -78,13 +138,19 @@ namespace BES.Gameplay
             if (IsSprinting)
                 stamina?.SpendPerSecond();
 
-            controller.Move(moveDir.normalized * (speed * Time.deltaTime));
-
+            // Rotate player toward move direction
             if (moveDir.sqrMagnitude > 0.01f)
             {
                 var targetRotation = Quaternion.LookRotation(moveDir);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
+
+            // Apply gravity
+            velocity.y += gravity * Time.deltaTime;
+
+            // Single unified Move call combines horizontal translation and vertical gravity
+            Vector3 motion = (moveDir.normalized * speed + velocity) * Time.deltaTime;
+            controller.Move(motion);
         }
 
         void HandleJump()
@@ -98,18 +164,20 @@ namespace BES.Gameplay
                 jumpPressed = keyboard.spaceKey.wasPressedThisFrame;
 
             if (jumpPressed && isGrounded)
+            {
                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-
-        void ApplyGravity()
-        {
-            velocity.y += gravity * Time.deltaTime;
-            controller.Move(velocity * Time.deltaTime);
+                isGrounded = false;
+            }
         }
 
         public void ApplyExternalForce(Vector3 force)
         {
             velocity += force;
+        }
+
+        public void SetVerticalVelocity(float y)
+        {
+            velocity.y = y;
         }
 
         static Vector2 ReadKeyboardMove()

@@ -432,87 +432,85 @@ Các trường quan trọng:
 - `rewards`
 - `partyRequirements`
 
-## Runtime UI scripts
+## Kiến Trúc Codebase & Các Hệ Thống Core
 
-### `Assets/UI/Scripts/Menu`
+Codebase của dự án **BES** được chia làm 4 module chính chạy trên Unity, đảm bảo sự tách biệt rõ ràng giữa quản lý hệ thống (Core), logic gameplay (Gameplay), cốt truyện/nhiệm vụ/AI (Narrative), và giao diện hiển thị (UI).
 
-| Script | Vai trò |
-| --- | --- |
-| `MenuNavigator` | Chuyển giữa Home, Story và các screen cấp cao. |
-| `MenuHomeController` | Gắn button Home với modal/mode/action. |
-| `HomeModeSwitcher` | Swipe/chuyển Story Mode và Play Mode. |
-| `SimpleModalPanel` | Mở/đóng modal. |
-| `PlayModePanelController` | Quản lý bốn main tab Play Mode. |
-| `PlayModeLaunchButton` | Mở Play Mode đúng tab từ Home. |
-| `ResonanceSubTabController` | Quản lý bốn subtab Resonance. |
-| `StoryModePanelController` | Chọn đội, requirement và ActiveButton. |
-| `HoverSpriteButton` | Sprite/text hover cho button được phép hover. |
-| `DivineRemnantCarousel` | Scroll ngang Divine Remnant. |
-| `LostEchoAchievementEntry` | Entry relic Lost Echoes. |
-| `DiscoverableRelicSlot` | Slot relic; hiện không giảm alpha. |
-| `SanctumDomainEntry` | Entry domain Ascension/Insight. |
-| `RiftStageCardView` | Stage card Rift. |
-| `DialogueSequenceUI` | Chuỗi hội thoại UI. |
-| `TurnBattleUI` | UI battle theo lượt. |
-| `UIPanelTransition` | Hiệu ứng alpha panel. |
+### 1. Module Core (`BES.Core`)
+Module quản lý vòng đời hệ thống, chuyển cảnh, cấu hình hiệu năng toàn cục và phân phối sự kiện giữa các thành phần khác nhau.
 
-### `Assets/UI/Scripts/Data`
+- **[Bootstrapper.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Core/Bootstrapper.cs)**: Khởi tạo hệ thống tự động trước khi bất kỳ scene nào được load (`RuntimeInitializeOnLoadMethod`). Tạo game object trung tâm `[BES] GameSystems` chứa các service chính như [GameManager.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Core/GameManager.cs), [SceneLoader.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Core/SceneLoader.cs), [PartyRoster.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Data/PartyRoster.cs), [PlayerWallet.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Data/PlayerWallet.cs), [MetaProgressState.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Data/MetaProgressState.cs) và [GachaPityState.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Data/GachaPityState.cs).
+- **[GameManager.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Core/GameManager.cs)**: Lớp Singleton điều phối vòng đời dữ liệu game. Quản lý tham chiếu trực tiếp đến các manager cốt lõi ([SaveSystem.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Save/SaveSystem.cs), [QuestManager.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/QuestManager.cs), [InventorySystem.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Inventory/InventorySystem.cs), [RelationshipSystem.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/RelationshipSystem.cs)) và định nghĩa luồng cho game mới (`NewGame`), tiếp tục (`ContinueGame`), và lưu trữ trạng thái (`SaveGame`).
+- **[GameEvents.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Core/GameEvents.cs)**: Sân ga sự kiện trung tâm (Event Bus) của game. Định nghĩa các delegate `event Action` để liên kết các hệ thống tách biệt mà không gây coupling (ví dụ: thay đổi HP/Mana/Stamina, cập nhật nhiệm vụ, thay đổi hảo cảm NPC, kích hoạt/kết thúc hội thoại, nhặt vật phẩm, tiêu diệt quái vật).
+- **[SceneLoader.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Core/SceneLoader.cs)** & **[SceneNames.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Core/SceneNames.cs)**: Thực hiện tải scene bất đồng bộ thông qua scene trung gian `Loading`. Quản lý hiệu ứng chuyển cảnh mượt mà bằng overlay Canvas fade-in/out (`SceneFadeCanvas`).
+- **[PerformanceSettings.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Core/PerformanceSettings.cs)**: Thiết lập chất lượng đồ họa và giới hạn framerate (FPS target).
+- **[RuntimeResourceLoader.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Core/RuntimeResourceLoader.cs)**: Tự động tải trước các tài nguyên nhân vật và asset UI từ thư mục `Resources`.
 
-Chứa database và runtime state:
+### 2. Module Gameplay & World (`BES.Gameplay`)
+Module kiểm soát vật lý, combat, nhân vật, hệ thống túi đồ, điểm dịch chuyển và cơ chế lưu trữ game.
 
-- Character.
-- Artifact.
-- Weapon.
-- Party.
-- Wallet.
-- Gacha.
-- HUD sprite/background manifest.
+- **Hệ thống nhân vật & chỉ số**:
+  - **[PlayerStats.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/PlayerStats.cs)** & **[StaminaSystem.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/StaminaSystem.cs)**: Quản lý lượng máu, năng lượng (Mana) và thể lực (Stamina) của người chơi. Stamina tiêu thụ khi chạy nhanh (Dash) hoặc thực hiện né tránh.
+  - **[PlayerMotor.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/PlayerMotor.cs)** & **[PlayerInputReader.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/PlayerInputReader.cs)** & **[GameplayInputGate.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/GameplayInputGate.cs)**: Điều khiển chuyển động góc nhìn thứ ba, đọc dữ liệu từ Unity Input System mới và hỗ trợ khóa phím di chuyển khi đang mở menu UI.
+  - **[ThirdPersonCamera.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/ThirdPersonCamera.cs)**: Camera bám theo nhân vật chính với khoảng cách và chiều cao tối ưu cho việc quan sát thế giới 3D.
+  - **[PartySwapController.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/PartySwapController.cs)** & **[PartyCharacterVisualSwitcher.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/PartyCharacterVisualSwitcher.cs)**: Cơ chế đổi nhanh nhân vật active bằng phím `1–4` (Genshin-style). Tự động hoán đổi và khởi tạo visual model (hoặc capsule màu thay thế nếu thiếu prefab).
+  - **[PlayerBuildStats.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/PlayerBuildStats.cs)**: Tính toán tổng hợp chỉ số (HP, ATK, DEF, Crit Rate, Crit DMG) dựa trên cấp độ nhân vật đang chọn, chỉ số vũ khí trang bị và dòng thuộc tính của thánh di vật (Artifact) kèm các hiệu ứng nội tại.
+- **Hệ thống Combat (Chiến đấu)**:
+  - **[CombatManager.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Combat/CombatManager.cs)** & **[DamageCalculator.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Combat/DamageCalculator.cs)**: Quản lý kích hoạt tấn công, combo đòn đánh, tính toán lượng sát thương thực tế gây ra dựa trên chỉ số công/thủ và chí mạng.
+  - **[DodgeController.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Combat/DodgeController.cs)** & **[BasicAttackController.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Combat/BasicAttackController.cs)** & **[SkillController.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Combat/SkillController.cs)**: Xử lý hoạt ảnh né tránh (iframe), combo kiếm thường và kích hoạt skill nhân vật (cooldown/năng lượng tiêu thụ).
+  - **[EnemyHealth.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Combat/EnemyHealth.cs)** & **[EnemyHealthBar.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Combat/EnemyHealthBar.cs)** & **[EnemyDamageFeedback.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Combat/EnemyDamageFeedback.cs)** & **[WorldDamagePopup.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Combat/WorldDamagePopup.cs)**: Quản lý máu của quái vật, hiển thị thanh máu trên đầu, nhấp nháy đỏ khi trúng đòn và hiển thị sát thương dạng số bay (floating text).
+  - **[BossController.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Combat/BossController.cs)**: Quản lý AI chiến đấu và chuyển tiếp các phase của boss lớn.
+- **Hệ thống Thế giới & Sinh quái (World & Spawning)**:
+  - **[EnemySpawnRegion.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/World/EnemySpawnRegion.cs)**: Tự động sinh quái vật theo đợt ngẫu nhiên dựa trên phân vùng NavMesh hoặc các điểm spawn cố định, đi kèm cơ chế đếm ngược thời gian hồi sinh (respawn).
+  - **[Collectible.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/World/Collectible.cs)**: Vật phẩm có thể nhặt được trên bản đồ thông qua raycast hoặc kích hoạt trigger gần.
+  - **[TeleportPoint.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/World/TeleportPoint.cs)** & **[TeleportService.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/World/TeleportService.cs)**: Hệ thống điểm dịch chuyển tức thời, di chuyển tọa độ transform của player.
+  - **[WorldIntegrationManager.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/World/WorldIntegrationManager.cs)**: Tích hợp thiết lập vùng bản đồ khi bắt đầu scene, cập nhật tên vùng lên HUD, trao nguyên liệu khởi đầu cho người chơi mới.
+  - **[OpenWorldSliceValidator.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/OpenWorldSliceValidator.cs)**: Thực hiện kiểm tra tính hợp lệ của bản đồ mở (QA logging) tại runtime.
+- **Hệ thống Lưu trữ (Save System)**:
+  - **[SaveSystem.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Save/SaveSystem.cs)** & **[SaveData.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Save/SaveData.cs)** & **[GameAutoSave.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Save/GameAutoSave.cs)**: Ghi và đọc file JSON (`bes_save.json`) lưu trữ tọa độ người chơi, thanh máu/năng lượng, ví tiền, túi đồ, tiến độ nhiệm vụ, hảo cảm NPC, ký ức AI và trạng thái bảo hiểm gacha (pity). Hỗ trợ mô phỏng đồng bộ hóa đám mây (Cloud Sync) thông qua `PlayerPrefs` theo tài khoản đăng nhập.
+- **Hệ thống Túi đồ (Inventory)**:
+  - **[InventorySystem.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Inventory/InventorySystem.cs)**: Quản lý số lượng vật phẩm trong kho.
+  - **[ItemDatabase.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Inventory/ItemDatabase.cs)** & **[ItemDefinition.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Gameplay/Inventory/ItemDefinition.cs)**: ScriptableObject định nghĩa thông tin cơ bản, icon và phân loại của các vật phẩm trong game.
 
-### `Assets/UI/Scripts/Core`
+### 3. Module Narrative & AI (`BES.Narrative`)
+Module xử lý hội thoại cốt truyện tĩnh, hệ thống trò chuyện AI tự do với NPC, quản lý hảo cảm và hệ thống theo dõi tiến trình nhiệm vụ.
 
-Chứa:
+- **Hệ thống hội thoại cốt truyện (Static Dialogue)**:
+  - **[DialogueSystem.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/DialogueSystem.cs)** & **[DialogueNode.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/DialogueNode.cs)**: Quản lý luồng đối thoại có sẵn được viết dưới dạng cây phân nhánh (ScriptableObjects). Người chơi đưa ra lựa chọn có thể dẫn tới thay đổi chỉ số hảo cảm, phân nhánh nhiệm vụ hoặc hoàn thành các kết cục (ending) cụ thể.
+  - **[NPCInteractable.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/NPCInteractable.cs)**: Thành phần gắn trên NPC để phát hiện người chơi tới gần và kích hoạt hội thoại tĩnh (nếu có cấu hình) hoặc mở giao diện chat AI tự do.
+- **Hệ thống Trò chuyện AI tự do (AI NPC Chatbot)**:
+  - **[AIDialogueService.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/AIDialogueService.cs)** & **[NPCMemoryStore.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/NPCMemoryStore.cs)**: Sử dụng API OpenAI (`gpt-4o-mini`) để tạo hội thoại động thời gian thực dựa trên tên NPC, trạng thái tình cảm (disposition) và các ký ức đã lưu của người chơi.
+  - *Cơ chế Fallback*: Nếu không có API Key, service sẽ tự tạo câu trả lời offline dựa trên ngữ cảnh nhiệm vụ hiện tại, khu vực người chơi đang đứng và ký ức cuối cùng được ghi nhớ.
+- **Hệ thống hảo cảm (Affinity System)**:
+  - **[RelationshipSystem.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/RelationshipSystem.cs)**: Quản lý điểm hảo cảm từ `-100` đến `100` cho từng NPC. Phân cấp trạng thái quan hệ thành: Trusted (>=50), Friendly (>=20), Cold (<=-20), Hostile (<=-50), và Neutral (bình thường).
+- **Hệ thống Nhiệm vụ (Quest System)**:
+  - **[QuestManager.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/QuestManager.cs)** & **[QuestDefinition.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/QuestDefinition.cs)** & **[QuestDatabase.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/QuestDatabase.cs)**: Quản lý danh sách nhiệm vụ chính (Main) và nhiệm vụ phụ (Side commission). Quản lý tiến trình qua các bước nhiệm vụ: Reach (Đến điểm), Talk (Trò chuyện), Defeat (Tiêu diệt quái), Collect (Thu thập vật phẩm) và Choice (Phân nhánh).
+  - **[QuestObjectiveTracker.cs](file:///c:/Users/Admin/Documents/BES/Assets/_Project/Scripts/Narrative/QuestObjectiveTracker.cs)**: Bộ lắng nghe sự kiện toàn cục để tự động đẩy tiến độ của nhiệm vụ khi người chơi nhặt vật phẩm, tiêu diệt quái vật hoặc nói chuyện với đúng mục tiêu.
 
-- Layout token.
-- Anchor preset.
-- Theme.
-- Primitive style.
-- Screen registry.
-- Các widget HUD dùng chung.
+### 4. Module UI & Panels (`BES.UI`)
+Module hiển thị giao diện, điều hướng màn hình, xử lý đăng nhập, nâng cấp trang bị, hệ thống gacha, và màn chơi Turn-Based giả lập.
 
-### Các UI gameplay khác
+- **Khung UI chính (Framework)**:
+  - **[UIRootController.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/UIRootController.cs)** & **[UINavigationController.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/UINavigationController.cs)** & **[UICanvasFit.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/UICanvasFit.cs)**: Đăng ký màn hình, điều hướng tiến lùi giữa các layout canvas và khóa tỷ lệ màn hình chuẩn `1920x1080` bất chấp kích thước cửa sổ thực tế.
+  - **[SimpleModalPanel.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/SimpleModalPanel.cs)** & **[UIPanelTransition.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/UIPanelTransition.cs)** & **[HoverSpriteButton.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/HoverSpriteButton.cs)**: Hỗ trợ tạo hoạt ảnh mở/đóng modal, đưa modal lên sibling cuối để tránh bị che khuất và xử lý hiệu ứng hover cho các nút bấm.
+  - **[MainMenuController.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/MainMenuController.cs)** & **[LoadingScreenUI.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/LoadingScreenUI.cs)**: UI cho màn hình bắt đầu game và màn hình loading tiến trình tải thế giới.
+- **Hệ thống Giao diện Menu Hub (`MenuHub`)**:
+  - **[MenuNavigator.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/MenuNavigator.cs)** & **[MenuHomeController.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/MenuHomeController.cs)**: Điều khiển màn hình trung tâm, kết nối các nút tắt dẫn đến Mail, Cửa hàng, Setting, Sự kiện, Trò chuyện nhóm, Cấp bậc sao.
+  - **[HomeModeSwitcher.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/HomeModeSwitcher.cs)**: Xử lý vuốt màn hình (Swipe/Drag) để hoán đổi khu vực làm việc giữa chế độ Story Mode và Play Mode.
+  - **[StoryModePanelController.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/StoryModePanelController.cs)** & **[StoryPartyController.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/StoryPartyController.cs)**: Chọn đội hình 4 nhân vật, kiểm tra thuộc tính nguyên tố để thỏa mãn yêu cầu của màn chơi cốt truyện.
+  - **[PlayModePanelController.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/PlayModePanelController.cs)** & **[ResonanceSubTabController.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/ResonanceSubTabController.cs)** & **[DivineRemnantCarousel.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/DivineRemnantCarousel.cs)**: Hiển thị các hoạt động phụ bản, relic thưởng, danh sách quái vật cuộn ngang trong Divine Remnant.
+- **Màn đấu Turn-Based giả lập**:
+  - **[TurnBattleUI.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/TurnBattleUI.cs)**: Màn chơi giả lập chiến đấu theo lượt mở ra từ chế độ Story Mode. Tính toán lượt đi dựa trên chỉ số Speed (độ ưu tiên cho phe người chơi nếu bằng nhau), cho phép chọn skill và mục tiêu quái vật, có chế độ Auto-battle và tăng tốc hoạt ảnh `2X`.
+- **Hệ thống Đăng nhập / Xác thực (Auth)**:
+  - **[AuthManager.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/AuthManager.cs)**: Hệ thống quản lý tài khoản hỗ trợ đăng ký, đăng nhập thông qua Firebase REST API. Tích hợp tính năng khôi phục mật khẩu gửi mã xác thực OTP qua máy chủ SMTP thực tế (`smtp.mailersend.net`). Hỗ trợ chế độ offline (`IsTesting = true`) để duyệt qua luồng đăng nhập nhanh bằng PlayerPrefs.
+- **Nâng cấp trang bị & Kho đồ**:
+  - **[BagPanelController.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/BagPanelController.cs)** & **[EquipmentUI.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/EquipmentUI.cs)** & **[WeaponScreenUI.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/WeaponScreenUI.cs)**: Giao diện hiển thị danh sách trang bị, nâng cấp cấp độ vũ khí (Enhance), nâng bậc tinh luyện (Refine) và đột phá cấp sao (Rank Up).
+  - **[WishUI.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/WishUI.cs)**: Giao diện gacha biểu thị các banner nhân vật/vũ khí, hiển thị kết quả mở thưởng thẻ bài.
+- **Hệ thống hội thoại (Dialogue Box)**:
+  - **[DialogueUI.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/DialogueUI.cs)** & **[DialogueSequenceUI.cs](file:///c:/Users/Admin/Documents/BES/Assets/UI/Scripts/Menu/DialogueSequenceUI.cs)**: Điều khiển bóng thoại hiển thị văn bản hội thoại cốt truyện tĩnh hoặc khung trò chuyện chat tự do với AI.
 
-`Assets/UI/Scripts` còn chứa UI cho:
-
-- Inventory.
-- Equipment.
-- Weapon upgrade/refine/rank up.
-- Gacha/Wish.
-- Battle Pass.
-- Quest.
-- Map/Minimap.
-- Dialogue.
-- Team setup.
-- Character profile.
-- HUD và skill bar.
-- Main Menu và Loading.
-
-## Gameplay và core code
-
-`Assets/_Project/Scripts` được chia thành:
-
-```text
-AI/
-Core/
-Editor/
-Gameplay/
-|-- Combat/
-|-- Inventory/
-|-- Save/
-`-- World/
-Narrative/
-```
-
-Đây là code ngoài UI cho combat, inventory, save, world và narrative. Trước khi xóa một script, cần kiểm tra reference trong bốn scene chính, prefab chính và ScriptableObject.
+> [!IMPORTANT]
+> Trước khi sửa hoặc xóa một script thuộc các module trên, cần kiểm tra toàn bộ reference trong bốn scene chính, prefab chính và ScriptableObject để tránh làm mất liên kết dữ liệu trong dự án Unity.
 
 ## Ảnh UI
 

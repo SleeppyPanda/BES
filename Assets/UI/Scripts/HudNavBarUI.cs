@@ -10,6 +10,7 @@ namespace BES.UI
         [SerializeField] Button wishButton;
         [SerializeField] Button bagButton;
         [SerializeField] Button personalButton;
+        [SerializeField] Button exitHubButton;
 
         UINavigationController navigation;
 
@@ -21,6 +22,15 @@ namespace BES.UI
             if (wishButton != null) wishButton.onClick.AddListener(() => navigation?.ToggleWish());
             if (bagButton != null) bagButton.onClick.AddListener(() => navigation?.ToggleInventory());
             if (personalButton != null) personalButton.onClick.AddListener(() => navigation?.ToggleCharacter());
+            if (exitHubButton != null) exitHubButton.onClick.AddListener(ExitToMenuHub);
+        }
+
+        void ExitToMenuHub()
+        {
+            if (BES.Core.SceneLoader.Instance != null)
+                BES.Core.SceneLoader.Instance.LoadScene("menuhub");
+            else
+                UnityEngine.SceneManagement.SceneManager.LoadScene("menuhub");
         }
     }
 }

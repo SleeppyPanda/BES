@@ -107,12 +107,14 @@ namespace BES.Gameplay
 
                 if (player.TryGetComponent<PlayerStats>(out var stats))
                 {
-                    Current.playerHealth = stats.CurrentHealth;
-                    Current.playerMana = stats.CurrentMana;
+                    // Save health/mana as RATIO (0..1) — invariant to MaxHealth changes.
+                    // This prevents the "100/820 HP" bug when build stats change between sessions.
+                    Current.playerHealth = stats.MaxHealth > 0f ? stats.CurrentHealth / stats.MaxHealth : 1f;
+                    Current.playerMana   = stats.MaxMana   > 0f ? stats.CurrentMana   / stats.MaxMana   : 1f;
                 }
 
                 if (player.TryGetComponent<StaminaSystem>(out var stamina))
-                    Current.playerStamina = stamina.Current;
+                    Current.playerStamina = stamina.Max > 0f ? stamina.Current / stamina.Max : 1f;
             }
 
             if (GameManager.Instance != null)
@@ -238,16 +240,40 @@ namespace BES.Gameplay
             if (player == null || currentSave == null)
                 return;
 
-            player.transform.position = new Vector3(
+            var cc = player.GetComponent<CharacterController>();
+            if (cc != null) cc.enabled = false;
+
+            Vector3 savedPos = new Vector3(
                 currentSave.playerPosX,
                 currentSave.playerPosY,
                 currentSave.playerPosZ);
 
+            // Warp to nearest NavMesh position to prevent spawning/loading inside walls/colliders
+            if (UnityEngine.AI.NavMesh.SamplePosition(savedPos, out UnityEngine.AI.NavMeshHit hit, 30f, UnityEngine.AI.NavMesh.AllAreas))
+            {
+                player.transform.position = hit.position + Vector3.up * 0.1f;
+            }
+            else
+            {
+                player.transform.position = savedPos;
+            }
+
+            if (cc != null) cc.enabled = true;
+
             if (player.TryGetComponent<PlayerStats>(out var stats))
-                stats.LoadState(currentSave.playerHealth, currentSave.playerMana);
+            {
+                // Saved value is a ratio (0..1). Use -1f sentinel to mean "full health" (new game).
+                // Apply AFTER build stats are computed so MaxHealth is correct.
+                float hpRatio     = currentSave.playerHealth  < 0f ? 1f : Mathf.Clamp01(currentSave.playerHealth);
+                float manaRatio   = currentSave.playerMana    < 0f ? 1f : Mathf.Clamp01(currentSave.playerMana);
+                stats.LoadState(stats.MaxHealth * hpRatio, stats.MaxMana * manaRatio);
+            }
 
             if (player.TryGetComponent<StaminaSystem>(out var stamina))
-                stamina.LoadState(currentSave.playerStamina);
+            {
+                float staminaRatio = currentSave.playerStamina < 0f ? 1f : Mathf.Clamp01(currentSave.playerStamina);
+                stamina.LoadState(stamina.Max * staminaRatio);
+            }
         }
 
         // ==================== CLOUD SYNC SIMULATION ====================

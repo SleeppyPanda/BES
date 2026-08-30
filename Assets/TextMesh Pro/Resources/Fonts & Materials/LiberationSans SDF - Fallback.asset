@@ -233,6 +233,42 @@ MonoBehaviour:
     m_Y: 0
     m_Width: 511
     m_Height: 511
+  - m_X: 0
+    m_Y: 436
+    m_Width: 511
+    m_Height: 75
+  - m_X: 64
+    m_Y: 331
+    m_Width: 447
+    m_Height: 180
+  - m_X: 61
+    m_Y: 331
+    m_Width: 450
+    m_Height: 11
+  - m_X: 57
+    m_Y: 159
+    m_Width: 7
+    m_Height: 12
+  - m_X: 126
+    m_Y: 66
+    m_Width: 385
+    m_Height: 93
+  - m_X: 131
+    m_Y: 245
+    m_Width: 380
+    m_Height: 266
+  - m_X: 188
+    m_Y: 66
+    m_Width: 323
+    m_Height: 445
+  - m_X: 64
+    m_Y: 245
+    m_Width: 447
+    m_Height: 8
+  - m_X: 64
+    m_Y: 237
+    m_Width: 61
+    m_Height: 16
   m_FontFeatureTable:
     m_MultipleSubstitutionRecords: []
     m_LigatureSubstitutionRecords: []
