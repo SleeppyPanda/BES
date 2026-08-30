@@ -475,12 +475,9 @@ namespace BES.UI.Menu
 
         void ApplyResultPanelArt()
         {
-#if UNITY_EDITOR
-            winPanelArt ??= AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art Ui/Game Việt hóa mới/Thông báo/Group 427323086.png");
-            losePanelArt ??= AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Art Ui/Game Việt hóa mới/Thông báo/Group 427323096.png");
-#endif
-            ApplyRootImage(winPanel, winPanelArt);
-            ApplyRootImage(losePanel, losePanelArt);
+            // Result panel artwork is assigned by hand in Unity.
+            // Do not write sprites to WinPanel/LosePanel roots here; their visible art lives on
+            // child objects such as WinFrame/LoseFrame and must keep the prefab setup.
         }
 
         static void ApplyRootImage(GameObject panel, Sprite sprite)
@@ -702,10 +699,6 @@ namespace BES.UI.Menu
                 yield break;
             }
 
-            Coroutine frameAttack = actor?.battlefieldImage != null && HasCompleteFrameAttack(actor.definition)
-                ? StartCoroutine(PlayFrameAttackOnce(actor))
-                : null;
-
             System.Action onStrike = () =>
             {
                 PlayAttackEffect(actor, target);
@@ -729,6 +722,10 @@ namespace BES.UI.Menu
 
             if (actor.definition.isRanged)
             {
+                Coroutine frameAttack = actor?.battlefieldImage != null && HasCompleteFrameAttack(actor.definition)
+                    ? StartCoroutine(PlayFrameAttackOnce(actor))
+                    : null;
+
                 // Ranged attack: play attack animation at spot
                 if (frameAttack == null && actor.gifPlayer != null && actor.definition.attackClip != null)
                 {
@@ -751,7 +748,7 @@ namespace BES.UI.Menu
             }
             else
             {
-                // Melee attack: move quickly to target, strike, return
+                // Melee attack: move to target, play the strike animation there, then return.
                 var actorRect = MovementRectFor(actor);
                 var targetRect = MovementRectFor(target);
 
@@ -760,16 +757,6 @@ namespace BES.UI.Menu
                     var startPos = actorRect.position;
                     var offset = actor.isPlayer ? new Vector3(-150f, 0f, 0f) : new Vector3(150f, 0f, 0f);
                     var targetPos = targetRect.position + offset;
-
-                    // Start attack GIF
-                    if (frameAttack == null && actor.gifPlayer != null && actor.definition.attackClip != null)
-                    {
-                        actor.gifPlayer.SetClip(actor.definition.attackClip, true);
-                    }
-                    else if (frameAttack == null && actor.animator != null)
-                    {
-                        actor.animator.SetTrigger(skillIndex == 0 ? "Attack" : "Skill");
-                    }
 
                     // Dash forward (0.15s)
                     float dashDuration = 0.15f;
@@ -789,13 +776,33 @@ namespace BES.UI.Menu
                     float remainingWindup = Mathf.Max(0f, actionWindup - dashDuration);
                     yield return ScaledWait(remainingWindup);
 
+                    Coroutine frameAttack = actor?.battlefieldImage != null && HasCompleteFrameAttack(actor.definition)
+                        ? StartCoroutine(PlayFrameAttackOnce(actor))
+                        : null;
+
+                    if (frameAttack == null && actor.gifPlayer != null && actor.definition.attackClip != null)
+                    {
+                        actor.gifPlayer.SetClip(actor.definition.attackClip, true);
+                    }
+                    else if (frameAttack == null && actor.animator != null)
+                    {
+                        actor.animator.SetTrigger(skillIndex == 0 ? "Attack" : "Skill");
+                    }
+
                     onStrike();
 
-                    // Recovery wait before moving back
-                    yield return ScaledWait(actionRecovery);
+                    if (frameAttack != null)
+                    {
+                        yield return frameAttack;
+                    }
+                    else
+                    {
+                        // Wait for the non-frame attack animation before returning.
+                        yield return ScaledWait(actionRecovery);
+                    }
 
                     // Switch back to idle GIF
-                    if (frameAttack == null && actor.gifPlayer != null && actor.definition.idleClip != null)
+                    if (actor.gifPlayer != null && actor.definition.idleClip != null)
                     {
                         actor.gifPlayer.SetClip(actor.definition.idleClip, true);
                     }
@@ -812,11 +819,13 @@ namespace BES.UI.Menu
                         yield return null;
                     }
                     actorRect.position = startPos;
-                    if (frameAttack != null) yield return frameAttack;
                 }
                 else
                 {
                     // Fallback to standard
+                    Coroutine frameAttack = actor?.battlefieldImage != null && HasCompleteFrameAttack(actor.definition)
+                        ? StartCoroutine(PlayFrameAttackOnce(actor))
+                        : null;
                     if (actor.animator != null) actor.animator.SetTrigger(skillIndex == 0 ? "Attack" : "Skill");
                     yield return ScaledWait(actionWindup);
                     onStrike();
@@ -1203,6 +1212,17 @@ namespace BES.UI.Menu
                 {
                     PlayerWallet.Instance.AddCoins(200);
                 }
+                PopulateWinRewardSlots(winPanel, new List<GrantedRewardView>
+                {
+                    new GrantedRewardView
+                    {
+                        id = "coins",
+                        displayName = "Vàng",
+                        icon = RewardIcon("coins", null),
+                        amount = 200,
+                        rarity = 1
+                    }
+                });
                 return new List<string> { "+ 200 Vàng" };
             }
 
@@ -1210,18 +1230,21 @@ namespace BES.UI.Menu
             var grantedRewards = new List<GrantedRewardView>();
 
             var stageRewards = currentStage?.rewards;
+            LogBattle($"ProcessCombatDrops stage='{currentStage?.id}' rewards={stageRewards?.Count ?? 0} activeStage='{ActiveStageId}' activeGroup='{ActivePlayModeStageGroupId}'");
             if (stageRewards != null && stageRewards.Count > 0)
             {
-                foreach (var reward in stageRewards)
+                for (var rewardIndex = 0; rewardIndex < stageRewards.Count; rewardIndex++)
                 {
+                    var reward = stageRewards[rewardIndex];
                     if (reward == null || string.IsNullOrWhiteSpace(reward.id) || !reward.ShouldDrop())
                         continue;
 
                     var amount = reward.RollAmount();
                     if (amount <= 0)
                         continue;
-                    if (!RewardGrantService.Grant(reward.id, amount, RewardDisplayName(reward.id)))
-                        continue;
+                    var granted = RewardGrantService.Grant(reward.id, amount, RewardDisplayName(reward.id));
+                    if (!granted)
+                        LogBattle($"Reward '{reward.id}' x{amount} rolled but was not granted to storage. Check Inventory/Currency/Character/Weapon definition linkage.");
 
                     rewardsList.Add(FormatRewardText(reward, amount));
                     if (amount > 0)
@@ -1230,7 +1253,7 @@ namespace BES.UI.Menu
                         {
                             id = reward.id,
                             displayName = RewardDisplayName(reward.id),
-                            icon = RewardIcon(reward),
+                            icon = ResolveRewardIcon(reward, rewardIndex),
                             amount = amount,
                             rarity = reward.rarity
                         });
@@ -1301,11 +1324,24 @@ namespace BES.UI.Menu
         static Sprite RewardIcon(RewardEntry reward)
         {
             if (reward == null) return null;
-            if (reward.icon != null) return reward.icon;
-            if (IsCurrencyReward(reward.id)) return null;
+            return RewardIcon(reward.id, reward.icon);
+        }
+
+        static Sprite RewardIcon(string id, Sprite explicitIcon)
+        {
+            if (explicitIcon != null) return explicitIcon;
+            if (string.IsNullOrWhiteSpace(id)) return null;
+
+            var database = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
+#if UNITY_EDITOR
+            if (database == null)
+                database = AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/Scenes/MenuContentDatabase.asset");
+#endif
+            var currency = database?.currencies?.Find(x => x != null && x.id.Equals(id, StringComparison.OrdinalIgnoreCase));
+            if (currency?.icon != null) return currency.icon;
 
             var inventory = GameManager.Instance?.Inventory;
-            var definition = inventory?.GetDefinition(reward.id);
+            var definition = inventory?.GetDefinition(id);
             if (definition?.icon != null) return definition.icon;
             return null;
         }
@@ -1314,7 +1350,7 @@ namespace BES.UI.Menu
         {
             if (panel == null) return;
             var rewardSlots = FindRewardSlotRoots(panel);
-            if (rewardSlots.Count == 0) return;
+            LogBattleStatic($"PopulateWinRewardSlots panel='{panel.name}' slots={rewardSlots.Count} rewards={rewards?.Count ?? 0}");
 
             for (var i = 0; i < rewardSlots.Count; i++)
             {
@@ -1324,25 +1360,20 @@ namespace BES.UI.Menu
                 slot.SetActive(show);
                 if (!show) continue;
 
-                var images = slot.GetComponentsInChildren<Image>(true);
-                foreach (var image in images)
+                var slotImage = slot.GetComponent<Image>();
+                if (slotImage != null)
                 {
-                    if (image == null || image.gameObject == slot) continue;
-                    if (image.name.IndexOf("icon", StringComparison.OrdinalIgnoreCase) < 0 &&
-                        image.name.IndexOf("item", StringComparison.OrdinalIgnoreCase) < 0 &&
-                        image.name.IndexOf("reward", StringComparison.OrdinalIgnoreCase) < 0)
-                        continue;
-
-                    image.sprite = reward.icon;
-                    image.enabled = reward.icon != null;
-                    break;
+                    LogBattleStatic($"RewardSlot '{slot.name}' id='{reward.id}' amount={reward.amount} icon='{(reward.icon != null ? reward.icon.name : "NULL")}'");
+                    slotImage.sprite = reward.icon;
+                    slotImage.enabled = reward.icon != null;
                 }
 
                 var texts = slot.GetComponentsInChildren<TMP_Text>(true);
                 foreach (var text in texts)
                 {
                     if (text == null) continue;
-                    if (text.name.IndexOf("amount", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    if (text.name.Equals("Amount", StringComparison.OrdinalIgnoreCase) ||
+                        text.name.IndexOf("amount", StringComparison.OrdinalIgnoreCase) >= 0 ||
                         text.name.IndexOf("count", StringComparison.OrdinalIgnoreCase) >= 0 ||
                         text.name.IndexOf("quantity", StringComparison.OrdinalIgnoreCase) >= 0)
                         text.text = reward.amount.ToString();
@@ -1352,15 +1383,99 @@ namespace BES.UI.Menu
             }
         }
 
+        Sprite ResolveRewardIcon(RewardEntry reward, int rewardIndex)
+        {
+            var icon = RewardIcon(reward);
+            if (icon != null || reward == null)
+                return icon;
+
+            var database = menuContentDatabase;
+            if (database == null)
+            {
+                database = Resources.Load<MenuContentDatabase>("Data/MenuContentDatabase");
+#if UNITY_EDITOR
+                if (database == null)
+                    database = AssetDatabase.LoadAssetAtPath<MenuContentDatabase>("Assets/Scenes/MenuContentDatabase.asset");
+#endif
+            }
+
+            var stage = FindStageById(database, ActiveStageId);
+            var rewards = stage?.rewards;
+            if (rewards == null || rewards.Count == 0)
+                return null;
+
+            var byId = rewards.Find(x => x != null &&
+                                         !string.IsNullOrWhiteSpace(x.id) &&
+                                         x.id.Equals(reward.id, StringComparison.OrdinalIgnoreCase) &&
+                                         x.icon != null);
+            if (byId?.icon != null)
+                return byId.icon;
+
+            if (rewardIndex >= 0 && rewardIndex < rewards.Count)
+                return rewards[rewardIndex]?.icon;
+
+            return null;
+        }
+
+        static StageEntry FindStageById(MenuContentDatabase database, string stageId)
+        {
+            if (database == null || string.IsNullOrWhiteSpace(stageId))
+                return null;
+
+            if (database.storyChapters != null)
+            {
+                foreach (var chapter in database.storyChapters)
+                {
+                    var stage = chapter?.stages?.Find(x => x != null && stageId.Equals(x.id, StringComparison.OrdinalIgnoreCase));
+                    if (stage != null) return stage;
+                }
+            }
+
+            var direct =
+                database.resourceStages?.Find(x => x != null && stageId.Equals(x.id, StringComparison.OrdinalIgnoreCase)) ??
+                database.sanctumStages?.Find(x => x != null && stageId.Equals(x.id, StringComparison.OrdinalIgnoreCase)) ??
+                database.weaponStages?.Find(x => x != null && stageId.Equals(x.id, StringComparison.OrdinalIgnoreCase));
+            if (direct != null) return direct;
+
+            if (database.playModeStageGroups != null)
+            {
+                foreach (var group in database.playModeStageGroups)
+                {
+                    var stage = group?.stages?.Find(x => x != null && stageId.Equals(x.id, StringComparison.OrdinalIgnoreCase));
+                    if (stage != null) return stage;
+                }
+            }
+
+            return null;
+        }
+
         static List<GameObject> FindRewardSlotRoots(GameObject panel)
         {
             var result = new List<GameObject>();
+            var rewardList = FindDeep(panel.transform, "RewardList");
+            if (rewardList != null)
+            {
+                for (var i = 0; i < rewardList.childCount; i++)
+                {
+                    var child = rewardList.GetChild(i);
+                    if (child == null) continue;
+                    if (!child.name.StartsWith("reward_", StringComparison.OrdinalIgnoreCase)) continue;
+                    result.Add(child.gameObject);
+                }
+                if (result.Count > 0)
+                {
+                    result.Sort((a, b) => string.Compare(a.name, b.name, StringComparison.OrdinalIgnoreCase));
+                    return result;
+                }
+            }
+
             var transforms = panel.GetComponentsInChildren<Transform>(true);
             foreach (var transform in transforms)
             {
                 if (transform == null || transform.gameObject == panel) continue;
                 var name = transform.name;
                 var isSlot =
+                    name.StartsWith("reward_", StringComparison.OrdinalIgnoreCase) ||
                     name.IndexOf("RewardSlot", StringComparison.OrdinalIgnoreCase) >= 0 ||
                     name.IndexOf("LootSlot", StringComparison.OrdinalIgnoreCase) >= 0 ||
                     name.IndexOf("ItemSlot", StringComparison.OrdinalIgnoreCase) >= 0;
@@ -1368,8 +1483,33 @@ namespace BES.UI.Menu
                 if (transform.GetComponentInParent<ScrollRect>() != null) continue;
                 result.Add(transform.gameObject);
             }
+            if (result.Count == 0)
+            {
+                var allTransforms = Resources.FindObjectsOfTypeAll<Transform>();
+                foreach (var transform in allTransforms)
+                {
+                    if (transform == null) continue;
+                    if (!transform.name.StartsWith("reward_", StringComparison.OrdinalIgnoreCase)) continue;
+                    if (!HasAncestorNamed(transform, "RewardList")) continue;
+                    if (!HasAncestorNamed(transform, "WinPanel")) continue;
+                    if (transform.GetComponentInParent<ScrollRect>() != null) continue;
+                    result.Add(transform.gameObject);
+                }
+            }
             result.Sort((a, b) => string.Compare(a.name, b.name, StringComparison.OrdinalIgnoreCase));
             return result;
+        }
+
+        static bool HasAncestorNamed(Transform transform, string ancestorName)
+        {
+            var current = transform != null ? transform.parent : null;
+            while (current != null)
+            {
+                if (current.name.Equals(ancestorName, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                current = current.parent;
+            }
+            return false;
         }
 
         static bool IsWeaponReward(string id)
@@ -1954,7 +2094,10 @@ namespace BES.UI.Menu
             for (var i = 0; i < enemies.Count; i++)
             {
                 if (enemies[i] != null && enemies[i].root != null)
+                {
                     enemies[i].root.SetActive(false);
+                    LogBattle($"LoadCurrentBattlePhase clearEnemySlot={i}");
+                }
             }
 
             var phaseEnemies = currentPhase != null ? currentPhase.enemies : currentStage?.enemies;
@@ -1969,7 +2112,8 @@ namespace BES.UI.Menu
                     var view = enemies[enemyIndex];
                     if (view == null) continue;
                     view.definition = CloneAndScaleDefinition(phaseEnemies[enemyIndex], level);
-                    if (view.root != null) view.root.SetActive(true);
+                    SetUnitVisualsActive(view, true);
+                    LogBattle($"LoadCurrentBattlePhase enemySlot={enemyIndex} id='{view.definition?.id}' active={view.root == null || view.root.activeSelf}");
                 }
             }
 
@@ -1977,7 +2121,8 @@ namespace BES.UI.Menu
             {
                 var bossView = enemies[4];
                 bossView.definition = CloneAndScaleDefinition(phaseBoss, level);
-                if (bossView.root != null) bossView.root.SetActive(true);
+                SetUnitVisualsActive(bossView, true);
+                LogBattle($"LoadCurrentBattlePhase bossSlot=4 id='{bossView.definition?.id}' active={bossView.root == null || bossView.root.activeSelf}");
             }
         }
 
@@ -2228,6 +2373,11 @@ namespace BES.UI.Menu
         {
             if (!debugBattleFlow) return;
             Debug.Log($"[BES][BattleFlow][{name}] {message}");
+        }
+
+        static void LogBattleStatic(string message)
+        {
+            Debug.Log($"[BES][BattleFlow] {message}");
         }
 
         static string JoinIds(IReadOnlyList<string> ids)
