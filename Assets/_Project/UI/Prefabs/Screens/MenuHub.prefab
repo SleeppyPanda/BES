@@ -23547,6 +23547,8 @@ MonoBehaviour:
           m_CallState: 2
   gatheringValeButton: {fileID: 4025460974762561038}
   gatheringValePanel: {fileID: 7029429806726344528}
+  desertMapButton: {fileID: 0}
+  desertMapSceneName: desert map
 --- !u!1 &1745021720114674973
 GameObject:
   m_ObjectHideFlags: 0

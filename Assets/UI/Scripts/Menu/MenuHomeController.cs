@@ -5,6 +5,7 @@ using BES.Gameplay;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace BES.UI.Menu
@@ -99,6 +100,10 @@ namespace BES.UI.Menu
         [SerializeField] List<HomeButtonAction> playModeActions = new();
         [SerializeField] Button gatheringValeButton;
         [SerializeField] SimpleModalPanel gatheringValePanel;
+        [Header("Scene links")]
+        [Tooltip("Gán nút Mode_5 vào đây để chuyển thẳng sang scene Desert Map, không mở panel phụ.")]
+        [SerializeField] Button desertMapButton;
+        [SerializeField] string desertMapSceneName = "desert map";
 
         public string CurrentCharacterId => currentCharacterId;
         public int CurrentRank => currentRank;
@@ -126,10 +131,13 @@ namespace BES.UI.Menu
                 else galleryPanel?.Open();
             });
             Wire(gatheringValeButton, () => gatheringValePanel?.Open());
+            Wire(desertMapButton, LoadDesertMapScene);
 
             foreach (var action in playModeActions)
             {
                 var captured = action;
+                if (captured?.button != null && captured.button == desertMapButton)
+                    continue;
                 Wire(captured.button, () => captured.action?.Invoke());
             }
             foreach (var view in currencies)
@@ -150,6 +158,18 @@ namespace BES.UI.Menu
         static void Wire(Button button, UnityEngine.Events.UnityAction action)
         {
             if (button != null) button.onClick.AddListener(action);
+        }
+
+        void LoadDesertMapScene()
+        {
+            if (string.IsNullOrWhiteSpace(desertMapSceneName))
+            {
+                Debug.LogWarning("[BES][MenuHomeController] Desert map scene name is empty.");
+                return;
+            }
+
+            Debug.Log($"[BES][MenuHomeController] Loading scene '{desertMapSceneName}' from desertMapButton.");
+            SceneManager.LoadScene(desertMapSceneName);
         }
 
         void EnsureStartingCharacter()
