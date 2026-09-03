@@ -23547,7 +23547,7 @@ MonoBehaviour:
           m_CallState: 2
   gatheringValeButton: {fileID: 4025460974762561038}
   gatheringValePanel: {fileID: 7029429806726344528}
-  desertMapButton: {fileID: 0}
+  desertMapButton: {fileID: 4025460974762561038}
   desertMapSceneName: desert map
 --- !u!1 &1745021720114674973
 GameObject:
@@ -79325,7 +79325,7 @@ MonoBehaviour:
   m_text: Gathering stages
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 714db48b82333e444b30fe203a9dd976, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: 2100000, guid: a7b84dceb885da84c91c7cde2ca81746, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -85479,7 +85479,7 @@ MonoBehaviour:
   m_text: "\xD7"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 714db48b82333e444b30fe203a9dd976, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: 2100000, guid: a7b84dceb885da84c91c7cde2ca81746, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -87278,7 +87278,7 @@ MonoBehaviour:
   m_text: THE GATHERING VALE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 714db48b82333e444b30fe203a9dd976, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: 2100000, guid: a7b84dceb885da84c91c7cde2ca81746, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -98644,7 +98644,7 @@ MonoBehaviour:
   m_text: Available rewards
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 714db48b82333e444b30fe203a9dd976, type: 2}
-  m_sharedMaterial: {fileID: 0}
+  m_sharedMaterial: {fileID: 2100000, guid: a7b84dceb885da84c91c7cde2ca81746, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
