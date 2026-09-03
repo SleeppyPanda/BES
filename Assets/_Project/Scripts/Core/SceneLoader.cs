@@ -40,6 +40,8 @@ namespace BES.Core
         IEnumerator LoadSceneRoutine(string sceneName)
         {
             isLoading = true;
+            // Capture the outgoing scene state before any scene-owned objects are destroyed.
+            GameManager.Instance?.SaveGame();
             GameEvents.RaiseSceneLoadStarted(sceneName);
 
             if (fadeDuration > 0f)

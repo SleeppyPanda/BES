@@ -140,13 +140,13 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: 3c90b39722421fe428f87e29662196ad, type: 3}
     fullBody: {fileID: 21300000, guid: ba321a1f5ea6d8a4db8328f74cdb65d5, type: 3}
     chibi: {fileID: 21300000, guid: 3d3aa4f9133a9034cb545cd49aadb7b6, type: 3}
-    attackFrame1: {fileID: 0}
-    attackFrame2: {fileID: 0}
-    attackFrame3: {fileID: 0}
-    attackFrame4: {fileID: 0}
-    attackFrame5: {fileID: 0}
-    normalAttackIcon: {fileID: 0}
-    skillIcon: {fileID: 0}
+    attackFrame1: {fileID: 332582104, guid: a8692221ca8ac164eb9fb48402625310, type: 3}
+    attackFrame2: {fileID: 764163011, guid: a8692221ca8ac164eb9fb48402625310, type: 3}
+    attackFrame3: {fileID: 85936460, guid: a8692221ca8ac164eb9fb48402625310, type: 3}
+    attackFrame4: {fileID: -597954433, guid: a8692221ca8ac164eb9fb48402625310, type: 3}
+    attackFrame5: {fileID: -1421458495, guid: a8692221ca8ac164eb9fb48402625310, type: 3}
+    normalAttackIcon: {fileID: 21300000, guid: 3b795b84c3e3b9f4890b82d5d2ec0533, type: 3}
+    skillIcon: {fileID: 21300000, guid: 33315c04fbbaaa245aab52c06f81b6f2, type: 3}
     attackEffectPrefabs:
     - {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
     - {fileID: 5033180708955247871, guid: 152689d6752175f4fa353ae19681fb33, type: 3}
@@ -196,13 +196,13 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: 457482637a0dc9f4dac4290c6c1f3c3b, type: 3}
     fullBody: {fileID: 21300000, guid: 8aafd4c6ca645ba4cbd9b94599857e2d, type: 3}
     chibi: {fileID: 21300000, guid: fe699ea950593af4a8b57c83dcaa801b, type: 3}
-    attackFrame1: {fileID: 0}
-    attackFrame2: {fileID: 0}
-    attackFrame3: {fileID: 0}
-    attackFrame4: {fileID: 0}
-    attackFrame5: {fileID: 0}
-    normalAttackIcon: {fileID: 0}
-    skillIcon: {fileID: 0}
+    attackFrame1: {fileID: -1167904229, guid: b7ec12efcc5fdb84c842266afbee6c14, type: 3}
+    attackFrame2: {fileID: 1621635502, guid: b7ec12efcc5fdb84c842266afbee6c14, type: 3}
+    attackFrame3: {fileID: -21819537, guid: b7ec12efcc5fdb84c842266afbee6c14, type: 3}
+    attackFrame4: {fileID: -2116402200, guid: b7ec12efcc5fdb84c842266afbee6c14, type: 3}
+    attackFrame5: {fileID: 1179236951, guid: b7ec12efcc5fdb84c842266afbee6c14, type: 3}
+    normalAttackIcon: {fileID: 21300000, guid: 517163e8a61e8784c81cd9100824e433, type: 3}
+    skillIcon: {fileID: 21300000, guid: 7a7c03639786a7a4f9c479432b449412, type: 3}
     attackEffectPrefabs:
     - {fileID: 6263782476919498309, guid: 1fd2749f2a4056446881dce86ed70c39, type: 3}
     - {fileID: 8367907410985086596, guid: 0b493b97a8e419d46903c1b023460740, type: 3}
@@ -251,11 +251,11 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: 4edf07b6e053fd949a4e8f4ac0f70e35, type: 3}
     fullBody: {fileID: 21300000, guid: d6a3693a0230a00499675a57f8ca09ac, type: 3}
     chibi: {fileID: 21300000, guid: e8d85727b67cf0e49b5cc974a1dbddc9, type: 3}
-    attackFrame1: {fileID: 0}
-    attackFrame2: {fileID: 0}
-    attackFrame3: {fileID: 0}
-    attackFrame4: {fileID: 0}
-    attackFrame5: {fileID: 0}
+    attackFrame1: {fileID: 1017227687, guid: 937c1b599b8a984418faa4c220fbae4d, type: 3}
+    attackFrame2: {fileID: 86475114, guid: 937c1b599b8a984418faa4c220fbae4d, type: 3}
+    attackFrame3: {fileID: 617246371, guid: 937c1b599b8a984418faa4c220fbae4d, type: 3}
+    attackFrame4: {fileID: 1945756768, guid: 937c1b599b8a984418faa4c220fbae4d, type: 3}
+    attackFrame5: {fileID: 232996115, guid: 937c1b599b8a984418faa4c220fbae4d, type: 3}
     normalAttackIcon: {fileID: 0}
     skillIcon: {fileID: 0}
     attackEffectPrefabs:
@@ -308,11 +308,11 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: b61ca766324ac0b4d82b3bca5ceab21c, type: 3}
     fullBody: {fileID: 21300000, guid: 8d33de7b6af5fa041871202aa1096350, type: 3}
     chibi: {fileID: 21300000, guid: f9553fa9985edf04a975bffe7536c921, type: 3}
-    attackFrame1: {fileID: 0}
-    attackFrame2: {fileID: 0}
-    attackFrame3: {fileID: 0}
-    attackFrame4: {fileID: 0}
-    attackFrame5: {fileID: 0}
+    attackFrame1: {fileID: 1586747878, guid: 5b2589205d56d5e43bae35e78b3aa993, type: 3}
+    attackFrame2: {fileID: 106865679, guid: 5b2589205d56d5e43bae35e78b3aa993, type: 3}
+    attackFrame3: {fileID: 2028725851, guid: 5b2589205d56d5e43bae35e78b3aa993, type: 3}
+    attackFrame4: {fileID: 461080375, guid: 5b2589205d56d5e43bae35e78b3aa993, type: 3}
+    attackFrame5: {fileID: 1820097714, guid: 5b2589205d56d5e43bae35e78b3aa993, type: 3}
     normalAttackIcon: {fileID: 0}
     skillIcon: {fileID: 0}
     attackEffectPrefabs:
@@ -364,11 +364,11 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: 53f94f5952835fd4da4d7afbacd84624, type: 3}
     fullBody: {fileID: 21300000, guid: 5e660eab12198374690cbfd98d420689, type: 3}
     chibi: {fileID: 21300000, guid: e9b47aa05a7cd6b4398af1533414e7db, type: 3}
-    attackFrame1: {fileID: 0}
-    attackFrame2: {fileID: 0}
-    attackFrame3: {fileID: 0}
-    attackFrame4: {fileID: 0}
-    attackFrame5: {fileID: 0}
+    attackFrame1: {fileID: 274987413, guid: 024e61ce1507cbb4e8727bb8763d22bb, type: 3}
+    attackFrame2: {fileID: -517118978, guid: 024e61ce1507cbb4e8727bb8763d22bb, type: 3}
+    attackFrame3: {fileID: -580476028, guid: 024e61ce1507cbb4e8727bb8763d22bb, type: 3}
+    attackFrame4: {fileID: 631699260, guid: 024e61ce1507cbb4e8727bb8763d22bb, type: 3}
+    attackFrame5: {fileID: 908068953, guid: 024e61ce1507cbb4e8727bb8763d22bb, type: 3}
     normalAttackIcon: {fileID: 0}
     skillIcon: {fileID: 0}
     attackEffectPrefabs:
@@ -421,11 +421,11 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: c1f4362c7bdb458409b78d6b035ab94a, type: 3}
     fullBody: {fileID: 21300000, guid: 83d05699cd0968d4096708c5ab277d57, type: 3}
     chibi: {fileID: 21300000, guid: dc809c7badbc845488f1428d5bb1ae1e, type: 3}
-    attackFrame1: {fileID: 0}
-    attackFrame2: {fileID: 0}
-    attackFrame3: {fileID: 0}
-    attackFrame4: {fileID: 0}
-    attackFrame5: {fileID: 0}
+    attackFrame1: {fileID: 469709115, guid: 744644455298c7746a8df9ef543d017b, type: 3}
+    attackFrame2: {fileID: -1324949910, guid: 744644455298c7746a8df9ef543d017b, type: 3}
+    attackFrame3: {fileID: 153057635, guid: 744644455298c7746a8df9ef543d017b, type: 3}
+    attackFrame4: {fileID: -398616790, guid: 744644455298c7746a8df9ef543d017b, type: 3}
+    attackFrame5: {fileID: 677374669, guid: 744644455298c7746a8df9ef543d017b, type: 3}
     normalAttackIcon: {fileID: 0}
     skillIcon: {fileID: 0}
     attackEffectPrefabs:
@@ -477,11 +477,11 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: a77dbd5c852586648b421f056815e010, type: 3}
     fullBody: {fileID: 21300000, guid: e3ad26001e914944c95cce3ab8c8f07b, type: 3}
     chibi: {fileID: 21300000, guid: c6ec6f82157332140af4d18326e6c224, type: 3}
-    attackFrame1: {fileID: 0}
-    attackFrame2: {fileID: 0}
-    attackFrame3: {fileID: 0}
-    attackFrame4: {fileID: 0}
-    attackFrame5: {fileID: 0}
+    attackFrame1: {fileID: 337970568, guid: c3ae12b45f1059e48be03f039c01b462, type: 3}
+    attackFrame2: {fileID: -1334702225, guid: c3ae12b45f1059e48be03f039c01b462, type: 3}
+    attackFrame3: {fileID: 425009568, guid: c3ae12b45f1059e48be03f039c01b462, type: 3}
+    attackFrame4: {fileID: -1457680828, guid: c3ae12b45f1059e48be03f039c01b462, type: 3}
+    attackFrame5: {fileID: 24296062, guid: c3ae12b45f1059e48be03f039c01b462, type: 3}
     normalAttackIcon: {fileID: 0}
     skillIcon: {fileID: 0}
     attackEffectPrefabs:
@@ -531,11 +531,11 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: 20e401ae6d7f33048b3e18ba3e01e7b3, type: 3}
     fullBody: {fileID: 21300000, guid: 1e6be91ec8066c34c92f9518e4d4cf39, type: 3}
     chibi: {fileID: 21300000, guid: 7f354c609b54670498e407b8a4297737, type: 3}
-    attackFrame1: {fileID: 0}
-    attackFrame2: {fileID: 0}
-    attackFrame3: {fileID: 0}
-    attackFrame4: {fileID: 0}
-    attackFrame5: {fileID: 0}
+    attackFrame1: {fileID: 1877536551, guid: 59607c12bd9640644a6d5311c412b603, type: 3}
+    attackFrame2: {fileID: -1962574516, guid: 59607c12bd9640644a6d5311c412b603, type: 3}
+    attackFrame3: {fileID: -1491851166, guid: 59607c12bd9640644a6d5311c412b603, type: 3}
+    attackFrame4: {fileID: 1466025233, guid: 59607c12bd9640644a6d5311c412b603, type: 3}
+    attackFrame5: {fileID: 1817286605, guid: 59607c12bd9640644a6d5311c412b603, type: 3}
     normalAttackIcon: {fileID: 0}
     skillIcon: {fileID: 0}
     attackEffectPrefabs:
@@ -568,8 +568,8 @@ MonoBehaviour:
     energyTurns: 3
     critRate: 0.1
     critDamageMultiplier: 1.5
-  - id: qasim
-    displayName: Qasim
+  - id: kasim
+    displayName: Kasim
     description: "\u0110\u1ED9i ph\xF3 h\u1ED9 v\u1EC7 ho\xE0ng gia"
     faction: Akherat
     playable: 1
@@ -582,21 +582,23 @@ MonoBehaviour:
       th\u01B0\u01A1ng l\xF4i b\u1EB1ng 150% ATK v\xE0 x\xE1c su\u1EA5t 50% b\u1EA1o
       k\xEDch."
     passiveDescription: 
-    portrait: {fileID: 0}
-    cardBackground: {fileID: 0}
-    fullBody: {fileID: 0}
-    chibi: {fileID: 0}
-    attackFrame1: {fileID: 0}
-    attackFrame2: {fileID: 0}
-    attackFrame3: {fileID: 0}
-    attackFrame4: {fileID: 0}
-    attackFrame5: {fileID: 0}
+    portrait: {fileID: 21300000, guid: 1c849cebac0da6742920da8210075a03, type: 3}
+    cardBackground: {fileID: 21300000, guid: c3cb20664d7b41a4fb017d9786b94a97, type: 3}
+    fullBody: {fileID: 21300000, guid: ba9b574af5a2c434aa1b027bc76f2731, type: 3}
+    chibi: {fileID: 21300000, guid: 946b919618fad4a469ef3368f89991d3, type: 3}
+    attackFrame1: {fileID: -1599742751, guid: b22831bbd1d92eb44b6516fb8b2ba0fa, type: 3}
+    attackFrame2: {fileID: 492569146, guid: b22831bbd1d92eb44b6516fb8b2ba0fa, type: 3}
+    attackFrame3: {fileID: 1554377852, guid: b22831bbd1d92eb44b6516fb8b2ba0fa, type: 3}
+    attackFrame4: {fileID: 1453065172, guid: b22831bbd1d92eb44b6516fb8b2ba0fa, type: 3}
+    attackFrame5: {fileID: 855866431, guid: b22831bbd1d92eb44b6516fb8b2ba0fa, type: 3}
     normalAttackIcon: {fileID: 0}
     skillIcon: {fileID: 0}
-    attackEffectPrefabs: []
+    attackEffectPrefabs:
+    - {fileID: 1141330259687333427, guid: 6718dc24203da53468af9ada8fef7d6d, type: 3}
+    - {fileID: 575319445162951685, guid: b7e5061752aa1fa48b86d205d34abf7f, type: 3}
     attackEffectOffset: {x: 0, y: 0, z: 0}
     attackEffectScale: {x: 1, y: 1, z: 1}
-    elementIcon: {fileID: 0}
+    elementIcon: {fileID: 21300000, guid: d0b977daf5eac5641af5a7941e32ba6f, type: 3}
     equippedArtifacts: []
     attributes:
     - Playable
@@ -607,11 +609,11 @@ MonoBehaviour:
     - "T\u1EA5n c\xF4ng AOE"
     - AOE
     - Ranged
-    revealVideoClip: {fileID: 0}
+    revealVideoClip: {fileID: 32900000, guid: 4fe55a01c247688439397622febd44fb, type: 3}
     rarity: 4
     starLevel: 0
     level: 1
-    combatPower: 0
+    combatPower: 588
     constellation: 0
     quality: 1
     affinity: 0
@@ -639,11 +641,11 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: c1881ef9c49aaf847bc4fbe68ba83dd0, type: 3}
     fullBody: {fileID: 21300000, guid: e4ffb70441e595e4b939a9678e27305e, type: 3}
     chibi: {fileID: 21300000, guid: 1e93b8c6d2d18964485f8981c63eb948, type: 3}
-    attackFrame1: {fileID: 0}
-    attackFrame2: {fileID: 0}
-    attackFrame3: {fileID: 0}
-    attackFrame4: {fileID: 0}
-    attackFrame5: {fileID: 0}
+    attackFrame1: {fileID: -200147880, guid: e2f4de297e52a2f4cb5f902e3737e1c8, type: 3}
+    attackFrame2: {fileID: -41760351, guid: e2f4de297e52a2f4cb5f902e3737e1c8, type: 3}
+    attackFrame3: {fileID: 1995404724, guid: e2f4de297e52a2f4cb5f902e3737e1c8, type: 3}
+    attackFrame4: {fileID: 650002759, guid: e2f4de297e52a2f4cb5f902e3737e1c8, type: 3}
+    attackFrame5: {fileID: -1871587461, guid: e2f4de297e52a2f4cb5f902e3737e1c8, type: 3}
     normalAttackIcon: {fileID: 0}
     skillIcon: {fileID: 0}
     attackEffectPrefabs:

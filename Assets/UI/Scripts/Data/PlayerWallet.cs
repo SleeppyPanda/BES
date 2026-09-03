@@ -90,8 +90,10 @@ namespace BES.UI
         {
             if (data == null)
                 return;
-            coins = data.coins > 0 ? data.coins : 99999;
-            gems = data.gems > 0 ? Mathf.Max(data.gems, 99999) : 99999;
+            // Zero is a valid saved balance. Clamping it back to the starter amount
+            // made spent currency reappear whenever the game was restarted.
+            coins = Mathf.Max(0, data.coins);
+            gems = Mathf.Max(0, data.gems);
             SyncMenuCurrency("coins", coins);
             SyncMenuCurrency("gems", gems);
             WalletChanged?.Invoke();

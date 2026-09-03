@@ -78,6 +78,7 @@ namespace BES.Narrative
             if (string.IsNullOrEmpty(trackedQuestId))
                 trackedQuestId = questId;
             GameEvents.RaiseQuestUpdated(questId);
+            GameManager.Instance?.SaveGame();
             return true;
         }
 
@@ -103,6 +104,7 @@ namespace BES.Narrative
                 TryStartChoiceDialogue(questId, quest);
 
             GameEvents.RaiseQuestUpdated(questId);
+            GameManager.Instance?.SaveGame();
         }
 
         void TryStartChoiceDialogue(string questId, QuestDefinition quest)
@@ -168,12 +170,16 @@ namespace BES.Narrative
                 currentEndingId = quest.endingId;
 
             GameEvents.RaiseQuestUpdated(questId);
+            GameManager.Instance?.SaveGame();
         }
 
         public void SetBranch(string branchId)
         {
             if (!string.IsNullOrEmpty(branchId))
+            {
                 currentBranch = branchId;
+                GameManager.Instance?.SaveGame();
+            }
         }
 
         public QuestDefinition GetQuest(string questId) =>
@@ -186,6 +192,7 @@ namespace BES.Narrative
 
             trackedQuestId = questId;
             GameEvents.RaiseQuestUpdated(questId);
+            GameManager.Instance?.SaveGame();
         }
 
         public int GetStepIndex(string questId) =>

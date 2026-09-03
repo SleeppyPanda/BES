@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using BES.Core;
@@ -68,9 +69,11 @@ namespace BES.Gameplay
     public class SaveSystem : MonoBehaviour
     {
         const string SaveFileName = "bes_save.json";
+        const string BackupSuffix = ".backup";
 
         SaveData currentSave;
         string SavePath => Path.Combine(Application.persistentDataPath, SaveFileName);
+        string BackupPath => SavePath + BackupSuffix;
 
         public SaveData Current => currentSave ??= new SaveData();
         public bool HasSave => File.Exists(SavePath);
@@ -156,8 +159,23 @@ namespace BES.Gameplay
                 Current.storyPartyCharacterIds = new List<string>(TurnBattleUI.SelectedPartyCharacterIds);
 
             var json = JsonUtility.ToJson(Current, true);
-            File.WriteAllText(SavePath, json);
-            GameEvents.RaiseGameSaved();
+            var temporaryPath = SavePath + ".tmp";
+            try
+            {
+                File.WriteAllText(temporaryPath, json);
+                if (File.Exists(SavePath))
+                    File.Replace(temporaryPath, SavePath, BackupPath);
+                else
+                    File.Move(temporaryPath, SavePath);
+
+                GameEvents.RaiseGameSaved();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogError($"[SaveSystem] Could not write save file: {exception.Message}");
+                if (File.Exists(temporaryPath))
+                    File.Delete(temporaryPath);
+            }
         }
 
         public bool Load()
@@ -165,8 +183,12 @@ namespace BES.Gameplay
             if (!HasSave)
                 return false;
 
-            var json = File.ReadAllText(SavePath);
-            currentSave = JsonUtility.FromJson<SaveData>(json) ?? new SaveData();
+            if (!TryReadSave(SavePath, out currentSave) && !TryReadSave(BackupPath, out currentSave))
+            {
+                Debug.LogError("[SaveSystem] Both the main save and its backup are unreadable.");
+                currentSave = null;
+                return false;
+            }
             LoadedFromContinue = true;
             IsNewSession = false;
 
@@ -201,6 +223,27 @@ namespace BES.Gameplay
 
             GameEvents.RaiseGameLoaded();
             return true;
+        }
+
+        static bool TryReadSave(string path, out SaveData data)
+        {
+            data = null;
+            if (!File.Exists(path))
+                return false;
+
+            try
+            {
+                var json = File.ReadAllText(path);
+                if (string.IsNullOrWhiteSpace(json))
+                    return false;
+                data = JsonUtility.FromJson<SaveData>(json);
+                return data != null;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"[SaveSystem] Could not read '{Path.GetFileName(path)}': {exception.Message}");
+                return false;
+            }
         }
 
         void ExportMenuContentToSave(SaveData data)

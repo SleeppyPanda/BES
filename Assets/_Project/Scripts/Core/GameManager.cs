@@ -15,6 +15,9 @@ namespace BES.Core
         [SerializeField] RelationshipSystem relationshipSystem;
         [SerializeField] bool autoLoadExistingSaveOnStart = true;
 
+        bool persistenceReady;
+        bool saveRequestedDuringInitialization;
+
         public SaveSystem Save => saveSystem;
         public QuestManager Quests => questManager;
         public InventorySystem Inventory => inventorySystem;
@@ -43,8 +46,16 @@ namespace BES.Core
 
         void Start()
         {
+            var loadedExistingSave = false;
             if (autoLoadExistingSaveOnStart && saveSystem.HasSave && !saveSystem.LoadedFromContinue)
-                saveSystem.Load();
+                loadedExistingSave = saveSystem.Load();
+
+            // Awake methods on persistent gameplay services may request a save while
+            // they are still constructing their default state. Never let those
+            // requests overwrite an existing save before it has been restored.
+            persistenceReady = true;
+            if (saveRequestedDuringInitialization && !loadedExistingSave && !saveSystem.HasSave)
+                saveSystem.Save();
         }
 
         void EnsureSystems()
@@ -80,6 +91,12 @@ namespace BES.Core
 
         public void SaveGame()
         {
+            if (!persistenceReady)
+            {
+                saveRequestedDuringInitialization = true;
+                return;
+            }
+
             saveSystem.Save();
         }
     }
