@@ -696,11 +696,11 @@ MonoBehaviour:
     cardBackground: {fileID: 21300000, guid: 9512eae1b79c3be4bb178a8a4b6acee7, type: 3}
     fullBody: {fileID: 21300000, guid: f46cb45b97c13b84eaf100fa7409395a, type: 3}
     chibi: {fileID: 21300000, guid: ffa9692f0a836d145be2201874795e47, type: 3}
-    attackFrame1: {fileID: 0}
-    attackFrame2: {fileID: 0}
-    attackFrame3: {fileID: 0}
-    attackFrame4: {fileID: 0}
-    attackFrame5: {fileID: 0}
+    attackFrame1: {fileID: -1599028258, guid: 092aed0bb00211c4e91fef6842dc8dc9, type: 3}
+    attackFrame2: {fileID: -833643015, guid: 092aed0bb00211c4e91fef6842dc8dc9, type: 3}
+    attackFrame3: {fileID: 585926281, guid: 092aed0bb00211c4e91fef6842dc8dc9, type: 3}
+    attackFrame4: {fileID: -834345504, guid: 092aed0bb00211c4e91fef6842dc8dc9, type: 3}
+    attackFrame5: {fileID: 558448643, guid: 092aed0bb00211c4e91fef6842dc8dc9, type: 3}
     normalAttackIcon: {fileID: 0}
     skillIcon: {fileID: 0}
     attackEffectPrefabs:
